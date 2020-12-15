@@ -1,0 +1,153 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>_2048_Rbu</RootNamespace>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>АСУ-Техно.ico</ApplicationIcon>
+    <Company>АСУ-Техно</Company>
+    <AssemblyName>2048_Rbu</AssemblyName>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <Prefer32Bit>true</Prefer32Bit>
+    <OutputPath>bin\Debug\</OutputPath>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningsAsErrors></WarningsAsErrors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Images\img_Truck_1.png" />
+    <None Remove="Images\Indicators\img_Cement.png" />
+    <None Remove="Images\Indicators\img_Inert.png" />
+    <None Remove="Images\Indicators\img_Solution.png" />
+    <None Remove="Images\Indicators\img_Water.png" />
+    <None Remove="Images\Logo_ASU.png" />
+    <None Remove="Images\Logo_ASU_Gray.png" />
+    <None Remove="Images\Mechs\img_BigGate_Alarm.png" />
+    <None Remove="Images\Mechs\img_BigGate_Close.png" />
+    <None Remove="Images\Mechs\img_BigGate_Open.png" />
+    <None Remove="Images\Mechs\img_Conv_Alarm.png" />
+    <None Remove="Images\Mechs\img_Conv_On.png" />
+    <None Remove="Images\Mechs\img_Gate_Alarm.png" />
+    <None Remove="Images\Mechs\img_Gate_Close.png" />
+    <None Remove="Images\Mechs\img_Gate_Open.png" />
+    <None Remove="Images\Mechs\img_Mixer_Alarm.png" />
+    <None Remove="Images\Mechs\img_Mixer_On.png" />
+    <None Remove="Images\Mechs\img_Motor_Alarm.png" />
+    <None Remove="Images\Mechs\img_Motor_On.png" />
+    <None Remove="Images\Mechs\img_Pump1_Alarm.png" />
+    <None Remove="Images\Mechs\img_Pump1_ON.png" />
+    <None Remove="Images\Mechs\img_Pump_Alarm.png" />
+    <None Remove="Images\Mechs\img_Pump_On.png" />
+    <None Remove="Images\Mechs\img_Shnek_Alarm.png" />
+    <None Remove="Images\Mechs\img_Shnek_On.png" />
+    <None Remove="Images\Mechs\img_Skip_Alarm.png" />
+    <None Remove="Images\Mechs\img_Skip_On.png" />
+    <None Remove="Images\Mnemo_Rbu.png" />
+    <None Remove="Images\Splash.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DevExpress.Data" Version="20.2.4" />
+    <PackageReference Include="DevExpressMvvm" Version="20.2.3" />
+    <PackageReference Include="EntityFramework" Version="6.4.4" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.19" />
+    <PackageReference Include="NETStandard.Library" Version="2.0.3" />
+    <PackageReference Include="Npgsql" Version="4.1.3" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.3" />
+    <PackageReference Include="Opc.UaFx.Client" Version="2.11.3.1" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="5.0.0" />
+    <PackageReference Include="System.ServiceModel.Primitives" Version="4.8.0" />
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="5.0.0" />
+    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="AS_Library_v2">
+      <HintPath>library\AS_Library_v2.dll</HintPath>
+    </Reference>
+    <Reference Include="Excel">
+      <HintPath>library\Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>library\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Lib_2048">
+      <HintPath>..\Lib_2048\bin\Debug\netcoreapp3.1\Lib_2048.dll</HintPath>
+    </Reference>
+    <Reference Include="nGantt">
+      <HintPath>library\nGantt.dll</HintPath>
+    </Reference>
+    <Reference Include="OpcNetApi">
+      <HintPath>library\OpcNetApi.dll</HintPath>
+    </Reference>
+    <Reference Include="OpcNetApi.Com">
+      <HintPath>library\OpcNetApi.Com.dll</HintPath>
+    </Reference>
+    <Reference Include="OPC_NET">
+      <HintPath>library\OPC_NET.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceLib">
+      <HintPath>library\ServiceLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Unme.Common">
+      <HintPath>library\Unme.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="ZedGraph">
+      <HintPath>library\ZedGraph.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\Indicators\img_Cement.png" />
+    <Resource Include="Images\Indicators\img_Inert.png" />
+    <Resource Include="Images\Indicators\img_Solution.png" />
+    <Resource Include="Images\Indicators\img_Water.png" />
+    <Resource Include="Images\Logo_ASU.png" />
+    <Resource Include="Images\Logo_ASU_Gray.png" />
+    <Resource Include="Images\Mechs\img_BigGate_Alarm.png" />
+    <Resource Include="Images\Mechs\img_BigGate_Close.png" />
+    <Resource Include="Images\Mechs\img_BigGate_Open.png" />
+    <Resource Include="Images\Mechs\img_Conv_Alarm.png" />
+    <Resource Include="Images\Mechs\img_Conv_On.png" />
+    <Resource Include="Images\Mechs\img_Gate_Alarm.png" />
+    <Resource Include="Images\Mechs\img_Gate_Close.png" />
+    <Resource Include="Images\Mechs\img_Gate_Open.png" />
+    <Resource Include="Images\Mechs\img_Mixer_Alarm.png" />
+    <Resource Include="Images\Mechs\img_Mixer_On.png" />
+    <Resource Include="Images\Mechs\img_Motor_Alarm.png" />
+    <Resource Include="Images\Mechs\img_Motor_On.png" />
+    <Resource Include="Images\Mechs\img_Pump1_Alarm.png" />
+    <Resource Include="Images\Mechs\img_Pump1_ON.png" />
+    <Resource Include="Images\Mechs\img_Pump_Alarm.png" />
+    <Resource Include="Images\Mechs\img_Pump_On.png" />
+    <Resource Include="Images\Mechs\img_Shnek_Alarm.png" />
+    <Resource Include="Images\Mechs\img_Shnek_On.png" />
+    <Resource Include="Images\Mechs\img_Skip_Alarm.png" />
+    <Resource Include="Images\Mechs\img_Skip_On.png" />
+    <Resource Include="Images\Mnemo_Rbu.png" />
+    <Resource Include="Images\Splash.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Data\Service.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Elements\Mechs\ElMotor.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy $(ProjectDir)Data $(ProjectDir)$(OutDir)Data /s /d /y" />
+  </Target>
+
+</Project>

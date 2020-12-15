@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="_2048_Rbu.Elements.Indicators.ElValueBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             Visibility="{Binding Vis}">
+    <Grid Height="Auto" Width="Auto">
+        <Label Name="LblValue" Width="25" Height="25" BorderThickness="1" BorderBrush="Black" Background="LightGray" HorizontalContentAlignment="Center" HorizontalAlignment="Left">
+            <Label.Content>
+                <TextBlock Name="TxtValue" Text="{Binding Value}" FontSize="16" Margin="-4,-5"></TextBlock>
+            </Label.Content>
+        </Label>
+        <Label Name="LblText" Width="0" Height="25" BorderThickness="1" BorderBrush="Black" Background="LightGray" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="24,0,0,0">
+            <Label.Content>
+                <TextBlock Name="TxtText" FontSize="16" Margin="-4,-4"></TextBlock>
+            </Label.Content>
+        </Label>
+    </Grid>
+</UserControl>

@@ -1,0 +1,11 @@
+﻿<Window x:Class="_2048_Rbu.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        Background="Silver"
+        Title='Программа управления растоворо-бетонным узлом' WindowStartupLocation="CenterScreen" Width="1920" Height="1080" WindowState="Maximized" Closing="Program_Closing" Closed="Program_Closed">
+    <Grid Name="MainGrid" Background="Silver">
+        <Grid Name="ScreenGrid" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+    </Grid>
+</Window>

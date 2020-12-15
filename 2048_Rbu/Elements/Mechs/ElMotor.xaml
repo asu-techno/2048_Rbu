@@ -1,0 +1,102 @@
+﻿<UserControl x:Class="_2048_Rbu.Elements.Mechs.ElMotor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d"
+             d:DesignWidth="66" d:DesignHeight="46" MouseEnter="Rect_OnMouseEnter" MouseLeave="Rect_OnMouseLeave">
+    <Grid>
+        <Grid Name="ObjectGrid" VerticalAlignment="Top" HorizontalAlignment="Left" Width="32" Height="22" Margin="17.5,12.5">
+            <Image Name="img_KM" VerticalAlignment="Top" HorizontalAlignment="Left" Width="26" Height="16" Margin="2.5" Visibility="{Binding VisKM}" Source="../../Images/Mechs/img_Motor_On.png"/>
+            <Image Name="img_Alarm" VerticalAlignment="Top" HorizontalAlignment="Left" Width="26" Height="16" Margin="2.5" Visibility="{Binding VisAlarm}" Source="../../Images/Mechs/img_Motor_Alarm.png"/>
+        </Grid>
+        <TextBlock Name="tbc_name" FontSize="14" Text="МXXX" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,25,0,0" TextAlignment="Left"/>
+        <Label Name="lbl_mode" Width="12" Height="12" BorderThickness="1" BorderBrush="Black" Background="Yellow" Margin="-70,0,0,0">
+            <Label.Style>
+                <Style TargetType="{x:Type Label}">
+                    <Setter Property="Visibility" Value="Visible" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ModeAutomat}" Value="True">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Label.Style>
+            <Label.Content>
+                <TextBlock Text="Р" FontSize="10" Margin="-3,-7"></TextBlock>
+            </Label.Content>
+        </Label>
+        <Rectangle Name="rect_object" VerticalAlignment="Center" HorizontalAlignment="Center" Width="30" Height="20" Margin="1" StrokeThickness="0.5" Fill="Transparent" Stroke="Black" Opacity="0" MouseLeftButtonUp="ValveGrid_OnMouseRightButtonDown"/>
+        <Popup Name="PopupObject" Placement="Bottom" StaysOpen="False">
+            <Border BorderBrush="Black" BorderThickness="1">
+                <Grid Background="Beige" Width="150">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="40"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Name="txt_popName" Grid.ColumnSpan="2" Foreground="Black" HorizontalAlignment="Center" FontSize="16" FontWeight="Bold" Text="Насос 2" VerticalAlignment="Center"/>
+                    <Button Background="LightBlue" Name="btnManual" Width="60" Height="30" Content="Ручной" Grid.Row="1" BorderBrush="Black" BorderThickness="1" Click="btnManual_Click" >
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="Background" Value="LightBlue" />
+                                <Setter Property="FontWeight" Value="Normal" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ModeManual}" Value="True">
+                                        <Setter Property="Background" Value="LimeGreen" />
+                                        <Setter Property="FontWeight" Value="Bold" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <Button Background="LightBlue" Name="btnAutomat" Width="60" Height="30" Content="Автомат" Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1" Click="btnAutomat_Click" >
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="Background" Value="LightBlue" />
+                                <Setter Property="FontWeight" Value="Normal" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ModeAutomat}" Value="True">
+                                        <Setter Property="Background" Value="LimeGreen" />
+                                        <Setter Property="FontWeight" Value="Bold" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <TextBlock Name="txt_freq" Foreground="Black" Visibility="{Binding VisFreq}" HorizontalAlignment="Center" Text="Частота,  Гц" VerticalAlignment="Center" Grid.Row="2" />
+                    <Label Grid.Column="2" Grid.Row="2" Visibility="{Binding VisFreq}" Content="{Binding Freq}" Height="28" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Name="lbl_param" VerticalAlignment="Center" Width="50" Background="LightBlue" Padding="0" Margin="5" BorderBrush="Black" FontSize="14" BorderThickness="1" VerticalContentAlignment="Center" MouseLeftButtonDown="Lbl_param_OnMouseLeftButtonDown" />
+                    <Button Background="LimeGreen" Name="btnStart" Width="60" Height="30" FontSize="16" Content="Пуск" Grid.Row="3" BorderBrush="Black" BorderThickness="1" Click="btnStart_Click" >
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="IsEnabled" Value="False" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ModeManual}" Value="True">
+                                        <Setter Property="IsEnabled" Value="True" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <Button Background="Salmon" Name="btnStop" Width="60" Height="30" FontSize="16"  Content="Стоп" Grid.Row="3" Grid.Column="1" BorderBrush="Black" BorderThickness="1" Click="btnStop_Click" >
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="IsEnabled" Value="False" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ModeManual}" Value="True">
+                                        <Setter Property="IsEnabled" Value="True" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                </Grid>
+            </Border>
+        </Popup>
+    </Grid>
+</UserControl>

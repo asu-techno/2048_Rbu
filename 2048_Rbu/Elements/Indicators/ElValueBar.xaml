@@ -1,0 +1,12 @@
+﻿<UserControl x:Class="_2048_Rbu.Elements.Indicators.ElValueBar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             >
+    <Grid Height="Auto" Width="Auto">
+        <ProgressBar Name="lbl_value" Value="{Binding Value}" Width="15" FontSize="8" BorderThickness="1" BorderBrush="Black" Foreground="DeepSkyBlue" Background="LightGray" Orientation="Vertical">
+        </ProgressBar>
+    </Grid>
+</UserControl>
