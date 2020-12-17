@@ -28,7 +28,7 @@
             </Label.Content>
         </Label>
         <Rectangle Name="RectObject" Width="40" Height="26" Margin="0" Fill="Transparent" StrokeThickness="0.5" Stroke="Black" Opacity="0" MouseLeftButtonUp="ValveGrid_OnMouseRightButtonDown"/>
-        <Popup Name="PopupObject" Placement="Bottom" StaysOpen="False" Closed="PopupObject_OnClosed">
+        <Popup Name="PopupObject" Placement="Bottom" StaysOpen="False">
             <Border BorderBrush="Black" BorderThickness="1">
                 <Grid Background="Beige" Width="180">
                     <Grid.RowDefinitions>
@@ -53,204 +53,64 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Name="TxtPopupName" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Black" FontWeight="Bold" FontSize="16" Text="Клапан"/>
-                    <!--<Button Name="BtnManual" Grid.Row="1" Grid.Column="0" Width="75" Height="25" BorderBrush="Black" BorderThickness="1" Content="Ручной" Click="BtnManual_Click">
-                        <Button.Style>
-                            <Style TargetType="{x:Type Button}">
-                                <Setter Property="Background" Value="LightBlue"/>
-                                <Setter Property="FontWeight" Value="Normal"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding ModeManual}" Value="True">
-                                        <Setter Property="Background" Value="Lime"/>
-                                        <Setter Property="FontWeight" Value="Bold"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-                    </Button>
-                    <Button Name="BtnAutomat" Grid.Row="1" Grid.Column="1" Width="75" Height="25" BorderBrush="Black" BorderThickness="1" Content="Автомат" Click="BtnAutomat_Click" >
-                        <Button.Style>
-                            <Style TargetType="{x:Type Button}">
-                                <Setter Property="Background" Value="LightBlue"/>
-                                <Setter Property="FontWeight" Value="Normal"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding ModeAutomat}" Value="True">
-                                        <Setter Property="Background" Value="Lime"/>
-                                        <Setter Property="FontWeight" Value="Bold"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-                    </Button>-->
                     <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="4,0,0,0" TextAlignment="Left" Text="Состояние:"/>
                     <Label Grid.Row="1" Grid.Column="1" Width="75" Height="25" BorderBrush="Black" BorderThickness="1" Background="{Binding Brush}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" Content="{Binding Status}"/>
-                    <Button Name="BtnOpen" Grid.Row="2" Grid.Column="0" Width="75" Height="25" Background="#85fc84" BorderBrush="Black" BorderThickness="1" Content="Открыть" Click="BtnOpen_Click" ToolTip='Управление доступно только в режиме работы "Ручной"' ToolTipService.ShowOnDisabled="True">
+                    <Button Name="BtnManual" Grid.Row="2" Grid.Column="0" Width="75" Height="25" BorderBrush="Black" BorderThickness="1" Content="Ручной" Click="BtnManual_Click">
                         <Button.Style>
                             <Style TargetType="{x:Type Button}">
-                                <Setter Property="IsEnabled" Value="False"/>
-                                <Setter Property="ToolTipService.IsEnabled" Value="True"/>
+                                <Setter Property="Background" Value="LightBlue"/>
+                                <Setter Property="FontWeight" Value="Normal"/>
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding ModeManual}" Value="True">
-                                        <Setter Property="IsEnabled" Value="True"/>
-                                        <Setter Property="ToolTipService.IsEnabled" Value="False"/>
+                                        <Setter Property="Background" Value="#85fc84"/>
+                                        <Setter Property="FontWeight" Value="Bold"/>
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
                         </Button.Style>
                     </Button>
-                    <Button Name="BtnClose" Grid.Row="2" Grid.Column="1" Width="75" Height="25" Background="Yellow" BorderBrush="Black" BorderThickness="1" Content="Закрыть" Click="BtnClose_Click" ToolTip='Управление доступно только в режиме работы "Ручной"' ToolTipService.ShowOnDisabled="True">
+                    <Button Name="BtnAutomat" Grid.Row="2" Grid.Column="1" Width="75" Height="25" BorderBrush="Black" BorderThickness="1" Content="Автомат" Click="BtnAutomat_Click" >
                         <Button.Style>
                             <Style TargetType="{x:Type Button}">
-                                <Setter Property="IsEnabled" Value="False"/>
-                                <Setter Property="ToolTipService.IsEnabled" Value="True"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding ModeManual}" Value="True">
-                                        <Setter Property="IsEnabled" Value="True"/>
-                                        <Setter Property="ToolTipService.IsEnabled" Value="False"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-                    </Button>
-                    <!--<Button Name="BtnService" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Height="25" Margin="7.5,5" BorderBrush="Black" BorderThickness="1" Content="Местный режим" Click="BtnService_Click">
-                        <Button.Style>
-                            <Style TargetType="{x:Type Button}">
-                                <Setter Property="Background" Value="Yellow"/>
-                                <Setter Property="FontWeight" Value="Bold"/>
+                                <Setter Property="Background" Value="LightBlue"/>
+                                <Setter Property="FontWeight" Value="Normal"/>
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding ModeAutomat}" Value="True">
-                                        <Setter Property="Background" Value="LightBlue"/>
-                                        <Setter Property="FontWeight" Value="Normal"/>
+                                        <Setter Property="Background" Value="#85fc84"/>
+                                        <Setter Property="FontWeight" Value="Bold"/>
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
                         </Button.Style>
                     </Button>
-                    <TextBlock Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="4,0,0,0" TextAlignment="Left" FontSize="10" Text="Авария открытия"/>
-                    <Label Grid.Row="4" Grid.Column="1" HorizontalAlignment="Right" Width="35" Height="20" Margin="0,2,3.5,2" BorderBrush="Black" BorderThickness="1" VerticalContentAlignment="Top" HorizontalContentAlignment="Center" Padding="2" FontSize="10">
-                        <Label.Style>
-                            <Style TargetType="{x:Type Label}">
-                                <Setter Property="Background" Value="#85FC84"/>
-                                <Setter Property="Content" Value="Нет"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Feedback_Open}" Value="True">
-                                        <Setter Property="Background" Value="#EB1B22"/>
-                                        <Setter Property="Content" Value="Да"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Label.Style>
-                    </Label>
-                    <TextBlock Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="4,0,0,0" TextAlignment="Left" FontSize="10" Text="Авария движения открытия"/>
-                    <Label Grid.Row="5" Grid.Column="1" HorizontalAlignment="Right" Width="35" Height="20" Margin="0,2,3.5,2" BorderBrush="Black" BorderThickness="1" VerticalContentAlignment="Top" HorizontalContentAlignment="Center" Padding="2" FontSize="10">
-                        <Label.Style>
-                            <Style TargetType="{x:Type Label}">
-                                <Setter Property="Background" Value="#85FC84"/>
-                                <Setter Property="Content" Value="Нет"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding NotMoving_Open}" Value="True">
-                                        <Setter Property="Background" Value="#EB1B22"/>
-                                        <Setter Property="Content" Value="Да"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Label.Style>
-                    </Label>
-                    <TextBlock Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="4,0,0,0" TextAlignment="Left" FontSize="10" Text="Авария закрытия"/>
-                    <Label Grid.Row="6" Grid.Column="1" HorizontalAlignment="Right" Width="35" Height="20" Margin="0,2,3.5,2" BorderBrush="Black" BorderThickness="1" VerticalContentAlignment="Top" HorizontalContentAlignment="Center" Padding="2" FontSize="10">
-                        <Label.Style>
-                            <Style TargetType="{x:Type Label}">
-                                <Setter Property="Background" Value="#85FC84"/>
-                                <Setter Property="Content" Value="Нет"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Feedback_Close}" Value="True">
-                                        <Setter Property="Background" Value="#EB1B22"/>
-                                        <Setter Property="Content" Value="Да"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Label.Style>
-                    </Label>
-                    <TextBlock Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="4,0,0,0" TextAlignment="Left" FontSize="10" Text="Авария движения закрытия"/>
-                    <Label Grid.Row="7" Grid.Column="1" HorizontalAlignment="Right" Width="35" Height="20" Margin="0,2,3.5,2" BorderBrush="Black" BorderThickness="1" VerticalContentAlignment="Top" HorizontalContentAlignment="Center" Padding="2" FontSize="10">
-                        <Label.Style>
-                            <Style TargetType="{x:Type Label}">
-                                <Setter Property="Background" Value="#85FC84"/>
-                                <Setter Property="Content" Value="Нет"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding NotMoving_Close}" Value="True">
-                                        <Setter Property="Background" Value="#EB1B22"/>
-                                        <Setter Property="Content" Value="Да"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Label.Style>
-                    </Label>
-                    <TextBlock Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="4,0,0,0" TextAlignment="Left" FontSize="10" Text="Авария датчиков"/>
-                    <Label Grid.Row="8" Grid.Column="1" HorizontalAlignment="Right" Width="35" Height="20" Margin="0,2,3.5,2" BorderBrush="Black" BorderThickness="1" VerticalContentAlignment="Top" HorizontalContentAlignment="Center" Padding="2" FontSize="10">
-                        <Label.Style>
-                            <Style TargetType="{x:Type Label}">
-                                <Setter Property="Background" Value="#85FC84"/>
-                                <Setter Property="Content" Value="Нет"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding BothSensor}" Value="True">
-                                        <Setter Property="Background" Value="#EB1B22"/>
-                                        <Setter Property="Content" Value="Да"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Label.Style>
-                    </Label>
-                    <TextBlock Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="4,0,0,0" TextAlignment="Left" FontSize="10" Text="Внешняя авария"/>
-                    <Label Grid.Row="9" Grid.Column="1" HorizontalAlignment="Right" Width="35" Height="20" Margin="0,2,3.5,5" BorderBrush="Black" BorderThickness="1" VerticalContentAlignment="Top" HorizontalContentAlignment="Center" Padding="2" FontSize="10">
-                        <Label.Style>
-                            <Style TargetType="{x:Type Label}">
-                                <Setter Property="Background" Value="#85FC84"/>
-                                <Setter Property="Content" Value="Нет"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding External}" Value="True">
-                                        <Setter Property="Background" Value="#EB1B22"/>
-                                        <Setter Property="Content" Value="Да"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Label.Style>
-                    </Label>
-                    <Button Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="2" Height="25" Margin="3.5,5" Background="LightBlue" BorderBrush="Black" BorderThickness="1" Click="BtnVisDop_Click">
+                    <Button Name="BtnOpen" Grid.Row="3" Grid.Column="0" Width="75" Height="25" Margin="0,0,0,5" Background="#85fc84" BorderBrush="Black" BorderThickness="1" Content="Открыть" Click="BtnOpen_Click" ToolTip='Управление доступно только в режиме работы "Ручной"' ToolTipService.ShowOnDisabled="True">
                         <Button.Style>
                             <Style TargetType="{x:Type Button}">
-                                <Setter Property="Content" Value="Настройки"/>
+                                <Setter Property="IsEnabled" Value="False"/>
+                                <Setter Property="ToolTipService.IsEnabled" Value="True"/>
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding VisDop}" Value="True">
-                                        <Setter Property="Content" Value="Скрыть настройки"/>
+                                    <DataTrigger Binding="{Binding ModeManual}" Value="True">
+                                        <Setter Property="IsEnabled" Value="True"/>
+                                        <Setter Property="ToolTipService.IsEnabled" Value="False"/>
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
                         </Button.Style>
                     </Button>
-                    <Grid Grid.Row="12" Grid.Column="0" Grid.ColumnSpan="2">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.Style>
-                            <Style TargetType="{x:Type Grid}">
-                                <Setter Property="Visibility" Value="Collapsed"/>
+                    <Button Name="BtnClose" Grid.Row="3" Grid.Column="1" Width="75" Height="25" Margin="0,0,0,5" Background="Yellow" BorderBrush="Black" BorderThickness="1" Content="Закрыть" Click="BtnClose_Click" ToolTip='Управление доступно только в режиме работы "Ручной"' ToolTipService.ShowOnDisabled="True">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="IsEnabled" Value="False"/>
+                                <Setter Property="ToolTipService.IsEnabled" Value="True"/>
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding VisDop}" Value="True">
-                                        <Setter Property="Visibility" Value="Visible"/>
+                                    <DataTrigger Binding="{Binding ModeManual}" Value="True">
+                                        <Setter Property="IsEnabled" Value="True"/>
+                                        <Setter Property="ToolTipService.IsEnabled" Value="False"/>
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
-                        </Grid.Style>
-                        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="4,0,0,0" TextAlignment="Left" FontSize="10" Text="Время запуска, с"/>
-                        --><!--<Label Name="LblStart" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Width="50" Height="25" Margin="0,2,3.5,5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="LightBlue" BorderBrush="Black" BorderThickness="1" Padding="0" FontSize="12"  MouseLeftButtonDown="LblStartTime_OnMouseLeftButtonDown" Content="{Binding StartTime}" />--><!--
-                        <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="4,0,0,0" TextAlignment="Left" FontSize="10" Text="Время останова, с"/>
-                        --><!--<Label Name="LblStop" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Width="50" Height="25" Margin="0,2,3.5,5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="LightBlue" BorderBrush="Black" BorderThickness="1" Padding="0" FontSize="12"  MouseLeftButtonDown="LblStopTime_OnMouseLeftButtonDown" Content="{Binding StopTime}" />--><!--
-                    </Grid>-->
+                        </Button.Style>
+                    </Button>
                 </Grid>
             </Border>
         </Popup>

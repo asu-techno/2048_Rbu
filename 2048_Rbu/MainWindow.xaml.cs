@@ -67,7 +67,7 @@ namespace _2048_Rbu
             #endregion
 
             this.Show();
-            
+
             #region AutoEvent
 
             //var events = EventsBase.GetInstance().GetControlEvents(OpcServer.OpcList.Rbu);
@@ -81,6 +81,7 @@ namespace _2048_Rbu
 
         private void Program_Closed(object sender, EventArgs e)
         {
+            ElScreenRbu.LinkTimer?.Stop();
             foreach (Window w in App.Current.Windows)
                 w.Close();
         }

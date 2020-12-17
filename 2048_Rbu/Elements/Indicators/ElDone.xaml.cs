@@ -70,6 +70,7 @@ namespace _2048_Rbu.Elements.Indicators
             visItem.DataChangeReceived += HandleVisChanged;
             OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(visItem);
         }
+
         private void HandleVisChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
             Brush = bool.Parse(e.Item.Value.ToString()) ? Brushes.Lime : Brushes.White;

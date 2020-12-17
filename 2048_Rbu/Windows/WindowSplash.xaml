@@ -9,7 +9,7 @@
         <Image VerticalAlignment="Top" HorizontalAlignment="Center" Width="732" Height="475" Margin="0" Source="../Images/Splash.png" />
         <Image VerticalAlignment="Top" HorizontalAlignment="Center" Width="365" Height="67" Margin="0,30,0,0" Source="../Images/Logo_ASU.png" />
         <TextBlock VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,110,0,0" Foreground="White" FontFamily="Arial" FontWeight="Normal" FontSize="18" TextAlignment="Center" Text="Автоматизированные системы управления технологическими процессами"/>
-        <TextBlock VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,160,0,0" Foreground="White" FontFamily="Arial" FontWeight="Normal" FontSize="30" TextAlignment="Center" Text='Программа управления&#xA;растовро-бетонный узлом&#xa;г. Минск'/>
+        <TextBlock VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,160,0,0" Foreground="White" FontFamily="Arial" FontWeight="Normal" FontSize="30" TextAlignment="Center" Text='Программа управления&#xA;растовро-бетонным узлом&#xa;г. Минск'/>
         <TextBlock Name="Version" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,290,0,0" Foreground="White" FontFamily="Arial" FontWeight="Normal" FontSize="30" TextAlignment="Center" Text="АНКМ.2048.010"/>
         <TextBlock VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,335,0,0" Foreground="White" FontFamily="Arial" FontWeight="Normal" FontSize="18" TextAlignment="Left" Text="e-mail:"/>
         <TextBlock VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,360,0,0" Foreground="White" FontFamily="Arial" FontWeight="Normal" FontSize="18" TextAlignment="Left" Text="тел:"/>

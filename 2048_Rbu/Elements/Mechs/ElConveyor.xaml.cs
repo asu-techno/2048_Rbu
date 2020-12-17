@@ -85,230 +85,6 @@ namespace _2048_Rbu.Elements.Mechs
             }
         }
 
-        private bool _feedback;
-        public bool Feedback
-        {
-            get
-            {
-                return _feedback;
-            }
-            set
-            {
-                _feedback = value;
-                OnPropertyChanged(nameof(Feedback));
-            }
-        }
-
-        private bool _dks;
-        public bool DKS
-        {
-            get
-            {
-                return _dks;
-            }
-            set
-            {
-                _dks = value;
-                OnPropertyChanged(nameof(DKS));
-            }
-        }
-
-        private bool _podpor;
-        public bool Podpor
-        {
-            get
-            {
-                return _podpor;
-            }
-            set
-            {
-                _podpor = value;
-                OnPropertyChanged(nameof(Podpor));
-            }
-        }
-
-        private bool _external;
-        public bool External
-        {
-            get
-            {
-                return _external;
-            }
-            set
-            {
-                _external = value;
-                OnPropertyChanged(nameof(External));
-            }
-        }
-
-        private bool _power;
-        public bool Power
-        {
-            get
-            {
-                return _power;
-            }
-            set
-            {
-                _power = value;
-                OnPropertyChanged(nameof(Power));
-            }
-        }
-
-        private bool _stop;
-        public bool Stop
-        {
-            get
-            {
-                return _stop;
-            }
-            set
-            {
-                _stop = value;
-                OnPropertyChanged(nameof(Stop));
-            }
-        }
-
-        private bool _parkingMode;
-        public bool ParkingMode
-        {
-            get
-            {
-                return _parkingMode;
-            }
-            set
-            {
-                _parkingMode = value;
-                OnPropertyChanged(nameof(ParkingMode));
-            }
-        }
-
-        private bool _parkingTime;
-        public bool ParkingTime
-        {
-            get
-            {
-                return _parkingTime;
-            }
-            set
-            {
-                _parkingTime = value;
-                OnPropertyChanged(nameof(ParkingTime));
-            }
-        }
-
-        private bool _parkingSensor;
-        public bool ParkingSensor
-        {
-            get
-            {
-                return _parkingSensor;
-            }
-            set
-            {
-                _parkingSensor = value;
-                OnPropertyChanged(nameof(ParkingSensor));
-            }
-        }
-
-        private Visibility _visAnalog;
-        public Visibility VisAnalog
-        {
-            get
-            {
-                return _visAnalog;
-            }
-            set
-            {
-                _visAnalog = value;
-                OnPropertyChanged(nameof(VisAnalog));
-            }
-        }
-
-        private bool _visWheel;
-        public bool VisWheel
-        {
-            get
-            {
-                return _visWheel;
-            }
-            set
-            {
-                _visWheel = value;
-                OnPropertyChanged(nameof(VisWheel));
-            }
-        }
-
-        private bool _visDop;
-        public bool VisDop
-        {
-            get
-            {
-                return _visDop;
-            }
-            set
-            {
-                _visDop = value;
-                OnPropertyChanged(nameof(VisDop));
-            }
-        }
-
-        private string _freq;
-        public string Freq
-        {
-            get
-            {
-                return _freq;
-            }
-            set
-            {
-                _freq = value;
-                OnPropertyChanged(nameof(Freq));
-            }
-        }
-
-        private string _freqAnalog;
-        public string FreqAnalog
-        {
-            get
-            {
-                return _freqAnalog;
-            }
-            set
-            {
-                _freqAnalog = value;
-                OnPropertyChanged(nameof(FreqAnalog));
-            }
-        }
-
-        private string _setfreq;
-        public string SetFreq
-        {
-            get
-            {
-                return _setfreq;
-            }
-            set
-            {
-                _setfreq = value;
-                OnPropertyChanged(nameof(SetFreq));
-            }
-        }
-
-        private string _apfreq;
-        public string ApFreq
-        {
-            get
-            {
-                return _apfreq;
-            }
-            set
-            {
-                _apfreq = value;
-                OnPropertyChanged(nameof(ApFreq));
-            }
-        }
-
         private SolidColorBrush _brush;
         public SolidColorBrush Brush
         {
@@ -337,34 +113,6 @@ namespace _2048_Rbu.Elements.Mechs
             }
         }
 
-        private string _startTime;
-        public string StartTime
-        {
-            get
-            {
-                return _startTime;
-            }
-            set
-            {
-                _startTime = value;
-                OnPropertyChanged(nameof(StartTime));
-            }
-        }
-
-        private string _stopTime;
-        public string StopTime
-        {
-            get
-            {
-                return _stopTime;
-            }
-            set
-            {
-                _stopTime = value;
-                OnPropertyChanged(nameof(StopTime));
-            }
-        }
-
         #region MyRegion
 
         private bool _alarmStatus;
@@ -377,7 +125,6 @@ namespace _2048_Rbu.Elements.Mechs
         public string ManualPcy { get; set; }
         public string KmPcy { get; set; }
         public string AlarmPcy { get; set; }
-        public bool IsWheel { get; set; }
         public int ValueNumMech { get; set; }
 
         private Mech _typeMech;
@@ -414,11 +161,10 @@ namespace _2048_Rbu.Elements.Mechs
                     RectObject.Height = 20;
                     RectObject.VerticalAlignment = VerticalAlignment.Top;
                     RectObject.HorizontalAlignment = HorizontalAlignment.Left;
-                    RectObject.Margin = new Thickness(0, 0, 0, 0);
+                    RectObject.Margin = new Thickness(25, 0, 0, 0);
                 }
 
                 MainGrid.Width = RectObject.Width + 40;
-                MainGrid.Width = RectObject.Width + 10;
 
                 _typeMech = value;
             }
@@ -435,7 +181,7 @@ namespace _2048_Rbu.Elements.Mechs
                 if (value == Position.Up)
                     LblMode.Margin = new Thickness(0, -40, 0, 0);
                 if (value == Position.RightUp)
-                    LblMode.Margin = new Thickness(90, 10, 0, 0);
+                    LblMode.Margin = new Thickness(100, 10, 0, 0);
                 if (value == Position.Left)
                     LblMode.Margin = new Thickness(2, 35, 0, 0);
                 if (value == Position.Right)
@@ -624,26 +370,6 @@ namespace _2048_Rbu.Elements.Mechs
             VisStatus();
         }
 
-        //void StatePopup()
-        //{
-        //    Feedback = _opc.cl.ReadBool("gb_Mech_Alarm_Feedback", out _err);
-        //    DKS = _opc.cl.ReadBool("gb_Mech_Alarm_DKS", out _err);
-        //    Podpor = _opc.cl.ReadBool("gb_Mech_Alarm_Podpor", out _err);
-        //    External = _opc.cl.ReadBool("gb_Mech_Alarm_External", out _err);
-        //    Power = _opc.cl.ReadBool("gb_Mech_Alarm_Power", out _err);
-        //    Stop = _opc.cl.ReadBool("gb_Mech_Alarm_Stop", out _err);
-        //    ParkingMode = _opc.cl.ReadBool("gb_Mech_Parking", out _err);
-        //    ParkingSensor = _opc.cl.ReadBool("gb_Mech_ParkingSensor", out _err);
-        //    ParkingTime = _opc.cl.ReadBool("gb_Mech_Alarm_ParkingTime", out _err);
-
-        //    FreqAnalog = _opc.cl.ReadReal("gr_Mech_Percent", out _err).ToString("F1");
-        //    Freq = _opc.cl.ReadReal("gr_Mech_DKS_Freq", out _err).ToString("F2");
-        //    SetFreq = _opc.cl.ReadReal("gr_Mech_DKS_Freq_Nominal", out _err).ToString("F2");
-        //    ApFreq = _opc.cl.ReadReal("gr_Mech_DKS_Freq_Deadband", out _err).ToString("F0");
-        //    StartTime = _opc.cl.ReadReal(_prefix + ".StartTime", out _err).ToString("F0");
-        //    StopTime = _opc.cl.ReadReal(_prefix + ".StopTime", out _err).ToString("F0");
-        //}
-
         void VisStatus()
         {
             if (_alarmStatus)
@@ -690,7 +416,7 @@ namespace _2048_Rbu.Elements.Mechs
                 if (KmPcy == null)
                     KmPcy = Prefix + ".DI_ON";
                 if (ModePcy == null)
-                    ModePcy = Prefix + ".DI_Service";
+                    ModePcy = Prefix + ".gMode_Automat";
                 if (ManualPcy == null)
                     ManualPcy = ".gMode_Manual";
                 if (AlarmPcy == null)
@@ -730,19 +456,19 @@ namespace _2048_Rbu.Elements.Mechs
             }
         }
 
-        //private void BtnManual_Click(object sender, RoutedEventArgs e)
-        //{
-        //    object btn = e.Source;
-        //    Methods.ButtonClick(btn, BtnManual, _manualPcy, true);
-        //    Methods.ButtonClick(btn, BtnManual, _modePcy, false);
-        //}
+        private void BtnManual_Click(object sender, RoutedEventArgs e)
+        {
+            object btn = e.Source;
+            Methods.ButtonClick(btn, BtnManual, ManualPcy, true);
+            Methods.ButtonClick(btn, BtnManual, ModePcy, false);
+        }
 
-        //private void BtnAutomat_Click(object sender, RoutedEventArgs e)
-        //{
-        //    object btn = e.Source;
-        //    Methods.ButtonClick(btn, BtnAutomat, _modePcy, true);
-        //    Methods.ButtonClick(btn, BtnAutomat, _manualPcy, false);
-        //}
+        private void BtnAutomat_Click(object sender, RoutedEventArgs e)
+        {
+            object btn = e.Source;
+            Methods.ButtonClick(btn, BtnAutomat, ModePcy, true);
+            Methods.ButtonClick(btn, BtnAutomat, ManualPcy, false);
+        }
 
         private void BtnStart_Click(object sender, RoutedEventArgs e)
         {
@@ -755,79 +481,7 @@ namespace _2048_Rbu.Elements.Mechs
             object btn = e.Source;
             Methods.ButtonClick(btn, BtnStop, StopPcx, true, TxtPopupName.Text + ". Стоп");
         }
-
-        //private void BtnAway_Click(object sender, RoutedEventArgs e)
-        //{
-        //    object btn = e.Source;
-        //    var temp = _opc.cl.ReadReal("gr_Mech_Percent", out _err) >= 0.5 ? _opc.cl.ReadReal("gr_Mech_Percent", out _err) - 0.5 : 0;
-        //    Methods.ButtonClick(btn, BtnAway, "gr_Mech_Percent", temp, TxtPopupName.Text + ". Уменьшение производительности до " + temp + " %");
-        //}
-
-        //private void BtnAdd_Click(object sender, RoutedEventArgs e)
-        //{
-        //    object btn = e.Source;
-        //    var temp = _opc.cl.ReadReal("gr_Mech_Percent", out _err) <= 99.5 ? _opc.cl.ReadReal("gr_Mech_Percent", out _err) + 0.5 : 100;
-        //    Methods.ButtonClick(btn, BtnAdd, "gr_Mech_Percent", temp, TxtPopupName.Text + ". Увеличение производительности до " + temp + " %");
-        //}
-
-        //private void BtnParking_Click(object sender, RoutedEventArgs e)
-        //{
-        //    object btn = e.Source;
-
-        //    if (!ParkingMode)
-        //        Methods.ButtonClick(btn, BtnParking, "gb_Mech_Parking", true, TxtPopupName.Text + ". Парковка");
-        //    else
-        //        Methods.ButtonClick(btn, BtnParking, "gb_Mech_Parking", false, TxtPopupName.Text + ". Отмена парковки");
-        //}
-
-        private void BtnVisDop_Click(object sender, RoutedEventArgs e)
-        {
-            if (!_visDop)
-                VisDop = true;
-            else
-                VisDop = false;
-        }
-
-        private void PopupObject_OnClosed(object sender, EventArgs e)
-        {
-            VisDop = false;
-        }
-
-        //private void LblFreqAnalog_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        //{
-        //    object btn = e.Source;
-
-        //    Methods.SetParameter(LblFreqAnalog, btn, _opcName, TxtPopupName.Text + ". Производительность, %", 0, 100, "gr_Mech_Percent", "Real", PopupObject, 0, 1);
-        //}
-
-        //private void LblSetFreq_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        //{
-        //    object btn = e.Source;
-
-        //    Methods.SetParameter(LblSetFreq, btn, _opcName, TxtPopupName.Text + ". Номинальная частота, Гц", 0, 100, "gr_Mech_DKS_Freq_Nominal", "Real", PopupObject, 0, 2);
-        //}
-
-        //private void LblApFreq_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        //{
-        //    object btn = e.Source;
-
-        //    Methods.SetParameter(LblApFreq, btn, _opcName, TxtPopupName.Text + ". Допуск по оборотам, %", 0, 100, "gr_Mech_DKS_Freq_Deadband", "Real", PopupObject, 0, 0);
-        //}
-
-        //private void LblStartTime_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        //{
-        //    object btn = e.Source;
-
-        //    Methods.SetParameter(LblStart, btn, _opcName, TxtPopupName.Text + ". Время запуска, с", 0, 500, _prefix + ".StartTime", "Real", PopupObject, 0, 0);
-        //}
-
-        //private void LblStopTime_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        //{
-        //    object btn = e.Source;
-
-        //    Methods.SetParameter(LblStop, btn, _opcName, TxtPopupName.Text + ". Время останова, с", 0, 500, _prefix + ".StopTime", "Real", PopupObject, 0, 0);
-        //}
-
+        
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]

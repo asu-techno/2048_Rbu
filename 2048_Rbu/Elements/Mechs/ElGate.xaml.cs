@@ -124,104 +124,6 @@ namespace _2048_Rbu.Elements.Mechs
             }
         }
 
-        private bool _external;
-        public bool External
-        {
-            get
-            {
-                return _external;
-            }
-            set
-            {
-                _external = value;
-                OnPropertyChanged(nameof(External));
-            }
-        }
-
-        private bool _bothSensor;
-        public bool BothSensor
-        {
-            get
-            {
-                return _bothSensor;
-            }
-            set
-            {
-                _bothSensor = value;
-                OnPropertyChanged(nameof(BothSensor));
-            }
-        }
-
-        private bool _feedback_Close;
-        public bool Feedback_Close
-        {
-            get
-            {
-                return _feedback_Close;
-            }
-            set
-            {
-                _feedback_Close = value;
-                OnPropertyChanged(nameof(Feedback_Close));
-            }
-        }
-
-        private bool _feedback_Open;
-        public bool Feedback_Open
-        {
-            get
-            {
-                return _feedback_Open;
-            }
-            set
-            {
-                _feedback_Open = value;
-                OnPropertyChanged(nameof(Feedback_Open));
-            }
-        }
-
-        private bool _notMoving_Close;
-        public bool NotMoving_Close
-        {
-            get
-            {
-                return _notMoving_Close;
-            }
-            set
-            {
-                _notMoving_Close = value;
-                OnPropertyChanged(nameof(NotMoving_Close));
-            }
-        }
-
-        private bool _notMoving_Open;
-        public bool NotMoving_Open
-        {
-            get
-            {
-                return _notMoving_Open;
-            }
-            set
-            {
-                _notMoving_Open = value;
-                OnPropertyChanged(nameof(NotMoving_Open));
-            }
-        }
-
-        private bool _visDop;
-        public bool VisDop
-        {
-            get
-            {
-                return _visDop;
-            }
-            set
-            {
-                _visDop = value;
-                OnPropertyChanged(nameof(VisDop));
-            }
-        }
-
         #region MyRegion
 
         private bool _alarmStatus;
@@ -440,7 +342,6 @@ namespace _2048_Rbu.Elements.Mechs
                     _opc.cl.WriteInt16(Static.NumMech, (short)ValueNumMech, out _err);
                     if (_err)
                         MessageBox.Show("Возможно запись не прошла.\nПроверьте OPC-сервер или соответствующий тег", "Предупреждение");
-                    //StatePopup();
                 }
             }
             catch (Exception)
@@ -531,7 +432,7 @@ namespace _2048_Rbu.Elements.Mechs
                     VisOpen = Visibility.Collapsed;
                     VisClose = Visibility.Collapsed;
                     Status = "- - - - -";
-                    Brush = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFC0C0C0"));
+                    Brush = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFFFFF00"));
                 }
                 else
                 {
@@ -547,22 +448,11 @@ namespace _2048_Rbu.Elements.Mechs
                         VisOpen = Visibility.Collapsed;
                         VisClose = Visibility.Visible;
                         Status = "Закрыта";
-                        Brush = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFFFFF00"));
+                        Brush = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFC0C0C0"));
                     }
                 }
             }
         }
-
-        //void StatePopup()
-        //{
-        //    Feedback_Open = _opc.cl.ReadBool("gb_Gate_Alarm_Open", out _err);
-        //    Feedback_Close = _opc.cl.ReadBool("gb_Gate_Alarm_Close", out _err);
-        //    BothSensor = _opc.cl.ReadBool("gb_Gate_Alarm_BothSensor", out _err);
-        //    External = _opc.cl.ReadBool("gb_Gate_Alarm_External", out _err);
-        //    NotMoving_Open = _opc.cl.ReadBool("gb_Gate_Alarm_NotMoving_Open", out _err);
-        //    NotMoving_Close = _opc.cl.ReadBool("gb_Gate_Alarm_NotMoving_Close", out _err);
-        //}
-
 
         void VisMode()
         {
@@ -585,7 +475,7 @@ namespace _2048_Rbu.Elements.Mechs
                 if (ModePcy == null)
                     ModePcy = Prefix + ".gMode_Automat";
                 if (ManualPcy == null)
-                    ManualPcy = "gMode_Manual";
+                    ManualPcy = Prefix+".gMode_Manual";
                 if (OpenPcy == null)
                     OpenPcy = Prefix + ".DI_Opened";
                 if (ClosePcy == null)
@@ -594,8 +484,8 @@ namespace _2048_Rbu.Elements.Mechs
                     AlarmPcy = Prefix + ".gb_ALARM";
             }
 
-            OpenPcx = "btn_Gate_Open";
-            ClosePcx = "btn_Gate_Close";
+            OpenPcx = "btn_Valve_Open";
+            ClosePcx = "btn_Valve_Close";
         }
 
         private void Rect_OnMouseEnter(object sender, MouseEventArgs e)
@@ -618,7 +508,6 @@ namespace _2048_Rbu.Elements.Mechs
                     _opc.cl.WriteInt16(Static.NumMech, (short)ValueNumMech, out _err);
                     if (_err)
                         MessageBox.Show("Возможно запись не прошла.\nПроверьте OPC-сервер или соответствующий тег", "Предупреждение");
-                    //StatePopup();
                 }
             }
             catch (Exception)
@@ -627,20 +516,20 @@ namespace _2048_Rbu.Elements.Mechs
             }
         }
 
-        //private void BtnManual_Click(object sender, RoutedEventArgs e)
-        //{
-        //    object btn = e.Source;
-        //    Methods.ButtonClick(btn, BtnManual, _manualPcy, true);
-        //    Methods.ButtonClick(btn, BtnManual, _modePcy, false);
-        //}
+        private void BtnManual_Click(object sender, RoutedEventArgs e)
+        {
+            object btn = e.Source;
+            Methods.ButtonClick(btn, BtnManual, ManualPcy, true);
+            Methods.ButtonClick(btn, BtnManual, ModePcy, false);
+        }
 
-        //private void BtnAutomat_Click(object sender, RoutedEventArgs e)
-        //{
-        //    object btn = e.Source;
-        //    Methods.ButtonClick(btn, BtnAutomat, _modePcy, true);
-        //    Methods.ButtonClick(btn, BtnAutomat, _manualPcy, false);
+        private void BtnAutomat_Click(object sender, RoutedEventArgs e)
+        {
+            object btn = e.Source;
+            Methods.ButtonClick(btn, BtnAutomat, ModePcy, true);
+            Methods.ButtonClick(btn, BtnAutomat, ManualPcy, false);
 
-        //}
+        }
 
         private void BtnOpen_Click(object sender, RoutedEventArgs e)
         {
@@ -652,28 +541,6 @@ namespace _2048_Rbu.Elements.Mechs
         {
             object btn = e.Source;
             Methods.ButtonClick(btn, BtnClose, ClosePcx, true, TxtPopupName.Text + ". Закрыть");
-        }
-
-        //private void BtnService_Click(object sender, RoutedEventArgs e)
-        //{
-        //    object btn = e.Source;
-        //    if (!_opc.cl.ReadBool("gb_Gate_ServiceMode", out _err))
-        //        Methods.ButtonClick(btn, BtnService, "gb_Gate_ServiceMode", true, TxtPopupName.Text + ". Сервисный режим");
-        //    else
-        //        Methods.ButtonClick(btn, BtnService, "gb_Gate_ServiceMode", false, TxtPopupName.Text + ". Отмена сервисного режима");
-        //}
-
-        private void BtnVisDop_Click(object sender, RoutedEventArgs e)
-        {
-            if (!_visDop)
-                VisDop = true;
-            else
-                VisDop = false;
-        }
-
-        private void PopupObject_OnClosed(object sender, EventArgs e)
-        {
-            VisDop = false;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

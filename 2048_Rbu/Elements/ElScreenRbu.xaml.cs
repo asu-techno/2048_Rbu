@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -11,6 +12,8 @@ using Lib_2048.Classes;
 using _2048_Rbu.Interfaces;
 using Opc.UaFx;
 using Opc.UaFx.Client;
+using System.Windows.Threading;
+using _2048_Rbu.Windows;
 
 namespace _2048_Rbu.Elements
 {
@@ -19,10 +22,16 @@ namespace _2048_Rbu.Elements
     /// </summary>
     public partial class ElScreenRbu : INotifyPropertyChanged
     {
+        public static DispatcherTimer LinkTimer;
+
         OpcServer.OpcList _opcName;
         private OPC_client _opc;
 
+        private int _currentLinkValue, _linkValue, _cycle;
+
         private readonly List<IElementsUpdater> _elementList = new List<IElementsUpdater>();
+        
+        private WindowMode _mode;
 
         private bool _isUpdating;
         public bool IsUpdating
@@ -51,20 +60,24 @@ namespace _2048_Rbu.Elements
             InitializeComponent();
         }
 
-        //public async void Initialize(OpcServer.OpcList opcName)
         public void Initialize()
         {
             IsUpdating = true;
 
             _opcName = OpcServer.OpcList.Rbu;
+
+            #region Timers
+            LinkTimer = new DispatcherTimer();
+            LinkTimer.Interval = new TimeSpan(0, 0, 0, 1);
+            LinkTimer.Tick += new EventHandler(TimerTick1S);
+            LinkTimer.Start();
+            #endregion
+
             DataContext = this;
 
-            //await Task.Run(() =>
-            //{
             OpcServer.GetInstance().InitOpc(_opcName, "opc.tcp://192.168.100.70:49320");
             OpcServer.GetInstance().ConnectOpc(_opcName);
             EventsBase.GetInstance().CreateControlEvents(_opcName);
-            //});
 
             #region Init
 
@@ -149,25 +162,44 @@ namespace _2048_Rbu.Elements
             {
                 item.Subscribe();
             }
-            //CreateSubscription();
+            CreateSubscription();
             OpcServer.GetInstance().GetSubscription(_opcName).ApplyChanges();
-
-            IsUpdating = false;
         }
 
-        //private void CreateSubscription()
-        //{
-        //    _opc = OpcServer.GetInstance().GetOpc(_opcName);
-        //    var visItem = new OpcMonitoredItem(_opc.cl.GetNode("_System._NoError"), OpcAttribute.Value);
-        //    visItem.DataChangeReceived += HandleVisChanged;
-        //    OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(visItem);
-        //}
+        private void CreateSubscription()
+        {
+            _opc = OpcServer.GetInstance().GetOpc(_opcName);
+            var visItem = new OpcMonitoredItem(_opc.cl.GetNode("gi_lifeWord"), OpcAttribute.Value);
+            visItem.DataChangeReceived += HandleVisChanged;
+            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(visItem);
+        }
 
-        //private void HandleVisChanged(object sender, OpcDataChangeReceivedEventArgs e)
-        //{
-        //    Static.Link = bool.Parse(e.Item.Value.ToString());
-        //    LinkMessage = !Static.Link;
-        //}
+        private void HandleVisChanged(object sender, OpcDataChangeReceivedEventArgs e)
+        {
+            _linkValue = int.Parse(e.Item.Value.ToString());
+        }
+
+        private void TimerTick1S(object sender, EventArgs e)
+        {
+            GetLink();
+        }
+
+        private void GetLink()
+        {
+            LblDateTime.Content = DateTime.Now.ToString("HH:mm:ss dd.MM.yyyy");
+
+            _cycle++;
+            if (_cycle > 2)
+            {
+                Static.Link = (_linkValue != _currentLinkValue);
+                LinkMessage = !Static.Link;
+                _currentLinkValue = _linkValue;
+                _cycle = 0;
+
+                IsUpdating = false;
+            }
+
+        }
 
         private void BtnReset_Down(object sender, MouseButtonEventArgs e)
         {
@@ -191,6 +223,14 @@ namespace _2048_Rbu.Elements
         {
             object btn = e.Source;
             Methods.ButtonClick(btn, BtnAck, "cmd_Ack", true, "Сброс звонка");
+        }
+
+        private void Mode_OnClick(object sender, RoutedEventArgs e)
+        {
+            _mode = new WindowMode(_opcName);
+            //UpdateChild += _mode.Update;
+            //_mode.StopUpdate += StopUpdateChild;
+            _mode.ShowDialog();
         }
 
         private void Archive_OnClick(object sender, RoutedEventArgs e)

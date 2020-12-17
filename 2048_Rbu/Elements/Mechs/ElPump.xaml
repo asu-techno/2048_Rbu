@@ -8,7 +8,7 @@
     <Grid>
 
         <Grid Name="ValveGrid" Height="40" Width="40" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Image Name="img_KM" Visibility="{Binding VisKM}" Source="../../Images/Mechs/img_Pump_ON.png"  Width="37" Height="23"  VerticalAlignment="Top" HorizontalAlignment="Left" Margin="2,8,0,0"></Image>
+            <Image Name="img_On" Visibility="{Binding VisOn}" Source="../../Images/Mechs/img_Pump_ON.png"  Width="37" Height="23"  VerticalAlignment="Top" HorizontalAlignment="Left" Margin="2,8,0,0"></Image>
             <Image Name="img_Alarm" Visibility="{Binding VisAlarm}" Source="../../Images/Mechs/img_Pump_Alarm.png" Width="37" Height="23" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="2,8,0,0"></Image>
         </Grid>
         <TextBlock Name="tbc_name" FontSize="14"  Text="PXXX"  HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,50,55,0" TextAlignment="Right" TextWrapping="Wrap" ></TextBlock>
@@ -28,69 +28,86 @@
             </Label.Content>
         </Label>
         <Rectangle Name="rect_object" Fill="Transparent" Height="25" Width="40" StrokeThickness="0.5" Stroke="Black" Opacity="0" Margin="0,-1,0,0" MouseLeftButtonUp="ValveGrid_OnMouseRightButtonDown"></Rectangle>
-        <Popup Name="PopupObject" Placement="Bottom" StaysOpen="False"  >
+        <Popup Name="PopupObject" Placement="Bottom" StaysOpen="False">
             <Border BorderBrush="Black" BorderThickness="1">
-                <Grid Background="Beige" Width="165">
+                <Grid Background="Beige" Width="180">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="25"/>
+                        <RowDefinition MinHeight="25" Height="Auto"/>
                         <RowDefinition Height="35"/>
-                        <RowDefinition Height="*"/>
                         <RowDefinition Height="35"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Name="txt_popName" Grid.ColumnSpan="2" Foreground="Black" HorizontalAlignment="Center" FontSize="16" FontWeight="Bold" Text="Насос 2" VerticalAlignment="Center"/>
-                    <Button Background="LightBlue" Name="btnManual" Width="75" Height="25" Content="Ручной" Grid.Row="1" BorderBrush="Black" BorderThickness="1" Click="btnManual_Click" >
+                    <TextBlock Name="TxtPopupName" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Black" FontSize="16" TextWrapping="Wrap" FontWeight="Bold" TextAlignment="Center" Text="Механизм"/>
+                    <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="4,0,0,0" TextAlignment="Left" Text="Состояние:"/>
+                    <Label Grid.Row="1" Grid.Column="1" Width="75" Height="25" BorderBrush="Black" BorderThickness="1" Background="{Binding Brush}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" Content="{Binding Status}"/>
+                    <Button Name="BtnManual" Grid.Row="2" Grid.Column="0" Background="LightBlue" Width="75" Height="25" BorderBrush="Black" BorderThickness="1" Content="Ручной" Click="BtnManual_Click" >
                         <Button.Style>
                             <Style TargetType="{x:Type Button}">
-                                <Setter Property="Background" Value="LightBlue" />
-                                <Setter Property="FontWeight" Value="Normal" />
+                                <Setter Property="Background" Value="LightBlue"/>
+                                <Setter Property="FontWeight" Value="Normal"/>
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding ModeManual}" Value="True">
-                                        <Setter Property="Background" Value="Lime" />
-                                        <Setter Property="FontWeight" Value="Bold" />
+                                        <Setter Property="Background" Value="#85fc84"/>
+                                        <Setter Property="FontWeight" Value="Bold"/>
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
                         </Button.Style>
                     </Button>
-                    <Button Name="btnAutomat" Width="75" Height="25" Content="Автомат" Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1" Click="btnAutomat_Click" >
+                    <Button Name="BtnAutomat" Grid.Row="2" Grid.Column="1" Width="75" Height="25" BorderBrush="Black" BorderThickness="1" Content="Автомат" Click="BtnAutomat_Click" >
                         <Button.Style>
                             <Style TargetType="{x:Type Button}">
-                                <Setter Property="Background" Value="LightBlue" />
-                                <Setter Property="FontWeight" Value="Normal" />
+                                <Setter Property="Background" Value="LightBlue"/>
+                                <Setter Property="FontWeight" Value="Normal"/>
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding ModeAutomat}" Value="True">
-                                        <Setter Property="Background" Value="Lime" />
-                                        <Setter Property="FontWeight" Value="Bold" />
+                                        <Setter Property="Background" Value="#85fc84"/>
+                                        <Setter Property="FontWeight" Value="Bold"/>
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
                         </Button.Style>
                     </Button>
-                    <TextBlock Name="txt_freq" Visibility="{Binding VisFreq}" Foreground="Black" HorizontalAlignment="Center" Text="Частота,  Гц" VerticalAlignment="Center" Grid.Row="2" />
-                    <Label Grid.Column="2" Visibility="{Binding VisFreq}" Content="{Binding Freq}" Grid.Row="2" Height="25" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Name="lbl_param" VerticalAlignment="Center" Width="50" Background="LightBlue" Padding="0" Margin="5" BorderBrush="Black" FontSize="14" BorderThickness="1" VerticalContentAlignment="Center" MouseLeftButtonDown="Lbl_param_OnMouseLeftButtonDown" />
-                    <Button Background="Lime" Name="btnStart" Width="75" Height="25" Content="Пуск" Grid.Row="3" BorderBrush="Black" BorderThickness="1" Click="btnStart_Click" >
+                    <TextBlock Name="TxtFreq" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="3" Grid.Column="0" Visibility="{Binding VisFreq}" Foreground="Black" Text="Частота, Гц" />
+                    <Label Name="LblParam" VerticalAlignment="Center" HorizontalAlignment="Center" Width="50" Height="25" Grid.Row="3" Grid.Column="1" Background="LightBlue" Padding="0" Margin="5" BorderBrush="Black" BorderThickness="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="14" Visibility="{Binding VisFreq}" Content="{Binding Freq}" MouseLeftButtonDown="Lbl_param_OnMouseLeftButtonDown" />
+                    <Button Name="BtnStart" Grid.Row="3" Grid.Column="0" Width="75" Height="25" Margin="0,0,0,5" Background="#85fc84" BorderBrush="Black" BorderThickness="1" Content="Пуск" Click="BtnStart_Click" ToolTip='Управление доступно только в режиме работы "Ручной"' ToolTipService.ShowOnDisabled="True">
                         <Button.Style>
                             <Style TargetType="{x:Type Button}">
-                                <Setter Property="IsEnabled" Value="False" />
+                                <Setter Property="IsEnabled" Value="False"/>
+                                <Setter Property="ToolTipService.IsEnabled" Value="True"/>
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding ModeManual}" Value="True">
-                                        <Setter Property="IsEnabled" Value="True" />
+                                        <Setter Property="IsEnabled" Value="True"/>
+                                        <Setter Property="ToolTipService.IsEnabled" Value="False"/>
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
                         </Button.Style>
                     </Button>
-                    <Button Background="Salmon" Name="btnStop" Width="75" Height="25" Content="Стоп" Grid.Row="3" Grid.Column="1" BorderBrush="Black" BorderThickness="1" Click="btnStop_Click" >
+                    <Button Name="BtnStop" Grid.Row="3" Grid.Column="1" Width="75" Height="25" Margin="0,0,0,5" Background="Salmon" BorderBrush="Black" BorderThickness="1" Content="Стоп" Click="BtnStop_Click" ToolTip='Управление доступно только в режиме работы "Ручной"' ToolTipService.ShowOnDisabled="True">
                         <Button.Style>
                             <Style TargetType="{x:Type Button}">
-                                <Setter Property="IsEnabled" Value="False" />
+                                <Setter Property="IsEnabled" Value="False"/>
+                                <Setter Property="ToolTipService.IsEnabled" Value="True"/>
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding ModeManual}" Value="True">
-                                        <Setter Property="IsEnabled" Value="True" />
+                                        <Setter Property="IsEnabled" Value="True"/>
+                                        <Setter Property="ToolTipService.IsEnabled" Value="False"/>
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>

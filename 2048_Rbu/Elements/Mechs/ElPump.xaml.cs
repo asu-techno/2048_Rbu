@@ -10,6 +10,7 @@ using System.Windows.Media.Imaging;
 using _2048_Rbu.Classes;
 using Lib_2048.Classes;
 using _2048_Rbu.Interfaces;
+using AS_Library.Annotations;
 using AS_Library.Events.Classes;
 using AS_Library.Link;
 using Opc.UaFx;
@@ -57,17 +58,17 @@ namespace _2048_Rbu.Elements.Mechs
             }
         }
 
-        private Visibility _visKM;
-        public Visibility VisKM
+        private Visibility _visOn;
+        public Visibility VisOn
         {
             get
             {
-                return _visKM;
+                return _visOn;
             }
             set
             {
-                _visKM = value;
-                OnPropertyChanged(nameof(VisKM));
+                _visOn = value;
+                OnPropertyChanged(nameof(VisOn));
             }
         }
 
@@ -113,22 +114,49 @@ namespace _2048_Rbu.Elements.Mechs
             }
         }
 
+        private SolidColorBrush _brush;
+        public SolidColorBrush Brush
+        {
+            get
+            {
+                return _brush;
+            }
+            set
+            {
+                _brush = value;
+                OnPropertyChanged(nameof(Brush));
+            }
+        }
+
+        private string _status;
+        public string Status
+        {
+            get
+            {
+                return _status;
+            }
+            set
+            {
+                _status = value;
+                OnPropertyChanged(nameof(Status));
+            }
+        }
+
         #region MyRegion
 
         private bool _alarmStatus;
-        private bool _kmStatus;
+        private bool _onStatus;
         private bool _automatMode;
         private bool _manualMode;
 
         public string Prefix { get; set; }
-        public string FreqPCAY { get; set; }
+        public string FreqPcay { get; set; }
         public string ModePcy { get; set; }
         public string ManualPcy { get; set; }
-        public string KMPCY { get; set; }
+        public string OnPcy { get; set; }
         public string AlarmPcy { get; set; }
         public string StartPcx { get; set; }
         public string StopPcx { get; set; }
-        public string NumMech { get; set; }
         public int ValueNumMech { get; set; }
 
         private bool _rotate;
@@ -141,14 +169,14 @@ namespace _2048_Rbu.Elements.Mechs
                 {
                     img_Alarm.Source =
                         new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs/img_Pump1_Alarm.png", UriKind.Relative));
-                    img_KM.Source =
+                    img_On.Source =
                         new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs/img_Pump1_ON.png", UriKind.Relative));
                 }
                 else
                 {
                     img_Alarm.Source =
                     new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs/img_Pump_Alarm.png", UriKind.Relative));
-                    img_KM.Source =
+                    img_On.Source =
                         new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs/img_Pump_ON.png", UriKind.Relative));
                 }
                 _rotate = value;
@@ -256,7 +284,7 @@ namespace _2048_Rbu.Elements.Mechs
             set
             {
                 tbc_name.Text = value;
-                txt_popName.Text = value;
+                TxtPopupName.Text = value;
                 _nameObject = value;
             }
         }
@@ -293,9 +321,9 @@ namespace _2048_Rbu.Elements.Mechs
             var alarmItem = new OpcMonitoredItem(_opc.cl.GetNode(AlarmPcy), OpcAttribute.Value);
             alarmItem.DataChangeReceived += HandleAlarmStatusChanged;
             OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(alarmItem);
-            var kmItem = new OpcMonitoredItem(_opc.cl.GetNode(KMPCY), OpcAttribute.Value);
-            kmItem.DataChangeReceived += HandleKmStatusChanged;
-            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(kmItem);
+            var onItem = new OpcMonitoredItem(_opc.cl.GetNode(OnPcy), OpcAttribute.Value);
+            onItem.DataChangeReceived += HandleKmStatusChanged;
+            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(onItem);
             var modeAutomat = new OpcMonitoredItem(_opc.cl.GetNode(ModePcy), OpcAttribute.Value);
             modeAutomat.DataChangeReceived += HandleAutomatChanged;
             OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(modeAutomat);
@@ -303,13 +331,13 @@ namespace _2048_Rbu.Elements.Mechs
             modeManual.DataChangeReceived += HandleManualChanged;
             OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(modeManual);
 
-            if (FreqPCAY == null)
+            if (FreqPcay == null)
                 VisFreq = Visibility.Collapsed;
             else
             {
                 VisFreq = Visibility.Visible;
 
-                var freqItem = new OpcMonitoredItem(_opc.cl.GetNode(FreqPCAY), OpcAttribute.Value);
+                var freqItem = new OpcMonitoredItem(_opc.cl.GetNode(FreqPcay), OpcAttribute.Value);
                 freqItem.DataChangeReceived += HandleFreqChanged;
                 OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(freqItem);
             }
@@ -334,7 +362,7 @@ namespace _2048_Rbu.Elements.Mechs
 
         private void HandleKmStatusChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
-            _kmStatus = bool.Parse(e.Item.Value.ToString());
+            _onStatus = bool.Parse(e.Item.Value.ToString());
             VisStatus();
         }
 
@@ -347,8 +375,10 @@ namespace _2048_Rbu.Elements.Mechs
         void HideImages()
         {
             VisAlarm = Visibility.Collapsed;
-            VisKM = Visibility.Collapsed;
+            VisOn = Visibility.Collapsed;
             ModeAutomat = true;
+            Status = "- - - - -";
+            Brush = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFC0C0C0"));
         }
 
         void VisStatus()
@@ -356,19 +386,30 @@ namespace _2048_Rbu.Elements.Mechs
             if (_alarmStatus)
             {
                 VisAlarm = Visibility.Visible;
+                Status = "Авария";
+                Brush = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFEB1B22"));
             }
             else
             {
-                VisAlarm = Visibility.Collapsed;
-                if (_kmStatus)
-                    VisKM = Visibility.Visible;
+                VisAlarm = Visibility.Hidden;
+                if (_onStatus)
+                {
+                    VisOn = Visibility.Visible;
+                    Status = "Включен";
+                    Brush = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF85FC84"));
+                }
                 else
-                    VisKM = Visibility.Collapsed;
+                {
+                    VisOn = Visibility.Hidden;
+                    Status = "Остановлен";
+                    Brush = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFC0C0C0"));
+                }
             }
         }
+
         void VisMode()
         {
-            if (_automatMode || (ModePcy == "" && !_manualMode))
+            if (_automatMode)
             {
                 ModeAutomat = true;
                 ModeManual = false;
@@ -379,36 +420,23 @@ namespace _2048_Rbu.Elements.Mechs
                 ModeManual = _manualMode;
             }
         }
+
         void IndexMethod()
         {
             if (Prefix != null)
             {
-                if (KMPCY == null)
-                    KMPCY = Prefix + ".DI_ON";
+                if (OnPcy == null)
+                    OnPcy = Prefix + ".DI_ON";
                 if (ModePcy == null)
                     ModePcy = Prefix + ".gMode_Automat";
                 if (ManualPcy == null)
                     ManualPcy = Prefix + ".gMode_Manual";
                 if (AlarmPcy == null)
                     AlarmPcy = Prefix + ".gb_ALARM";
-                if (StartPcx == null)
-                    StartPcx = Prefix + ".btn_Start";
-                if (StopPcx == null)
-                    StopPcx = Prefix + ".btn_Stop";
             }
 
-
-            //if (Tag != null)
-            //    _startPCX = Tag + ".btn_StartPump";
-            //if (Tag != null)
-            //    _stopPCX = Tag + ".btn_StopPump";
-
-            if (NumMech != null)
-            {
-                StartPcx = "btn_Mech_Start";
-                StopPcx = "btn_Mech_Stop";
-                FreqPCAY = "gr_Mech_Hz";
-            }
+            StartPcx = "btn_Mech_Start";
+            StopPcx = "btn_Mech_Stop";
         }
 
         private void Rect_OnMouseEnter(object sender, MouseEventArgs e)
@@ -423,7 +451,6 @@ namespace _2048_Rbu.Elements.Mechs
 
         private void ValveGrid_OnMouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
-            //if (SelUser.GetInstance().GetSelUser().PermitManual && false)
             PopupObject.IsOpen = true;
             try
             {
@@ -432,7 +459,6 @@ namespace _2048_Rbu.Elements.Mechs
                     _opc.cl.WriteInt16(Static.NumMech, (short)ValueNumMech, out _err);
                     if (_err)
                         MessageBox.Show("Возможно запись не прошла.\nПроверьте OPC-сервер или соответствующий тег", "Предупреждение");
-                    //StatePopup();
                 }
             }
             catch (Exception)
@@ -441,42 +467,42 @@ namespace _2048_Rbu.Elements.Mechs
             }
         }
 
-        private void btnManual_Click(object sender, RoutedEventArgs e)
+        private void BtnManual_Click(object sender, RoutedEventArgs e)
         {
-            _opc.cl.WriteBool(ManualPcy, true, out _err);
-            _opc.cl.WriteBool(ModePcy, false, out _err);
-            //EventsBase.GetInstance().GetControlEvents(_opcName)?.AddEvent("Насос " + _nameObject + ". Режим работы - Ручной", SystemEventType.UserDoing);
+            object btn = e.Source;
+            Methods.ButtonClick(btn, BtnManual, ManualPcy, true);
+            Methods.ButtonClick(btn, BtnManual, ModePcy, false);
         }
 
-        private void btnAutomat_Click(object sender, RoutedEventArgs e)
+        private void BtnAutomat_Click(object sender, RoutedEventArgs e)
         {
-            _opc.cl.WriteBool(ModePcy, true, out _err);
-            _opc.cl.WriteBool(ManualPcy, false, out _err);
-            //EventsBase.GetInstance().GetControlEvents(_opcName)?.AddEvent("Насос " + _nameObject + ". Режим работы - Автомат", SystemEventType.UserDoing);
+            object btn = e.Source;
+            Methods.ButtonClick(btn, BtnAutomat, ModePcy, true);
+            Methods.ButtonClick(btn, BtnAutomat, ManualPcy, false);
         }
 
-        private void btnStart_Click(object sender, RoutedEventArgs e)
+        private void BtnStart_Click(object sender, RoutedEventArgs e)
         {
-            _opc.cl.WriteBool(StartPcx, true, out _err);
-            //EventsBase.GetInstance().GetControlEvents(_opcName)?.AddEvent("Насос " + _nameObject + " - Пуск", SystemEventType.UserDoing);
+            object btn = e.Source;
+            Methods.ButtonClick(btn, BtnStart, StartPcx, true, TxtPopupName.Text + ". Старт");
         }
 
-        private void btnStop_Click(object sender, RoutedEventArgs e)
+        private void BtnStop_Click(object sender, RoutedEventArgs e)
         {
-            _opc.cl.WriteBool(StopPcx, true, out _err);
-            //EventsBase.GetInstance().GetControlEvents(_opcName)?.AddEvent("Насос " + _nameObject + " - Стоп", SystemEventType.UserDoing);
+            object btn = e.Source;
+            Methods.ButtonClick(btn, BtnStop, StopPcx, true, TxtPopupName.Text + ". Стоп");
         }
 
         private void Lbl_param_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             object btn = e.Source;
 
-            Methods.SetParameter(lbl_param, btn, _opcName, "Частота насоса " + _nameObject + ", Гц", 0, 50, FreqPCAY, "Real", PopupObject, 0, 1);
+            Methods.SetParameter(LblParam, btn, _opcName, "Частота насоса " + _nameObject + ", Гц", 0, 50, FreqPcay, "Real", PopupObject, 0, 1);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        //[NotifyPropertyChangedInvocator]
+        [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
