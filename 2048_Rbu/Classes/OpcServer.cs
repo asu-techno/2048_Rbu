@@ -8,7 +8,7 @@ using AS_Library.Link;
 using Excel;
 using Opc.UaFx.Client;
 
-namespace Lib_2048.Classes
+namespace _2048_Rbu.Classes
 {
     public class OpcServer
     {
@@ -53,45 +53,6 @@ namespace Lib_2048.Classes
             });
         }
 
-        private string ErrCodeParse(int errCode)
-        {
-            switch (errCode)
-            {
-                case 0:
-                    return "ОК";
-                case 1:
-                    return "Файл инициализации не найден";
-                case 2:
-                    return "Файл инициализации заполнен неверно";
-                case 3:
-                    return "Ошибка доступа к серверу";
-                case 4:
-                    return "Ошибка связи с сервером";
-                case 5:
-                    return "Адреса переменных для чтения не корректны";
-                case 6:
-                    return "Адреса переменных для записи не корректны";
-                case 7:
-                    return "Переменная с таким именем не существует";
-                case 8:
-                    return "Переменная с таким адресом не существует";
-                case 9:
-                    return "Переменная с таким именем имеет другой тип";
-                case 10:
-                    return "Файл инициализации заполнен неверно - имя или адрес повторяются";
-                case 11:
-                    return "Xml файл заполнен неверно - отсутcтвуют дочерние элементы узлов Item";
-                case 12:
-                    return "Xml файл инициализации заполнен неверно - отсутствуют некоторые дочерние элементы узлов Item";
-                case 13:
-                    return "Xml файл заполнен неверно - отсутcтвуют узлы Item";
-                case 14:
-                    return "Xml файл инициализации заполнен неверно - TypeRW не определен";
-                default:
-                    return "";
-            }
-        }
-
         public void ConnectOpc(OpcList obj)
         {
             if (_opcDict.ContainsKey(obj))
@@ -115,60 +76,6 @@ namespace Lib_2048.Classes
             }
             return null;
         }
-        public OPC_client CreateOpc(OpcList opcName)
-        {
-            var postgresql = ServiceData.GetInstance().GetSqlName() == "PostgreSQL";
-
-            if (GetOpc(opcName) != null)
-            {
-                _opcDict[opcName].cl.Disconnect();
-                _opcDict[opcName] = null;
-            }
-
-            var opc = new OPC_client(ServiceData.GetInstance().GetOpcTablesBase(), GetObjectData(opcName).SqlTableName, postgresql, true, out _err1);
-            if (_err1 == 0)
-            {
-                var err2 = opc.cl.Connect(ServiceData.GetInstance().GetOpcAddress(), ServiceData.GetInstance().GetOpcName(), 100);
-                if (err2 != 0)
-                {
-                    //MessageBox.Show("Ошибка №" + err2);
-                    opc = null;
-                }
-                else
-                {
-                    if (!_opcDict.ContainsKey(opcName))
-                    {
-                        _opcDict.Add(opcName, opc);
-                    }
-                    else
-                    {
-                        _opcDict[opcName] = opc;
-                    }
-                }
-            }
-            else
-            {
-                //MessageBox.Show("Ошибка №" + _err1 + " - " + opc.cl.ErrTxt);
-                opc = null;
-            }
-
-            return opc;
-        }
-
-        public OPC_client InitOpc(OpcList obj, bool serverInit = false)
-        {
-            bool postgresql = ServiceData.GetInstance().GetSqlName() == "PostgreSQL";
-            var opc = new OPC_client(ServiceData.GetInstance().GetOpcTablesBase(), GetObjectData(obj).SqlTableName, postgresql, serverInit, out _err1);
-            if (!_opcDict.ContainsKey(obj))
-            {
-                _opcDict.Add(obj, opc);
-            }
-            else
-            {
-                _opcDict[obj] = opc;
-            }
-            return opc;
-        }
         public OPC_client InitOpc(OpcList obj, string serverAddress)
         {
             if (!_opcDict.ContainsKey(obj))
@@ -179,21 +86,6 @@ namespace Lib_2048.Classes
             }
 
             return _opcDict[obj];
-        }
-        public OPC_client InitOpc(OpcList obj, bool sim, bool serverInit)
-        {
-            bool postgresql = ServiceData.GetInstance().GetSqlName() == "PostgreSQL";
-            string simTablePath = "server=dalmioserver;user id=AS_Library;password=asuasu123;database=DbOpcTables";
-            var opc = new OPC_client(simTablePath, GetObjectData(obj).SqlTableName, postgresql, serverInit, out _err1);
-            if (!_opcDict.ContainsKey(obj))
-            {
-                _opcDict.Add(obj, opc);
-            }
-            else
-            {
-                _opcDict[obj] = opc;
-            }
-            return opc;
         }
         public OPC_client GetOpc(OpcList obj)
         {

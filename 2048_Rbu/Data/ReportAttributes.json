@@ -1,0 +1,22 @@
+{
+  "ReportName": "Reports.Reports",
+  "TaskId": "ID",
+  "StartDt": "StartTime",
+  "FinishDt": "FinishTime",
+  "BatchName": "Reports",
+  "BatchStartDt": "StartTime",
+  "BatchFinishDt": "FinishTime",
+  "StartMixing": "Mixing_StartTime",
+  "FinishMixing": "Mixing_EndTime",
+  "StartUnloading": "Empting_StartTime",
+  "FinishUnloading": "Empting_EndTime",
+  "StartLoading": "Empting_StartTime",
+  "FinishLoading": "Empting_EndTime",
+  "StartWeight": "Empting_StartWeight",
+  "FinishWeight": "Empting_EndWeight",
+  "StartDosage": "Dozing_StartTime",
+  "FinishDosage": "Dozing_EndTime",
+  "StartWeightDosage": "Dozing_StartWeight",
+  "FinishWeightDosage": "Dozing_EndWeight"
+
+}

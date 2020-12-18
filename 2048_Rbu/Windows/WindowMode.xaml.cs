@@ -7,7 +7,7 @@ using System.Windows.Media;
 using _2048_Rbu.Classes;
 using AS_Library.Annotations;
 using AS_Library.Link;
-using Lib_2048.Classes;
+using _2048_Rbu.Classes;
 
 namespace _2048_Rbu.Windows
 {

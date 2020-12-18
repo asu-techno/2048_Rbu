@@ -3,10 +3,15 @@ using System.ComponentModel;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Media;
+using _2048_Rbu.Classes;
 using _2048_Rbu.Elements;
+using _2048_Rbu.Helpers;
 using _2048_Rbu.Windows;
 using AS_Library.Events.Classes;
-using Lib_2048.Classes;
+using AsuBetonLibrary;
+using AsuBetonLibrary.Services;
+using AsuBetonWpfTest.Handlers;
+using _2048_Rbu.Classes;
 using ServiceLib.Classes;
 
 namespace _2048_Rbu
@@ -40,6 +45,25 @@ namespace _2048_Rbu
                 "ZQ3KUPWZTOBY3M7ZUJQFQ2KTXXIB75LVC7EHAZ2AF3OELXR2YP2AVTIGKBEPXAJIFQLB6CKHQQEHHSSPWO3HQHTYVZYGMVM4KUTDRHHSGUA";
 
             InitializeComponent();
+
+            #region Init
+            var logger = Service.GetInstance().GetLogger();
+            LibService.Init(logger);
+            LibService.GetInstance().SetDbConnectionString(Service.GetInstance().GetOpcDict()["DbConnectionString"]);
+            NewOpcServer.Init(logger);
+            NewOpcServer.GetInstance().InitOpc(NewOpcServer.OpcList.Rbu);
+            NewOpcServer.GetInstance().ConnectOpc(NewOpcServer.OpcList.Rbu);
+
+            var taskQueueItemsService = new TaskQueueItemsService();
+
+            //var recipeQueueViewModel = new ElTaskQueueViewModel(taskQueueItemsService, logger);
+            //ElRecipeQueue.DataContext = recipeQueueViewModel;
+
+            var loadTaskHandler = new LoadTaskHandler(taskQueueItemsService, logger);
+
+            var reportHelper = new ReportHelper(logger);
+            reportHelper.SubscribeReportSaving(); 
+            #endregion
 
             OpcServer.Init(@"Data/Service.xlsx");
             OpcServer.GetInstance();

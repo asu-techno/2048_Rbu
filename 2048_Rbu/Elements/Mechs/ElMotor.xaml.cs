@@ -10,7 +10,7 @@ using System.Windows.Media;
 using _2048_Rbu.Classes;
 using _2048_Rbu.Interfaces;
 using AS_Library.Annotations;
-using Lib_2048.Classes;
+using _2048_Rbu.Classes;
 using AS_Library.Events.Classes;
 using AS_Library.Link;
 using Opc.UaFx;
