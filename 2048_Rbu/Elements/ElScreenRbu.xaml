@@ -116,9 +116,10 @@
         <mechs:ElPump VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="90" Height="90" Margin="855,124,0,0" Rotate="True" NameObject="P-2" NamePos="Up" ModePos="Left" ValueNumMech="2" Prefix="P_02"/>
         <mechs:ElPump VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="90" Height="90" Margin="935,176,0,0" Rotate="True" NameObject="P-3" NamePos="Up" ModePos="Left" ValueNumMech="3" Prefix="P_03"/>
         <mechs:ElGate VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="180" Height="70" Margin="464,736,0,0" IssUnload="True" NameObject="V-1" NamePos="Left" ModePos="Left" PopupPosition="Down" ValueNumMech="20" Prefix="V_1"/>
-        <indicators:ElValueBox VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="75" Height="25" Margin="505,443,0,0" Count="5" Digit="1" Color="CornflowerBlue" Measure="%" ValuePcay="Test"/>
+        <indicators:ElValueBox VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="75" Height="25" Margin="505,443,0,0" Count="5" Digit="1" Color="CornflowerBlue" Measure="кг" ValuePcay="Test"/>
         <indicators:ElValueBox VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="75" Height="25" Margin="779,443,0,0" Count="5" Digit="1" Color="CornflowerBlue" Measure="%" ValuePcay="Test"/>
         <indicators:ElValueBox VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="75" Height="25" Margin="849,287,0,0" Count="5" Digit="1" Color="CornflowerBlue" Measure="%" ValuePcay="Test"/>
+        <indicators:ElValueBox VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="75" Height="25" Margin="1292,646,0,0" Count="5" Digit="1" Color="CornflowerBlue" Measure="кг" ValuePcay="Test"/>
         <indicators:ElValueBox VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="75" Height="25" Margin="615,680,0,0" Count="5" Digit="1" Color="Beige" Measure="А" ValuePcay="Test"/>
         <indicators:ElDone VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="30" Height="15" Margin="445,346,0,0" OnPcy="Test"/>
         <indicators:ElDone VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="30" Height="15" Margin="445,189,0,0" OnPcy="Test"/>
@@ -148,8 +149,8 @@
         </Label>
         <indicators:ElWarning Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="210" MyWidth="210" Height="60" MyHeight="60" Margin="1700,10,0,0" Color="Red" FontSize="14" NameObject="Нажата стоповая кнопка" Logic="True" ValuePcy="cmd_Stop"/>
         <indicators:ElWarning Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="210" MyWidth="210" Height="60" MyHeight="60" Margin="1700,80,0,0" Color="Red" FontSize="14" NameObject="Нет связи&#xA;с программой архивации" Logic="True" ValuePcy="gb_ArchiverERROR"/>
-        <indicators:ElWarning Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="210" MyWidth="210" Height="60" MyHeight="60" Margin="1700,150,0,0" Color="Yellow" FontSize="14" NameObject="Ручной&#xA;режим работы" Logic="True" ValuePcy=""/>
-        <indicators:ElWarning Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="210" MyWidth="210" Height="60" MyHeight="60" Margin="1700,150,0,0" Color="Yellow" FontSize="14" NameObject="Не выбран&#xA;режим работы" Logic="True" ValuePcy=""/>
+        <indicators:ElWarning Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="210" MyWidth="210" Height="60" MyHeight="60" Margin="1700,150,0,0" Color="Yellow" FontSize="14" NameObject="Ручной&#xA;режим работы" Logic="True" ValuePcy="gMode_Manual"/>
+        <indicators:ElWarning Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="210" MyWidth="210" Height="60" MyHeight="60" Margin="1700,150,0,0" Color="Yellow" FontSize="14" NameObject="Не выбран&#xA;режим работы" Logic="False" ValuePcy="gMode_Manual" ValueAddPcy="gMode_Automat"/>
         <Label VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="1" Width="500" Height="140" Margin="0,0,0,0" BorderBrush="Black" BorderThickness="1" Background="Red" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" FontSize="24" Padding="0" Content="Нет связи со шкафом управления">
             <Label.Style>
                 <Style TargetType="{x:Type Label}">
@@ -163,8 +164,9 @@
             </Label.Style>
         </Label>
         <!--#region Control -->
-        <!--<control:ElControl x:Name="ElControl" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="330" Height="135" Margin="10,10,0,0"/>-->
-        <!--<control:ElDosingWait x:Name="ElDosingWait" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="250" Height="110" Margin="360,10,0,0"/>-->
+        <control:ElControl x:Name="ElControl" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="330" Height="135" Margin="10,10,0,0"/>
+        <control:ElDosingWait x:Name="ElDosingWait" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="250" Height="110" Margin="360,10,0,0"/>
+        <control:ElTabl x:Name="ElTabl" VerticalAlignment="Top" HorizontalAlignment="Left" Width="384" Height="365" Margin="1281,10,0,0" Grid.Row="1"/>
         <!--#endregion-->
         <dxmvvm:WaitIndicator Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Height="150" Width="300" DeferedVisibility="{Binding IsUpdating}" Content="Загрузка...">
             <dxmvvm:WaitIndicator.ContentTemplate>

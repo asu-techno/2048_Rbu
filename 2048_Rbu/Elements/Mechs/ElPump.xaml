@@ -62,7 +62,7 @@
                                 <Setter Property="FontWeight" Value="Normal"/>
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding ModeManual}" Value="True">
-                                        <Setter Property="Background" Value="#85fc84"/>
+                                        <Setter Property="Background" Value="#85FC84"/>
                                         <Setter Property="FontWeight" Value="Bold"/>
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -76,7 +76,7 @@
                                 <Setter Property="FontWeight" Value="Normal"/>
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding ModeAutomat}" Value="True">
-                                        <Setter Property="Background" Value="#85fc84"/>
+                                        <Setter Property="Background" Value="#85FC84"/>
                                         <Setter Property="FontWeight" Value="Bold"/>
                                     </DataTrigger>
                                 </Style.Triggers>

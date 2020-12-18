@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="_2048_Rbu.Elements.Control.ElZamesMixer"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Height="205" Width="302" Background="Silver" BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Center">
+    <Grid>
+        <Label Content="Узел бетоносмесителя" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" Margin="0" Padding="0" HorizontalContentAlignment="Center" />
+        <Label Name="lbl_State" Content="{Binding Path=orderActCycle}" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="87,74,111,0" BorderBrush="Black" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Width="50" Height="22" Background="LightGray"/>
+        <Label Content="Замес" FontSize="16" FontWeight="Normal" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="27,75,165,0" Padding="0" VerticalAlignment="Top" Width="56" />
+        <Label Content="из" FontSize="16" FontWeight="Normal" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="141,75,83,0" Padding="0" VerticalAlignment="Top" Width="24" />
+        <Label Background="LightGray" BorderBrush="Black" BorderThickness="1" Content="{Binding Path=orderCycles}" FontSize="14" Height="22" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="168,74,30,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="50" />
+        <ProgressBar Value="{Binding Path=mixingProcess}" BorderBrush="Black" Height="22" HorizontalAlignment="Center" Margin="15,125,71,0" Minimum="0" Name="progressBar2" VerticalAlignment="Top" Width="214" />
+        <Label Content="Смешивание" FontSize="16" FontWeight="Normal" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="12,100,9,0" Padding="0" VerticalAlignment="Top" Width="227" />       
+        <Label Background="LightGray" BorderBrush="Black" BorderThickness="1" Content="{Binding Path=receiptName}" FontSize="14" Height="22" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,44,0,0" Name="label1" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="270" />
+        <ProgressBar Value="{Binding Path=razgruzkaProcess}" BorderBrush="Black" Height="22" HorizontalAlignment="Center" Margin="15,174,71,0" Minimum="0" Name="progressBar3" VerticalAlignment="Top" Width="214" />
+        <Label Content="Разгрузка" FontSize="16" FontWeight="Normal" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="12,149,12,0" Padding="0" VerticalAlignment="Top" Width="224" />
+        <Label Content="Название:" FontSize="16" FontWeight="Normal" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="94,22,94,0" Padding="0" VerticalAlignment="Top" Width="79" />
+        <Label Background="LightGray" BorderBrush="Black" BorderThickness="1" Content="{Binding Path=timeProcess}" FontSize="14" Height="22" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="235,125,15,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="50" Name="t_mixer" />
+        <Label Background="LightBlue" BorderBrush="Black" BorderThickness="1" Content="{Binding Path=timeRazgruzka}" FontSize="14" Height="22" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="235,174,15,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="50" Name="t_razgr" MouseDown="lbl_t_razgr_MouseDown" />
+    </Grid>
+</UserControl>

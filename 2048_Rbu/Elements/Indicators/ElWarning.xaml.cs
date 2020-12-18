@@ -36,7 +36,10 @@ namespace _2048_Rbu.Elements.Indicators
 
         #region MyRegion
 
+        private bool _visPcy, _visAddPcy;
+
         public string ValuePcy { get; set; }
+        public string ValueAddPcy { get; set; }
 
         private string _nameObject;
         public string NameObject
@@ -103,24 +106,11 @@ namespace _2048_Rbu.Elements.Indicators
         public ElWarning()
         {
             InitializeComponent();
-
-            HideImages();
         }
 
         public void Subscribe()
         {
             CreateSubscription();
-        }
-
-        private void HandleVisChanged(object sender, OpcDataChangeReceivedEventArgs e)
-        {
-            try
-            {
-                Vis = bool.Parse(e.Item.Value.ToString()) == Logic ? Visibility.Visible : Visibility.Collapsed;
-            }
-            catch (System.Exception)
-            {
-            }
         }
 
         public void Unsubscribe()
@@ -142,10 +132,42 @@ namespace _2048_Rbu.Elements.Indicators
                 visItem.DataChangeReceived += HandleVisChanged;
                 OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(visItem);
             }
+            if (ValueAddPcy != null)
+            {
+                var visAddItem = new OpcMonitoredItem(_opc.cl.GetNode(ValueAddPcy), OpcAttribute.Value);
+                visAddItem.DataChangeReceived += HandleVisAddChanged;
+                OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(visAddItem);
+            }
         }
-        void HideImages()
+        private void HandleVisChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
-            Vis = Visibility.Collapsed;
+            try
+            {
+                _visPcy = bool.Parse(e.Item.Value.ToString());
+                UpdateVis();
+            }
+            catch (System.Exception)
+            {
+            }
+        }
+        private void HandleVisAddChanged(object sender, OpcDataChangeReceivedEventArgs e)
+        {
+            try
+            {
+                _visAddPcy = bool.Parse(e.Item.Value.ToString());
+                UpdateVis();
+            }
+            catch (System.Exception)
+            {
+            }
+        }
+
+        public void UpdateVis()
+        {
+            if (ValueAddPcy != null)
+                Vis = (_visPcy || _visAddPcy) == Logic ? Visibility.Visible : Visibility.Collapsed;
+            else
+                Vis = _visPcy == Logic ? Visibility.Visible : Visibility.Collapsed;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

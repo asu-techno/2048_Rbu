@@ -8,6 +8,8 @@ using _2048_Rbu.Classes;
 using AS_Library.Annotations;
 using AS_Library.Link;
 using Lib_2048.Classes;
+using Opc.UaFx;
+using Opc.UaFx.Client;
 
 namespace _2048_Rbu.Windows
 {
@@ -61,17 +63,37 @@ namespace _2048_Rbu.Windows
             DataContext = this;
         }
 
-        public void Update()
+        public void Subscribe()
         {
-            if (_opc != null)
-            {
-                ModeManual = _opc.cl.ReadBool("gMode_Manual", out _err);
-                ModeAutomat = _opc.cl.ReadBool("gMode_Automat", out _err);
-            }
-            else
-            {
-                _opc = OpcServer.GetInstance().GetOpc(_opcName);
-            }
+            CreateSubscription();
+        }
+        public void Unsubscribe()
+        {
+
+        }
+
+        private void CreateSubscription()
+        {
+            _opc = OpcServer.GetInstance().GetOpc(_opcName);
+            var manualItem = new OpcMonitoredItem(_opc.cl.GetNode("gMode_Manual"), OpcAttribute.Value);
+            manualItem.DataChangeReceived += HandleManualChanged;
+            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(manualItem);
+
+            var automatItem = new OpcMonitoredItem(_opc.cl.GetNode("gMode_Automat"), OpcAttribute.Value);
+            automatItem.DataChangeReceived += HandleAutomatChanged;
+            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(automatItem);
+
+            OpcServer.GetInstance().GetSubscription(_opcName).ApplyChanges();
+        }
+
+        private void HandleManualChanged(object sender, OpcDataChangeReceivedEventArgs e)
+        {
+            ModeManual = bool.Parse(e.Item.Value.ToString());
+        }
+
+        private void HandleAutomatChanged(object sender, OpcDataChangeReceivedEventArgs e)
+        {
+            ModeAutomat = bool.Parse(e.Item.Value.ToString());
         }
 
         private void BtnManual_Click(object sender, RoutedEventArgs e)

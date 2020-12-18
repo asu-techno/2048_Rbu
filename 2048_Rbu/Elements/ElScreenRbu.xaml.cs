@@ -146,6 +146,8 @@ namespace _2048_Rbu.Elements
                     _elementList.Add(warning);
                 }
             }
+            ElTabl.Initialize();
+            _elementList.Add(ElTabl);
 
             #endregion
 
@@ -228,8 +230,7 @@ namespace _2048_Rbu.Elements
         private void Mode_OnClick(object sender, RoutedEventArgs e)
         {
             _mode = new WindowMode(_opcName);
-            //UpdateChild += _mode.Update;
-            //_mode.StopUpdate += StopUpdateChild;
+            _mode.Subscribe();
             _mode.ShowDialog();
         }
 
