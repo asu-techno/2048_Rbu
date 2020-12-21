@@ -6,6 +6,7 @@
       xmlns:indicators="clr-namespace:_2048_Rbu.Elements.Indicators"
       xmlns:mechs="clr-namespace:_2048_Rbu.Elements.Mechs"
       xmlns:control="clr-namespace:_2048_Rbu.Elements.Control"
+      xmlns:local="clr-namespace:_2048_Rbu.Elements"
       xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
       mc:Ignorable="d">
     <Grid Width="1920" Height="1020" Background="Silver" Name="ElGrid" VerticalAlignment="Top" HorizontalAlignment="Left">
@@ -22,6 +23,31 @@
             <MenuItem Name="Settings" Header="Настройки" Foreground="Black" BorderBrush="Black" FontWeight="Bold" Height="30">
                 <MenuItem Name="Mode" Header="Режим работы" Click="Mode_OnClick"/>
                 <Separator/>
+            </MenuItem>
+            <MenuItem Name="Directory" Header="Справочник" Foreground="Black" BorderBrush="Black" FontWeight="Bold" Height="30">
+                <MenuItem Header="Типы материалов" Click="MaterialTypes_OnClick"></MenuItem>
+                <Separator/>
+                <MenuItem Header="Материалы" Click="Materials_OnClick"></MenuItem>
+                <Separator/>
+                <MenuItem Header="Типы емкостей" Click="ContainerTypes_OnClick"></MenuItem>
+                <Separator/>
+                <MenuItem Header="Емкости" Height="30" Click="Containers_OnClick"></MenuItem>
+                <Separator/>
+                <MenuItem Header="Типы рецептов" Click="RecipeTypes_OnClick"></MenuItem>
+                <Separator/>
+                <MenuItem Header="Группы рецептов" Click="RecipeGroups_OnClick"></MenuItem>
+                <Separator/>
+                <MenuItem Header="Рецепты" Click="Recipes_OnClick"></MenuItem>
+                <Separator/>
+                <MenuItem Header="Выбор материалов" Click="MatchingMaterials_OnClick"></MenuItem>
+                <Separator/>
+                <MenuItem Header="Физическая модель">
+                    <MenuItem Header="Общие настройки" Click="CommonSettings_OnClick"/>
+                    <Separator/>
+                    <MenuItem Header="Источники дозирования" Click="DosingSources_OnClick"/>
+                    <Separator/>
+                    <MenuItem Header="Дозаторы" Click="Batchers_OnClick"/>
+                </MenuItem>
             </MenuItem>
         </Menu>
         <Image VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="0" Margin="0" Width="160" Height="30" Source="/2048_Rbu;component/Images/Logo_ASU_Gray.png" Stretch="Uniform" RenderOptions.BitmapScalingMode="Fant"/>
@@ -97,8 +123,8 @@
         <mechs:ElGate VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="180" Height="70" Margin="1536,558,0,0" NameObject="V-12-2" NamePos="RightDown" ModePos="RightUp" PopupPosition="Down" ValueNumMech="34" Prefix="V_12_2"/>
         <mechs:ElGate VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="180" Height="70" Margin="1512,558,0,0" Rotate="True" NameObject="V-12-1" NamePos="LeftDown" ModePos="LeftUp" PopupPosition="Down" ValueNumMech="33" Prefix="V_12_1"/>
         <mechs:ElMixer VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="130" Height="220" Margin="587,520,0,0" NameObject="M-1" NamePos="Up" ModePos="LeftUp" PopupPosition="Down" ValueNumMech="4" Prefix="M_1"/>
-        <mechs:ElConveyor VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Margin="714,542,0,0" TypeMech="Skip" NameObject="M-2" NamePos="Up" ModePos="RightUp" PopupPosition="Up" ValueNumMech="5" Prefix="M_2"/>
-        <mechs:ElConveyor VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Margin="955,613,0,0" TypeMech="Conveyor" NameObject="M-3" NamePos="Left" ModePos="LeftDown" PopupPosition="Up" ValueNumMech="6" Prefix="M_3"/>
+        <mechs:ElConveyor VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Margin="735,542,0,0" TypeMech="Skip" NameObject="M-2" NamePos="Up" ModePos="RightUp" PopupPosition="Up" ValueNumMech="5" Prefix="M_2"/>
+        <mechs:ElConveyor VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Margin="975,613,0,0" TypeMech="Conveyor" NameObject="M-3" NamePos="Left" ModePos="LeftDown" PopupPosition="Up" ValueNumMech="6" Prefix="M_3"/>
         <mechs:ElMotor VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="66" Height="46" Margin="372,306,0,0" NameObject="M-6" NamePos="Up" ModePos="Down" PopupPosition="Up" ValueNumMech="9" Prefix="M_6"/>
         <mechs:ElMotor VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="66" Height="46" Margin="487,306,0,0" NameObject="M-7" NamePos="Up" ModePos="Down" PopupPosition="Up" ValueNumMech="10" Prefix="M_7"/>
         <mechs:ElMotor VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="66" Height="46" Margin="422,433,0,0" NameObject="M-8" NamePos="Up" ModePos="Down" PopupPosition="Up" ValueNumMech="10" Prefix="M_8"/>
@@ -110,8 +136,8 @@
         <mechs:ElMotor VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="66" Height="46" Margin="1452,524,0,0" Rotate="True" NameObject="M-11-2" NamePos="RightUp" ModePos="Down" PopupPosition="Up" ValueNumMech="17" Prefix="M_11_2"/>
         <mechs:ElMotor VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="66" Height="46" Margin="1518,524,0,0" NameObject="M-12-1" NamePos="LeftUp" ModePos="Down" PopupPosition="Up" ValueNumMech="18" Prefix="M_12_1"/>
         <mechs:ElMotor VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="66" Height="46" Margin="1642,524,0,0" Rotate="True" NameObject="M-12-2" NamePos="RightUp" ModePos="Down" PopupPosition="Up" ValueNumMech="19" Prefix="M_12_2"/>
-        <mechs:ElConveyor VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Margin="397,351,0,0" TypeMech="Shnek" NameObject="M-4" NamePos="LeftUp" ModePos="Left" PopupPosition="Up" ValueNumMech="7" Prefix="M_4"/>
-        <mechs:ElConveyor VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Margin="512,351,0,0" TypeMech="Shnek" NameObject="M-5" NamePos="LeftUp" ModePos="Left" PopupPosition="Up" ValueNumMech="8" Prefix="M_5"/>
+        <mechs:ElConveyor VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Margin="417,351,0,0" TypeMech="Shnek" NameObject="M-4" NamePos="LeftUp" ModePos="Left" PopupPosition="Up" ValueNumMech="7" Prefix="M_4"/>
+        <mechs:ElConveyor VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Margin="532,351,0,0" TypeMech="Shnek" NameObject="M-5" NamePos="LeftUp" ModePos="Left" PopupPosition="Up" ValueNumMech="8" Prefix="M_5"/>
         <mechs:ElPump VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="90" Height="90" Margin="690,329,0,0" NameObject="P-1" NamePos="Up" ModePos="Right" ValueNumMech="1" Prefix="P_01"/>
         <mechs:ElPump VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="90" Height="90" Margin="855,124,0,0" Rotate="True" NameObject="P-2" NamePos="Up" ModePos="Left" ValueNumMech="2" Prefix="P_02"/>
         <mechs:ElPump VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="90" Height="90" Margin="935,176,0,0" Rotate="True" NameObject="P-3" NamePos="Up" ModePos="Left" ValueNumMech="3" Prefix="P_03"/>
@@ -164,9 +190,12 @@
             </Label.Style>
         </Label>
         <!--#region Control -->
-        <control:ElControl x:Name="ElControl" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="330" Height="135" Margin="10,10,0,0"/>
-        <control:ElDosingWait x:Name="ElDosingWait" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="250" Height="110" Margin="360,10,0,0"/>
-        <control:ElTabl x:Name="ElTabl" VerticalAlignment="Top" HorizontalAlignment="Left" Width="384" Height="365" Margin="1281,10,0,0" Grid.Row="1"/>
+        <control:ElControl x:Name="ElControlControl" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="330" Height="135" Margin="10,10,0,0"/>
+        <control:ElDosingWait x:Name="ElControlDosingWait" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="250" Height="110" Margin="360,10,0,0"/>
+        <control:ElTabl x:Name="ElControlTabl" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="384" Height="387" Margin="1281,10,0,0"/>
+        <control:ElZamesDozing x:Name="ElControlZamesDozing" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="302" Height="160" Margin="1271,736,0,0"/>
+        <control:ElZamesMixer x:Name="ElControlZamesMixer" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="302" Height="205" Margin="1578,736,0,0"/>
+        <!--<local:ElTaskQueue x:Name="ElRecipeQueue" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="500" Height="500" Margin="28,189,0,0"/>-->
         <!--#endregion-->
         <dxmvvm:WaitIndicator Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Height="150" Width="300" DeferedVisibility="{Binding IsUpdating}" Content="Загрузка...">
             <dxmvvm:WaitIndicator.ContentTemplate>

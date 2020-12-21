@@ -7,7 +7,8 @@ using System.Windows.Media;
 using _2048_Rbu.Classes;
 using AS_Library.Annotations;
 using AS_Library.Link;
-using _2048_Rbu.Classes;
+using Opc.UaFx;
+using Opc.UaFx.Client;
 
 namespace _2048_Rbu.Windows
 {

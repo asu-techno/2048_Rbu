@@ -4,16 +4,19 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using _2048_Rbu.Classes;
 using AS_Library.Annotations;
 using AS_Library.Link;
-using _2048_Rbu.Classes;
 using _2048_Rbu.Interfaces;
 using Opc.UaFx;
 using Opc.UaFx.Client;
 using System.Windows.Threading;
 using _2048_Rbu.Windows;
+using AsuBetonLibrary.Services;
+using AsuBetonLibrary.Windows;
+using NLog;
 
 namespace _2048_Rbu.Elements
 {
@@ -65,7 +68,6 @@ namespace _2048_Rbu.Elements
             IsUpdating = true;
 
             _opcName = OpcServer.OpcList.Rbu;
-
             #region Timers
             LinkTimer = new DispatcherTimer();
             LinkTimer.Interval = new TimeSpan(0, 0, 0, 1);
@@ -146,8 +148,30 @@ namespace _2048_Rbu.Elements
                     _elementList.Add(warning);
                 }
             }
-            ElTabl.Initialize();
-            _elementList.Add(ElTabl);
+
+            ElControlControl.Initialize(_opcName);
+            _elementList.Add(ElControlControl);
+            
+            ElControlDosingWait.Initialize(_opcName);
+            _elementList.Add(ElControlDosingWait);
+            
+            ElControlTabl.Initialize(_opcName);
+            _elementList.Add(ElControlTabl);
+            
+            ElControlZamesDozing.Initialize(_opcName);
+            _elementList.Add(ElControlZamesDozing); 
+            
+            ElControlZamesMixer.Initialize(_opcName);
+            _elementList.Add(ElControlZamesMixer);
+
+            //var elRecipeQueue = new ElTaskQueue();
+            //ElGrid.Children.Add(elRecipeQueue);
+            //Grid.SetColumnSpan(elRecipeQueue, 1);
+            //elRecipeQueue.Margin = new Thickness(10,200,0,0);
+            //ElRecipeQueue.Initialize(_opcName);
+            //var taskQueueItemsService = new TaskQueueItemsService();
+            //var recipeQueueViewModel = new ElTaskQueueViewModel(taskQueueItemsService, logger);
+            //ElRecipeQueue.DataContext = recipeQueueViewModel;
 
             #endregion
 
@@ -232,6 +256,72 @@ namespace _2048_Rbu.Elements
             _mode = new WindowMode(_opcName);
             _mode.Subscribe();
             _mode.ShowDialog();
+        }
+
+        private void Materials_OnClick(object sender, RoutedEventArgs e)
+        {
+            WindowCommonList window = new WindowCommonList(new MaterialsService());
+            window.Show();
+        }
+
+        private void MaterialTypes_OnClick(object sender, RoutedEventArgs e)
+        {
+            WindowCommonList window = new WindowCommonList(new MaterialTypesService());
+            window.Show();
+        }
+
+        private void Containers_OnClick(object sender, RoutedEventArgs e)
+        {
+            WindowCommonList window = new WindowCommonList(new ContainersService());
+            window.Show();
+        }
+
+        private void ContainerTypes_OnClick(object sender, RoutedEventArgs e)
+        {
+            WindowCommonList window = new WindowCommonList(new ContainerTypesService());
+            window.Show();
+        }
+
+        private void RecipeTypes_OnClick(object sender, RoutedEventArgs e)
+        {
+            WindowCommonList window = new WindowCommonList(new RecipeTypesService());
+            window.Show();
+        }
+
+        private void RecipeGroups_OnClick(object sender, RoutedEventArgs e)
+        {
+            WindowCommonList window = new WindowCommonList(new RecipeGroupsService());
+            window.Show();
+        }
+
+        private void Recipes_OnClick(object sender, RoutedEventArgs e)
+        {
+            WindowCommonList window = new WindowCommonList(new RecipesService());
+            window.Show();
+        }
+
+        private void MatchingMaterials_OnClick(object sender, RoutedEventArgs e)
+        {
+            WindowMatchingMaterials window = new WindowMatchingMaterials();
+            window.Show();
+        }
+
+        private void CommonSettings_OnClick(object sender, RoutedEventArgs e)
+        {
+            WindowCommonOpcParameters window = new WindowCommonOpcParameters(new CommonOpcParametersService());
+            window.Show();
+        }
+
+        private void Batchers_OnClick(object sender, RoutedEventArgs e)
+        {
+            WindowCommonList window = new WindowCommonList(new BatchersService());
+            window.Show();
+        }
+
+        private void DosingSources_OnClick(object sender, RoutedEventArgs e)
+        {
+            WindowCommonList window = new WindowCommonList(new DosingSourcesService());
+            window.Show();
         }
 
         private void Archive_OnClick(object sender, RoutedEventArgs e)

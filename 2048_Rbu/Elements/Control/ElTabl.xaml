@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:_2048_Rbu.Elements.Control"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance Type={x:Type local:ViewModelTabl}, IsDesignTimeCreatable=False}"
-             Height="365" Width="384" Background="Silver" BorderBrush="Black" BorderThickness="1">
+             Height="387" Width="384" Background="Silver" BorderBrush="Black" BorderThickness="1">
     <Grid Background="LightGray">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="900" />
@@ -18,19 +18,19 @@
             <Label Background="Silver" BorderBrush="Black" BorderThickness="1" Content="Объем замеса, м³: " FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Right" Margin="2,101,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="124" />
             <Label Background="Silver" BorderBrush="Black" BorderThickness="1" Content="Кол-во замесов: " FontSize="14" Height="23" HorizontalContentAlignment="Right" Margin="2,123,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="124" />
 
-            <Label BorderBrush="Black" Content="{Binding Tasks.RecipeId}" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="125,25,0,0" Padding="0" VerticalAlignment="Top" Width="255" Background="White" BorderThickness="1" VerticalContentAlignment="Center" />
-            <Label BorderBrush="Black" Content="{Binding Tasks.Volume}" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="125,47,0,0" VerticalAlignment="Top" Width="255" Background="White" BorderThickness="1" Padding="0" VerticalContentAlignment="Center" />
-            <Label BorderBrush="Black" Content="{Binding Tasks.CustomerId}" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="125,69,0,0" VerticalAlignment="Top" Width="255" Background="White" BorderThickness="1" Padding="0" VerticalContentAlignment="Center" />
-            <Label BorderBrush="Black" Content="{Binding Tasks.BatchVolume}" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="125,101,0,0" VerticalAlignment="Top" Width="255" Background="White" BorderThickness="1" Padding="0" VerticalContentAlignment="Center" />
-            <Label BorderBrush="Black" Content="{Binding Tasks.BatchesAmount}" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="125,123,0,0" VerticalAlignment="Top" Width="255" Background="White" BorderThickness="1" Padding="0" VerticalContentAlignment="Center" />
+            <Label BorderBrush="Black" Content="{Binding SelTask.Recipe.Name, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="125,25,0,0" Padding="0" VerticalAlignment="Top" Width="255" Background="White" BorderThickness="1" VerticalContentAlignment="Center" />
+            <Label BorderBrush="Black" Content="{Binding SelTask.Volume, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="125,47,0,0" VerticalAlignment="Top" Width="255" Background="White" BorderThickness="1" Padding="0" VerticalContentAlignment="Center" />
+            <Label BorderBrush="Black" Content="{Binding SelTask.Customer.Name, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="125,69,0,0" VerticalAlignment="Top" Width="255" Background="White" BorderThickness="1" Padding="0" VerticalContentAlignment="Center" />
+            <Label BorderBrush="Black" Content="{Binding SelTask.BatchVolume, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="125,101,0,0" VerticalAlignment="Top" Width="255" Background="White" BorderThickness="1" Padding="0" VerticalContentAlignment="Center" />
+            <Label BorderBrush="Black" Content="{Binding SelTask.BatchesAmount, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="125,123,0,0" VerticalAlignment="Top" Width="255" Background="White" BorderThickness="1" Padding="0" VerticalContentAlignment="Center" />
 
-            <Label BorderBrush="Black" BorderThickness="0" Content="Состав замеса:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,133,0,0" Name="label1" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="307" />
-            <Label Background="Silver" BorderBrush="Black" BorderThickness="1" Content="Материал" FontSize="14" FontWeight="Bold" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="2,161,0,0" Name="label11" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200" />
-            <Label Background="Silver" BorderBrush="Black" BorderThickness="1" Content="Задано, кг" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="201,161,0,0" Name="label17" Padding="0" VerticalAlignment="Top" Width="90" FontWeight="Bold" />
+            <Label BorderBrush="Black" BorderThickness="0" Content="Состав замеса:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,155,0,0" Name="label1" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="307" />
+            <Label Background="Silver" BorderBrush="Black" BorderThickness="1" Content="Материал" FontSize="14" FontWeight="Bold" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="2,183,0,0" Name="label11" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200" />
+            <Label Background="Silver" BorderBrush="Black" BorderThickness="1" Content="Задано, кг" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="201,183,0,0" Name="label17" Padding="0" VerticalAlignment="Top" Width="90" FontWeight="Bold" />
             <Label BorderBrush="Black" FontSize="16" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Padding="0" VerticalContentAlignment="Center" Content="Информация о текущем рецепте" VerticalAlignment="Top" BorderThickness="0" Background="LightGray" FontWeight="Bold" />
-            
-            <ComboBox IsEnabled="False" ItemsSource="{Binding Path=database.cementTypes}" SelectedValue="{Binding Path=receipt.cementType_ID}" DisplayMemberPath="typeName" SelectedValuePath="typeID" Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="2,183,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200" Name="cmbx_Cement" />
-            <Label Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="2,183,0,0" Name="label5" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200">
+
+            <ComboBox IsEnabled="False" ItemsSource="{Binding SelTask.Recipe.RecipeMaterials.Id, UpdateSourceTrigger=PropertyChanged}" SelectedValue="{Binding Path=receipt.cementType_ID}" DisplayMemberPath="typeName" SelectedValuePath="typeID" Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="2,205,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200" Name="cmbx_Cement" />
+            <Label Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="2,205,0,0" Name="label5" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200">
                 <Label.Style>
                     <Style TargetType="{x:Type Label}">
                         <Setter Property="Content" Value="{Binding ElementName=cmbx_Cement, Path=SelectedItem.typeName}"/>
@@ -42,7 +42,7 @@
                     </Style>
                 </Label.Style>
             </Label>
-            <Label Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="2,205,0,0" Name="label8" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200">
+            <Label Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="2,227,0,0" Name="label8" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200">
                 <Label.Style>
                     <Style TargetType="{x:Type Label}">
                         <Setter Property="Content" Value="Вода"/>
@@ -58,8 +58,8 @@
                 </Label.Style>
             </Label>
 
-            <ComboBox IsEnabled="False" ItemsSource="{Binding Path=database.inertTypes}" SelectedValue="{Binding Path=receipt.inert1Type_ID}" DisplayMemberPath="typeName" SelectedValuePath="typeID" Name="cmbx_Inert1" Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="2,227,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200"/>
-            <Label Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="2,227,0,0" Name="label10" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200">
+            <ComboBox IsEnabled="False" ItemsSource="{Binding Path=database.inertTypes}" SelectedValue="{Binding Path=receipt.inert1Type_ID}" DisplayMemberPath="typeName" SelectedValuePath="typeID" Name="cmbx_Inert1" Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="2,249,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200"/>
+            <Label Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="2,249,0,0" Name="label10" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200">
                 <Label.Style>
                     <Style TargetType="{x:Type Label}">
                         <Setter Property="Content" Value="{Binding ElementName=cmbx_Inert1, Path=SelectedItem.typeName}" />
@@ -71,8 +71,8 @@
                     </Style>
                 </Label.Style>
             </Label>
-            <ComboBox IsEnabled="False" ItemsSource="{Binding Path=database.inertTypes}" SelectedValue="{Binding Path=receipt.inert2Type_ID}" DisplayMemberPath="typeName" SelectedValuePath="typeID" Name="cmbx_Inert2" Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="2,249,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200" />
-            <Label Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="2,249,0,0" Name="label19" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200" >
+            <ComboBox IsEnabled="False" ItemsSource="{Binding Path=database.inertTypes}" SelectedValue="{Binding Path=receipt.inert2Type_ID}" DisplayMemberPath="typeName" SelectedValuePath="typeID" Name="cmbx_Inert2" Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="2,271,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200" />
+            <Label Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="2,271,0,0" Name="label19" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200" >
                 <Label.Style>
                     <Style TargetType="{x:Type Label}">
                         <Setter Property="Content" Value="{Binding ElementName=cmbx_Inert2, Path=SelectedItem.typeName}"/>
@@ -84,8 +84,8 @@
                     </Style>
                 </Label.Style>
             </Label>
-            <ComboBox  IsEnabled="False" ItemsSource="{Binding Path=database.inertTypes}" SelectedValue="{Binding Path=receipt.inert3Type_ID}" DisplayMemberPath="typeName" SelectedValuePath="typeID" Name="cmbx_Inert3" Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="2,271,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200"/>
-            <Label Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="2,271,0,0" Name="lbl_inert3" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200">
+            <ComboBox  IsEnabled="False" ItemsSource="{Binding Path=database.inertTypes}" SelectedValue="{Binding Path=receipt.inert3Type_ID}" DisplayMemberPath="typeName" SelectedValuePath="typeID" Name="cmbx_Inert3" Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="2,293,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200"/>
+            <Label Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="2,293,0,0" Name="lbl_inert3" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200">
                 <Label.Style>
                     <Style TargetType="{x:Type Label}">
                         <Setter Property="Content" Value="{Binding ElementName=cmbx_Inert3, Path=SelectedItem.typeName}"/>
@@ -97,10 +97,10 @@
                     </Style>
                 </Label.Style>
             </Label>
-            <ComboBox  IsEnabled="False" ItemsSource="{Binding Path=database.additiveTypes}" SelectedValue="{Binding Path=receipt.additive1Type_ID}" DisplayMemberPath="typeName" SelectedValuePath="typeID" Name="cmbx_Additive1" Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="2,293,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200"/>
-            <ComboBox  IsEnabled="False" ItemsSource="{Binding Path=database.additiveTypes}" SelectedValue="{Binding Path=receipt.additive2Type_ID}" DisplayMemberPath="typeName" SelectedValuePath="typeID" Name="cmbx_Additive2" Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="2,293,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200"/>
-            <ComboBox  IsEnabled="False" ItemsSource="{Binding Path=database.additiveTypes}" SelectedValue="{Binding Path=receipt.additive3Type_ID}" DisplayMemberPath="typeName" SelectedValuePath="typeID" Name="cmbx_Additive3" Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="2,293,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200"/>
-            <Label Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="2,293,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200">
+            <ComboBox  IsEnabled="False" ItemsSource="{Binding Path=database.additiveTypes}" SelectedValue="{Binding Path=receipt.additive1Type_ID}" DisplayMemberPath="typeName" SelectedValuePath="typeID" Name="cmbx_Additive1" Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="2,315,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200"/>
+            <ComboBox  IsEnabled="False" ItemsSource="{Binding Path=database.additiveTypes}" SelectedValue="{Binding Path=receipt.additive2Type_ID}" DisplayMemberPath="typeName" SelectedValuePath="typeID" Name="cmbx_Additive2" Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="2,315,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200"/>
+            <ComboBox  IsEnabled="False" ItemsSource="{Binding Path=database.additiveTypes}" SelectedValue="{Binding Path=receipt.additive3Type_ID}" DisplayMemberPath="typeName" SelectedValuePath="typeID" Name="cmbx_Additive3" Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="2,315,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200"/>
+            <Label Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="2,315,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200">
                 <Label.Style>
                     <Style TargetType="{x:Type Label}">
                         <Setter Property="Content" Value="{Binding ElementName=cmbx_Additive1, Path=SelectedItem.typeName}"/>
@@ -112,7 +112,7 @@
                     </Style>
                 </Label.Style>
             </Label>
-            <Label Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="2,315,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200">
+            <Label Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="2,337,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200">
                 <Label.Style>
                     <Style TargetType="{x:Type Label}">
                         <Setter Property="Content" Value="{Binding ElementName=cmbx_Additive2, Path=SelectedItem.typeName}"/>
@@ -124,7 +124,7 @@
                     </Style>
                 </Label.Style>
             </Label>
-            <Label Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="2,337,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200">
+            <Label Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="2,359,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200">
                 <Label.Style>
                     <Style TargetType="{x:Type Label}">
                         <Setter Property="Content" Value="{Binding ElementName=cmbx_Additive3, Path=SelectedItem.typeName}"/>
@@ -136,7 +136,7 @@
                     </Style>
                 </Label.Style>
             </Label>
-            <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="201,183,0,0" Name="label16" VerticalAlignment="Top" Width="90" Padding="0">
+            <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="201,205,0,0" Name="label16" VerticalAlignment="Top" Width="90" Padding="0">
                 <Label.Style>
                     <Style TargetType="{x:Type Label}">
                         <Setter Property="Content" Value="{Binding Path=cementVol}"/>
@@ -148,7 +148,7 @@
                     </Style>
                 </Label.Style>
             </Label>
-            <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="201,205,0,0" Name="label14" VerticalAlignment="Top" Width="90" Padding="0">
+            <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="201,227,0,0" Name="label14" VerticalAlignment="Top" Width="90" Padding="0">
                 <Label.Style>
                     <Style TargetType="{x:Type Label}">
                         <Setter Property="Content" Value="{Binding Path=waterVol}"/>
@@ -160,7 +160,7 @@
                     </Style>
                 </Label.Style>
             </Label>
-            <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="201,227,0,0" Name="label13" Padding="0" VerticalAlignment="Top" Width="90">
+            <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="201,249,0,0" Name="label13" Padding="0" VerticalAlignment="Top" Width="90">
                 <Label.Style>
                     <Style TargetType="{x:Type Label}">
                         <Setter Property="Content" Value="{Binding Path=inert1Vol}"/>
@@ -172,7 +172,7 @@
                     </Style>
                 </Label.Style>
             </Label>
-            <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="201,249,0,0" Name="label20" Padding="0" VerticalAlignment="Top" Width="90">
+            <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="201,271,0,0" Name="label20" Padding="0" VerticalAlignment="Top" Width="90">
                 <Label.Style>
                     <Style TargetType="{x:Type Label}">
                         <Setter Property="Content" Value="{Binding Path=inert2Vol}"/>
@@ -184,7 +184,7 @@
                     </Style>
                 </Label.Style>
             </Label>
-            <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="201,271,0,0" Name="label22" Padding="0" VerticalAlignment="Top" Width="90">
+            <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="201,293,0,0" Name="label22" Padding="0" VerticalAlignment="Top" Width="90">
                 <Label.Style>
                     <Style TargetType="{x:Type Label}">
                         <Setter Property="Content" Value="{Binding Path=inert3Vol}"/>
@@ -196,7 +196,7 @@
                     </Style>
                 </Label.Style>
             </Label>
-            <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="201,315,0,0" Padding="0" VerticalAlignment="Top" Width="90">
+            <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="201,337,0,0" Padding="0" VerticalAlignment="Top" Width="90">
                 <Label.Style>
                     <Style TargetType="{x:Type Label}">
                         <Setter Property="Content" Value="{Binding Path=additive2Vol}"/>
@@ -208,7 +208,7 @@
                     </Style>
                 </Label.Style>
             </Label>
-            <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="201,337,0,0" Padding="0" VerticalAlignment="Top" Width="90">
+            <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="201,359,0,0" Padding="0" VerticalAlignment="Top" Width="90">
                 <Label.Style>
                     <Style TargetType="{x:Type Label}">
                         <Setter Property="Content" Value="{Binding Path=additive3Vol}"/>
@@ -220,7 +220,7 @@
                     </Style>
                 </Label.Style>
             </Label>
-            <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="201,293,0,0" Padding="0" VerticalAlignment="Top" Width="90">
+            <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="201,315,0,0" Padding="0" VerticalAlignment="Top" Width="90">
                 <Label.Style>
                     <Style TargetType="{x:Type Label}">
                         <Setter Property="Content" Value="{Binding Path=additive1Vol}"/>
@@ -232,8 +232,8 @@
                     </Style>
                 </Label.Style>
             </Label>
-            <Label Background="Silver" BorderBrush="Black" BorderThickness="1" Content="Сделано, кг" FontSize="14" FontWeight="Bold" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="290,161,0,0" Name="label2" Padding="0" VerticalAlignment="Top" Width="90" />
-            <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="290,183,0,0" Name="label3" Padding="0" VerticalAlignment="Top" Width="90">
+            <Label Background="Silver" BorderBrush="Black" BorderThickness="1" Content="Сделано, кг" FontSize="14" FontWeight="Bold" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="290,183,0,0" Name="label2" Padding="0" VerticalAlignment="Top" Width="90" />
+            <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="290,205,0,0" Name="label3" Padding="0" VerticalAlignment="Top" Width="90">
                 <Label.Style>
                     <Style TargetType="{x:Type Label}">
                         <Style.Triggers>
@@ -245,7 +245,7 @@
                     </Style>
                 </Label.Style>
             </Label>
-            <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="290,205,0,0" Name="label4" Padding="0" VerticalAlignment="Top" Width="90">
+            <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="290,227,0,0" Name="label4" Padding="0" VerticalAlignment="Top" Width="90">
                 <Label.Style>
                     <Style TargetType="{x:Type Label}">
                         <Style.Triggers>
@@ -257,7 +257,7 @@
                     </Style>
                 </Label.Style>
             </Label>
-            <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="290,227,0,0" Name="label6" Padding="0" VerticalAlignment="Top" Width="90">
+            <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="290,249,0,0" Name="label6" Padding="0" VerticalAlignment="Top" Width="90">
                 <Label.Style>
                     <Style TargetType="{x:Type Label}">
                         <Style.Triggers>
@@ -269,7 +269,7 @@
                     </Style>
                 </Label.Style>
             </Label>
-            <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="290,249,0,0" Name="label7" Padding="0" VerticalAlignment="Top" Width="90">
+            <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="290,271,0,0" Name="label7" Padding="0" VerticalAlignment="Top" Width="90">
                 <Label.Style>
                     <Style TargetType="{x:Type Label}">
                         <Style.Triggers>
@@ -281,7 +281,7 @@
                     </Style>
                 </Label.Style>
             </Label>
-            <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="290,271,0,0" Name="label9" Padding="0" VerticalAlignment="Top" Width="90">
+            <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="290,293,0,0" Name="label9" Padding="0" VerticalAlignment="Top" Width="90">
                 <Label.Style>
                     <Style TargetType="{x:Type Label}">
                         <Style.Triggers>
@@ -293,7 +293,7 @@
                     </Style>
                 </Label.Style>
             </Label>
-            <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="290,293,0,0" Padding="0" VerticalAlignment="Top" Width="90">
+            <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="290,315,0,0" Padding="0" VerticalAlignment="Top" Width="90">
                 <Label.Style>
                     <Style TargetType="{x:Type Label}">
                         <Style.Triggers>
@@ -305,7 +305,7 @@
                     </Style>
                 </Label.Style>
             </Label>
-            <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="290,315,0,0" Padding="0" VerticalAlignment="Top" Width="90">
+            <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="290,337,0,0" Padding="0" VerticalAlignment="Top" Width="90">
                 <Label.Style>
                     <Style TargetType="{x:Type Label}">
                         <Style.Triggers>
@@ -317,7 +317,7 @@
                     </Style>
                 </Label.Style>
             </Label>
-            <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="290,337,0,0" Padding="0" VerticalAlignment="Top" Width="90">
+            <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="290,359,0,0" Padding="0" VerticalAlignment="Top" Width="90">
                 <Label.Style>
                     <Style TargetType="{x:Type Label}">
                         <Style.Triggers>

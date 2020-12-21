@@ -1,25 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Controls;
 using AS_Library.Link;
-using System.Windows.Threading;
 using System.ComponentModel;
 using _2048_Rbu.Classes;
-using Microsoft.EntityFrameworkCore.Internal;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using _2048_Rbu.Interfaces;
 using AS_Library.Annotations;
-using Lib_2048.Classes;
+using AsuBetonLibrary.Abstract;
+using AsuBetonLibrary.Readers;
+using AsuBetonLibrary.Services;
 using Opc.UaFx;
 using Opc.UaFx.Client;
 
 namespace _2048_Rbu.Elements.Control
 {
-    /// <summary>
-    /// Логика взаимодействия для el_AutoControl.xaml
-    /// </summary>
     public partial class ElTabl : IElementsUpdater
     {
         public ViewModelTabl _viewmodelTabl;
@@ -29,11 +25,11 @@ namespace _2048_Rbu.Elements.Control
             InitializeComponent();
         }
 
-        public void Initialize()
+        public void Initialize(OpcServer.OpcList opcName)
         {
-            _viewmodelTabl = new ViewModelTabl(OpcServer.OpcList.Rbu);
-            this.DataContext = _viewmodelTabl;
-            
+            _viewmodelTabl = new ViewModelTabl(opcName);
+            DataContext = _viewmodelTabl;
+
         }
         public void Subscribe()
         {
@@ -44,8 +40,12 @@ namespace _2048_Rbu.Elements.Control
         }
     }
 
-    public class ViewModelTabl : UserControl, INotifyPropertyChanged
+    public sealed class ViewModelTabl : UserControl, INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private TasksReader TasksReader { get; set; } = new TasksReader();
+        private RecipesReader RecipesReader { get; set; } = new RecipesReader();//
         private OPC_client _opc;
         private OpcServer.OpcList _opcName;
         private long _id;
@@ -82,29 +82,32 @@ namespace _2048_Rbu.Elements.Control
             {
             }
         }
-
-        private TaskTable GetRecipe(long id)
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            using (DbRbu db = new DbRbu())
-            {
-                var task = db.TaskTables.Where(x => x.Id == id);
-
-                return (TaskTable)task;
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        //public Orders order { get; set; }
-        private TaskTable _tasktables;
-        public TaskTable TaskTables
+        private ObservableCollection<ApiTask> _tasks;
+        public ObservableCollection<ApiTask> Tasks
         {
-            get { return _tasktables; }
+            get { return _tasks; }
             set
             {
-                _tasktables = value;
-                OnPropertyChanged(nameof(TaskTables));
+                _tasks = value;
+                OnPropertyChanged(nameof(Tasks));
             }
         }
-        //public Reports report { get; set; }
+
+        private ApiTask _selTask;
+        public ApiTask SelTask
+        {
+            get { return _selTask; }
+            set
+            {
+                _selTask = value;
+                OnPropertyChanged(nameof(SelTask));
+            }
+        }
 
         #region Задано
         private float? _cementVol;
@@ -302,7 +305,7 @@ namespace _2048_Rbu.Elements.Control
             {
                 try
                 {
-                    TaskTables = GetRecipe(_id);
+                    GetTask(_id);
                     //order = database.orders.SingleOrDefault(x => x.orderID == PLC.GetValue("PCAY_01"));
                     //receipt = database.receipts.SingleOrDefault(x => x.receiptID == order.receiptID);
                     //report = database.reports.SingleOrDefault(x => x.orderID == order.orderID && x.cycleNum == PLC.GetValue("PCAY_14"));
@@ -333,7 +336,7 @@ namespace _2048_Rbu.Elements.Control
             else
             {
                 //order = null;
-                TaskTables = null;
+                //TaskTables = null;
                 //report = null;
 
                 cementVol = null;
@@ -355,12 +358,23 @@ namespace _2048_Rbu.Elements.Control
                 additive3Vol_f = null;
             }
         }
-        public event PropertyChangedEventHandler PropertyChanged;
 
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        private void GetTask(long id)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            UpdateTasks();
+            UpdateSelTask(id);
+        }
+        private ContainersReader ContainersReader { get; set; }
+        private void UpdateTasks()
+        {
+            Tasks = new ObservableCollection<ApiTask>(TasksReader.ListTasks());
+
+            var recipe= new ObservableCollection<ApiRecipe>(RecipesReader.ListRecipes());
+            var selrecipe = recipe.FirstOrDefault(x => x.Id == id);
+        }
+        private void UpdateSelTask(long id)
+        {
+            SelTask = Tasks.FirstOrDefault(x => x.Id == id);
         }
     }
 }

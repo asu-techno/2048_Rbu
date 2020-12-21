@@ -10,8 +10,8 @@
             <Image Name="ImgKm" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Visibility="{Binding VisOn}"/>
             <Image Name="ImgAlarm" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Visibility="{Binding VisAlarm}"/>
         </Grid>
-        <TextBlock Name="TbcName" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,20,0,0" TextAlignment="Right" FontSize="14" Text="VXXX"/>
-        <Label Name="LblMode" VerticalAlignment="Top" HorizontalAlignment="Left" Width="12" Height="12" Margin="70,0,0,0" BorderThickness="1" BorderBrush="Black" Background="Yellow">
+        <TextBlock Name="TbcName" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,20,0,0" TextAlignment="Right" FontSize="14" Text="VXXX"/>
+        <Label Name="LblMode" VerticalAlignment="Center" HorizontalAlignment="Center" Width="12" Height="12" Margin="70,0,0,0" BorderThickness="1" BorderBrush="Black" Background="Yellow">
             <Label.Style>
                 <Style TargetType="{x:Type Label}">
                     <Setter Property="Visibility" Value="Visible"/>
@@ -26,7 +26,7 @@
                 <TextBlock Text="Р" FontSize="10" Margin="-3,-7"></TextBlock>
             </Label.Content>
         </Label>
-        <Rectangle Name="RectObject" Width="10" Height="10" Margin="0" Fill="Transparent" StrokeThickness="0.5" Stroke="Black" Opacity="0" MouseLeftButtonUp="ValveGrid_OnMouseRightButtonDown"/>
+        <Rectangle Name="RectObject" Width="10" Height="10" Margin="0" Fill="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center" StrokeThickness="0.5" Stroke="Black" Opacity="0" MouseLeftButtonUp="ValveGrid_OnMouseRightButtonDown"/>
         <Popup Name="PopupObject" Placement="Bottom" StaysOpen="False">
             <Border BorderBrush="Black" BorderThickness="1">
                 <Grid Background="Beige" Width="180">

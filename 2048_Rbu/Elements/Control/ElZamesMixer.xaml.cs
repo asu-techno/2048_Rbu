@@ -1,186 +1,344 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
 using AS_Library.Link;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using _2048_Rbu.Classes;
+using _2048_Rbu.Interfaces;
+using AsuBetonLibrary.Abstract;
+using AsuBetonLibrary.Readers;
+using Opc.UaFx;
+using Opc.UaFx.Client;
+using System.Linq;
 
 namespace _2048_Rbu.Elements.Control
 {
-    /// <summary>
-    /// Логика взаимодействия для el_Zames.xaml
-    /// </summary>
-    public partial class ElZamesMixer : UserControl
-     {
-        public DispatcherTimer Timer;
-        public ModbusMasterDevice PLC;
-        public viewmodel_Mixer viewmodelMixer;
+    public partial class ElZamesMixer : IElementsUpdater
+    {
+        public ViewModelMixer _viewModelMixer;
+        private OpcServer.OpcList _opcName;
 
         public ElZamesMixer()
         {
             InitializeComponent();
         }
 
-        public void Initialize()
+        public void Initialize(OpcServer.OpcList opcName)
         {
-            this.PLC = PLC;
+            _opcName = opcName;
+            _viewModelMixer = new ViewModelMixer(opcName);
+            DataContext = _viewModelMixer;
 
-            viewmodelMixer = new viewmodel_Mixer();
-            this.DataContext = viewmodelMixer;
-
-            Timer = new DispatcherTimer();
-            Timer.Interval = new TimeSpan(0, 0, 0, 0, 25);
-            Timer.Tick += new EventHandler(Timer_Tick);
-            Timer.Start();
         }
 
-        void Timer_Tick(object sender, EventArgs e)
+        public void Subscribe()
         {
-            //if (database != null)
-            //    viewmodelMixer.Update();
+            _viewModelMixer.Subscribe();
+        }
+
+        public void Unsubscribe()
+        {
         }
 
         private void lbl_t_razgr_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            //Window_setParameter window = new Window_setParameter(PLC, "Длительность разгрузки, c", 0, 100, "PCAX_15", "PCX_15", "PCAY_15", 0, controlEvents);
-            //window.Show();
+            object btn = e.Source;
+
+            Methods.SetParameter(t_razgr, btn, _opcName, "Длительность разгрузки, c", 0, 100, "PAR_TimeFullUnload", "Real", null, 0, 0);
         }
     }
 
-       public class viewmodel_Mixer : INotifyPropertyChanged
-       {
-           public event PropertyChangedEventHandler PropertyChanged;
+    public class ViewModelMixer : INotifyPropertyChanged
+    {
+        public event PropertyChangedEventHandler PropertyChanged;
 
-           private string _receiptName;
-           public string receiptName
-           {
-               get { return _receiptName; }
-               set
-               {
-                   _receiptName = value;
-                   if (PropertyChanged != null)
-                       PropertyChanged(this, new PropertyChangedEventArgs("receiptName"));
-               }
-           }
-           private int? _orderCycles;
-           public int? orderCycles
-           {
-               get { return _orderCycles; }
-               set
-               {
-                   _orderCycles = value;
-                   if (PropertyChanged != null)
-                       PropertyChanged(this, new PropertyChangedEventArgs("orderCycles"));
-               }
-           }
-           private int? _orderActCycle;
-           public int? orderActCycle
-           {
-               get { return _orderActCycle; }
-               set
-               {
-                   _orderActCycle = value;
-                   if (PropertyChanged != null)
-                       PropertyChanged(this, new PropertyChangedEventArgs("orderActCycle"));
-               }
-           }
-           private int? _mixingProcess;
-           public int? mixingProcess
-           {
-               get { return _mixingProcess; }
-               set
-               {
-                   _mixingProcess = value;
-                   if (PropertyChanged != null)
-                       PropertyChanged(this, new PropertyChangedEventArgs("mixingProcess"));
-               }
-           }
-           private string _timeProcess;
-           public string timeProcess
-           {
-               get { return _timeProcess; }
-               set
-               {
-                   _timeProcess = value;
-                   if (PropertyChanged != null)
-                       PropertyChanged(this, new PropertyChangedEventArgs("timeProcess"));
-               }
-           }
-           private int? _razgruzkaProcess;
-           public int? razgruzkaProcess
-           {
-               get { return _razgruzkaProcess; }
-               set
-               {
-                   _razgruzkaProcess = value;
-                   if (PropertyChanged != null)
-                       PropertyChanged(this, new PropertyChangedEventArgs("razgruzkaProcess"));
-               }
-           }
-           private string _timeRazgruzka;
-           public string timeRazgruzka
-           {
-               get { return _timeRazgruzka; }
-               set
-               {
-                   _timeRazgruzka = value;
-                   if (PropertyChanged != null)
-                       PropertyChanged(this, new PropertyChangedEventArgs("timeRazgruzka"));
-               }
-           }
+        private RecipesReader RecipesReader { get; set; } = new RecipesReader();
+        private OPC_client _opc;
+        private OpcServer.OpcList _opcName;
+        private long _id;
+
+        private int _partialUnload, _fullUnload;
+
+        public ViewModelMixer(OpcServer.OpcList opcName)
+        {
+            _opcName = opcName;
+        }
+
+        public void Subscribe()
+        {
+            CreateSubscription();
+        }
+        public void Unsubscribe()
+        {
+        }
+
+        private void CreateSubscription()
+        {
+            _opc = OpcServer.GetInstance().GetOpc(_opcName);
+            var idItem = new OpcMonitoredItem(_opc.cl.GetNode("TaskID_mixer"), OpcAttribute.Value);
+            idItem.DataChangeReceived += HandleIdChanged;
+            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(idItem);
+
+            var orderActItem = new OpcMonitoredItem(_opc.cl.GetNode("CurrentMixing_batchNum"), OpcAttribute.Value);
+            orderActItem.DataChangeReceived += HandleOrderActChanged;
+            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(orderActItem);
+
+            var orderItem = new OpcMonitoredItem(_opc.cl.GetNode("PAR_BatchesQuantity"), OpcAttribute.Value);
+            orderItem.DataChangeReceived += HandleOrderChanged;
+            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(orderItem);
+
+            var mixingItem = new OpcMonitoredItem(_opc.cl.GetNode("Current_MixingTime"), OpcAttribute.Value);
+            mixingItem.DataChangeReceived += HandleMixingChanged;
+            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(mixingItem);
+
+            var timePrItem = new OpcMonitoredItem(_opc.cl.GetNode("PAR_MixingTime"), OpcAttribute.Value);
+            timePrItem.DataChangeReceived += HandleTimeProcessChanged;
+            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(timePrItem); 
+
+            var razgruzkaItem = new OpcMonitoredItem(_opc.cl.GetNode("Current_UnloadTime"), OpcAttribute.Value);
+            razgruzkaItem.DataChangeReceived += HandleRazgruzkaChanged;
+            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(razgruzkaItem);
+
+            var partialUnloadItem = new OpcMonitoredItem(_opc.cl.GetNode("PAR_TimePartialUnload"), OpcAttribute.Value);
+            partialUnloadItem.DataChangeReceived += HandlePartialUnloadChanged;
+            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(partialUnloadItem);
+
+            var fullUnloadItem = new OpcMonitoredItem(_opc.cl.GetNode("PAR_TimeFullUnload"), OpcAttribute.Value);
+            fullUnloadItem.DataChangeReceived += HandleFullUnloadChanged;
+            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(fullUnloadItem);
+        }
+
+        private void HandleIdChanged(object sender, OpcDataChangeReceivedEventArgs e)
+        {
+            try
+            {
+                _id = long.Parse(e.Item.Value.ToString());
+                GetTable();
+            }
+            catch (Exception exception)
+            {
+            }
+        }
+
+        private void HandleOrderActChanged(object sender, OpcDataChangeReceivedEventArgs e)
+        {
+            try
+            {
+                OrderActCycle = int.Parse(e.Item.Value.ToString());
+            }
+            catch (Exception exception)
+            {
+            }
+        }
+
+        private void HandleOrderChanged(object sender, OpcDataChangeReceivedEventArgs e)
+        {
+            try
+            {
+                OrderCycle = int.Parse(e.Item.Value.ToString());
+            }
+            catch (Exception exception)
+            {
+            }
+        }
+
+        private void HandleMixingChanged(object sender, OpcDataChangeReceivedEventArgs e)
+        {
+            try
+            {
+                MixingProcess = int.Parse(e.Item.Value.ToString());
+            }
+            catch (Exception exception)
+            {
+            }
+        }
+
+        private void HandleTimeProcessChanged(object sender, OpcDataChangeReceivedEventArgs e)
+        {
+            try
+            {
+                TimeProcess = int.Parse(e.Item.Value.ToString());
+            }
+            catch (Exception exception)
+            {
+            }
+        }
+
+        private void HandleRazgruzkaChanged(object sender, OpcDataChangeReceivedEventArgs e)
+        {
+            try
+            {
+                RazgruzkaProcess = int.Parse(e.Item.Value.ToString());
+            }
+            catch (Exception exception)
+            {
+            }
+        }
+
+        private void HandlePartialUnloadChanged(object sender, OpcDataChangeReceivedEventArgs e)
+        {
+            try
+            {
+                _partialUnload = int.Parse(e.Item.Value.ToString());
+                TimeUnload();
+            }
+            catch (Exception exception)
+            {
+            }
+        }
+
+        private void HandleFullUnloadChanged(object sender, OpcDataChangeReceivedEventArgs e)
+        {
+            try
+            {
+                _fullUnload = int.Parse(e.Item.Value.ToString());
+                TimeUnload();
+            }
+            catch (Exception exception)
+            {
+            }
+        }
+
+        private void TimeUnload()
+        {
+            TimeRazgruzka = _partialUnload + _fullUnload;
+        }
+
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private ObservableCollection<ApiRecipe> _recipes;
+        public ObservableCollection<ApiRecipe> Recipes
+        {
+            get { return _recipes; }
+            set
+            {
+                _recipes = value;
+                OnPropertyChanged(nameof(Recipes));
+            }
+        }
+
+        private ApiRecipe _selRecipes;
+        public ApiRecipe SelRecipes
+        {
+            get { return _selRecipes; }
+            set
+            {
+                _selRecipes = value;
+                OnPropertyChanged(nameof(SelRecipes));
+            }
+        }
+
+        private int? _orderActCycle;
+        public int? OrderActCycle
+        {
+            get { return _orderActCycle; }
+            set
+            {
+                _orderActCycle = value;
+                OnPropertyChanged(nameof(OrderActCycle));
+            }
+        }
+
+        private int? _orderCycle;
+        public int? OrderCycle
+        {
+            get { return _orderCycle; }
+            set
+            {
+                _orderCycle = value;
+                OnPropertyChanged(nameof(OrderCycle));
+            }
+        }
+
+        private int? _mixingProcess;
+        public int? MixingProcess
+        {
+            get { return _mixingProcess; }
+            set
+            {
+                _mixingProcess = value;
+                OnPropertyChanged(nameof(MixingProcess));
+            }
+        }
+
+        private int? _timeProcess;
+        public int? TimeProcess
+        {
+            get { return _timeProcess; }
+            set
+            {
+                _timeProcess = value;
+                OnPropertyChanged(nameof(TimeProcess));
+            }
+        }
+
+        private int? _razgruzkaProcess;
+        public int? RazgruzkaProcess
+        {
+            get { return _razgruzkaProcess; }
+            set
+            {
+                _razgruzkaProcess = value;
+                OnPropertyChanged(nameof(RazgruzkaProcess));
+            }
+        }
+        private int? _timeRazgruzka;
+        public int? TimeRazgruzka
+        {
+            get { return _timeRazgruzka; }
+            set
+            {
+                _timeRazgruzka = value;
+                OnPropertyChanged(nameof(TimeRazgruzka));
+            }
+        }
 
 
-           //Database database;
-           //ModbusMasterDevice PLC;
+        public void GetTable()
+        {
+            if (_id != 0)
+            {
+                try
+                {
+                    GetTask(_id);
+                }
+                catch (Exception ex)
+                {
+                    System.IO.File.WriteAllText(@"Log\log.txt", DateTime.Now + " - " + ex.Message + "->" + _id);
+                }
+            }
+            else
+            {
+                Recipes = null;
+                SelRecipes = null;
+                OrderActCycle = null;
+                OrderCycle = null;
+                MixingProcess = null;
+                TimeProcess = null;
+                RazgruzkaProcess = null;
+                TimeRazgruzka = null;
+            }
+        }
 
-           public viewmodel_Mixer(/*ModbusMasterDevice PLC, Database database*/)
-           {
-               //this.PLC = PLC;
-               //this.database = database;
-               //Update();
-           }
+        private void GetTask(long id)
+        {
+            UpdateTasks();
+            UpdateSelTask(id);
+        }
 
-           //public void Update()
-           //{
-           //    if (PLC.GetValue("PCAY_08") != 0)
-           //    {
-           //        try
-           //        {
-           //            Orders tmp_order = database.orders.SingleOrDefault(x => x.orderID == PLC.GetValue("PCAY_08"));
-           //            Receipts tmp_receipt = database.receipts.SingleOrDefault(x => x.receiptID == tmp_order.receiptID);
-
-           //            receiptName = tmp_receipt.receiptName;
-           //            orderCycles = tmp_order.orderCycles;
-           //            orderActCycle = PLC.GetValue("PCAY_101");
-           //            mixingProcess = PLC.GetValue("PCAY_12");
-           //            timeProcess = WordToInt(PLC.GetValue("PCAY_09")).ToString() + " с";
-           //            razgruzkaProcess = PLC.GetValue("PCAY_13");
-           //            timeRazgruzka = WordToInt(PLC.GetValue("PCAY_10")).ToString() + " с";
-           //        }
-           //        catch (Exception ex)
-           //        {
-           //             System.IO.File.WriteAllText(@"Log\log.txt", DateTime.Now + " - " + ex.Message + "->" + PLC.GetValue("PCAY_08"));
-           //        }
-           //    }
-           //    else
-           //    {
-           //        receiptName = null;
-           //        orderCycles = null;
-           //        orderActCycle = null;
-           //        mixingProcess = null;
-           //        timeProcess = null;
-           //        razgruzkaProcess = null;
-           //        timeRazgruzka = null;
-           //    }
-           //}
-
-           //public int WordToInt(int val)
-           //{
-           //    if (val <= 32767)
-           //        return val;
-           //    else
-           //        return (val - 65536);
-           //}
-       }
+        private void UpdateTasks()
+        {
+            Recipes = new ObservableCollection<ApiRecipe>(RecipesReader.ListRecipes());
+        }
+        private void UpdateSelTask(long id)
+        {
+            SelRecipes = Recipes.FirstOrDefault(x => x.Id == id);
+        }
+    }
 }
- 

@@ -4,7 +4,7 @@
              Width="250" Height="110" BorderBrush="Black" BorderThickness="1">
     <UserControl.Style>
         <Style TargetType="{x:Type UserControl}">
-            <Setter Property="Visibility" Value="Visible" />
+            <Setter Property="Visibility" Value="Collapsed" />
             <Style.Triggers>
                 <DataTrigger Binding="{Binding Vis}" Value="True">
                     <Setter Property="Visibility" Value="Visible" />

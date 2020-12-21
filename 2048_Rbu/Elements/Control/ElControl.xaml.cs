@@ -1,24 +1,22 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using AS_Library.Link;
 using _2048_Rbu.Classes;
-using _2048_Rbu.Classes;
 using _2048_Rbu.Interfaces;
 using AS_Library.Annotations;
+using Opc.UaFx;
+using Opc.UaFx.Client;
 
 namespace _2048_Rbu.Elements.Control
 {
-    /// <summary>
-    /// Interaction logic for el_SimpleValve.xaml
-    /// </summary>
-    public partial class ElControl : INotifyPropertyChanged
+    public partial class ElControl : INotifyPropertyChanged, IElementsUpdater
     {
         private OPC_client _opc;
         private OpcServer.OpcList _opcName;
-        private bool _err;
 
         private bool _running;
         public bool Running
@@ -67,35 +65,68 @@ namespace _2048_Rbu.Elements.Control
             InitializeComponent();
         }
 
-        public void Initialize(OpcServer.OpcList opcName, string marhName, string marhOpcName)
+        public void Initialize(OpcServer.OpcList opcName)
         {
             _opcName = opcName;
-
+            
             DataContext = this;
         }
 
-        public void Update()
+        public void Subscribe()
         {
-            if (_opc != null)
+            CreateSubscription();
+        }
+        public void Unsubscribe()
+        {
+        }
+
+        private void CreateSubscription()
+        {
+            _opc = OpcServer.GetInstance().GetOpc(_opcName);
+            var runningItem = new OpcMonitoredItem(_opc.cl.GetNode(""), OpcAttribute.Value);
+            runningItem.DataChangeReceived += HandleRunningChanged;
+            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(runningItem);
+
+            var rdyStartItem = new OpcMonitoredItem(_opc.cl.GetNode(""), OpcAttribute.Value);
+            rdyStartItem.DataChangeReceived += HandleRdyStartChanged;
+            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(rdyStartItem);
+
+            var rdyStopItem = new OpcMonitoredItem(_opc.cl.GetNode(""), OpcAttribute.Value);
+            rdyStopItem.DataChangeReceived += HandleRdyStopChanged;
+            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(rdyStopItem);
+        }
+
+        private void HandleRunningChanged(object sender, OpcDataChangeReceivedEventArgs e)
+        {
+            try
             {
-                Running = _opc.cl.ReadBool("Marh_isRunning", out _err);
-                ReadyStart = _opc.cl.ReadBool("btn_rdy_Start", out _err);
-                ReadyStop = _opc.cl.ReadBool("btn_rdy_Stop", out _err);
+                Running = bool.Parse(e.Item.Value.ToString());
             }
-            else
+            catch (Exception exception)
             {
-                _opc = OpcServer.GetInstance().GetOpc(_opcName);
             }
         }
 
-        private void Rect_OnMouseEnter(object sender, MouseEventArgs e)
+        private void HandleRdyStartChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
-            //rect_object.Opacity = 1;
+            try
+            {
+                ReadyStart = bool.Parse(e.Item.Value.ToString());
+            }
+            catch (Exception exception)
+            {
+            }
         }
 
-        private void Rect_OnMouseLeave(object sender, MouseEventArgs e)
+        private void HandleRdyStopChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
-            //rect_object.Opacity = 0;
+            try
+            {
+                ReadyStop = bool.Parse(e.Item.Value.ToString());
+            }
+            catch (Exception exception)
+            {
+            }
         }
 
         private void BtnStart_OnClick(object sender, RoutedEventArgs e)

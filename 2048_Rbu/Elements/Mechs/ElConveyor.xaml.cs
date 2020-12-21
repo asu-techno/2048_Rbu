@@ -159,12 +159,7 @@ namespace _2048_Rbu.Elements.Mechs
                     RectObject.RenderTransform = new RotateTransform(30, 17.5, 17.5);
                     RectObject.Width = ImgKm.Width + 40;
                     RectObject.Height = 20;
-                    RectObject.VerticalAlignment = VerticalAlignment.Top;
-                    RectObject.HorizontalAlignment = HorizontalAlignment.Left;
-                    RectObject.Margin = new Thickness(25, 0, 0, 0);
                 }
-
-                MainGrid.Width = RectObject.Width + 40;
 
                 _typeMech = value;
             }
@@ -181,13 +176,13 @@ namespace _2048_Rbu.Elements.Mechs
                 if (value == Position.Up)
                     LblMode.Margin = new Thickness(0, -40, 0, 0);
                 if (value == Position.RightUp)
-                    LblMode.Margin = new Thickness(100, 10, 0, 0);
+                    LblMode.Margin = new Thickness(0, -100, 85, 0);
                 if (value == Position.Left)
                     LblMode.Margin = new Thickness(2, 35, 0, 0);
                 if (value == Position.Right)
                     LblMode.Margin = new Thickness(0, 17, 0, 0);
                 if (value == Position.LeftDown)
-                    LblMode.Margin = new Thickness(75, 30, 0, 0);
+                    LblMode.Margin = new Thickness(0, 26, 500, 0);
                 if (value == Position.Down)
                     LblMode.Margin = new Thickness(0, 44, 0, 0);
                 if (value == Position.RightDown)
@@ -205,27 +200,27 @@ namespace _2048_Rbu.Elements.Mechs
             {
                 if (value == Position.LeftUp)
                 {
-                    TbcName.Margin = new Thickness(25, 30, 0, 0);
-                    TbcName.HorizontalAlignment = HorizontalAlignment.Left;
-                    TbcName.TextAlignment = TextAlignment.Left;
+                    TbcName.Margin = new Thickness(0, 30, 50, 0);
+                    TbcName.HorizontalAlignment = HorizontalAlignment.Center;
+                    TbcName.TextAlignment = TextAlignment.Center;
                 }
                 if (value == Position.Up)
                 {
-                    TbcName.Margin = new Thickness(0, 5, 140, 0);
+                    TbcName.Margin = new Thickness(0, -120, 130, 0);
                     TbcName.HorizontalAlignment = HorizontalAlignment.Center;
                     TbcName.TextAlignment = TextAlignment.Center;
                 }
                 if (value == Position.RightUp)
                 {
                     TbcName.Margin = new Thickness(0, 0, 16, 0);
-                    TbcName.HorizontalAlignment = HorizontalAlignment.Right;
-                    TbcName.TextAlignment = TextAlignment.Right;
+                    TbcName.HorizontalAlignment = HorizontalAlignment.Center;
+                    TbcName.TextAlignment = TextAlignment.Center;
                 }
                 if (value == Position.Left)
                 {
-                    TbcName.Margin = new Thickness(38, 26, 0, 0);
-                    TbcName.HorizontalAlignment = HorizontalAlignment.Left;
-                    TbcName.TextAlignment = TextAlignment.Left;
+                    TbcName.Margin = new Thickness(0, 26, 550, 0);
+                    TbcName.HorizontalAlignment = HorizontalAlignment.Center;
+                    TbcName.TextAlignment = TextAlignment.Center;
                 }
                 if (value == Position.Right)
                 {
@@ -235,9 +230,9 @@ namespace _2048_Rbu.Elements.Mechs
                 }
                 if (value == Position.LeftDown)
                 {
-                    TbcName.Margin = new Thickness(45, 25, 0, 0);
-                    TbcName.HorizontalAlignment = HorizontalAlignment.Left;
-                    TbcName.TextAlignment = TextAlignment.Left;
+                    TbcName.Margin = new Thickness(60, 25, 0, 0);
+                    TbcName.HorizontalAlignment = HorizontalAlignment.Center;
+                    TbcName.TextAlignment = TextAlignment.Center;
                 }
                 if (value == Position.Down)
                 {

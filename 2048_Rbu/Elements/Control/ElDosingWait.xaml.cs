@@ -5,17 +5,15 @@ using System.Windows;
 using AS_Library.Link;
 using _2048_Rbu.Classes;
 using AS_Library.Annotations;
-using _2048_Rbu.Classes;
+using _2048_Rbu.Interfaces;
 using Opc.UaFx;
 using Opc.UaFx.Client;
 
 namespace _2048_Rbu.Elements.Control
 {
-    /// <summary>
-    /// Логика взаимодействия для el_AutoControl.xaml
-    /// </summary>
-    public partial class ElDosingWait : INotifyPropertyChanged
+    public partial class ElDosingWait : INotifyPropertyChanged, IElementsUpdater
     {
+        private OPC_client _opc;
         private OpcServer.OpcList _opcName;
 
         private bool _vis;
@@ -44,14 +42,37 @@ namespace _2048_Rbu.Elements.Control
             DataContext = this;
         }
 
-        void Timer_Tick(object sender, EventArgs e)
+        public void Subscribe()
         {
+            CreateSubscription();
+        }
+        public void Unsubscribe()
+        {
+        }
+
+        private void CreateSubscription()
+        {
+            _opc = OpcServer.GetInstance().GetOpc(_opcName);
+            var visItem = new OpcMonitoredItem(_opc.cl.GetNode(""), OpcAttribute.Value);
+            visItem.DataChangeReceived += HandleVisChanged;
+            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(visItem);
+        }
+
+        private void HandleVisChanged(object sender, OpcDataChangeReceivedEventArgs e)
+        {
+            try
+            {
+                Vis = bool.Parse(e.Item.Value.ToString());
+            }
+            catch (Exception exception)
+            {
+            }
         }
 
         private void BtnContinue_OnClick(object sender, RoutedEventArgs e)
         {
-            object btn = e.Source;//здесь
-            Methods.ButtonClick(btn, BtnContinue, "btn_Stop", true, "Дозирование цемента. Продолжить");
+            object btn = e.Source;
+            Methods.ButtonClick(btn, BtnContinue, "btn_Continue", true, "Дозирование цемента. Продолжить");
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
