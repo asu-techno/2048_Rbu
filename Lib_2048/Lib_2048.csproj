@@ -23,7 +23,7 @@
 
   <ItemGroup>
     <Reference Include="AS_Library_v2">
-      <HintPath>..\AS_Library_v2\AS_Library_v2\bin\Debug\AS_Library_v2.dll</HintPath>
+      <HintPath>..\..\..\..\Soft\AS_Library_v2\AS_Library_v2\bin\Debug\AS_Library_v2.dll</HintPath>
     </Reference>
     <Reference Include="Excel">
       <HintPath>..\2048_Rbu\library\Excel.dll</HintPath>

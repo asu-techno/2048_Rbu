@@ -1,0 +1,10 @@
+{
+  "CurrentTaskId": "CurrentTaskId",
+  "MaterialSet": "MaterialSet",
+  "MixingTime": "MixingTime",
+  "PercentOpenGate": "PercentOpenGate",
+  "TimeFullUnload": "TimeFullUnload",
+  "TimePartialUnload": "TimePartialUnload",
+  "BatchesAmount": "BatchesAmount",
+  "MixerVolume": "MixerVolume"
+}

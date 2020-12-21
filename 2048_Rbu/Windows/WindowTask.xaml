@@ -1,0 +1,92 @@
+﻿<Window x:Class="_2048_Rbu.Windows.WindowTask"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:window="clr-namespace:_2048_Rbu.Windows" xmlns:elements="clr-namespace:AsuBetonLibrary.Elements;assembly=AsuBetonLibrary"
+        mc:Ignorable="d" 
+        d:DataContext="{d:DesignInstance Type={x:Type window:NewTaskViewModel}, IsDesignTimeCreatable = False}"
+        Title="Новая заявка" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight" Background="LightGray">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300" />
+            <ColumnDefinition Width="300" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="550"/>
+            </Grid.RowDefinitions>
+            <TextBlock FontWeight="Bold" FontSize="16" Margin="5" Text="Группы рецептов" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <ListBox SelectedItem="{Binding SelRecipeGroup}" ItemsSource="{Binding RecipeGroups}" DisplayMemberPath="Name" Grid.Row="1" Margin="10,0,10,10" FontSize="14"/>
+        </Grid>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="550"/>
+            </Grid.RowDefinitions>
+            <TextBlock FontWeight="Bold" FontSize="16" Margin="0" Text="Список рецептов" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <ListBox SelectedItem="{Binding SelRecipe}" ItemsSource="{Binding SelRecipeGroup.Recipes}" DisplayMemberPath="Name" Margin="10,0,10,10" FontSize="14" Grid.Row="1" />
+        </Grid>
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Label BorderBrush="Black" BorderThickness="0" Content="Выбранный рецепт:" FontSize="16" FontWeight="Bold" Height="Auto" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="0" Name="label9" Padding="0" VerticalAlignment="Center" VerticalContentAlignment="Center" Width="279" Grid.Row="0" />
+            <elements:ElRecipeDetails Grid.Row="1" DataContext="{Binding ElRecipeDetailsViewModel}"/>
+        </Grid>
+        <Grid Grid.Column="3" Height="507" VerticalAlignment="Top" HorizontalAlignment="Center" Width="350">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label BorderBrush="Black" FontSize="16" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="0" Padding="0" Width="Auto" VerticalContentAlignment="Center" Content="Необходимый объем продукта, м³" Height="Auto" VerticalAlignment="Center" BorderThickness="0" FontWeight="Bold" />
+            <Slider Margin="15,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="265" Minimum="0.2" Maximum="10" Value="{Binding Volume}" TickFrequency="0.1" TickPlacement="TopLeft" IsSnapToTickEnabled="True" Grid.Row="1" />
+            <Label BorderBrush="Black" FontSize="16" Height="25" HorizontalAlignment="Right" HorizontalContentAlignment="Center" Margin="0,5,15,5" Padding="0" VerticalAlignment="Top" Width="50" FontWeight="Bold" Content="{Binding Volume, UpdateSourceTrigger=PropertyChanged}" Background="LightBlue" BorderThickness="1" Grid.Row="1" />
+            <TextBlock Text="Объем замеса, м³:" FontSize="16" FontWeight="Normal" Height="Auto" HorizontalAlignment="Left" Margin="15,5,0,5" VerticalAlignment="Center" Grid.Row="3" />
+            <TextBlock Text="Количество замесов:" FontSize="16" FontWeight="Normal" Height="Auto" HorizontalAlignment="Left" Margin="15,5,0,5" VerticalAlignment="Center" Grid.Row="4" />
+            <Button Grid.Row="7" Content="Добавить заявку" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" BorderBrush="Black" Background="LightBlue" Focusable="False" Margin="10" Command="{Binding SaveTaskCommand}">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="IsEnabled" Value="True"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding SelRecipe}" Value="{x:Null}">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Volume}" Value="0">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <TextBlock Background="White" Text="{Binding BatchVolume}" FontSize="16" FontWeight="Bold" Height="25" HorizontalAlignment="Right" Margin="0,5,15,5" TextAlignment="Center" VerticalAlignment="Center" Width="50" Grid.Row="3" />
+            <TextBlock Background="White" Text="{Binding BatchesAmount}" FontSize="16" FontWeight="Bold" Height="25" HorizontalAlignment="Right" Margin="0,5,15,5" TextAlignment="Center" VerticalAlignment="Center" Width="50" Grid.Row="4" />
+            <Label Background="LightGray" BorderBrush="Black" BorderThickness="0" Content="Заказчик" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="5" Padding="0" VerticalAlignment="Center" VerticalContentAlignment="Center" Width="Auto" Grid.Row="5" />
+            <Button Grid.Row="5" Background="LightBlue" Width="20" Height="20" FontSize="16" Margin="0,0,10,0" HorizontalAlignment="Right" VerticalAlignment="Center" ToolTip="Добавить заказчика" Command="{Binding AddCustomerCommand}">
+                <Button.Content>
+                    <Image Source="../Images/img_AddAct_Color.png" />
+                </Button.Content>
+            </Button>
+            <ComboBox Background="White" BorderBrush="Black" BorderThickness="1" ItemsSource="{Binding Customers}" SelectedValue="{Binding SelCustomer}" DisplayMemberPath="Name" FontSize="16" FontWeight="Bold" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="10" VerticalAlignment="Center" Grid.Row="6" />
+        </Grid>
+    </Grid>
+</Window>
