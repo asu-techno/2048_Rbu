@@ -83,15 +83,15 @@ namespace _2048_Rbu.Elements.Control
         private void CreateSubscription()
         {
             _opc = OpcServer.GetInstance().GetOpc(_opcName);
-            var runningItem = new OpcMonitoredItem(_opc.cl.GetNode(""), OpcAttribute.Value);
+            var runningItem = new OpcMonitoredItem(_opc.cl.GetNode("DB_RBU_Control.Work_ON"), OpcAttribute.Value);
             runningItem.DataChangeReceived += HandleRunningChanged;
             OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(runningItem);
 
-            var rdyStartItem = new OpcMonitoredItem(_opc.cl.GetNode(""), OpcAttribute.Value);
+            var rdyStartItem = new OpcMonitoredItem(_opc.cl.GetNode("DB_RBU_Control.rdy_btn_Start"), OpcAttribute.Value);
             rdyStartItem.DataChangeReceived += HandleRdyStartChanged;
             OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(rdyStartItem);
 
-            var rdyStopItem = new OpcMonitoredItem(_opc.cl.GetNode(""), OpcAttribute.Value);
+            var rdyStopItem = new OpcMonitoredItem(_opc.cl.GetNode("DB_RBU_Control.rdy_btn_Stop"), OpcAttribute.Value);
             rdyStopItem.DataChangeReceived += HandleRdyStopChanged;
             OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(rdyStopItem);
         }
@@ -132,13 +132,13 @@ namespace _2048_Rbu.Elements.Control
         private void BtnStart_OnClick(object sender, RoutedEventArgs e)
         {
             object btn = e.Source;
-            Methods.ButtonClick(btn, BtnStart, "btn_Start", true, "Маршрут Старт");
+            Methods.ButtonClick(btn, BtnStart, "DB_RBU_Control.btn_Start", true, "Маршрут Старт");
         }
 
         private void BtnStop_OnClick(object sender, RoutedEventArgs e)
         {
             object btn = e.Source;
-            Methods.ButtonClick(btn, BtnStop, "btn_Stop", true, "Маршрут Стоп");
+            Methods.ButtonClick(btn, BtnStop, "DB_RBU_Control.btn_Stop", true, "Маршрут Стоп");
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

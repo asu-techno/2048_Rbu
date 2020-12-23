@@ -1,0 +1,197 @@
+﻿<UserControl x:Class="_2048_Rbu.Elements.Control.ElQueue"
+     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:_2048_Rbu.Elements.Control"
+             xmlns:classes="clr-namespace:AsuBetonLibrary.Classes;assembly=AsuBetonLibrary"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance Type={x:Type local:ElQueueViewModel}, IsDesignTimeCreatable = False}"
+             Background="DarkGray" d:DesignHeight="300" d:DesignWidth="880" BorderThickness="1" BorderBrush="Black">
+    <Grid Background="DarkGray">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,5,0,0" FontWeight="Bold" FontSize="16" Text="Очередь заданий"/>
+        <!--<ListBox Grid.Row="1" Grid.Column="0" ItemsSource="{Binding TaskQueue}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelTaskQueueItem, UpdateSourceTrigger=PropertyChanged}" Margin="5,8,0,8" FontSize="14" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="Black" MinWidth="300" />-->
+        <ListView Grid.Row="1" Grid.Column="0" ItemsSource="{Binding TaskQueue}" SelectedItem="{Binding Path=SelTaskQueueItem, UpdateSourceTrigger=PropertyChanged}" Margin="5,8,0,8" FontSize="13" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" BorderBrush="Black" MinWidth="300">
+            <ListView.View>
+                <GridView >
+                    <GridViewColumn Width="28" DisplayMemberBinding="{Binding Order}">
+                        <GridViewColumnHeader Background="#fff5f5f5">
+                            <TextBlock Text="№" TextAlignment="Center" TextWrapping="WrapWithOverflow"/>
+                        </GridViewColumnHeader>
+                    </GridViewColumn>
+                    <GridViewColumn Width="150" DisplayMemberBinding="{Binding Task.Customer.Name}">
+                        <GridViewColumnHeader Background="#fff5f5f5">
+                            <TextBlock Text="Заказчик" TextAlignment="Center" TextWrapping="WrapWithOverflow"/>
+                        </GridViewColumnHeader>
+                    </GridViewColumn>
+                    <GridViewColumn Width="150" DisplayMemberBinding="{Binding Task.Recipe.Group.Name}">
+                        <GridViewColumnHeader Background="#fff5f5f5">
+                            <TextBlock Text="Группа рецептов" TextAlignment="Center" TextWrapping="WrapWithOverflow"/>
+                        </GridViewColumnHeader>
+                    </GridViewColumn>
+                    <GridViewColumn Width="150" DisplayMemberBinding="{Binding Task.Recipe.Name}">
+                        <GridViewColumnHeader Background="#fff5f5f5">
+                            <TextBlock Text="Рецепт" TextAlignment="Center" TextWrapping="WrapWithOverflow"/>
+                        </GridViewColumnHeader>
+                    </GridViewColumn>
+                    <GridViewColumn Width="88" DisplayMemberBinding="{Binding Task.Volume}">
+                        <GridViewColumnHeader Background="#fff5f5f5">
+                            <TextBlock Text="Объем задания" TextAlignment="Center" TextWrapping="WrapWithOverflow"/>
+                        </GridViewColumnHeader>
+                    </GridViewColumn>
+                    <GridViewColumn Width="88" DisplayMemberBinding="{Binding Task.BatchVolume}">
+                        <GridViewColumnHeader Background="#fff5f5f5">
+                            <TextBlock Text="Объем замеса" TextAlignment="Center" TextWrapping="WrapWithOverflow"/>
+                        </GridViewColumnHeader>
+                    </GridViewColumn>
+                    <GridViewColumn Width="88" DisplayMemberBinding="{Binding Task.BatchesAmount}">
+                        <GridViewColumnHeader Background="#fff5f5f5">
+                            <TextBlock Text="Количество замесов" TextAlignment="Center" TextWrapping="WrapWithOverflow"/>
+                        </GridViewColumnHeader>
+                    </GridViewColumn>
+                    <!--<ListView.ItemTemplate>
+                    GridView
+                    <DataTemplateListView.View          <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Order}"/>
+                        <TextBlock Text="{Binding Task.Customer.Name}"/>
+                        <TextBlock Text="{Binding Task.Recipe.Group.Name}"/>
+                        <TextBlock Text="{Binding Task.Recipe.Name}"/>
+                        <TextBlock Text="{Binding Task.Volume}"/>
+                        <TextBlock Text="{Binding Task.BatchVolume}"/>
+                        <TextBlock Text="{Binding Task.BatchesAmount}"/>
+                        <TextBlock Text="{Binding Name}"/>
+                        </StackPanel>
+                        </DataTemplate>
+                        </ListView.ItemTemplate> -->
+            </GridView>
+            </ListView.View>
+        </ListView>
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Button Grid.Row="0" Background="LightBlue" Width="110" Height="32" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="Добавить рецепт" Command="{Binding AddCommand}" Margin="5,0">
+                <Button.Content>
+                    <TextBlock Text="Добавить" FontSize="13"/>
+                </Button.Content>
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="IsEnabled" Value="True" />
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button Grid.Row="3" Background="LightBlue" Width="110" Height="32" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="Скопировать выбранный рецепт" Command="{Binding CopyCommand}" Margin="5,0">
+                <Button.Content>
+                    <TextBlock Text="Копировать" FontSize="13"/>
+                </Button.Content>
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="IsEnabled" Value="True" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding SelTaskQueueItem}" Value="{x:Null}">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+
+            <Button Grid.Row="5" Background="LightBlue" Width="110" Height="32" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="Подробнее о выбранном рецепте" Command="{Binding DetailsCommand}" Margin="5,0">
+                <Button.Content>
+                    <TextBlock Text="О рецепте" FontSize="13"/>
+                </Button.Content>
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="IsEnabled" Value="True" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding SelTaskQueueItem}" Value="{x:Null}">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+
+            <Button Grid.Row="1" Background="LightBlue" Width="110" Height="32" HorizontalAlignment="Center" VerticalAlignment="Center"  ToolTip="Повысить в очереди выбранный рецепт" Command="{Binding UpRecipeCommand}" Margin="5,0">
+                <Button.Content>
+                    <Image Source="../../Images/img_Up.png" Width="100" Height="28" Margin="0,-1,0,0">
+                        <Image.Style>
+                            <Style TargetType="{x:Type Image}">
+                                <Setter Property="Opacity" Value="1"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="Opacity" Value="0.5" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
+                </Button.Content>
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="IsEnabled" Value="True" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding SelTaskQueueItem}" Value="{x:Null}">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button Grid.Row="2" Background="LightBlue" Width="110" Height="32" HorizontalAlignment="Center" VerticalAlignment="Center"  ToolTip="Понизить в очереди выбранный рецепт" Command="{Binding DownRecipeCommand}" Margin="5,0">
+                <Button.Content>
+                    <Image Source="../../Images/img_Down.png" Width="100" Height="28" Margin="0,-1,0,0">
+                        <Image.Style>
+                            <Style TargetType="{x:Type Image}">
+                                <Setter Property="Opacity" Value="1"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="Opacity" Value="0.5"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
+                </Button.Content>
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="IsEnabled" Value="True" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding SelTaskQueueItem}" Value="{x:Null}">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button Grid.Row="4" Background="LightBlue" Width="110" Height="32" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="Удалить выбранный рецепт из очереди" Command="{Binding DeleteCommand}">
+                <Button.Content>
+                    <TextBlock Text="Удалить" FontSize="13"/>
+                </Button.Content>
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="IsEnabled" Value="True" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding SelTaskQueueItem}" Value="{x:Null}">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+        </Grid>
+    </Grid>
+</UserControl>

@@ -82,7 +82,7 @@ namespace _2048_Rbu
             #region LoadScreen
             if (!_isLoad)
             {
-                _elScreen.Initialize();
+                _elScreen.Initialize(logger);
                 ScreenGrid.Children.Add(_elScreen);
                 _elScreen.Visibility = Visibility.Visible;
                 _isLoad = true;

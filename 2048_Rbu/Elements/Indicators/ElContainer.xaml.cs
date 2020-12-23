@@ -1,0 +1,130 @@
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Windows;
+using System.Windows.Input;
+using System.Windows.Media;
+using AS_Library.Link;
+using _2048_Rbu.Classes;
+using _2048_Rbu.Interfaces;
+using AS_Library.Annotations;
+using AsuBetonLibrary.Abstract;
+using AsuBetonLibrary.Readers;
+using AsuBetonLibrary.Windows;
+using Opc.UaFx;
+using Opc.UaFx.Client;
+
+namespace _2048_Rbu.Elements.Indicators
+{
+    public partial class ElContainer : INotifyPropertyChanged
+    {
+        private ContainersReader ContainersReader { get; set; } = new ContainersReader();
+
+        private int _cycle;
+
+        private ObservableCollection<ApiContainer> _containers;
+        public ObservableCollection<ApiContainer> Containers
+        {
+            get { return _containers; }
+            set
+            {
+                _containers = value;
+                OnPropertyChanged(nameof(Containers));
+            }
+        }
+
+        private ApiContainer _selContainer;
+        public ApiContainer SelContainer
+        {
+            get { return _selContainer; }
+            set
+            {
+                _selContainer = value;
+                OnPropertyChanged(nameof(SelContainer));
+            }
+        }
+
+        public int ContainerId { get; set; }
+
+        public ElContainer()
+        {
+            InitializeComponent();
+        }
+
+        public void Initialize(OpcServer.OpcList opcName)
+        {
+            DataContext = this;
+
+            GetMaterial();
+        }
+
+        //public void Subscribe()
+        //{
+        //    //    CreateSubscription();
+        //}
+        //public void Unsubscribe()
+        //{
+        //}
+
+        //private void CreateSubscription()
+        //{
+        //    _opc = OpcServer.GetInstance().GetOpc(_opcName);
+        //    var idItem = new OpcMonitoredItem(_opc.cl.GetNode(ContainerId), OpcAttribute.Value);
+        //    idItem.DataChangeReceived += HandleIdChanged;
+        //    OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(idItem);
+        //    var idMaterialItem = new OpcMonitoredItem(_opc.cl.GetNode(ContainerId.Replace("ContainerID", "MaterialID")), OpcAttribute.Value);
+        //    idMaterialItem.DataChangeReceived += HandleIdMaterialChanged;
+        //    OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(idMaterialItem);
+        //}
+
+        //private void HandleIdChanged(object sender, OpcDataChangeReceivedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        _containerId = int.Parse(e.Item.Value.ToString());
+        //        GetMaterial();
+        //    }
+        //    catch (Exception exception)
+        //    {
+        //    }
+        //}
+
+        //private void HandleIdMaterialChanged(object sender, OpcDataChangeReceivedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        _materialId = int.Parse(e.Item.Value.ToString());
+        //        GetMaterial();
+        //    }
+        //    catch (Exception exception)
+        //    {
+        //    }
+        //}
+
+        public void GetMaterial()
+        {
+            Containers = new ObservableCollection<ApiContainer>(ContainersReader.ListContainers());
+            SelContainer = Containers.FirstOrDefault(x => x.Id == ContainerId);
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void Double_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ClickCount == 2)
+            {
+                WindowMatchingMaterials window = new WindowMatchingMaterials();
+                window.Show();
+            }
+        }
+    }
+}

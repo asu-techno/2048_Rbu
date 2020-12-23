@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
@@ -13,69 +15,44 @@ using _2048_Rbu.Interfaces;
 using Opc.UaFx;
 using Opc.UaFx.Client;
 using System.Windows.Threading;
+using _2048_Rbu.Elements.Control;
+using _2048_Rbu.Elements.Indicators;
 using _2048_Rbu.Windows;
+using AsuBetonLibrary.Abstract;
+using AsuBetonLibrary.Readers;
 using AsuBetonLibrary.Services;
 using AsuBetonLibrary.Windows;
 using NLog;
 
 namespace _2048_Rbu.Elements
 {
-    /// <summary>
-    /// Interaction logic for ElScreenRbu.xaml
-    /// </summary>
-    public partial class ElScreenRbu : INotifyPropertyChanged
+    public partial class ElScreenRbu : UserControl
     {
+        OpcServer.OpcList _opcName;
+
         public static DispatcherTimer LinkTimer;
 
-        OpcServer.OpcList _opcName;
-        private OPC_client _opc;
-
-        private int _currentLinkValue, _linkValue, _cycle;
-
         private readonly List<IElementsUpdater> _elementList = new List<IElementsUpdater>();
-        
+        private List<ElContainer> _containerList = new List<ElContainer>();
+        private ViewModelScreenRbu _viewModelScreenRbu;
+
         private WindowMode _mode;
 
-        private bool _isUpdating;
-        public bool IsUpdating
-        {
-            get { return _isUpdating; }
-            set
-            {
-                _isUpdating = value;
-                OnPropertyChanged(nameof(IsUpdating));
-            }
-        }
-
-        private bool _linkMessage;
-        public bool LinkMessage
-        {
-            get { return _linkMessage; }
-            set
-            {
-                _linkMessage = value;
-                OnPropertyChanged(nameof(LinkMessage));
-            }
-        }
+        private int _cycle;
 
         public ElScreenRbu()
         {
             InitializeComponent();
         }
 
-        public void Initialize()
+        public void Initialize(Logger logger)
         {
-            IsUpdating = true;
-
             _opcName = OpcServer.OpcList.Rbu;
-            #region Timers
-            LinkTimer = new DispatcherTimer();
-            LinkTimer.Interval = new TimeSpan(0, 0, 0, 1);
-            LinkTimer.Tick += new EventHandler(TimerTick1S);
-            LinkTimer.Start();
-            #endregion
 
-            DataContext = this;
+            _viewModelScreenRbu = new ViewModelScreenRbu(_opcName);
+            DataContext = _viewModelScreenRbu;
+
+            _viewModelScreenRbu.IsUpdating = true;
 
             OpcServer.GetInstance().InitOpc(_opcName, "opc.tcp://192.168.100.70:49320");
             OpcServer.GetInstance().ConnectOpc(_opcName);
@@ -147,86 +124,81 @@ namespace _2048_Rbu.Elements
                     warning.Initialize(_opcName);
                     _elementList.Add(warning);
                 }
+
+                if (item.GetType() == typeof(Indicators.ElContainer))
+                {
+                    var container = (Indicators.ElContainer)item;
+                    container.Initialize(_opcName);
+                    _containerList.Add(container);
+                }
             }
 
             ElControlControl.Initialize(_opcName);
             _elementList.Add(ElControlControl);
-            
+
             ElControlDosingWait.Initialize(_opcName);
             _elementList.Add(ElControlDosingWait);
-            
+
             ElControlTabl.Initialize(_opcName);
             _elementList.Add(ElControlTabl);
-            
+
             ElControlZamesDozing.Initialize(_opcName);
-            _elementList.Add(ElControlZamesDozing); 
-            
+            _elementList.Add(ElControlZamesDozing);
+
             ElControlZamesMixer.Initialize(_opcName);
             _elementList.Add(ElControlZamesMixer);
 
-            //var elRecipeQueue = new ElTaskQueue();
-            //ElGrid.Children.Add(elRecipeQueue);
-            //Grid.SetColumnSpan(elRecipeQueue, 1);
-            //elRecipeQueue.Margin = new Thickness(10,200,0,0);
-            //ElRecipeQueue.Initialize(_opcName);
-            //var taskQueueItemsService = new TaskQueueItemsService();
-            //var recipeQueueViewModel = new ElTaskQueueViewModel(taskQueueItemsService, logger);
-            //ElRecipeQueue.DataContext = recipeQueueViewModel;
+            var taskQueueItemsService = new TaskQueueItemsService();
+            var recipeQueueViewModel = new ElQueueViewModel(taskQueueItemsService, logger);
+            ElControlQueue.DataContext = recipeQueueViewModel;
 
             #endregion
 
-            IsUpdating = false;
+            _viewModelScreenRbu.IsUpdating = false;
 
             Subscribe();
         }
 
         public void Subscribe()
         {
-            IsUpdating = true;
+            _viewModelScreenRbu.IsUpdating = true;
 
             foreach (var item in _elementList)
             {
                 item.Subscribe();
             }
-            CreateSubscription();
+
+            _viewModelScreenRbu.Subscribe();
+
             OpcServer.GetInstance().GetSubscription(_opcName).ApplyChanges();
-        }
 
-        private void CreateSubscription()
-        {
-            _opc = OpcServer.GetInstance().GetOpc(_opcName);
-            var visItem = new OpcMonitoredItem(_opc.cl.GetNode("gi_lifeWord"), OpcAttribute.Value);
-            visItem.DataChangeReceived += HandleVisChanged;
-            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(visItem);
-        }
+            #region Timers
 
-        private void HandleVisChanged(object sender, OpcDataChangeReceivedEventArgs e)
-        {
-            _linkValue = int.Parse(e.Item.Value.ToString());
+            LinkTimer = new DispatcherTimer();
+            LinkTimer.Interval = new TimeSpan(0, 0, 0, 1);
+            LinkTimer.Tick += new EventHandler(TimerTick1S);
+            LinkTimer.Start();
+
+            #endregion
         }
 
         private void TimerTick1S(object sender, EventArgs e)
         {
-            GetLink();
-        }
-
-        private void GetLink()
-        {
-            LblDateTime.Content = DateTime.Now.ToString("HH:mm:ss dd.MM.yyyy");
+            _viewModelScreenRbu.GetLink();
 
             _cycle++;
-            if (_cycle > 2)
+            if (_cycle > 5)
             {
-                Static.Link = (_linkValue != _currentLinkValue);
-                LinkMessage = !Static.Link;
-                _currentLinkValue = _linkValue;
+                foreach (var item in _containerList)
+                {
+                    item.GetMaterial();
+                }
+                ElControlTabl.GetValue();
                 _cycle = 0;
-
-                IsUpdating = false;
             }
-
         }
 
+        #region Menu
         private void BtnReset_Down(object sender, MouseButtonEventArgs e)
         {
             object btn = e.Source;
@@ -333,11 +305,99 @@ namespace _2048_Rbu.Elements
         {
             Commands.EventsArchive_OnClick(_opcName);
         }
+        #endregion
+    }
 
+    public sealed class ViewModelScreenRbu : UserControl, INotifyPropertyChanged, IElementsUpdater
+    {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        private OPC_client _opc;
+        private OpcServer.OpcList _opcName;
+
+        private int _currentLinkValue, _linkValue, _cycle;
+
+
+        public ViewModelScreenRbu(OpcServer.OpcList opcName)
+        {
+            _opcName = opcName;
+
+        }
+
+        private bool _isUpdating;
+        public bool IsUpdating
+        {
+            get { return _isUpdating; }
+            set
+            {
+                _isUpdating = value;
+                OnPropertyChanged(nameof(IsUpdating));
+            }
+        }
+
+        private bool _linkMessage;
+        public bool LinkMessage
+        {
+            get { return _linkMessage; }
+            set
+            {
+                _linkMessage = value;
+                OnPropertyChanged(nameof(LinkMessage));
+            }
+        }
+
+        private string _currentDateTime;
+        public string CurrentDateTime
+        {
+            get { return _currentDateTime; }
+            set
+            {
+                _currentDateTime = value;
+                OnPropertyChanged(nameof(CurrentDateTime));
+            }
+        }
+
+
+        public void Subscribe()
+        {
+            CreateSubscription();
+        }
+
+        public void Unsubscribe()
+        {
+        }
+
+        private void CreateSubscription()
+        {
+            _opc = OpcServer.GetInstance().GetOpc(_opcName);
+            var visItem = new OpcMonitoredItem(_opc.cl.GetNode("gi_lifeWord"), OpcAttribute.Value);
+            visItem.DataChangeReceived += HandleVisChanged;
+            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(visItem);
+        }
+
+        private void HandleVisChanged(object sender, OpcDataChangeReceivedEventArgs e)
+        {
+            _linkValue = int.Parse(e.Item.Value.ToString());
+        }
+
+        public void GetLink()
+        {
+            CurrentDateTime = DateTime.Now.ToString("HH:mm:ss dd.MM.yyyy");
+
+            _cycle++;
+            if (_cycle > 2)
+            {
+                Static.Link = (_linkValue != _currentLinkValue);
+                LinkMessage = !Static.Link;
+                _currentLinkValue = _linkValue;
+
+                _cycle = 0;
+
+                IsUpdating = false;
+            }
+        }
+
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

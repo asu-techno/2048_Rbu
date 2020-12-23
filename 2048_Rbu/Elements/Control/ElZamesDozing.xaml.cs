@@ -51,7 +51,7 @@ namespace _2048_Rbu.Elements.Control
         private RecipesReader RecipesReader { get; set; } = new RecipesReader();
         private OPC_client _opc;
         private OpcServer.OpcList _opcName;
-        private long _id;
+        private long _id, _currentId;
 
         public ViewModelDozing(OpcServer.OpcList opcName)
         {
@@ -103,6 +103,7 @@ namespace _2048_Rbu.Elements.Control
             try
             {
                 OrderActCycle = int.Parse(e.Item.Value.ToString());
+                GetTable();
             }
             catch (Exception exception)
             {
@@ -114,6 +115,7 @@ namespace _2048_Rbu.Elements.Control
             try
             {
                 OrderCycle = int.Parse(e.Item.Value.ToString());
+                GetTable();
             }
             catch (Exception exception)
             {
@@ -125,6 +127,7 @@ namespace _2048_Rbu.Elements.Control
             try
             {
                 DozingProcess = int.Parse(e.Item.Value.ToString());
+                GetTable();
             }
             catch (Exception exception)
             {
@@ -195,13 +198,17 @@ namespace _2048_Rbu.Elements.Control
         {
             if (_id != 0)
             {
-                try
+                if (_id != _currentId)
                 {
-                    GetTask(_id);
-                }
-                catch (Exception ex)
-                {
-                    System.IO.File.WriteAllText(@"Log\log.txt", DateTime.Now + " - " + ex.Message + "->" + _id);
+                    try
+                    {
+                        GetTask(_id);
+                        _currentId = _id;
+                    }
+                    catch (Exception ex)
+                    {
+                        System.IO.File.WriteAllText(@"Log\log.txt", DateTime.Now + " - " + ex.Message + "->" + _id);
+                    }
                 }
             }
             else
@@ -211,21 +218,13 @@ namespace _2048_Rbu.Elements.Control
                 OrderActCycle = null;
                 OrderCycle = null;
                 DozingProcess = null;
+                _currentId = _id;
             }
         }
 
         private void GetTask(long id)
         {
-            UpdateTasks();
-            UpdateSelTask(id);
-        }
-
-        private void UpdateTasks()
-        {
             Recipes = new ObservableCollection<ApiRecipe>(RecipesReader.ListRecipes());
-        }
-        private void UpdateSelTask(long id)
-        {
             SelRecipes = Recipes.FirstOrDefault(x => x.Id == id);
         }
     }

@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="_2048_Rbu.Elements.Indicators.ElContainer"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:indicators="clr-namespace:_2048_Rbu.Elements.Indicators"
+      xmlns:local="clr-namespace:_2048_Rbu.Elements.Indicators"
+      mc:Ignorable="d"
+      d:DataContext="{d:DesignInstance Type={x:Type local:ElContainer}, IsDesignTimeCreatable=False}"
+      BorderThickness="1" BorderBrush="Black" MinWidth="70" MaxWidth="100" Height="Auto" MaxHeight="80">
+    <StackPanel Background="Gray" MouseLeftButtonDown="Double_OnMouseLeftButtonDown">
+        <TextBlock VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,3,0,0" TextAlignment="Center" Width="68" Text="{Binding SelContainer.Name}"/>
+        <TextBlock Text="{Binding SelContainer.CurrentMaterial.Name}" Margin="0,2" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Center" TextAlignment="Center" MinWidth="68" MaxWidth="98"/>
+    </StackPanel>
+</UserControl>

@@ -6,8 +6,8 @@
              xmlns:local="clr-namespace:_2048_Rbu.Elements.Control"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance Type={x:Type local:ViewModelTabl}, IsDesignTimeCreatable=False}"
-             Height="387" Width="384" Background="Silver" BorderBrush="Black" BorderThickness="1">
-    <Grid Background="LightGray">
+             Height="418" Width="384" Background="DarkGray" BorderBrush="Black" BorderThickness="1">
+    <Grid Background="DarkGray">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="900" />
         </Grid.ColumnDefinitions>
@@ -27,308 +27,63 @@
             <Label BorderBrush="Black" BorderThickness="0" Content="Состав замеса:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,155,0,0" Name="label1" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="307" />
             <Label Background="Silver" BorderBrush="Black" BorderThickness="1" Content="Материал" FontSize="14" FontWeight="Bold" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="2,183,0,0" Name="label11" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200" />
             <Label Background="Silver" BorderBrush="Black" BorderThickness="1" Content="Задано, кг" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="201,183,0,0" Name="label17" Padding="0" VerticalAlignment="Top" Width="90" FontWeight="Bold" />
-            <Label BorderBrush="Black" FontSize="16" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Padding="0" VerticalContentAlignment="Center" Content="Информация о текущем рецепте" VerticalAlignment="Top" BorderThickness="0" Background="LightGray" FontWeight="Bold" />
+            <Label BorderBrush="Black" FontSize="16" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Padding="0" VerticalContentAlignment="Center" Content="Информация о текущем задании" VerticalAlignment="Top" BorderThickness="0" Background="Transparent" FontWeight="Bold" Margin="0,2,0,0"/>
+            <Label Background="Silver" BorderBrush="Black" BorderThickness="1" Content="Сделано, кг" FontSize="14" FontWeight="Bold" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="290,183,0,0" Name="label2" Padding="0" VerticalAlignment="Top" Width="90"/>
 
-            <ComboBox IsEnabled="False" ItemsSource="{Binding SelTask.Recipe.RecipeMaterials.Id, UpdateSourceTrigger=PropertyChanged}" SelectedValue="{Binding Path=receipt.cementType_ID}" DisplayMemberPath="typeName" SelectedValuePath="typeID" Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="2,205,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200" Name="cmbx_Cement" />
-            <Label Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="2,205,0,0" Name="label5" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200">
-                <Label.Style>
-                    <Style TargetType="{x:Type Label}">
-                        <Setter Property="Content" Value="{Binding ElementName=cmbx_Cement, Path=SelectedItem.typeName}"/>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding ElementName=cmbx_Cement, Path=SelectedItem.typeName, UpdateSourceTrigger=PropertyChanged}" Value="0">
-                                <Setter Property="Content" Value="---"/>
-                            </DataTrigger>
-                        </Style.Triggers>
+            <StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="2,205,0,0" Width="200">
+                <Label Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="0,0,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200"/>
+                <Label Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="0,-1,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200"/>
+                <Label Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="0,-1,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200"/>
+                <Label Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="0,-1,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200" />
+                <Label Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="0,-1,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200"/>
+                <Label Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="0,-1,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200"/>
+                <Label Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="0,-1,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200"/>
+                <Label Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="0,-1,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200"/>
+                <Label Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="0,-1,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="201,205,0,0" Width="90">
+                <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="0,0,0,0"  Padding="0" VerticalAlignment="Top" Width="90"/>
+                <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="0,-1,0,0"  Padding="0" VerticalAlignment="Top" Width="90"/>
+                <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="0,-1,0,0"  Padding="0" VerticalAlignment="Top" Width="90"/>
+                <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="0,-1,0,0"  Padding="0" VerticalAlignment="Top" Width="90"/>
+                <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="0,-1,0,0"  Padding="0" VerticalAlignment="Top" Width="90"/>
+                <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="0,-1,0,0"  Padding="0" VerticalAlignment="Top" Width="90"/>
+                <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="0,-1,0,0"  Padding="0" VerticalAlignment="Top" Width="90"/>
+                <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="0,-1,0,0"  Padding="0" VerticalAlignment="Top" Width="90"/>
+                <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="0,-1,0,0"  Padding="0" VerticalAlignment="Top" Width="90"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="290,205,0,0" Width="90">
+                <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="0,0,0,0"  Padding="0" VerticalAlignment="Top" Width="90"/>
+                <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="0,-1,0,0"  Padding="0" VerticalAlignment="Top" Width="90"/>
+                <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="0,-1,0,0"  Padding="0" VerticalAlignment="Top" Width="90"/>
+                <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="0,-1,0,0"  Padding="0" VerticalAlignment="Top" Width="90"/>
+                <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="0,-1,0,0"  Padding="0" VerticalAlignment="Top" Width="90"/>
+                <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="0,-1,0,0"  Padding="0" VerticalAlignment="Top" Width="90"/>
+                <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="0,-1,0,0"  Padding="0" VerticalAlignment="Top" Width="90"/>
+                <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="0,-1,0,0"  Padding="0" VerticalAlignment="Top" Width="90"/>
+                <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="0,-1,0,0"  Padding="0" VerticalAlignment="Top" Width="90"/>
+            </StackPanel>
+            <ListBox ItemsSource="{Binding MaterialName, UpdateSourceTrigger=PropertyChanged}" Margin="2,205,0,0" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Top" Height="208" Padding="0" Background="Transparent" BorderBrush="Transparent" MinWidth="200">
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="Control">
+                        <Setter Property="Focusable" Value="False" />
                     </Style>
-                </Label.Style>
-            </Label>
-            <Label Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="2,227,0,0" Name="label8" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200">
-                <Label.Style>
-                    <Style TargetType="{x:Type Label}">
-                        <Setter Property="Content" Value="Вода"/>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Path=waterVol}" Value="0">
-                                <Setter Property="Content" Value="---"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding Path=waterVol}" Value="TargetNullValue">
-                                <Setter Property="Content" Value=""/>
-                            </DataTrigger>
-                        </Style.Triggers>
+                </ListBox.ItemContainerStyle>
+            </ListBox>
+            <ListBox ItemsSource="{Binding SetValue, UpdateSourceTrigger=PropertyChanged}" Margin="201,205,0,0" FontSize="14" HorizontalAlignment="Left" HorizontalContentAlignment="Center" VerticalAlignment="Top" Height="208" Padding="0" Background="Transparent" BorderBrush="Transparent" MinWidth="90">
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="Control">
+                        <Setter Property="Focusable" Value="False" />
                     </Style>
-                </Label.Style>
-            </Label>
-
-            <ComboBox IsEnabled="False" ItemsSource="{Binding Path=database.inertTypes}" SelectedValue="{Binding Path=receipt.inert1Type_ID}" DisplayMemberPath="typeName" SelectedValuePath="typeID" Name="cmbx_Inert1" Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="2,249,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200"/>
-            <Label Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="2,249,0,0" Name="label10" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200">
-                <Label.Style>
-                    <Style TargetType="{x:Type Label}">
-                        <Setter Property="Content" Value="{Binding ElementName=cmbx_Inert1, Path=SelectedItem.typeName}" />
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding ElementName=cmbx_Inert1, Path=SelectedItem.typeName, UpdateSourceTrigger=PropertyChanged}" Value="0">
-                                <Setter Property="Content" Value="---"/>
-                            </DataTrigger>
-                        </Style.Triggers>
+                </ListBox.ItemContainerStyle>
+            </ListBox>
+            <ListBox ItemsSource="{Binding CurrentValue, UpdateSourceTrigger=PropertyChanged}" Margin="290,205,0,0" FontSize="14" HorizontalAlignment="Left" HorizontalContentAlignment="Center" VerticalAlignment="Top" Height="208" Padding="0" Background="Transparent" BorderBrush="Transparent" MinWidth="90">
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="Control">
+                        <Setter Property="Focusable" Value="False" />
                     </Style>
-                </Label.Style>
-            </Label>
-            <ComboBox IsEnabled="False" ItemsSource="{Binding Path=database.inertTypes}" SelectedValue="{Binding Path=receipt.inert2Type_ID}" DisplayMemberPath="typeName" SelectedValuePath="typeID" Name="cmbx_Inert2" Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="2,271,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200" />
-            <Label Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="2,271,0,0" Name="label19" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200" >
-                <Label.Style>
-                    <Style TargetType="{x:Type Label}">
-                        <Setter Property="Content" Value="{Binding ElementName=cmbx_Inert2, Path=SelectedItem.typeName}"/>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding ElementName=cmbx_Inert2, Path=SelectedItem.typeName, UpdateSourceTrigger=PropertyChanged}" Value="0">
-                                <Setter Property="Content" Value="---"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Label.Style>
-            </Label>
-            <ComboBox  IsEnabled="False" ItemsSource="{Binding Path=database.inertTypes}" SelectedValue="{Binding Path=receipt.inert3Type_ID}" DisplayMemberPath="typeName" SelectedValuePath="typeID" Name="cmbx_Inert3" Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="2,293,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200"/>
-            <Label Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="2,293,0,0" Name="lbl_inert3" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200">
-                <Label.Style>
-                    <Style TargetType="{x:Type Label}">
-                        <Setter Property="Content" Value="{Binding ElementName=cmbx_Inert3, Path=SelectedItem.typeName}"/>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding ElementName=cmbx_Inert3, Path=SelectedItem.typeName, UpdateSourceTrigger=PropertyChanged}" Value="0">
-                                <Setter Property="Content" Value="---"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Label.Style>
-            </Label>
-            <ComboBox  IsEnabled="False" ItemsSource="{Binding Path=database.additiveTypes}" SelectedValue="{Binding Path=receipt.additive1Type_ID}" DisplayMemberPath="typeName" SelectedValuePath="typeID" Name="cmbx_Additive1" Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="2,315,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200"/>
-            <ComboBox  IsEnabled="False" ItemsSource="{Binding Path=database.additiveTypes}" SelectedValue="{Binding Path=receipt.additive2Type_ID}" DisplayMemberPath="typeName" SelectedValuePath="typeID" Name="cmbx_Additive2" Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="2,315,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200"/>
-            <ComboBox  IsEnabled="False" ItemsSource="{Binding Path=database.additiveTypes}" SelectedValue="{Binding Path=receipt.additive3Type_ID}" DisplayMemberPath="typeName" SelectedValuePath="typeID" Name="cmbx_Additive3" Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="2,315,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200"/>
-            <Label Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="2,315,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200">
-                <Label.Style>
-                    <Style TargetType="{x:Type Label}">
-                        <Setter Property="Content" Value="{Binding ElementName=cmbx_Additive1, Path=SelectedItem.typeName}"/>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding ElementName=cmbx_Additive1, Path=SelectedItem.typeName}" Value="0">
-                                <Setter Property="Content" Value="---"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Label.Style>
-            </Label>
-            <Label Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="2,337,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200">
-                <Label.Style>
-                    <Style TargetType="{x:Type Label}">
-                        <Setter Property="Content" Value="{Binding ElementName=cmbx_Additive2, Path=SelectedItem.typeName}"/>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding ElementName=cmbx_Additive2, Path=SelectedItem.typeName}" Value="0">
-                                <Setter Property="Content" Value="---"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Label.Style>
-            </Label>
-            <Label Background="Silver" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="2,359,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200">
-                <Label.Style>
-                    <Style TargetType="{x:Type Label}">
-                        <Setter Property="Content" Value="{Binding ElementName=cmbx_Additive3, Path=SelectedItem.typeName}"/>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding ElementName=cmbx_Additive3, Path=SelectedItem.typeName}" Value="0">
-                                <Setter Property="Content" Value="---"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Label.Style>
-            </Label>
-            <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="201,205,0,0" Name="label16" VerticalAlignment="Top" Width="90" Padding="0">
-                <Label.Style>
-                    <Style TargetType="{x:Type Label}">
-                        <Setter Property="Content" Value="{Binding Path=cementVol}"/>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Path=cementVol}" Value="0">
-                                <Setter Property="Content" Value="---"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Label.Style>
-            </Label>
-            <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="201,227,0,0" Name="label14" VerticalAlignment="Top" Width="90" Padding="0">
-                <Label.Style>
-                    <Style TargetType="{x:Type Label}">
-                        <Setter Property="Content" Value="{Binding Path=waterVol}"/>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Path=waterVol}" Value="0">
-                                <Setter Property="Content" Value="---"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Label.Style>
-            </Label>
-            <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="201,249,0,0" Name="label13" Padding="0" VerticalAlignment="Top" Width="90">
-                <Label.Style>
-                    <Style TargetType="{x:Type Label}">
-                        <Setter Property="Content" Value="{Binding Path=inert1Vol}"/>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Path=inert1Vol}" Value="0">
-                                <Setter Property="Content" Value="---"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Label.Style>
-            </Label>
-            <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="201,271,0,0" Name="label20" Padding="0" VerticalAlignment="Top" Width="90">
-                <Label.Style>
-                    <Style TargetType="{x:Type Label}">
-                        <Setter Property="Content" Value="{Binding Path=inert2Vol}"/>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Path=inert2Vol}" Value="0">
-                                <Setter Property="Content" Value="---"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Label.Style>
-            </Label>
-            <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="201,293,0,0" Name="label22" Padding="0" VerticalAlignment="Top" Width="90">
-                <Label.Style>
-                    <Style TargetType="{x:Type Label}">
-                        <Setter Property="Content" Value="{Binding Path=inert3Vol}"/>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Path=inert3Vol}" Value="0">
-                                <Setter Property="Content" Value="---"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Label.Style>
-            </Label>
-            <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="201,337,0,0" Padding="0" VerticalAlignment="Top" Width="90">
-                <Label.Style>
-                    <Style TargetType="{x:Type Label}">
-                        <Setter Property="Content" Value="{Binding Path=additive2Vol}"/>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Path=additive2Vol}" Value="0">
-                                <Setter Property="Content" Value="---"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Label.Style>
-            </Label>
-            <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="201,359,0,0" Padding="0" VerticalAlignment="Top" Width="90">
-                <Label.Style>
-                    <Style TargetType="{x:Type Label}">
-                        <Setter Property="Content" Value="{Binding Path=additive3Vol}"/>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Path=additive3Vol}" Value="0">
-                                <Setter Property="Content" Value="---"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Label.Style>
-            </Label>
-            <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="201,315,0,0" Padding="0" VerticalAlignment="Top" Width="90">
-                <Label.Style>
-                    <Style TargetType="{x:Type Label}">
-                        <Setter Property="Content" Value="{Binding Path=additive1Vol}"/>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Path=additive1Vol}" Value="0">
-                                <Setter Property="Content" Value="---"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Label.Style>
-            </Label>
-            <Label Background="Silver" BorderBrush="Black" BorderThickness="1" Content="Сделано, кг" FontSize="14" FontWeight="Bold" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="290,183,0,0" Name="label2" Padding="0" VerticalAlignment="Top" Width="90" />
-            <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="290,205,0,0" Name="label3" Padding="0" VerticalAlignment="Top" Width="90">
-                <Label.Style>
-                    <Style TargetType="{x:Type Label}">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Path=cementVol_f}" Value="0">
-                                <Setter Property="ContentControl.Content" Value="---" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                        <Setter Property="ContentControl.Content" Value="{Binding Path=cementVol_f}" />
-                    </Style>
-                </Label.Style>
-            </Label>
-            <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="290,227,0,0" Name="label4" Padding="0" VerticalAlignment="Top" Width="90">
-                <Label.Style>
-                    <Style TargetType="{x:Type Label}">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Path=waterVol_f}" Value="0">
-                                <Setter Property="ContentControl.Content" Value="---" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                        <Setter Property="ContentControl.Content" Value="{Binding Path=waterVol_f}" />
-                    </Style>
-                </Label.Style>
-            </Label>
-            <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="290,249,0,0" Name="label6" Padding="0" VerticalAlignment="Top" Width="90">
-                <Label.Style>
-                    <Style TargetType="{x:Type Label}">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Path=inert1Vol_f}" Value="0">
-                                <Setter Property="ContentControl.Content" Value="---" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                        <Setter Property="ContentControl.Content" Value="{Binding Path=inert1Vol_f}" />
-                    </Style>
-                </Label.Style>
-            </Label>
-            <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="290,271,0,0" Name="label7" Padding="0" VerticalAlignment="Top" Width="90">
-                <Label.Style>
-                    <Style TargetType="{x:Type Label}">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Path=inert2Vol_f}" Value="0">
-                                <Setter Property="ContentControl.Content" Value="---" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                        <Setter Property="ContentControl.Content" Value="{Binding Path=inert2Vol_f}" />
-                    </Style>
-                </Label.Style>
-            </Label>
-            <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="290,293,0,0" Name="label9" Padding="0" VerticalAlignment="Top" Width="90">
-                <Label.Style>
-                    <Style TargetType="{x:Type Label}">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Path=inert3Vol_f}" Value="0">
-                                <Setter Property="ContentControl.Content" Value="---" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                        <Setter Property="ContentControl.Content" Value="{Binding Path=inert3Vol_f}" />
-                    </Style>
-                </Label.Style>
-            </Label>
-            <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="290,315,0,0" Padding="0" VerticalAlignment="Top" Width="90">
-                <Label.Style>
-                    <Style TargetType="{x:Type Label}">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Path=additive1Vol_f}" Value="0">
-                                <Setter Property="ContentControl.Content" Value="---" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                        <Setter Property="ContentControl.Content" Value="{Binding Path=additive1Vol_f}" />
-                    </Style>
-                </Label.Style>
-            </Label>
-            <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="290,337,0,0" Padding="0" VerticalAlignment="Top" Width="90">
-                <Label.Style>
-                    <Style TargetType="{x:Type Label}">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Path=additive2Vol_f}" Value="0">
-                                <Setter Property="ContentControl.Content" Value="---" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                        <Setter Property="ContentControl.Content" Value="{Binding Path=additive2Vol_f}" />
-                    </Style>
-                </Label.Style>
-            </Label>
-            <Label Background="White" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="290,359,0,0" Padding="0" VerticalAlignment="Top" Width="90">
-                <Label.Style>
-                    <Style TargetType="{x:Type Label}">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Path=additive3Vol_f}" Value="0">
-                                <Setter Property="ContentControl.Content" Value="---" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                        <Setter Property="ContentControl.Content" Value="{Binding Path=additive3Vol_f}" />
-                    </Style>
-                </Label.Style>
-            </Label>
+                </ListBox.ItemContainerStyle>
+            </ListBox>
         </Grid>
     </Grid>
 </UserControl>

@@ -5,14 +5,14 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:indicators="clr-namespace:_2048_Rbu.Elements.Indicators"
       mc:Ignorable="d" 
-      Width="330" Height="135" BorderThickness="1" BorderBrush="Black">
-    <Grid Background="Silver">
+      Width="330" Height="135" Background="DarkGray" BorderThickness="1" BorderBrush="Black">
+    <Grid Background="DarkGray">
         <TextBlock VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,10,0,0" TextAlignment="Center" FontSize="18" FontWeight="Bold" Text="Управление"/>
         <Label VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,45,0,0" Width="160" Height="30" BorderBrush="Black" BorderThickness="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="16" Padding="0">
             <Label.Style>
                 <Style TargetType="{x:Type Label}">
                     <Setter Property="Content" Value="остановлен"/>
-                    <Setter Property="Background" Value="LightGray"/>
+                    <Setter Property="Background" Value="Silver"/>
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding Running}" Value="True">
                             <Setter Property="Content" Value="работает"/>

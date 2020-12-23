@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Controls;
 using AS_Library.Link;
@@ -38,6 +39,11 @@ namespace _2048_Rbu.Elements.Control
         public void Unsubscribe()
         {
         }
+
+        public void GetValue()
+        {
+            _viewmodelTabl.GetValue();
+        }
     }
 
     public sealed class ViewModelTabl : UserControl, INotifyPropertyChanged
@@ -45,7 +51,8 @@ namespace _2048_Rbu.Elements.Control
         public event PropertyChangedEventHandler PropertyChanged;
 
         private TasksReader TasksReader { get; set; } = new TasksReader();
-        private RecipesReader RecipesReader { get; set; } = new RecipesReader();//
+        private RecipesReader RecipesReader { get; set; } = new RecipesReader();
+        private ContainersReader ContainersReader { get; set; } = new ContainersReader();
         private OPC_client _opc;
         private OpcServer.OpcList _opcName;
         private long _id;
@@ -62,7 +69,7 @@ namespace _2048_Rbu.Elements.Control
         public void Unsubscribe()
         {
         }
-
+        
         private void CreateSubscription()
         {
             _opc = OpcServer.GetInstance().GetOpc(_opcName);
@@ -109,195 +116,41 @@ namespace _2048_Rbu.Elements.Control
             }
         }
 
-        #region Задано
-        private float? _cementVol;
-        public float? cementVol
+        private List<string> _materialName;
+        public List<string> MaterialName
         {
-            get { return _cementVol; }
+            get { return _materialName; }
             set
             {
-                _cementVol = value;
-                if (PropertyChanged != null)
-                    PropertyChanged(this, new PropertyChangedEventArgs("cementVol"));
-            }
-        }
-        private float? _waterVol;
-        public float? waterVol
-        {
-            get { return _waterVol; }
-            set
-            {
-                _waterVol = value;
-                if (PropertyChanged != null)
-                    PropertyChanged(this, new PropertyChangedEventArgs("waterVol"));
-            }
-        }
-        private float? _inert1Vol;
-        public float? inert1Vol
-        {
-            get { return _inert1Vol; }
-            set
-            {
-                _inert1Vol = value;
-                if (PropertyChanged != null)
-                    PropertyChanged(this, new PropertyChangedEventArgs("inert1Vol"));
-            }
-        }
-        private float? _inert2Vol;
-        public float? inert2Vol
-        {
-            get { return _inert2Vol; }
-            set
-            {
-                _inert2Vol = value;
-                if (PropertyChanged != null)
-                    PropertyChanged(this, new PropertyChangedEventArgs("inert2Vol"));
+                _materialName = value;
+                OnPropertyChanged(nameof(MaterialName));
             }
         }
 
-        private float? _inert3Vol;
-        public float? inert3Vol
+        private string[] _setValueTag;
+        private string[] _currentValueTag;
+
+        private string[] _setValue;
+        public string[] SetValue
         {
-            get { return _inert3Vol; }
+            get { return _setValue; }
             set
             {
-                _inert3Vol = value;
-                if (PropertyChanged != null)
-                    PropertyChanged(this, new PropertyChangedEventArgs("inert3Vol"));
+                _setValue = value;
+                OnPropertyChanged(nameof(SetValue));
             }
         }
 
-        private float? _additive1Vol;
-        public float? additive1Vol
+        private string[] _currentValue;
+        public string[] CurrentValue
         {
-            get { return _additive1Vol; }
+            get { return _currentValue; }
             set
             {
-                _additive1Vol = value;
-                if (PropertyChanged != null)
-                    PropertyChanged(this, new PropertyChangedEventArgs("additive1Vol"));
+                _currentValue = value;
+                OnPropertyChanged(nameof(CurrentValue));
             }
         }
-
-        private float? _additive2Vol;
-        public float? additive2Vol
-        {
-            get { return _additive2Vol; }
-            set
-            {
-                _additive2Vol = value;
-                if (PropertyChanged != null)
-                    PropertyChanged(this, new PropertyChangedEventArgs("additive2Vol"));
-            }
-        }
-
-        private float? _additive3Vol;
-        public float? additive3Vol
-        {
-            get { return _additive3Vol; }
-            set
-            {
-                _additive3Vol = value;
-                if (PropertyChanged != null)
-                    PropertyChanged(this, new PropertyChangedEventArgs("additive3Vol"));
-            }
-        }
-        #endregion
-        #region Сделано
-        private float? _cementVol_f;
-        public float? cementVol_f
-        {
-            get { return _cementVol_f; }
-            set
-            {
-                _cementVol_f = value;
-                if (PropertyChanged != null)
-                    PropertyChanged(this, new PropertyChangedEventArgs("cementVol_f"));
-            }
-        }
-        private float? _waterVol_f;
-        public float? waterVol_f
-        {
-            get { return _waterVol_f; }
-            set
-            {
-                _waterVol_f = value;
-                if (PropertyChanged != null)
-                    PropertyChanged(this, new PropertyChangedEventArgs("waterVol_f"));
-            }
-        }
-        private float? _inert1Vol_f;
-        public float? inert1Vol_f
-        {
-            get { return _inert1Vol_f; }
-            set
-            {
-                _inert1Vol_f = value;
-                if (PropertyChanged != null)
-                    PropertyChanged(this, new PropertyChangedEventArgs("inert1Vol_f"));
-            }
-        }
-        private float? _inert2Vol_f;
-        public float? inert2Vol_f
-        {
-            get { return _inert2Vol_f; }
-            set
-            {
-                _inert2Vol_f = value;
-                if (PropertyChanged != null)
-                    PropertyChanged(this, new PropertyChangedEventArgs("inert2Vol_f"));
-            }
-        }
-
-        private float? _inert3Vol_f;
-        public float? inert3Vol_f
-        {
-            get { return _inert3Vol_f; }
-            set
-            {
-                _inert3Vol_f = value;
-                if (PropertyChanged != null)
-                    PropertyChanged(this, new PropertyChangedEventArgs("inert3Vol_f"));
-            }
-        }
-
-        private float? _additive1Vol_f;
-        public float? additive1Vol_f
-        {
-            get { return _additive1Vol_f; }
-            set
-            {
-                _additive1Vol_f = value;
-                if (PropertyChanged != null)
-                    PropertyChanged(this, new PropertyChangedEventArgs("additive1Vol_f"));
-            }
-        }
-
-        private float? _additive2Vol_f;
-        public float? additive2Vol_f
-        {
-            get { return _additive2Vol_f; }
-            set
-            {
-                _additive2Vol_f = value;
-                if (PropertyChanged != null)
-                    PropertyChanged(this, new PropertyChangedEventArgs("additive2Vol_f"));
-            }
-        }
-
-        private float? _additive3Vol_f;
-        public float? additive3Vol_f
-        {
-            get { return _additive3Vol_f; }
-            set
-            {
-                _additive3Vol_f = value;
-                if (PropertyChanged != null)
-                    PropertyChanged(this, new PropertyChangedEventArgs("additive3Vol_f"));
-            }
-        }
-        #endregion
-
 
         public void GetTable()
         {
@@ -306,27 +159,7 @@ namespace _2048_Rbu.Elements.Control
                 try
                 {
                     GetTask(_id);
-                    //order = database.orders.SingleOrDefault(x => x.orderID == PLC.GetValue("PCAY_01"));
-                    //receipt = database.receipts.SingleOrDefault(x => x.receiptID == order.receiptID);
-                    //report = database.reports.SingleOrDefault(x => x.orderID == order.orderID && x.cycleNum == PLC.GetValue("PCAY_14"));
-
-                    //cementVol = Convert.ToSingle(Math.Round(Convert.ToDecimal(receipt.cementNorma * order.oneCycleVolume), 1));
-                    //waterVol = Convert.ToSingle(Math.Round(Convert.ToDecimal(receipt.waterNorma * order.oneCycleVolume), 1));
-                    //inert1Vol = Convert.ToSingle(Math.Round(Convert.ToDecimal(receipt.inert1Norma * order.oneCycleVolume), 0));
-                    //inert2Vol = Convert.ToSingle(Math.Round(Convert.ToDecimal(receipt.inert2Norma * order.oneCycleVolume), 0));
-                    //inert3Vol = Convert.ToSingle(Math.Round(Convert.ToDecimal(receipt.inert3Norma * order.oneCycleVolume), 0));
-                    //additive1Vol = Convert.ToSingle(Math.Round(Convert.ToDecimal(receipt.additive1Norma * order.oneCycleVolume), 2));
-                    //additive2Vol = Convert.ToSingle(Math.Round(Convert.ToDecimal(receipt.additive2Norma * order.oneCycleVolume), 2));
-                    //additive3Vol = Convert.ToSingle(Math.Round(Convert.ToDecimal(receipt.additive3Norma * order.oneCycleVolume), 2));
-
-                    //cementVol_f = Convert.ToSingle(Math.Round(Convert.ToDecimal(report.cementWeight), 1));
-                    //waterVol_f = Convert.ToSingle(Math.Round(Convert.ToDecimal(report.waterWeight), 1));
-                    //inert1Vol_f = Convert.ToSingle(Math.Round(Convert.ToDecimal(report.inert1Weight), 0));
-                    //inert2Vol_f = Convert.ToSingle(Math.Round(Convert.ToDecimal(report.inert2Weight), 0));
-                    //inert3Vol_f = Convert.ToSingle(Math.Round(Convert.ToDecimal(report.inert3Weight), 0));
-                    //additive1Vol_f = Convert.ToSingle(Math.Round(Convert.ToDecimal(report.additive1Weight), 2));
-                    //additive2Vol_f = Convert.ToSingle(Math.Round(Convert.ToDecimal(report.additive2Weight), 2));
-                    //additive3Vol_f = Convert.ToSingle(Math.Round(Convert.ToDecimal(report.additive3Weight), 2));
+                    GetValue();
                 }
                 catch (Exception ex)
                 {
@@ -335,46 +168,118 @@ namespace _2048_Rbu.Elements.Control
             }
             else
             {
-                //order = null;
-                //TaskTables = null;
-                //report = null;
-
-                cementVol = null;
-                waterVol = null;
-                inert1Vol = null;
-                inert2Vol = null;
-                inert3Vol = null;
-                additive1Vol = null;
-                additive2Vol = null;
-                additive3Vol = null;
-
-                cementVol_f = null;
-                waterVol_f = null;
-                inert1Vol_f = null;
-                inert2Vol_f = null;
-                inert3Vol_f = null;
-                additive1Vol_f = null;
-                additive2Vol_f = null;
-                additive3Vol_f = null;
+                SelTask = null;
+                MaterialName = null;
+                SetValue = null;
+                CurrentValue = null;
             }
         }
 
         private void GetTask(long id)
         {
-            UpdateTasks();
-            UpdateSelTask(id);
-        }
-        private ContainersReader ContainersReader { get; set; }
-        private void UpdateTasks()
-        {
             Tasks = new ObservableCollection<ApiTask>(TasksReader.ListTasks());
-
-            var recipe= new ObservableCollection<ApiRecipe>(RecipesReader.ListRecipes());
-            var selrecipe = recipe.FirstOrDefault(x => x.Id == id);
-        }
-        private void UpdateSelTask(long id)
-        {
             SelTask = Tasks.FirstOrDefault(x => x.Id == id);
+
+            GetMaterial();
+        }
+
+        private void GetMaterial()
+        {
+            var recipes = new ObservableCollection<ApiRecipe>(RecipesReader.ListRecipes());
+            var selRecipe = recipes.FirstOrDefault(x => x.Id == SelTask.Recipe.Id);
+            var materials = new ObservableCollection<ApiRecipeMaterial>(selRecipe.RecipeMaterials);
+            MaterialName = new List<string>();
+            foreach (var mat in materials)
+            {
+                if (mat.Material.Name != null)
+                    MaterialName.Add(mat.Material.Name);
+                else
+                    MaterialName.Add("");
+            }
+
+            _setValueTag = new string[materials.Count];
+            _currentValueTag = new string[materials.Count];
+            var containers = new ObservableCollection<ApiContainer>(ContainersReader.ListContainers());
+            for (int i = 0; i < materials.Count; i++)
+            {
+                var selContainer = containers.FirstOrDefault(x => x.CurrentMaterial.Id == materials[i].Material.Id);
+                switch (selContainer.Id)
+                {
+                    case 0:
+                        _setValueTag[i] = null;
+                        _currentValueTag[i] = null;
+                        break;
+                    case 1:
+                        _setValueTag[i] = "Reports[1].Batchers[1].Batcher_inert.Bunker1.Dozing_SetValue";
+                        _currentValueTag[i] = "Reports[1].Batchers[1].Batcher_inert.Bunker1.Dozing_DozedValue";
+                        break;
+                    case 2:
+                        _setValueTag[i] = "Reports[1].Batchers[1].Batcher_inert.Bunker2.Dozing_SetValue";
+                        _currentValueTag[i] = "Reports[1].Batchers[1].Batcher_inert.Bunker2.Dozing_DozedValue";
+                        break;
+                    case 3:
+                        _setValueTag[i] = "Reports[1].Batchers[1].Batcher_inert.Bunker3.Dozing_SetValue";
+                        _currentValueTag[i] = "Reports[1].Batchers[1].Batcher_inert.Bunker3.Dozing_DozedValue";
+                        break;
+                    case 4:
+                        _setValueTag[i] = "Reports[1].Batchers[1].Batcher_inert.Bunker4.Dozing_SetValue";
+                        _currentValueTag[i] = "Reports[1].Batchers[1].Batcher_inert.Bunker4.Dozing_DozedValue";
+                        break;
+                    case 5:
+                        _setValueTag[i] = "Reports[1].Batchers[1].Batcher_cement.Silos1.Dozing_SetValue";
+                        _currentValueTag[i] = "Reports[1].Batchers[1].Batcher_cement.Silos1.Dozing_DozedValue";
+                        break;
+                    case 6:
+                        _setValueTag[i] = "Reports[1].Batchers[1].Batcher_cement.Silos2.Dozing_SetValue";
+                        _currentValueTag[i] = "Reports[1].Batchers[1].Batcher_cement.Silos2.Dozing_DozedValue";
+                        break;
+                    case 7:
+                        _setValueTag[i] = "Reports[1].Batchers[1].Batcher_water.Water.Dozing_SetValue";
+                        _currentValueTag[i] = "Reports[1].Batchers[1].Batcher_water.Water.Dozing_DozedValue";
+                        break;
+                    case 8:
+                        _setValueTag[i] = "Reports[1].Batchers[1].Batcher_add.Tank1.Dozing_StartTime";
+                        _currentValueTag[i] = "Reports[1].Batchers[1].Batcher_add.Tank1.Dozing_DozedValue";
+                        break;
+                    case 9:
+                        _setValueTag[i] = "Reports[1].Batchers[1].Batcher_add.Tank2.Dozing_SetValue";
+                        _currentValueTag[i] = "Reports[1].Batchers[1].Batcher_add.Tank2.Dozing_DozedValue";
+                        break;
+                    default:
+                        _setValueTag[i] = null;
+                        _currentValueTag[i] = null;
+                        break;
+                }
+            }
+        }
+
+        public void GetValue()
+        {
+            if (_id != 0)
+            {
+                if (SetValue == null || CurrentValue == null)
+                {
+                    SetValue = new string[_setValueTag.Length];
+                    CurrentValue = new string[_setValueTag.Length];
+                }
+                for (int i = 0; i < _setValueTag.Length; i++)
+                {
+                    if (_setValueTag[i] == null || _currentValueTag[i] == null)
+                    {
+                        SetValue[i] = "";
+                        CurrentValue[i] = "";
+                    }
+                    else
+                    {
+                        SetValue[i] = _opc.cl.ReadReal(_setValueTag[i], out var err).ToString();
+                        CurrentValue[i] = _opc.cl.ReadReal(_currentValueTag[i], out var err1).ToString();
+                        if (err)
+                            SetValue[i] = "ошибка";
+                        if (err1)
+                            CurrentValue[i] = "ошибка";
+                    }
+                }
+            }
         }
     }
 }

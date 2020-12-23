@@ -6,16 +6,16 @@
              xmlns:local="clr-namespace:_2048_Rbu.Elements.Control"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance Type={x:Type local:ViewModelDozing}, IsDesignTimeCreatable=False}"
-             Height="160" Width="302" Background="Silver" BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Center">
-    <Grid>
+             Height="160" Width="330" Background="DarkGray" BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Center">
+    <Grid Background="DarkGray">
         <Label Content="Узел дозирования" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" Margin="0" Padding="0" HorizontalContentAlignment="Center" />
-        <Label Name="lbl_State" Content="{Binding Path=OrderActCycle, UpdateSourceTrigger=PropertyChanged}" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="87,76,111,0" BorderBrush="Black" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Width="50" Height="22" Background="LightGray"/>
+        <Label Name="lbl_State" Content="{Binding Path=OrderActCycle, UpdateSourceTrigger=PropertyChanged}" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="87,76,111,0" BorderBrush="Black" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Width="50" Height="22" Background="Silver"/>
         <Label Content="Замес" FontSize="16" FontWeight="Normal" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="27,77,165,0" Padding="0" VerticalAlignment="Top" Width="56" />
         <ProgressBar Value="{Binding Path=DozingProcess, UpdateSourceTrigger=PropertyChanged}" Height="23" HorizontalAlignment="Center" Margin="0,126,0,0" Name="progressBar1" VerticalAlignment="Top" Width="270" Minimum="0" BorderBrush="Black"/>
         <Label Content="из" FontSize="16" FontWeight="Normal" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="141,77,83,0" Padding="0" VerticalAlignment="Top" Width="24" />
-        <Label Background="LightGray" BorderBrush="Black" BorderThickness="1" Content="{Binding Path=OrderCycle, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Height="22" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="168,76,30,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="50" />
+        <Label Background="Silver" BorderBrush="Black" BorderThickness="1" Content="{Binding Path=OrderCycle, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Height="22" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="168,76,30,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="50" />
         <Label Content="Дозирование" FontSize="16" FontWeight="Normal" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="12,101,12,0" Padding="0" VerticalAlignment="Top" Width="224" />
-        <Label Background="LightGray" BorderBrush="Black" BorderThickness="1" Content="{Binding Path=SelRecipes.Name, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Height="22" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,46,0,0" Name="label1" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="270" />
+        <Label Background="Silver" BorderBrush="Black" BorderThickness="1" Content="{Binding Path=SelRecipes.Name, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Height="22" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,46,0,0" Name="label1" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="270" />
         <Label Content="Название:" FontSize="16" FontWeight="Normal" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="97,23,97,0" Padding="0" VerticalAlignment="Top" Width="Auto" />
     </Grid>
 </UserControl>

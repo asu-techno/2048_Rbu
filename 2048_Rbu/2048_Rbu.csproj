@@ -21,7 +21,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\Copy.png" />
+    <None Remove="Images\img_AddAct_Color.png" />
+    <None Remove="Images\img_BackTTN.png" />
+    <None Remove="Images\img_CheckAct_Color.png" />
+    <None Remove="Images\img_DelAct_Color.png" />
+    <None Remove="Images\img_Down.png" />
+    <None Remove="Images\img_Refresh_Color.png" />
+    <None Remove="Images\img_ReplyAct_Color.png" />
+    <None Remove="Images\img_SaveAct_Color.png" />
     <None Remove="Images\img_Truck_1.png" />
+    <None Remove="Images\img_Up.png" />
     <None Remove="Images\Indicators\img_Cement.png" />
     <None Remove="Images\Indicators\img_Inert.png" />
     <None Remove="Images\Indicators\img_Solution.png" />
@@ -109,6 +119,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\Copy.png" />
+    <Resource Include="Images\img_AddAct_Color.png" />
+    <Resource Include="Images\img_BackTTN.png" />
+    <Resource Include="Images\img_CheckAct_Color.png" />
+    <Resource Include="Images\img_DelAct_Color.png" />
+    <Resource Include="Images\img_Down.png" />
+    <Resource Include="Images\img_Refresh_Color.png" />
+    <Resource Include="Images\img_ReplyAct_Color.png" />
+    <Resource Include="Images\img_SaveAct_Color.png" />
     <Resource Include="Images\Indicators\img_Cement.png" />
     <Resource Include="Images\Indicators\img_Inert.png" />
     <Resource Include="Images\Indicators\img_Solution.png" />
@@ -137,6 +156,7 @@
     <Resource Include="Images\Mechs\img_Skip_On.png" />
     <Resource Include="Images\Mnemo_Rbu.png" />
     <Resource Include="Images\Splash.png" />
+    <Resource Include="Images\img_Up.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -161,6 +181,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Update="Elements\Control\ElQueue.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Elements\Indicators\ElContainer.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Elements\Mechs\ElMotor.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
