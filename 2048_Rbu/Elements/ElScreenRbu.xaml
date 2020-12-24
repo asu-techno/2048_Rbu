@@ -21,7 +21,9 @@
             </MenuItem>
             <MenuItem Name="Settings" Header="Настройки" Foreground="Black" BorderBrush="Black" FontWeight="Bold" Height="30">
                 <MenuItem Name="Mode" Header="Режим работы" Click="Mode_OnClick"/>
-                <Separator/>
+            </MenuItem>
+            <MenuItem Name="Reports" Header="Отчеты" Foreground="Black" BorderBrush="Black" FontWeight="Bold" Height="30">
+                <MenuItem Name="RecipeReport" Header="Отчет по заданию" Click="RecipeReport_Click"/>
             </MenuItem>
         </Menu>
         <Image VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="0" Margin="0" Width="160" Height="30" Source="/2048_Rbu;component/Images/Logo_ASU_Gray.png" Stretch="Uniform" RenderOptions.BitmapScalingMode="Fant"/>

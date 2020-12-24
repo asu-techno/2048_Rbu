@@ -14,6 +14,10 @@ using Opc.UaFx;
 using Opc.UaFx.Client;
 using System.Windows.Threading;
 using _2048_Rbu.Windows;
+using Stimulsoft.Report;
+using Stimulsoft.Report.Dictionary;
+using AsuBetonLibrary.Databases;
+using _2048_Rbu.Windows.Reports;
 
 namespace _2048_Rbu.Elements
 {
@@ -241,6 +245,12 @@ namespace _2048_Rbu.Elements
         private void EventsArchive_OnClick(object sender, RoutedEventArgs e)
         {
             Commands.EventsArchive_OnClick(_opcName);
+        }
+
+        private void RecipeReport_Click(object sender, RoutedEventArgs e)
+        {
+            RecipeReportWindow window = new RecipeReportWindow();
+            window.Show();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

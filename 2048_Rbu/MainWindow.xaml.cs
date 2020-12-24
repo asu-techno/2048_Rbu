@@ -44,6 +44,14 @@ namespace _2048_Rbu
                 "Q7FI2GKTHYAO2KKWNI2STU7ABZ3VROFRTYOOEOLVI7FH2ZL35SDTWD2FPFWCR4SDXIRRFVXOGZJLF6KEUHOYGBRQR3CYA62YF4K2HYX46TX" +
                 "ZQ3KUPWZTOBY3M7ZUJQFQ2KTXXIB75LVC7EHAZ2AF3OELXR2YP2AVTIGKBEPXAJIFQLB6CKHQQEHHSSPWO3HQHTYVZYGMVM4KUTDRHHSGUA";
 
+            Stimulsoft.Base.StiLicense.Key = "6vJhGtLLLz2GNviWmUTrhSqnOItdDwjBylQzQcAOiHlo0BLi03H5eu1wfyYtghdwJHRIUDASSNqz5wYiN/0REuF5rx" +
+                                             "l0PuYej+g+9PW3zj9rf4q2Hr3Rp+4siFan2+bLDIWecyw4cso2kClUxmGiOPMf8e9yf/4LU06O2KwITH9htGzZ5H8f" +
+                                             "WkYXqiSRovW8fvjzPHMKsHri+ywu+vv1sGfAwA0zzPsF2OEmeNC34NoNvq0aHta9JYfhfq9bkKZym8x02csbJJuI2R" +
+                                             "c3V1rG5B/jATAQfCMOVMRttnnmQ6VnSEiSRStLhvBtVE0bC1kq4Z4RNpUVrGVcBn6w41aSyD8uOc78dBIu7a3ykZ45" +
+                                             "1A/Q3ww3T1GtnmfAkGLK2b/srd675k7fpZrVlyiLH7BfEyo+hrBj51dYG0IaJqzseeuSh7GFjJZCihujJNgugyR4Id" +
+                                             "N4KjrZg2sAuO4JeNlvzZvyQ7wNzu92lFHGoZGLnnKIAUQUk8FECgamOxYIYzP4UzLturdpFL6MBW6c9E0SdRy+Ydnb" +
+                                             "SH40eSD+WGmkWgDhi8JDzJK2aIjAcTpjguEE";
+
             InitializeComponent();
 
             #region Init
