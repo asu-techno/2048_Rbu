@@ -117,6 +117,7 @@ namespace _2048_Rbu.Elements.Control
             {
                 _id = long.Parse(e.Item.Value.ToString());
                 GetTable();
+                OpcServer.GetInstance().GetSubscription(_opcName).ApplyChanges();
             }
             catch (Exception exception)
             {

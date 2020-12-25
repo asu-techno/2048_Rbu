@@ -9,6 +9,7 @@ using AsuBetonLibrary.Abstract;
 using AsuBetonLibrary.Readers;
 using AsuBetonLibrary.Services;
 using AsuBetonLibrary.Windows;
+using _2048_Rbu.Handlers;
 using _2048_Rbu.Windows;
 using NLog;
 
@@ -54,8 +55,21 @@ namespace _2048_Rbu.Elements
                 OnPropertyChanged(nameof(SelTaskQueueItem));
             }
         }
-
+        private bool _stopLoadTasks;
+        public bool StopLoadTasks
+        {
+            get { return _stopLoadTasks; }
+            set
+            {
+                _stopLoadTasks = value;
+                OnPropertyChanged(nameof(StopLoadTasks));
+            }
+        }
         private int MaxOrder { get; set; }
+
+        public delegate void NotStopLoadTasksHandler(bool stopLoadTasks);
+        public NotStopLoadTasksHandler NotStopLoadTasks;
+
 
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -68,6 +82,9 @@ namespace _2048_Rbu.Elements
             Service = service;
             Service.Updated += ServiceOnUpdate;
             ServiceOnUpdate();
+            StopLoadTasks = true;
+            var loadTaskHandler = new LoadTaskHandler(Service, logger);
+            NotStopLoadTasks += loadTaskHandler.NotStopLoadTasks;
         }
 
         private void ServiceOnUpdate()
@@ -181,6 +198,18 @@ namespace _2048_Rbu.Elements
             }
         }
 
+        private RelayCommand _stopLoadTaskCommand;
+        public RelayCommand StopLoadTaskCommand
+        {
+            get
+            {
+                return _stopLoadTaskCommand ??= new RelayCommand((o) =>
+                {
+                    StopLoadTasks = !StopLoadTasks;
+                    NotStopLoadTasks?.Invoke(StopLoadTasks);
+                });
+            }
+        }
         #endregion
     }
 }

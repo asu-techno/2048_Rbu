@@ -156,9 +156,9 @@ namespace _2048_Rbu.Elements.Mechs
                     ImgAlarm.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs/img_Skip_Alarm.png", UriKind.Relative));
                     ImgKm.Width = ImgAlarm.Width = 258;
                     ImgKm.Height = ImgAlarm.Height = 152;
-                    RectObject.RenderTransform = new RotateTransform(30, 17.5, 17.5);
                     RectObject.Width = ImgKm.Width + 40;
                     RectObject.Height = 20;
+                    RectObject.RenderTransform = new RotateTransform(30, 149, 10);
                 }
 
                 _typeMech = value;
@@ -413,7 +413,7 @@ namespace _2048_Rbu.Elements.Mechs
                 if (ModePcy == null)
                     ModePcy = Prefix + ".gMode_Automat";
                 if (ManualPcy == null)
-                    ManualPcy = ".gMode_Manual";
+                    ManualPcy = Prefix + ".gMode_Manual";
                 if (AlarmPcy == null)
                     AlarmPcy = Prefix + ".gb_ALARM";
             }
@@ -476,7 +476,7 @@ namespace _2048_Rbu.Elements.Mechs
             object btn = e.Source;
             Methods.ButtonClick(btn, BtnStop, StopPcx, true, TxtPopupName.Text + ". Стоп");
         }
-        
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]

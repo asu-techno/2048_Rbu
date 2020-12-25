@@ -34,6 +34,7 @@
     <None Remove="Images\img_Up.png" />
     <None Remove="Images\Indicators\img_Cement.png" />
     <None Remove="Images\Indicators\img_Inert.png" />
+    <None Remove="Images\Indicators\img_Inert_Edit.png" />
     <None Remove="Images\Indicators\img_Solution.png" />
     <None Remove="Images\Indicators\img_Water.png" />
     <None Remove="Images\Logo_ASU.png" />
@@ -95,6 +96,9 @@
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>library\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="nGantt">
       <HintPath>library\nGantt.dll</HintPath>
     </Reference>
@@ -130,6 +134,7 @@
     <Resource Include="Images\img_SaveAct_Color.png" />
     <Resource Include="Images\Indicators\img_Cement.png" />
     <Resource Include="Images\Indicators\img_Inert.png" />
+    <Resource Include="Images\Indicators\img_Inert_Edit.png" />
     <Resource Include="Images\Indicators\img_Solution.png" />
     <Resource Include="Images\Indicators\img_Water.png" />
     <Resource Include="Images\Logo_ASU.png" />

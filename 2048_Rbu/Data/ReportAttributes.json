@@ -17,6 +17,8 @@
   "StartDosage": "Dozing_StartTime",
   "FinishDosage": "Dozing_EndTime",
   "StartWeightDosage": "Dozing_StartWeight",
-  "FinishWeightDosage": "Dozing_EndWeight"
-
+  "FinishWeightDosage": "Dozing_EndWeight",
+  "MaterialId": "MaterialId",
+  "ContainerId": "ContainerId",
+  "SetVolume": "SetValue"
 }

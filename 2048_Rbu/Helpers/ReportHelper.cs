@@ -4,8 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Threading;
-using AS_Library.Link;
-using AsuBetonLibrary.Abstract;
 using AsuBetonLibrary.Classes.DbContext;
 using AsuBetonLibrary.Readers;
 using AsuBetonLibrary.Services;
@@ -109,7 +107,7 @@ namespace _2048_Rbu.Helpers
         private bool SearchReport(long taskId)
         {
             var report = Service.SearchReportByTaskId(taskId);
-            return report != null && report.FinishDt == new DateTime(1,1,1, 0, 0, 0);
+            return report != null && report.FinishDt == new DateTime(1, 1, 1, 0, 0, 0);
         }
         #endregion
 
@@ -145,7 +143,7 @@ namespace _2048_Rbu.Helpers
 
                     if (finishDt != "1/1/1990 12:00:00 AM" && finishDt != "null")
                     {
-                        var batch = new Batch {FinishDt = finishDt.StringDtParsing()};
+                        var batch = new Batch { FinishDt = finishDt.StringDtParsing() };
 
                         if (_reportAttributesDict.ContainsKey(ReportAttributes.BatchStartDt))
                         {
@@ -180,10 +178,10 @@ namespace _2048_Rbu.Helpers
 
                         var batchString = report + _reportAttributesDict[ReportAttributes.BatchName] + $"[{j}].";
                         batch.BatcherMaterials = GetBatcherMaterials(batchString);
-                        batches.Add(batch); 
+                        batches.Add(batch);
                     }
                 }
-              
+
             }
             return batches;
         }
@@ -263,6 +261,27 @@ namespace _2048_Rbu.Helpers
                     decimal.TryParse(finishWeightString, out var finishWeight);
                     dosingSourceMaterial.FinishWeightDosage = finishWeight;
                 }
+                if (_reportAttributesDict.ContainsKey(ReportAttributes.MaterialId))
+                {
+                    var materialIdTag = batcher + $"{dosingSourceName}." + _reportAttributesDict[ReportAttributes.MaterialId];
+                    var materialIdString = _opc.ReadNode(materialIdTag.ToNode(), OpcAttribute.Value)?.ToString();
+                    long.TryParse(materialIdString, out var materialId);
+                    dosingSourceMaterial.MaterialId = materialId;
+                }
+                if (_reportAttributesDict.ContainsKey(ReportAttributes.ContainerId))
+                {
+                    var containerIdTag = batcher + $"{dosingSourceName}." + _reportAttributesDict[ReportAttributes.ContainerId];
+                    var containerIdString = _opc.ReadNode(containerIdTag.ToNode(), OpcAttribute.Value)?.ToString();
+                    long.TryParse(containerIdString, out var containerId);
+                    dosingSourceMaterial.ContainerId = containerId;
+                }
+                if (_reportAttributesDict.ContainsKey(ReportAttributes.SetVolume))
+                {
+                    var setVolumeTag = batcher + $"{dosingSourceName}." + _reportAttributesDict[ReportAttributes.SetVolume];
+                    var setVolumeString = _opc.ReadNode(setVolumeTag.ToNode(), OpcAttribute.Value)?.ToString();
+                    decimal.TryParse(setVolumeString, out var setVolume);
+                    dosingSourceMaterial.SetVolume = setVolume;
+                }
 
                 dosingSourceMaterials.Add(dosingSourceMaterial);
             }
@@ -300,6 +319,9 @@ namespace _2048_Rbu.Helpers
         StartDosage,
         FinishDosage,
         StartWeightDosage,
-        FinishWeightDosage
+        FinishWeightDosage,
+        MaterialId,
+        ContainerId,
+        SetVolume
     }
 }

@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -104,10 +105,13 @@ namespace _2048_Rbu.Elements.Indicators
         //    }
         //}
 
-        public void GetMaterial()
+        public async void GetMaterial()
         {
-            Containers = new ObservableCollection<ApiContainer>(ContainersReader.ListContainers());
-            SelContainer = Containers.FirstOrDefault(x => x.Id == ContainerId);
+            await Task.Run(() =>
+            {
+                Containers = new ObservableCollection<ApiContainer>(ContainersReader.ListContainers());
+                SelContainer = Containers.FirstOrDefault(x => x.Id == ContainerId);
+            });
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

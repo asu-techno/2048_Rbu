@@ -182,16 +182,16 @@ namespace _2048_Rbu.Windows
             var mixerVolumeParam = CommonOpcParametersReader.GetCommonOpcParameterByName(OpcHelper.GetTagName(OpcHelper.TagNames.MixerVolume));
             if (mixerVolumeParam != null)
             {
-               var mixerVolumeValue = OpcHelper.ReadTag(NewOpcServer.OpcList.Rbu, mixerVolumeParam.Tag);
-               var mixerVolume = Convert.ToDecimal(OpcHelper.GetParameterValue(mixerVolumeValue, mixerVolumeParam));
-               if (mixerVolume != 0)
-               {
-                   return mixerVolume;
-               }
+                var mixerVolumeValue = OpcHelper.ReadTag(NewOpcServer.OpcList.Rbu, mixerVolumeParam.Tag);
+                var mixerVolume = Convert.ToDecimal(OpcHelper.GetParameterValue(mixerVolumeValue, mixerVolumeParam));
+                if (mixerVolume != 0)
+                {
+                    return mixerVolume;
+                }
 
-               Logger.Error("Объем миксера не может быть равен 0.");
-               MessageBox.Show("Объем миксера не может быть равен 0.");
-               return (decimal) 0.2;
+                Logger.Error("Объем миксера не может быть равен 0.");
+                MessageBox.Show("Объем миксера не может быть равен 0.");
+                return (decimal)0.2;
             }
 
             Logger.Error("Остутствует название тега - MixerVolume.");

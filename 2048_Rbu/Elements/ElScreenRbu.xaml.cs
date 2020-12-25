@@ -220,7 +220,7 @@ namespace _2048_Rbu.Elements
         private void BtnAck_OnClick(object sender, RoutedEventArgs e)
         {
             object btn = e.Source;
-            Methods.ButtonClick(btn, BtnAck, "cmd_Ack", true, "Сброс звонка");
+            Methods.ButtonClick(btn, BtnAck, "cmd_Ack_Alarm", true, "Сброс звонка");
         }
 
         private void Mode_OnClick(object sender, RoutedEventArgs e)

@@ -1,19 +1,29 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Controls;
-using _2048_Rbu.Windows;
+using _2048_Rbu.Classes;
 using AS_Library.Classes;
 using AsuBetonLibrary.Abstract;
 using AsuBetonLibrary.Readers;
 using AsuBetonLibrary.Services;
 using AsuBetonLibrary.Windows;
+using _2048_Rbu.Handlers;
+using _2048_Rbu.Windows;
 using NLog;
+using Opc.UaFx;
+using Opc.UaFx.Client;
+using AS_Library.Link;
 
 namespace _2048_Rbu.Elements.Control
 {
+    /// <summary>
+    /// Interaction logic for ElTaskQueue.xaml
+    /// </summary>
     public partial class ElQueue : UserControl
     {
         public ElQueue()
@@ -26,12 +36,23 @@ namespace _2048_Rbu.Elements.Control
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
+        private OPC_client _opc;
         private Logger Logger { get; set; }
         private TaskQueueItemsService Service { get; set; }
         private RecipesReader RecipesReader { get; set; } = new RecipesReader();
 
-        private ObservableCollection<ApiTaskQueueItem> _taskQueue;
+        private long _taskId;
+        public long TaskId
+        {
+            get { return _taskId; }
+            set
+            {
+                _taskId = value;
+                OnPropertyChanged(nameof(TaskId));
+            }
+        }
 
+        private ObservableCollection<ApiTaskQueueItem> _taskQueue;
         public ObservableCollection<ApiTaskQueueItem> TaskQueue
         {
             get { return _taskQueue; }
@@ -43,7 +64,6 @@ namespace _2048_Rbu.Elements.Control
         }
 
         private ApiTaskQueueItem _selTaskQueueItem;
-
         public ApiTaskQueueItem SelTaskQueueItem
         {
             get { return _selTaskQueueItem; }
@@ -53,8 +73,21 @@ namespace _2048_Rbu.Elements.Control
                 OnPropertyChanged(nameof(SelTaskQueueItem));
             }
         }
-
+        private bool _stopLoadTasks;
+        public bool StopLoadTasks
+        {
+            get { return _stopLoadTasks; }
+            set
+            {
+                _stopLoadTasks = value;
+                OnPropertyChanged(nameof(StopLoadTasks));
+            }
+        }
         private int MaxOrder { get; set; }
+
+        public delegate void NotStopLoadTasksHandler(bool stopLoadTasks);
+        public NotStopLoadTasksHandler NotStopLoadTasks;
+
 
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -67,6 +100,35 @@ namespace _2048_Rbu.Elements.Control
             Service = service;
             Service.Updated += ServiceOnUpdate;
             ServiceOnUpdate();
+            StopLoadTasks = true;
+            var loadTaskHandler = new LoadTaskHandler(Service, logger);
+            NotStopLoadTasks += loadTaskHandler.NotStopLoadTasks;
+
+            Subscribe();
+        }
+
+        public void Subscribe()
+        {
+            CreateSubscription();
+        }
+
+        private void CreateSubscription()
+        {
+            _opc = OpcServer.GetInstance().GetOpc(OpcServer.OpcList.Rbu);
+            var idItem = new OpcMonitoredItem(_opc.cl.GetNode("TaskID"), OpcAttribute.Value);
+            idItem.DataChangeReceived += HandleIdChanged;
+            OpcServer.GetInstance().GetSubscription(OpcServer.OpcList.Rbu).AddMonitoredItem(idItem);
+        }
+
+        private void HandleIdChanged(object sender, OpcDataChangeReceivedEventArgs e)
+        {
+            try
+            {
+                TaskId = long.Parse(e.Item.Value.ToString());
+            }
+            catch (Exception exception)
+            {
+            }
         }
 
         private void ServiceOnUpdate()
@@ -78,7 +140,6 @@ namespace _2048_Rbu.Elements.Control
         #region Commands
 
         private RelayCommand _addCommand;
-
         public RelayCommand AddCommand
         {
             get
@@ -92,7 +153,6 @@ namespace _2048_Rbu.Elements.Control
         }
 
         private RelayCommand _upRecipeCommand;
-
         public RelayCommand UpRecipeCommand
         {
             get
@@ -108,7 +168,6 @@ namespace _2048_Rbu.Elements.Control
                             previousItem.Order += 1;
                             recipeQueueItems.Add(previousItem);
                         }
-
                         SelTaskQueueItem.Order -= 1;
                         recipeQueueItems.Add(SelTaskQueueItem);
                         Service.Update(recipeQueueItems);
@@ -118,7 +177,6 @@ namespace _2048_Rbu.Elements.Control
         }
 
         private RelayCommand _downRecipeCommand;
-
         public RelayCommand DownRecipeCommand
         {
             get
@@ -134,7 +192,6 @@ namespace _2048_Rbu.Elements.Control
                             nextItem.Order -= 1;
                             recipeQueueItems.Add(nextItem);
                         }
-
                         SelTaskQueueItem.Order += 1;
                         recipeQueueItems.Add(SelTaskQueueItem);
                         Service.Update(recipeQueueItems);
@@ -144,7 +201,6 @@ namespace _2048_Rbu.Elements.Control
         }
 
         private RelayCommand _detailsCommand;
-
         public RelayCommand DetailsCommand
         {
             get
@@ -161,7 +217,6 @@ namespace _2048_Rbu.Elements.Control
         }
 
         private RelayCommand _copyCommand;
-
         public RelayCommand CopyCommand
         {
             get
@@ -176,10 +231,49 @@ namespace _2048_Rbu.Elements.Control
         }
 
         private RelayCommand _deleteCommand;
-
         public RelayCommand DeleteCommand
         {
-            get { return _deleteCommand ??= new RelayCommand((o) => { Service.Delete(SelTaskQueueItem.Id); }); }
+            get
+            {
+                return _deleteCommand ??= new RelayCommand((o) =>
+                {
+                    Service.Delete(SelTaskQueueItem.Id);
+                });
+            }
+        }
+
+        private RelayCommand _stopLoadTaskCommand;
+        public RelayCommand StopLoadTaskCommand
+        {
+            get
+            {
+                return _stopLoadTaskCommand ??= new RelayCommand((o) =>
+                {
+                    StopLoadTasks = !StopLoadTasks;
+                    NotStopLoadTasks?.Invoke(StopLoadTasks);
+                });
+            }
+        }
+
+        private RelayCommand _unloadTask;
+        public RelayCommand UnloadTask
+        {
+            get
+            {
+                return _unloadTask ??= new RelayCommand((o) =>
+                {
+                    try
+                    {
+                        _opc.cl.WriteBool("btn_UnloadRecipe", true, out var err);
+                        if (err)
+                            MessageBox.Show("Ошибка записи", "Ошибка");
+                    }
+                    catch (Exception e)
+                    {
+                        MessageBox.Show("Ошибка записи", "Ошибка");
+                    }
+                });
+            }
         }
 
         #endregion

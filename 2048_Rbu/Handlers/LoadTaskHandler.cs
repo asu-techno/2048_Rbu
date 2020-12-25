@@ -10,7 +10,7 @@ using NLog;
 using Opc.UaFx;
 using Opc.UaFx.Client;
 
-namespace AsuBetonWpfTest.Handlers
+namespace _2048_Rbu.Handlers
 {
     public class LoadTaskHandler
     {
@@ -24,7 +24,7 @@ namespace AsuBetonWpfTest.Handlers
         private BatchersReader BatchersReader { get; set; }
         private RecipesReader RecipesReader { get; set; }
         private Logger Logger { get; set; }
-
+        public bool StopLoadTasks { get; set; } = true;
         public delegate void NoticeHandler(string message);
         public event NoticeHandler OnNoticeHandler;
 
@@ -84,7 +84,7 @@ namespace AsuBetonWpfTest.Handlers
 
         private void DoWork(OpcValue value)
         {
-            if (value != null)
+            if (value != null && !StopLoadTasks)
             {
                 var currentTaskId = Convert.ToInt64(value.ToString());
                 if (currentTaskId == 0)
@@ -175,16 +175,38 @@ namespace AsuBetonWpfTest.Handlers
                     containers.TryGetValue(dosingSource.Container.Id, out var recipeMaterial);
                     if (recipeMaterial != null)
                     {
-                        var parameter = dosingSource.DosingSourceOpcParameters.FirstOrDefault(x =>
+                        var materialSetParameter = dosingSource.DosingSourceOpcParameters.FirstOrDefault(x =>
                             x.Name == OpcHelper.GetTagName(OpcHelper.TagNames.MaterialSet));
-                        if (parameter != null)
+                        if (materialSetParameter != null)
                         {
-                            result.Add(parameter, recipeMaterial.Volume.ToString(CultureInfo.InvariantCulture));
+                            result.Add(materialSetParameter, recipeMaterial.Volume.ToString(CultureInfo.InvariantCulture));
                         }
                         else
                         {
                             isOk = false;
                             Logger.Error($"У дозатора {batcher.Name} - источник дозирования {dosingSource.Name} отсутствует параметр - MaterialSet.");
+                        }
+                        var materialIdParameter = dosingSource.DosingSourceOpcParameters.FirstOrDefault(x =>
+                            x.Name == OpcHelper.GetTagName(OpcHelper.TagNames.MaterialId));
+                        if (materialIdParameter != null)
+                        {
+                            result.Add(materialIdParameter, recipeMaterial.Material.Id.ToString(CultureInfo.InvariantCulture));
+                        }
+                        else
+                        {
+                            isOk = false;
+                            Logger.Error($"У дозатора {batcher.Name} - источник дозирования {dosingSource.Name} отсутствует параметр - MaterialId.");
+                        }
+                        var containerIdParameter = dosingSource.DosingSourceOpcParameters.FirstOrDefault(x =>
+                            x.Name == OpcHelper.GetTagName(OpcHelper.TagNames.ContainerId));
+                        if (containerIdParameter != null)
+                        {
+                            result.Add(containerIdParameter, dosingSource.Container.Id.ToString(CultureInfo.InvariantCulture));
+                        }
+                        else
+                        {
+                            isOk = false;
+                            Logger.Error($"У дозатора {batcher.Name} - источник дозирования {dosingSource.Name} отсутствует параметр - ContainerId.");
                         }
                     }
                 }
@@ -275,6 +297,15 @@ namespace AsuBetonWpfTest.Handlers
             else
             {
                 Logger.Error("Отсутствует параметр CurrentTaskId.");
+            }
+        }
+
+        public void NotStopLoadTasks(bool stopLoadTasks)
+        {
+            StopLoadTasks = stopLoadTasks;
+            if (!stopLoadTasks)
+            {
+                CheckAndLoad();
             }
         }
     }

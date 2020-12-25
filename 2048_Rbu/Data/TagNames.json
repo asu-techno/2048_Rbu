@@ -6,5 +6,7 @@
   "TimeFullUnload": "TimeFullUnload",
   "TimePartialUnload": "TimePartialUnload",
   "BatchesAmount": "BatchesAmount",
-  "MixerVolume": "MixerVolume"
+  "MixerVolume": "MixerVolume",
+  "MaterialId": "MaterialId",
+  "ContainerId": "ContainerId"
 }

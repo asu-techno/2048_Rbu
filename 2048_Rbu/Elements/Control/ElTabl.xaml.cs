@@ -55,7 +55,7 @@ namespace _2048_Rbu.Elements.Control
         private ContainersReader ContainersReader { get; set; } = new ContainersReader();
         private OPC_client _opc;
         private OpcServer.OpcList _opcName;
-        private long _id;
+        private long _id, _currentId;
 
         public ViewModelTabl(OpcServer.OpcList opcName)
         {
@@ -156,14 +156,18 @@ namespace _2048_Rbu.Elements.Control
         {
             if (_id != 0)
             {
-                try
+                if (_id != _currentId)
                 {
-                    GetTask(_id);
-                    GetValue();
-                }
-                catch (Exception ex)
-                {
-                    System.IO.File.WriteAllText(@"Log\log.txt", DateTime.Now + " - " + ex.Message + "->" + _id);
+                    try
+                    {
+                        GetTask(_id);
+                        GetValue();
+                        _currentId = _id;
+                    }
+                    catch (Exception ex)
+                    {
+                        System.IO.File.WriteAllText(@"Log\log.txt", DateTime.Now + " - " + ex.Message + "->" + _id);
+                    }
                 }
             }
             else
@@ -172,6 +176,7 @@ namespace _2048_Rbu.Elements.Control
                 MaterialName = null;
                 SetValue = null;
                 CurrentValue = null;
+                _currentId = _id;
             }
         }
 
@@ -257,7 +262,7 @@ namespace _2048_Rbu.Elements.Control
         {
             if (_id != 0)
             {
-                if (SetValue == null || CurrentValue == null)
+                if (_currentId != _id)
                 {
                     SetValue = new string[_setValueTag.Length];
                     CurrentValue = new string[_setValueTag.Length];

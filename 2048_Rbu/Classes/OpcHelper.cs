@@ -24,7 +24,9 @@ namespace _2048_Rbu.Classes
             TimeFullUnload,
             TimePartialUnload,
             BatchesAmount,
-            MixerVolume
+            MixerVolume,
+            MaterialId,
+            ContainerId
         }
 
         public static Dictionary<TagNames, string> TagNamesDictionary = GetTagNamesDictionary();

@@ -8,7 +8,6 @@ using System.Windows.Input;
 using AS_Library.Link;
 using AS_Library.Events;
 using _2048_Rbu.Classes;
-using _2048_Rbu.Classes;
 using AS_Library.Events.Classes;
 
 

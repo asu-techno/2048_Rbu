@@ -131,6 +131,22 @@
                     </Style>
                 </Button.Style>
             </Button>
+
+            <Button Grid.Row="0" Width="150" Height="20" FontSize="16" Margin="10" HorizontalAlignment="Left" VerticalAlignment="Center" ToolTip="Запрет загрузки рецептов" Command="{Binding StopLoadTaskCommand}">
+                <Button.Content>
+                    <TextBlock Text="Запрет загрузки рецептов" FontSize="10"/>
+                </Button.Content>
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Background" Value="LightBlue" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding StopLoadTasks}" Value="True">
+                                <Setter Property="Background" Value="Yellow" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
             <ListBox Grid.Row="1" ItemsSource="{Binding TaskQueue}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelTaskQueueItem, UpdateSourceTrigger=PropertyChanged}" Margin="10" FontSize="14" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="Black" MinWidth="300" />
         </Grid>
     </Grid>

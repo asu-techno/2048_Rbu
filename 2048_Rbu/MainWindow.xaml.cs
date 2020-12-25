@@ -3,15 +3,17 @@ using System.ComponentModel;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Media;
+using AsuBetonLibrary;
+using AsuBetonLibrary.Elements;
+using AsuBetonLibrary.Services;
+using AsuBetonLibrary.Windows;
 using _2048_Rbu.Classes;
 using _2048_Rbu.Elements;
+using _2048_Rbu.Handlers;
 using _2048_Rbu.Helpers;
+using NLog;
 using _2048_Rbu.Windows;
 using AS_Library.Events.Classes;
-using AsuBetonLibrary;
-using AsuBetonLibrary.Services;
-using AsuBetonWpfTest.Handlers;
-using _2048_Rbu.Classes;
 using ServiceLib.Classes;
 
 namespace _2048_Rbu
@@ -54,20 +56,13 @@ namespace _2048_Rbu
             NewOpcServer.GetInstance().InitOpc(NewOpcServer.OpcList.Rbu);
             NewOpcServer.GetInstance().ConnectOpc(NewOpcServer.OpcList.Rbu);
 
-            var taskQueueItemsService = new TaskQueueItemsService();
-
-            //var recipeQueueViewModel = new ElTaskQueueViewModel(taskQueueItemsService, logger);
-            //ElRecipeQueue.DataContext = recipeQueueViewModel;
-
-            var loadTaskHandler = new LoadTaskHandler(taskQueueItemsService, logger);
-
             var reportHelper = new ReportHelper(logger);
-            reportHelper.SubscribeReportSaving(); 
-            #endregion
+            reportHelper.SubscribeReportSaving();
 
             OpcServer.Init(@"Data/Service.xlsx");
             OpcServer.GetInstance();
-
+            #endregion
+            
             Title += " v." + Assembly.GetExecutingAssembly().GetName().Version.ToString();
             
             #region Масштаб экрана
