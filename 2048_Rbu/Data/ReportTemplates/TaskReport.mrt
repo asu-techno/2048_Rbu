@@ -1,0 +1,1436 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<StiSerializer version="1.02" type="Net" application="StiReport">
+  <CalculationMode>Interpretation</CalculationMode>
+  <Dictionary Ref="1" type="Dictionary" isKey="true">
+    <BusinessObjects isList="true" count="0" />
+    <Databases isList="true" count="0" />
+    <DataSources isList="true" count="3">
+      <Batches Ref="2" type="Stimulsoft.Report.Dictionary.StiBusinessObjectSource" isKey="true">
+        <Alias>Batches</Alias>
+        <Columns isList="true" count="6">
+          <value>Id,System.Int64</value>
+          <value>StartTime,System.DateTime</value>
+          <value>FinishTime,System.DateTime</value>
+          <value>MaterialsUnloadReports,_2048_Rbu.Windows.Reports.ReportCollection`1[_2048_Rbu.Windows.Reports.MaterialsUnloadReport]</value>
+          <value>_ID,System.Int32</value>
+          <value>_Current,System.Object</value>
+        </Columns>
+        <Dictionary isRef="1" />
+        <Key>77ef8e3819c7433181ac20da506d243b</Key>
+        <Name>Batches</Name>
+        <NameInSource>Batches</NameInSource>
+      </Batches>
+      <Batches_MaterialsUnloadReports Ref="3" type="Stimulsoft.Report.Dictionary.StiBusinessObjectSource" isKey="true">
+        <Alias>Batches_MaterialsUnloadReports</Alias>
+        <Columns isList="true" count="10">
+          <value>StartWeight,System.Decimal</value>
+          <value>FinishWeight,System.Decimal</value>
+          <value>StartTime,System.DateTime</value>
+          <value>FinishTime,System.DateTime</value>
+          <value>_ID,System.Int32</value>
+          <value>_parentID,System.Int32</value>
+          <value>_Current,System.Object</value>
+          <value>UnloadId,System.Int64</value>
+          <value>MaterialsDosingReports,_2048_Rbu.Windows.Reports.ReportCollection`1[_2048_Rbu.Windows.Reports.MaterialsDosingReport]</value>
+          <value>Batcher,System.String</value>
+        </Columns>
+        <Dictionary isRef="1" />
+        <Key>982c0958551c4c3681f6bf68b9aee52c</Key>
+        <Name>Batches_MaterialsUnloadReports</Name>
+        <NameInSource>Batches_MaterialsUnloadReports</NameInSource>
+      </Batches_MaterialsUnloadReports>
+      <Batches_MaterialsUnloadReports_MaterialsDosingReports Ref="4" type="Stimulsoft.Report.Dictionary.StiBusinessObjectSource" isKey="true">
+        <Alias>Batches_MaterialsUnloadReports_MaterialsDosingReports</Alias>
+        <Columns isList="true" count="9">
+          <value>Material,System.String</value>
+          <value>SetVolume,System.Decimal</value>
+          <value>StartWeight,System.Decimal</value>
+          <value>FinishWeight,System.Decimal</value>
+          <value>StartTime,System.DateTime</value>
+          <value>FinishTime,System.DateTime</value>
+          <value>_ID,System.Int32</value>
+          <value>_parentID,System.Int32</value>
+          <value>_Current,System.Object</value>
+        </Columns>
+        <Dictionary isRef="1" />
+        <Key>a213c45aefe444d8a9ece0f343fcfc49</Key>
+        <Name>Batches_MaterialsUnloadReports_MaterialsDosingReports</Name>
+        <NameInSource>Batches_MaterialsUnloadReports_MaterialsDosingReports</NameInSource>
+      </Batches_MaterialsUnloadReports_MaterialsDosingReports>
+    </DataSources>
+    <Relations isList="true" count="2">
+      <Batches Ref="5" type="DataRelation" isKey="true">
+        <Alias>Batches</Alias>
+        <ChildColumns isList="true" count="1">
+          <value>_parentID</value>
+        </ChildColumns>
+        <ChildSource isRef="3" />
+        <Dictionary isRef="1" />
+        <Name>Batches</Name>
+        <NameInSource>Batches_MaterialsUnloadReportsRelation</NameInSource>
+        <ParentColumns isList="true" count="1">
+          <value>_ID</value>
+        </ParentColumns>
+        <ParentSource isRef="2" />
+      </Batches>
+      <Batches_MaterialsUnloadReports Ref="6" type="DataRelation" isKey="true">
+        <Alias>Batches_MaterialsUnloadReports</Alias>
+        <ChildColumns isList="true" count="1">
+          <value>_parentID</value>
+        </ChildColumns>
+        <ChildSource isRef="4" />
+        <Dictionary isRef="1" />
+        <Name>Batches_MaterialsUnloadReports</Name>
+        <NameInSource>Batches_MaterialsUnloadReports_MaterialsDosingReportsRelation</NameInSource>
+        <ParentColumns isList="true" count="1">
+          <value>_ID</value>
+        </ParentColumns>
+        <ParentSource isRef="3" />
+      </Batches_MaterialsUnloadReports>
+    </Relations>
+    <Report isRef="0" />
+    <Resources isList="true" count="0" />
+    <Variables isList="true" count="9">
+      <value>,TaskId,TaskId,,System.Int64,,False,False,False,False,,_x0030_d5fa8285b094e8a8853333bc096423d</value>
+      <value>,RecipeGroup,RecipeGroup,,System.String,,False,False,False,False,,f816ea4563a944cb8fedbf7b6e795b67</value>
+      <value>,RecipeName,RecipeName,,System.String,,False,False,False,False,,_x0034_697c8d4f4084f178bde9352f07ce67b</value>
+      <value>,BatchesCount,BatchesCount,,System.Decimal,,False,False,False,False,,b3e9db69f0dc4b62b15b23397cd57dca</value>
+      <value>,Volume,Volume,,System.Decimal,,False,False,False,False</value>
+      <value>,BatchVolume,BatchVolume,,System.Decimal,,False,False,False,False</value>
+      <value>,Customer,Customer,,System.String,,False,False,False,False</value>
+      <value>,StartTime,StartTime,,System.DateTime,_x0031_2_x002F_22_x002F_2020_x0020_7:23:34_x0020_AM,False,False,False,False,,b24046bd727849dca1a35458ab568049</value>
+      <value>,FinishTime,FinishTime,,System.DateTime,_x0031_2_x002F_22_x002F_2020_x0020_7:23:15_x0020_AM,False,False,False,False,,d3c34fa4e2024259868bfc97fe87ea91</value>
+    </Variables>
+  </Dictionary>
+  <EngineVersion>EngineV2</EngineVersion>
+  <GlobalizationStrings isList="true" count="0" />
+  <Key>781d4160daaa4ed2aa3c2d839fc152c3</Key>
+  <MetaTags isList="true" count="0" />
+  <Pages isList="true" count="1">
+    <Page1 Ref="7" type="Page" isKey="true">
+      <Border>None;Black;2;Solid;False;4;Black</Border>
+      <Brush>Transparent</Brush>
+      <Components isList="true" count="5">
+        <ReportTitleBand1 Ref="8" type="ReportTitleBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,0.4,19,6.4</ClientRectangle>
+          <Components isList="true" count="16">
+            <Text1 Ref="9" type="Text" isKey="true">
+              <Brush>[255:192:0]</Brush>
+              <ClientRectangle>0,0,10.6,2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Segoe UI,18,Bold</Font>
+              <Guid>22d6e0d29c0b478dad6943efacfdb7b2</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text1</Name>
+              <Page isRef="7" />
+              <Parent isRef="8" />
+              <Text>Отчет по заданию №{TaskId}</Text>
+              <TextBrush>[31:73:125]</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text1>
+            <Text8 Ref="10" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0,4,3.6,0.8</ClientRectangle>
+              <ComponentStyle>Text</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Segoe UI,12</Font>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text8</Name>
+              <Page isRef="7" />
+              <Parent isRef="8" />
+              <Text>Кол-во замесов:</Text>
+              <TextBrush>[31:73:125]</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text8>
+            <Text10 Ref="11" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0,4.8,3.6,0.8</ClientRectangle>
+              <ComponentStyle>Text</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Segoe UI,12</Font>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text10</Name>
+              <Page isRef="7" />
+              <Parent isRef="8" />
+              <Text>Объем замеса, м3:</Text>
+              <TextBrush>[31:73:125]</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text10>
+            <Text12 Ref="12" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>14.2,4.8,4.8,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Segoe UI,12,Bold</Font>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text12</Name>
+              <Page isRef="7" />
+              <Parent isRef="8" />
+              <Text>{string.Format("{0:D2}:{1:D2}:{2:D2}", DateDiff(FinishTime, StartTime).Hours, DateDiff(FinishTime, StartTime).Minutes, DateDiff(FinishTime, StartTime).Seconds)}</Text>
+              <TextBrush>[31:73:125]</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text12>
+            <Text6 Ref="13" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>1,2.4,2.6,0.8</ClientRectangle>
+              <ComponentStyle>Text</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Segoe UI,12</Font>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text6</Name>
+              <Page isRef="7" />
+              <Parent isRef="8" />
+              <Text>Заказчик:</Text>
+              <TextBrush>[31:73:125]</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text6>
+            <Text44 Ref="14" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>9.4,4.8,4.8,0.8</ClientRectangle>
+              <ComponentStyle>Text</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Segoe UI,12</Font>
+              <Guid>62d1b54b44fd4ff3b339779119b17174</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text44</Name>
+              <Page isRef="7" />
+              <Parent isRef="8" />
+              <Text>Длительность:</Text>
+              <TextBrush>[31:73:125]</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text44>
+            <Text45 Ref="15" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>14.2,3.2,4.8,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Segoe UI,12,Bold</Font>
+              <Guid>3ffe2c2f402549b9be275a32873a73b1</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text45</Name>
+              <Page isRef="7" />
+              <Parent isRef="8" />
+              <Text>{StartTime}</Text>
+              <TextBrush>[31:73:125]</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text45>
+            <Text46 Ref="16" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>10,3.2,4.2,0.8</ClientRectangle>
+              <ComponentStyle>Text</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Segoe UI,12</Font>
+              <Guid>2f1ab9a57f084230a5719c86d375188d</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text46</Name>
+              <Page isRef="7" />
+              <Parent isRef="8" />
+              <Text>Начало выполнения:</Text>
+              <TextBrush>[31:73:125]</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text46>
+            <Text47 Ref="17" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>9.4,4,4.8,0.8</ClientRectangle>
+              <ComponentStyle>Text</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Segoe UI,12</Font>
+              <Guid>aa0924a9f6b54a1081728eddcc7dde62</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text47</Name>
+              <Page isRef="7" />
+              <Parent isRef="8" />
+              <Text>Окончание выполнения:</Text>
+              <TextBrush>[31:73:125]</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text47>
+            <Text48 Ref="18" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>14.2,4,4.8,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Segoe UI,12,Bold</Font>
+              <Guid>04e19bab5ab74d95a64777f028e9ca8c</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text48</Name>
+              <Page isRef="7" />
+              <Parent isRef="8" />
+              <Text>{FinishTime}</Text>
+              <TextBrush>[31:73:125]</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text48>
+            <Text3 Ref="19" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>3.6,2.4,4.8,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Segoe UI,12,Bold</Font>
+              <Guid>62fc2656d62d4657aacbf3fc2d0acaba</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text3</Name>
+              <Page isRef="7" />
+              <Parent isRef="8" />
+              <Text>{Customer}</Text>
+              <TextBrush>[31:73:125]</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text3>
+            <Text4 Ref="20" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>3.6,3.2,4.8,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Segoe UI,12,Bold</Font>
+              <Guid>8546b8d58e53465cb74447ace88617ac</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text4</Name>
+              <Page isRef="7" />
+              <Parent isRef="8" />
+              <Text>{BatchVolume}</Text>
+              <TextBrush>[31:73:125]</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text4>
+            <Text9 Ref="21" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0,3.2,3.6,0.8</ClientRectangle>
+              <ComponentStyle>Text</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Segoe UI,12</Font>
+              <Guid>33ea1bc9aec04f2696c46886d4b7ee91</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text9</Name>
+              <Page isRef="7" />
+              <Parent isRef="8" />
+              <Text>Объем заказа, м3:</Text>
+              <TextBrush>[31:73:125]</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text9>
+            <Text52 Ref="22" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>3.6,4.8,4.8,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Segoe UI,12,Bold</Font>
+              <Guid>10c4f0cf4b3347f48286e0aee6b0cc77</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text52</Name>
+              <Page isRef="7" />
+              <Parent isRef="8" />
+              <Text>{Volume}</Text>
+              <TextBrush>[31:73:125]</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text52>
+            <Text53 Ref="23" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>3.6,4,4.8,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Segoe UI,12,Bold</Font>
+              <Guid>b29f320be4454677bfe8fcbdbfd09a7f</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text53</Name>
+              <Page isRef="7" />
+              <Parent isRef="8" />
+              <Text>{BatchesCount}</Text>
+              <TextBrush>[31:73:125]</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text53>
+            <Panel3 Ref="24" type="Panel" isKey="true">
+              <Brush>[242:242:242]</Brush>
+              <ClientRectangle>10.6,0,8.4,2</ClientRectangle>
+              <Components isList="true" count="4">
+                <Text43 Ref="25" type="Text" isKey="true">
+                  <Brush>Transparent</Brush>
+                  <ClientRectangle>3.6,1,4.8,0.8</ClientRectangle>
+                  <Conditions isList="true" count="0" />
+                  <Expressions isList="true" count="0" />
+                  <Font>Segoe UI,12,Bold</Font>
+                  <Guid>15367a99ce804e7f89e376769fb4f01b</Guid>
+                  <HorAlignment>Center</HorAlignment>
+                  <Margins>0,0,0,0</Margins>
+                  <Name>Text43</Name>
+                  <Page isRef="7" />
+                  <Parent isRef="24" />
+                  <Text>{RecipeName}</Text>
+                  <TextBrush>[31:73:125]</TextBrush>
+                  <Type>Expression</Type>
+                  <VertAlignment>Center</VertAlignment>
+                </Text43>
+                <Text54 Ref="26" type="Text" isKey="true">
+                  <Brush>Transparent</Brush>
+                  <ClientRectangle>3.6,0.2,4.8,0.8</ClientRectangle>
+                  <Conditions isList="true" count="0" />
+                  <Expressions isList="true" count="0" />
+                  <Font>Segoe UI,12,Bold</Font>
+                  <Guid>db78f146c6c142e489c9c986641b5bcf</Guid>
+                  <HorAlignment>Center</HorAlignment>
+                  <Margins>0,0,0,0</Margins>
+                  <Name>Text54</Name>
+                  <Page isRef="7" />
+                  <Parent isRef="24" />
+                  <Text>{RecipeGroup}</Text>
+                  <TextBrush>[31:73:125]</TextBrush>
+                  <Type>Expression</Type>
+                  <VertAlignment>Center</VertAlignment>
+                </Text54>
+                <Text2 Ref="27" type="Text" isKey="true">
+                  <Brush>Transparent</Brush>
+                  <ClientRectangle>0,1,3.6,0.8</ClientRectangle>
+                  <ComponentStyle>Text</ComponentStyle>
+                  <Conditions isList="true" count="0" />
+                  <Expressions isList="true" count="0" />
+                  <Font>Segoe UI,12</Font>
+                  <HorAlignment>Right</HorAlignment>
+                  <Margins>0,0,0,0</Margins>
+                  <Name>Text2</Name>
+                  <Page isRef="7" />
+                  <Parent isRef="24" />
+                  <Text>Название рецепта:</Text>
+                  <TextBrush>[31:73:125]</TextBrush>
+                  <Type>Expression</Type>
+                  <VertAlignment>Center</VertAlignment>
+                </Text2>
+                <Text5 Ref="28" type="Text" isKey="true">
+                  <Brush>Transparent</Brush>
+                  <ClientRectangle>0,0.2,3.6,0.8</ClientRectangle>
+                  <ComponentStyle>Text</ComponentStyle>
+                  <Conditions isList="true" count="0" />
+                  <Expressions isList="true" count="0" />
+                  <Font>Segoe UI,12</Font>
+                  <HorAlignment>Right</HorAlignment>
+                  <Margins>0,0,0,0</Margins>
+                  <Name>Text5</Name>
+                  <Page isRef="7" />
+                  <Parent isRef="24" />
+                  <Text>Группа рецептов:</Text>
+                  <TextBrush>[31:73:125]</TextBrush>
+                  <Type>Expression</Type>
+                  <VertAlignment>Center</VertAlignment>
+                </Text5>
+              </Components>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Name>Panel3</Name>
+              <Page isRef="7" />
+              <Parent isRef="8" />
+            </Panel3>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Name>ReportTitleBand1</Name>
+          <Page isRef="7" />
+          <Parent isRef="7" />
+        </ReportTitleBand1>
+        <DataBand1 Ref="29" type="DataBand" isKey="true">
+          <Border>Top, Left, Right;[79:129:189];2;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <BusinessObjectGuid isNull="true" />
+          <ClientRectangle>0,7.6,19,2.4</ClientRectangle>
+          <Components isList="true" count="7">
+            <Text13 Ref="30" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>7.8,1.6,6.4,0.8</ClientRectangle>
+              <ComponentStyle>Text</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Segoe UI,12</Font>
+              <Guid>7a3a726e6d904a3d83e0bd00c1347adf</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text13</Name>
+              <Page isRef="7" />
+              <Parent isRef="29" />
+              <Text>Длительность:</Text>
+              <TextBrush>[31:73:125]</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text13>
+            <Text15 Ref="31" type="Text" isKey="true">
+              <Border>Right;[79:129:189];2;Solid;False;4;[79:129:189]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0,0,6.2,2.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Segoe UI,16,Bold</Font>
+              <Guid>5d171caea54f44368146394ef4ff4576</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text15</Name>
+              <Page isRef="7" />
+              <Parent isRef="29" />
+              <Text>Замес №{Line}</Text>
+              <TextBrush>[31:73:125]</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text15>
+            <Text49 Ref="32" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>14.2,0.8,4.8,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Segoe UI,12,Bold</Font>
+              <Guid>677f18aaaf6d4c33b67c22b3dacabbfc</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text49</Name>
+              <Page isRef="7" />
+              <Parent isRef="29" />
+              <Text>{Batches.FinishTime}</Text>
+              <TextBrush>[31:73:125]</TextBrush>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text49>
+            <Text11 Ref="33" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>14.2,0,4.8,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Segoe UI,12,Bold</Font>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text11</Name>
+              <Page isRef="7" />
+              <Parent isRef="29" />
+              <Text>{Batches.StartTime}</Text>
+              <TextBrush>[31:73:125]</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text11>
+            <Text50 Ref="34" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>7.8,0,6.4,0.8</ClientRectangle>
+              <ComponentStyle>Text</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Segoe UI,12</Font>
+              <Guid>4dbea9c5cd96418597cdedf577ad2e8c</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text50</Name>
+              <Page isRef="7" />
+              <Parent isRef="29" />
+              <Text>Начало выполнения:</Text>
+              <TextBrush>[31:73:125]</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text50>
+            <Text51 Ref="35" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>7.8,0.8,6.4,0.8</ClientRectangle>
+              <ComponentStyle>Text</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Segoe UI,12</Font>
+              <Guid>6198f299960c4de8a35c160e07689804</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text51</Name>
+              <Page isRef="7" />
+              <Parent isRef="29" />
+              <Text>Окончание выполнения:</Text>
+              <TextBrush>[31:73:125]</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text51>
+            <Text14 Ref="36" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>14.2,1.6,4.8,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Segoe UI,12,Bold</Font>
+              <Guid>14af37c348f7425bb5d4f9338f29f35f</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text14</Name>
+              <Page isRef="7" />
+              <Parent isRef="29" />
+              <Text>{string.Format("{0:D2}:{1:D2}:{2:D2}", DateDiff(Batches.FinishTime, Batches.StartTime).Hours, DateDiff(Batches.FinishTime, Batches.StartTime).Minutes, DateDiff(Batches.FinishTime, Batches.StartTime).Seconds)}</Text>
+              <TextBrush>[31:73:125]</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text14>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <DataRelationName isNull="true" />
+          <DataSourceName>Batches</DataSourceName>
+          <Expressions isList="true" count="0" />
+          <Filters isList="true" count="0" />
+          <Name>DataBand1</Name>
+          <Page isRef="7" />
+          <Parent isRef="7" />
+          <PrintIfDetailEmpty>True</PrintIfDetailEmpty>
+          <Sort isList="true" count="0" />
+        </DataBand1>
+        <HeaderBand1 Ref="37" type="HeaderBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,10.8,19,1.6</ClientRectangle>
+          <Components isList="true" count="15">
+            <Text16 Ref="38" type="Text" isKey="true">
+              <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
+              <Brush>[141:179:226]</Brush>
+              <ClientRectangle>13.4,0.8,1.4,0.8</ClientRectangle>
+              <ComponentStyle>Header</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Segoe UI,7</Font>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text16</Name>
+              <Page isRef="7" />
+              <Parent isRef="37" />
+              <Text>Нач. вес</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text16>
+            <Text17 Ref="39" type="Text" isKey="true">
+              <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
+              <Brush>[141:179:226]</Brush>
+              <ClientRectangle>14.8,0.8,1.4,0.8</ClientRectangle>
+              <ComponentStyle>Header</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Segoe UI,7</Font>
+              <Guid>ed831e80e2e246459c47c66a1bc99325</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text17</Name>
+              <Page isRef="7" />
+              <Parent isRef="37" />
+              <Text>Кон. вес</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text17>
+            <Text18 Ref="40" type="Text" isKey="true">
+              <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
+              <Brush>[141:179:226]</Brush>
+              <ClientRectangle>13.4,0,5.6,0.8</ClientRectangle>
+              <ComponentStyle>Header</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Segoe UI,7</Font>
+              <Guid>6a198544b0ba47e9863b25d7255b7363</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text18</Name>
+              <Page isRef="7" />
+              <Parent isRef="37" />
+              <Text>Выгрузка</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text18>
+            <Text19 Ref="41" type="Text" isKey="true">
+              <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
+              <Brush>[141:179:226]</Brush>
+              <ClientRectangle>16.2,0.8,1.4,0.8</ClientRectangle>
+              <ComponentStyle>Header</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Segoe UI,7</Font>
+              <Guid>843bc01cf07648898db97c6c7e1961db</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text19</Name>
+              <Page isRef="7" />
+              <Parent isRef="37" />
+              <Text>Выгружено</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text19>
+            <Text20 Ref="42" type="Text" isKey="true">
+              <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
+              <Brush>[141:179:226]</Brush>
+              <ClientRectangle>17.6,0.8,1.4,0.8</ClientRectangle>
+              <ComponentStyle>Header</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Segoe UI,7</Font>
+              <Guid>88c4da502d134ff9a7b1f86cc21ff99f</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text20</Name>
+              <Page isRef="7" />
+              <Parent isRef="37" />
+              <Text>Длит.
+выгрузки</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text20>
+            <Text31 Ref="43" type="Text" isKey="true">
+              <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
+              <Brush>[141:179:226]</Brush>
+              <ClientRectangle>2.4,0,11,0.8</ClientRectangle>
+              <ComponentStyle>Header</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Segoe UI,7</Font>
+              <Guid>a40529982b1946ffaff795ba16127f06</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text31</Name>
+              <Page isRef="7" />
+              <Parent isRef="37" />
+              <Text>Дозирование</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text31>
+            <Text30 Ref="44" type="Text" isKey="true">
+              <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
+              <Brush>[141:179:226]</Brush>
+              <ClientRectangle>12,0.8,1.4,0.8</ClientRectangle>
+              <ComponentStyle>Header</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Segoe UI,7</Font>
+              <Guid>74c208bfc9bf48b99cdba7addb488b11</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text30</Name>
+              <Page isRef="7" />
+              <Parent isRef="37" />
+              <Text>Длит.
+дозир.</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text30>
+            <Text27 Ref="45" type="Text" isKey="true">
+              <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
+              <Brush>[141:179:226]</Brush>
+              <ClientRectangle>10.4,0.8,1.6,0.8</ClientRectangle>
+              <ComponentStyle>Header</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Segoe UI,7</Font>
+              <Guid>9641ffb3e0d94285bf9d58801082b399</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text27</Name>
+              <Page isRef="7" />
+              <Parent isRef="37" />
+              <Text>Погрешность</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text27>
+            <Text29 Ref="46" type="Text" isKey="true">
+              <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
+              <Brush>[141:179:226]</Brush>
+              <ClientRectangle>9,0.8,1.4,0.8</ClientRectangle>
+              <ComponentStyle>Header</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Segoe UI,7</Font>
+              <Guid>41c2280f06984124861c00e38efa7126</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text29</Name>
+              <Page isRef="7" />
+              <Parent isRef="37" />
+              <Text>Сдози-
+ровано</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text29>
+            <Text26 Ref="47" type="Text" isKey="true">
+              <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
+              <Brush>[141:179:226]</Brush>
+              <ClientRectangle>7.6,0.8,1.4,0.8</ClientRectangle>
+              <ComponentStyle>Header</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Segoe UI,7</Font>
+              <Guid>fcd9897218c740dda5e925d098032ac0</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text26</Name>
+              <Page isRef="7" />
+              <Parent isRef="37" />
+              <Text>Кон. вес</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text26>
+            <Text34 Ref="48" type="Text" isKey="true">
+              <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
+              <Brush>[141:179:226]</Brush>
+              <ClientRectangle>6.2,0.8,1.4,0.8</ClientRectangle>
+              <ComponentStyle>Header</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Segoe UI,7</Font>
+              <Guid>3d6026c7901041488b3eb4b46b64e326</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text34</Name>
+              <Page isRef="7" />
+              <Parent isRef="37" />
+              <Text>Нач. вес</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text34>
+            <Text35 Ref="49" type="Text" isKey="true">
+              <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
+              <Brush>[141:179:226]</Brush>
+              <ClientRectangle>4.8,0.8,1.4,0.8</ClientRectangle>
+              <ComponentStyle>Header</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Segoe UI,7</Font>
+              <Guid>e713583435d240dfb7fa49ee90a4452e</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text35</Name>
+              <Page isRef="7" />
+              <Parent isRef="37" />
+              <Text>Задано</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text35>
+            <Text39 Ref="50" type="Text" isKey="true">
+              <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
+              <Brush>[141:179:226]</Brush>
+              <ClientRectangle>0,0.8,2.4,0.8</ClientRectangle>
+              <ComponentStyle>Header</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Segoe UI,7</Font>
+              <Guid>bef5976fc803459c8c6281e045653207</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text39</Name>
+              <Page isRef="7" />
+              <Parent isRef="37" />
+              <Text>Дозатор</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text39>
+            <Text40 Ref="51" type="Text" isKey="true">
+              <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
+              <Brush>[141:179:226]</Brush>
+              <ClientRectangle>2.4,0.8,2.4,0.8</ClientRectangle>
+              <ComponentStyle>Header</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Segoe UI,7</Font>
+              <Guid>908a2a6ff4874adeb6d1e3ce0213eddc</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text40</Name>
+              <Page isRef="7" />
+              <Parent isRef="37" />
+              <Text>Компонент</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text40>
+            <Text41 Ref="52" type="Text" isKey="true">
+              <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
+              <Brush>[141:179:226]</Brush>
+              <ClientRectangle>0,0,2.4,0.8</ClientRectangle>
+              <ComponentStyle>Header</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Segoe UI,7</Font>
+              <Guid>032252d487f849da8515735ca60cf047</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text41</Name>
+              <Page isRef="7" />
+              <Parent isRef="37" />
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text41>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Name>HeaderBand1</Name>
+          <Page isRef="7" />
+          <Parent isRef="7" />
+          <PrintIfEmpty>True</PrintIfEmpty>
+        </HeaderBand1>
+        <DataBand2 Ref="53" type="DataBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,13.2,19,0.8</ClientRectangle>
+          <Components isList="true" count="1">
+            <Panel2 Ref="54" type="Panel" isKey="true">
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>0,0,19,2.4</ClientRectangle>
+              <Components isList="true" count="6">
+                <Text22 Ref="55" type="Text" isKey="true">
+                  <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
+                  <Brush>[198:217:240]</Brush>
+                  <CanGrow>True</CanGrow>
+                  <ClientRectangle>14.8,0,1.4,0.8</ClientRectangle>
+                  <ComponentStyle>Data</ComponentStyle>
+                  <Conditions isList="true" count="0" />
+                  <Expressions isList="true" count="0" />
+                  <Font>Segoe UI,8</Font>
+                  <GrowToHeight>True</GrowToHeight>
+                  <Guid>ab05ca1a89df49be8e73fbeb33275d82</Guid>
+                  <HorAlignment>Center</HorAlignment>
+                  <Margins>0,0,0,0</Margins>
+                  <Name>Text22</Name>
+                  <Page isRef="7" />
+                  <Parent isRef="54" />
+                  <Text>{Batches_MaterialsUnloadReports.FinishWeight}</Text>
+                  <TextBrush>Black</TextBrush>
+                  <Type>DataColumn</Type>
+                  <VertAlignment>Center</VertAlignment>
+                </Text22>
+                <Text21 Ref="56" type="Text" isKey="true">
+                  <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
+                  <Brush>[198:217:240]</Brush>
+                  <CanGrow>True</CanGrow>
+                  <ClientRectangle>13.4,0,1.4,0.8</ClientRectangle>
+                  <ComponentStyle>Data</ComponentStyle>
+                  <Conditions isList="true" count="0" />
+                  <Expressions isList="true" count="0" />
+                  <Font>Segoe UI,8</Font>
+                  <GrowToHeight>True</GrowToHeight>
+                  <Guid>cd28fb6fa94840e7b2463dfa016103dc</Guid>
+                  <HorAlignment>Center</HorAlignment>
+                  <Margins>0,0,0,0</Margins>
+                  <Name>Text21</Name>
+                  <Page isRef="7" />
+                  <Parent isRef="54" />
+                  <Text>{Batches_MaterialsUnloadReports.StartWeight}</Text>
+                  <TextBrush>Black</TextBrush>
+                  <Type>Expression</Type>
+                  <VertAlignment>Center</VertAlignment>
+                </Text21>
+                <Panel1 Ref="57" type="Panel" isKey="true">
+                  <Brush>Transparent</Brush>
+                  <CanGrow>True</CanGrow>
+                  <ClientRectangle>2.4,0,11,2.4</ClientRectangle>
+                  <Components isList="true" count="1">
+                    <DataBand3 Ref="58" type="DataBand" isKey="true">
+                      <Brush>Transparent</Brush>
+                      <BusinessObjectGuid isNull="true" />
+                      <ClientRectangle>0,0.4,11,0.8</ClientRectangle>
+                      <Components isList="true" count="7">
+                        <Text25 Ref="59" type="Text" isKey="true">
+                          <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
+                          <Brush>[198:217:240]</Brush>
+                          <ClientRectangle>3.8,0,1.4,0.8</ClientRectangle>
+                          <ComponentStyle>Data</ComponentStyle>
+                          <Conditions isList="true" count="0" />
+                          <Expressions isList="true" count="0" />
+                          <Font>Segoe UI,8</Font>
+                          <Guid>05f98733013d4ffab0e5cf5571e426d0</Guid>
+                          <HorAlignment>Center</HorAlignment>
+                          <Margins>0,0,0,0</Margins>
+                          <Name>Text25</Name>
+                          <Page isRef="7" />
+                          <Parent isRef="58" />
+                          <Text>{Batches_MaterialsUnloadReports_MaterialsDosingReports.StartWeight}</Text>
+                          <TextBrush>Black</TextBrush>
+                          <Type>DataColumn</Type>
+                          <VertAlignment>Center</VertAlignment>
+                        </Text25>
+                        <Text28 Ref="60" type="Text" isKey="true">
+                          <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
+                          <Brush>[198:217:240]</Brush>
+                          <ClientRectangle>5.2,0,1.4,0.8</ClientRectangle>
+                          <ComponentStyle>Data</ComponentStyle>
+                          <Conditions isList="true" count="0" />
+                          <Expressions isList="true" count="0" />
+                          <Font>Segoe UI,8</Font>
+                          <Guid>3efe82087b90411585ddf1b3d55de219</Guid>
+                          <HorAlignment>Center</HorAlignment>
+                          <Margins>0,0,0,0</Margins>
+                          <Name>Text28</Name>
+                          <Page isRef="7" />
+                          <Parent isRef="58" />
+                          <Text>{Batches_MaterialsUnloadReports_MaterialsDosingReports.FinishWeight}</Text>
+                          <TextBrush>Black</TextBrush>
+                          <Type>DataColumn</Type>
+                          <VertAlignment>Center</VertAlignment>
+                        </Text28>
+                        <Text32 Ref="61" type="Text" isKey="true">
+                          <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
+                          <Brush>[198:217:240]</Brush>
+                          <ClientRectangle>6.6,0,1.4,0.8</ClientRectangle>
+                          <ComponentStyle>Data</ComponentStyle>
+                          <Conditions isList="true" count="0" />
+                          <Expressions isList="true" count="0" />
+                          <Font>Segoe UI,8</Font>
+                          <Guid>43b0c7a7e1774f6eb2758f5a79d526e8</Guid>
+                          <HorAlignment>Center</HorAlignment>
+                          <Margins>0,0,0,0</Margins>
+                          <Name>Text32</Name>
+                          <Page isRef="7" />
+                          <Parent isRef="58" />
+                          <Text>{Batches_MaterialsUnloadReports_MaterialsDosingReports.FinishWeight-Batches_MaterialsUnloadReports_MaterialsDosingReports.StartWeight}</Text>
+                          <TextBrush>Black</TextBrush>
+                          <Type>Expression</Type>
+                          <VertAlignment>Center</VertAlignment>
+                        </Text32>
+                        <Text33 Ref="62" type="Text" isKey="true">
+                          <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
+                          <Brush>[198:217:240]</Brush>
+                          <ClientRectangle>9.6,0,1.4,0.8</ClientRectangle>
+                          <ComponentStyle>Data</ComponentStyle>
+                          <Conditions isList="true" count="0" />
+                          <Expressions isList="true" count="0" />
+                          <Font>Segoe UI,8</Font>
+                          <Guid>1e44d7cb2e7d43a5a3eb016fbcfc64e4</Guid>
+                          <HorAlignment>Center</HorAlignment>
+                          <Margins>0,0,0,0</Margins>
+                          <Name>Text33</Name>
+                          <Page isRef="7" />
+                          <Parent isRef="58" />
+                          <Text>{string.Format("{0:D2}:{1:D2}:{2:D2}", DateDiff(Batches_MaterialsUnloadReports_MaterialsDosingReports.FinishTime,Batches_MaterialsUnloadReports_MaterialsDosingReports.StartTime).Hours, DateDiff(Batches_MaterialsUnloadReports_MaterialsDosingReports.FinishTime,Batches_MaterialsUnloadReports_MaterialsDosingReports.StartTime).Minutes, DateDiff(Batches_MaterialsUnloadReports_MaterialsDosingReports.FinishTime,Batches_MaterialsUnloadReports_MaterialsDosingReports.StartTime).Seconds)}</Text>
+                          <TextBrush>Black</TextBrush>
+                          <Type>Expression</Type>
+                          <VertAlignment>Center</VertAlignment>
+                        </Text33>
+                        <Text36 Ref="63" type="Text" isKey="true">
+                          <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
+                          <Brush>[198:217:240]</Brush>
+                          <ClientRectangle>2.4,0,1.4,0.8</ClientRectangle>
+                          <ComponentStyle>Data</ComponentStyle>
+                          <Conditions isList="true" count="0" />
+                          <Expressions isList="true" count="0" />
+                          <Font>Segoe UI,8</Font>
+                          <Guid>26cf431f81844f15b58119f5fe6dee7b</Guid>
+                          <HorAlignment>Center</HorAlignment>
+                          <Margins>0,0,0,0</Margins>
+                          <Name>Text36</Name>
+                          <Page isRef="7" />
+                          <Parent isRef="58" />
+                          <Text>{Batches_MaterialsUnloadReports_MaterialsDosingReports.SetVolume}</Text>
+                          <TextBrush>Black</TextBrush>
+                          <Type>DataColumn</Type>
+                          <VertAlignment>Center</VertAlignment>
+                        </Text36>
+                        <Text37 Ref="64" type="Text" isKey="true">
+                          <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
+                          <Brush>[198:217:240]</Brush>
+                          <ClientRectangle>8,0,1.6,0.8</ClientRectangle>
+                          <ComponentStyle>Data</ComponentStyle>
+                          <Conditions isList="true" count="0" />
+                          <Expressions isList="true" count="0" />
+                          <Font>Segoe UI,8</Font>
+                          <Guid>52789b7df8504aa7adbc75f3b815f590</Guid>
+                          <HorAlignment>Center</HorAlignment>
+                          <Margins>0,0,0,0</Margins>
+                          <Name>Text37</Name>
+                          <Page isRef="7" />
+                          <Parent isRef="58" />
+                          <Text>{Batches_MaterialsUnloadReports_MaterialsDosingReports.FinishWeight-Batches_MaterialsUnloadReports_MaterialsDosingReports.StartWeight-Batches_MaterialsUnloadReports_MaterialsDosingReports.SetVolume}</Text>
+                          <TextBrush>Black</TextBrush>
+                          <Type>Expression</Type>
+                          <VertAlignment>Center</VertAlignment>
+                        </Text37>
+                        <Text42 Ref="65" type="Text" isKey="true">
+                          <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
+                          <Brush>[198:217:240]</Brush>
+                          <CanGrow>True</CanGrow>
+                          <ClientRectangle>0,0,2.4,0.8</ClientRectangle>
+                          <ComponentStyle>Data</ComponentStyle>
+                          <Conditions isList="true" count="0" />
+                          <Expressions isList="true" count="0" />
+                          <Font>Segoe UI,8</Font>
+                          <GrowToHeight>True</GrowToHeight>
+                          <Guid>16b3d077416d4ee7afa94da8ee973ce5</Guid>
+                          <HorAlignment>Center</HorAlignment>
+                          <Margins>0,0,0,0</Margins>
+                          <Name>Text42</Name>
+                          <Page isRef="7" />
+                          <Parent isRef="58" />
+                          <Text>{Batches_MaterialsUnloadReports_MaterialsDosingReports.Material}</Text>
+                          <TextBrush>Black</TextBrush>
+                          <Type>DataColumn</Type>
+                          <VertAlignment>Center</VertAlignment>
+                        </Text42>
+                      </Components>
+                      <Conditions isList="true" count="0" />
+                      <DataRelationName>Batches_MaterialsUnloadReports_MaterialsDosingReportsRelation</DataRelationName>
+                      <DataSourceName>Batches_MaterialsUnloadReports_MaterialsDosingReports</DataSourceName>
+                      <Expressions isList="true" count="0" />
+                      <Filters isList="true" count="0" />
+                      <Guid>ca74008003f34717b4b91b5730735029</Guid>
+                      <MasterComponent isRef="53" />
+                      <Name>DataBand3</Name>
+                      <Page isRef="7" />
+                      <Parent isRef="57" />
+                      <Sort isList="true" count="0" />
+                    </DataBand3>
+                  </Components>
+                  <Conditions isList="true" count="0" />
+                  <Expressions isList="true" count="0" />
+                  <Name>Panel1</Name>
+                  <Page isRef="7" />
+                  <Parent isRef="54" />
+                </Panel1>
+                <Text24 Ref="66" type="Text" isKey="true">
+                  <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
+                  <Brush>[198:217:240]</Brush>
+                  <CanGrow>True</CanGrow>
+                  <ClientRectangle>17.6,0,1.4,0.8</ClientRectangle>
+                  <ComponentStyle>Data</ComponentStyle>
+                  <Conditions isList="true" count="0" />
+                  <Expressions isList="true" count="0" />
+                  <Font>Segoe UI,8</Font>
+                  <GrowToHeight>True</GrowToHeight>
+                  <Guid>0890b7cc9da54b78a733ca29b556d849</Guid>
+                  <HorAlignment>Center</HorAlignment>
+                  <Margins>0,0,0,0</Margins>
+                  <Name>Text24</Name>
+                  <Page isRef="7" />
+                  <Parent isRef="54" />
+                  <Text>{string.Format("{0:D2}:{1:D2}:{2:D2}", DateDiff(Batches_MaterialsUnloadReports.FinishTime, Batches_MaterialsUnloadReports.StartTime).Hours, DateDiff(Batches_MaterialsUnloadReports.FinishTime, Batches_MaterialsUnloadReports.StartTime).Minutes, DateDiff(Batches_MaterialsUnloadReports.FinishTime, Batches_MaterialsUnloadReports.StartTime).Seconds)}</Text>
+                  <TextBrush>Black</TextBrush>
+                  <Type>Expression</Type>
+                  <VertAlignment>Center</VertAlignment>
+                </Text24>
+                <Text23 Ref="67" type="Text" isKey="true">
+                  <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
+                  <Brush>[198:217:240]</Brush>
+                  <CanGrow>True</CanGrow>
+                  <ClientRectangle>16.2,0,1.4,0.8</ClientRectangle>
+                  <ComponentStyle>Data</ComponentStyle>
+                  <Conditions isList="true" count="0" />
+                  <Expressions isList="true" count="0" />
+                  <Font>Segoe UI,8</Font>
+                  <GrowToHeight>True</GrowToHeight>
+                  <Guid>28be469ec7d04e9eaced8a0e9390ecd0</Guid>
+                  <HorAlignment>Center</HorAlignment>
+                  <Margins>0,0,0,0</Margins>
+                  <Name>Text23</Name>
+                  <Page isRef="7" />
+                  <Parent isRef="54" />
+                  <Text>{Batches_MaterialsUnloadReports.StartWeight-Batches_MaterialsUnloadReports.FinishWeight}</Text>
+                  <TextBrush>Black</TextBrush>
+                  <Type>Expression</Type>
+                  <VertAlignment>Center</VertAlignment>
+                </Text23>
+                <Text38 Ref="68" type="Text" isKey="true">
+                  <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
+                  <Brush>[198:217:240]</Brush>
+                  <CanGrow>True</CanGrow>
+                  <ClientRectangle>0,0,2.4,0.8</ClientRectangle>
+                  <ComponentStyle>Data</ComponentStyle>
+                  <Conditions isList="true" count="0" />
+                  <Expressions isList="true" count="0" />
+                  <Font>Segoe UI,8</Font>
+                  <GrowToHeight>True</GrowToHeight>
+                  <Guid>3cb4b7ac944643319c1382768af40878</Guid>
+                  <HorAlignment>Center</HorAlignment>
+                  <Margins>0,0,0,0</Margins>
+                  <Name>Text38</Name>
+                  <Page isRef="7" />
+                  <Parent isRef="54" />
+                  <Text>{Batches_MaterialsUnloadReports.Batcher}</Text>
+                  <TextBrush>Black</TextBrush>
+                  <Type>DataColumn</Type>
+                  <VertAlignment>Center</VertAlignment>
+                </Text38>
+              </Components>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <GrowToHeight>True</GrowToHeight>
+              <Name>Panel2</Name>
+              <Page isRef="7" />
+              <Parent isRef="53" />
+            </Panel2>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <DataRelationName>Batches_MaterialsUnloadReportsRelation</DataRelationName>
+          <DataSourceName>Batches_MaterialsUnloadReports</DataSourceName>
+          <Expressions isList="true" count="0" />
+          <Filters isList="true" count="0" />
+          <Linked>True</Linked>
+          <MasterComponent isRef="29" />
+          <Name>DataBand2</Name>
+          <Page isRef="7" />
+          <Parent isRef="7" />
+          <Sort isList="true" count="0" />
+        </DataBand2>
+        <FooterBand1 Ref="69" type="FooterBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,14.8,19,1.4</ClientRectangle>
+          <Components isList="true" count="7">
+            <Text7 Ref="70" type="Text" isKey="true">
+              <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
+              <Brush>[141:179:226]</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>16.2,0,1.4,0.8</ClientRectangle>
+              <ComponentStyle>Header</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Segoe UI,7</Font>
+              <Guid>8328c8ba514446c483b2bf08371b33fd</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text7</Name>
+              <Page isRef="7" />
+              <Parent isRef="69" />
+              <Text>{Sum(DataBand2,Batches_MaterialsUnloadReports.StartWeight-Batches_MaterialsUnloadReports.FinishWeight)}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text7>
+            <Text55 Ref="71" type="Text" isKey="true">
+              <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
+              <Brush>[141:179:226]</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>9,0,1.4,0.8</ClientRectangle>
+              <ComponentStyle>Header</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Segoe UI,7</Font>
+              <Guid>879630e28ee44217a7d76ea542ebfa8c</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text55</Name>
+              <Page isRef="7" />
+              <Parent isRef="69" />
+              <Text>{Sum(Batches_MaterialsUnloadReports_MaterialsDosingReports.FinishWeight-Batches_MaterialsUnloadReports_MaterialsDosingReports.StartWeight)}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text55>
+            <Text56 Ref="72" type="Text" isKey="true">
+              <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
+              <Brush>[141:179:226]</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>4.8,0,1.4,0.8</ClientRectangle>
+              <ComponentStyle>Header</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Segoe UI,7</Font>
+              <Guid>f9c24da41bab4831b5fbcc2371091721</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text56</Name>
+              <Page isRef="7" />
+              <Parent isRef="69" />
+              <Text>{Sum(Batches_MaterialsUnloadReports_MaterialsDosingReports.SetVolume)}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text56>
+            <Text57 Ref="73" type="Text" isKey="true">
+              <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
+              <Brush>[141:179:226]</Brush>
+              <ClientRectangle>6.2,0,2.8,0.8</ClientRectangle>
+              <ComponentStyle>Header</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Segoe UI,7</Font>
+              <Guid>cb359bf6a0aa41fc8e92b32041b28d11</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text57</Name>
+              <Page isRef="7" />
+              <Parent isRef="69" />
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text57>
+            <Text58 Ref="74" type="Text" isKey="true">
+              <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
+              <Brush>[141:179:226]</Brush>
+              <ClientRectangle>10.4,0,5.8,0.8</ClientRectangle>
+              <ComponentStyle>Header</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Segoe UI,7</Font>
+              <Guid>2f1ca67af01c46b1b49e013a492db4dd</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text58</Name>
+              <Page isRef="7" />
+              <Parent isRef="69" />
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text58>
+            <Text59 Ref="75" type="Text" isKey="true">
+              <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
+              <Brush>[141:179:226]</Brush>
+              <ClientRectangle>17.6,0,1.4,0.8</ClientRectangle>
+              <ComponentStyle>Header</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Segoe UI,7</Font>
+              <Guid>a72831a640bb49cfb5c269abf963ba0b</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text59</Name>
+              <Page isRef="7" />
+              <Parent isRef="69" />
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text59>
+            <Text60 Ref="76" type="Text" isKey="true">
+              <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
+              <Brush>[141:179:226]</Brush>
+              <ClientRectangle>-0,0,4.8,0.8</ClientRectangle>
+              <ComponentStyle>Header</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Segoe UI,7</Font>
+              <Guid>d04a0da1122b4973b12fe2f511b44f2a</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text60</Name>
+              <Page isRef="7" />
+              <Parent isRef="69" />
+              <Text>ИТОГО:</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text60>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Name>FooterBand1</Name>
+          <Page isRef="7" />
+          <Parent isRef="7" />
+          <PrintIfEmpty>True</PrintIfEmpty>
+        </FooterBand1>
+      </Components>
+      <Conditions isList="true" count="0" />
+      <Expressions isList="true" count="0" />
+      <Guid>ed837fe183864fabbf50e7f41587efa3</Guid>
+      <Margins>1,1,1,1</Margins>
+      <Name>Page1</Name>
+      <PageHeight>29.7</PageHeight>
+      <PageWidth>21</PageWidth>
+      <Report isRef="0" />
+    </Page1>
+  </Pages>
+  <ReferencedAssemblies isList="true" count="8">
+    <value>System.Dll</value>
+    <value>System.Drawing.Dll</value>
+    <value>System.Windows.Forms.Dll</value>
+    <value>System.Data.Dll</value>
+    <value>System.Xml.Dll</value>
+    <value>Stimulsoft.Controls.Dll</value>
+    <value>Stimulsoft.Base.Dll</value>
+    <value>Stimulsoft.Report.Dll</value>
+  </ReferencedAssemblies>
+  <ReportAlias>Report</ReportAlias>
+  <ReportChanged>12/24/2020 1:29:06 PM</ReportChanged>
+  <ReportCreated>12/22/2020 7:22:15 AM</ReportCreated>
+  <ReportGuid>71963cbc3f5548a6a1fd890c76736fbe</ReportGuid>
+  <ReportName>Report</ReportName>
+  <ReportUnit>Centimeters</ReportUnit>
+  <ReportVersion>2020.5.2.0</ReportVersion>
+  <Script>using System;
+using System.Drawing;
+using System.Windows.Forms;
+using System.Data;
+using Stimulsoft.Controls;
+using Stimulsoft.Base.Drawing;
+using Stimulsoft.Report;
+using Stimulsoft.Report.Dialogs;
+using Stimulsoft.Report.Components;
+
+namespace Reports
+{
+    public class Report : Stimulsoft.Report.StiReport
+    {
+        public Report()        {
+            this.InitializeComponent();
+        }
+
+        #region StiReport Designer generated code - do not modify
+		#endregion StiReport Designer generated code - do not modify
+    }
+}
+</Script>
+  <ScriptLanguage>CSharp</ScriptLanguage>
+  <Styles isList="true" count="3">
+    <Text Ref="77" type="Stimulsoft.Report.StiStyle" isKey="true">
+      <AllowUseVertAlignment>True</AllowUseVertAlignment>
+      <Brush>Transparent</Brush>
+      <Conditions isList="true" count="0" />
+      <Font>Segoe UI,12</Font>
+      <HorAlignment>Right</HorAlignment>
+      <Name>Text</Name>
+      <NegativeTextBrush>Red</NegativeTextBrush>
+      <TextBrush>[31:73:125]</TextBrush>
+      <VertAlignment>Center</VertAlignment>
+    </Text>
+    <Header Ref="78" type="Stimulsoft.Report.StiStyle" isKey="true">
+      <AllowUseHorAlignment>True</AllowUseHorAlignment>
+      <AllowUseVertAlignment>True</AllowUseVertAlignment>
+      <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
+      <Brush>[141:179:226]</Brush>
+      <Conditions isList="true" count="0" />
+      <Font>Segoe UI,7</Font>
+      <HorAlignment>Center</HorAlignment>
+      <Name>Header</Name>
+      <NegativeTextBrush>Red</NegativeTextBrush>
+      <TextBrush>Black</TextBrush>
+      <VertAlignment>Center</VertAlignment>
+    </Header>
+    <Data Ref="79" type="Stimulsoft.Report.StiStyle" isKey="true">
+      <AllowUseHorAlignment>True</AllowUseHorAlignment>
+      <AllowUseVertAlignment>True</AllowUseVertAlignment>
+      <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
+      <Brush>[198:217:240]</Brush>
+      <Conditions isList="true" count="0" />
+      <Font>Segoe UI,8</Font>
+      <HorAlignment>Center</HorAlignment>
+      <Name>Data</Name>
+      <NegativeTextBrush>Red</NegativeTextBrush>
+      <TextBrush>Black</TextBrush>
+      <VertAlignment>Center</VertAlignment>
+    </Data>
+  </Styles>
+</StiSerializer>

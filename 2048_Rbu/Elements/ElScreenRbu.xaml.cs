@@ -11,6 +11,7 @@ using System.Windows.Input;
 using _2048_Rbu.Classes;
 using AS_Library.Annotations;
 using AS_Library.Link;
+using _2048_Rbu.Classes;
 using _2048_Rbu.Interfaces;
 using Opc.UaFx;
 using Opc.UaFx.Client;
@@ -23,6 +24,10 @@ using AsuBetonLibrary.Readers;
 using AsuBetonLibrary.Services;
 using AsuBetonLibrary.Windows;
 using NLog;
+using Stimulsoft.Report;
+using Stimulsoft.Report.Dictionary;
+using AsuBetonLibrary.Databases;
+using _2048_Rbu.Windows.Reports;
 
 namespace _2048_Rbu.Elements
 {
@@ -305,6 +310,12 @@ namespace _2048_Rbu.Elements
         {
             Commands.EventsArchive_OnClick(_opcName);
         }
+        private void RecipeReport_Click(object sender, RoutedEventArgs e)
+        {
+            RecipeReportWindow window = new RecipeReportWindow();
+            window.Show();
+        }
+
         #endregion
     }
 

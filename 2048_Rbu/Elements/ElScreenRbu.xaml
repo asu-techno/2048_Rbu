@@ -22,8 +22,11 @@
                 <MenuItem Name="EventsArchive" Header="Журнал событий" Click="EventsArchive_OnClick"/>
             </MenuItem>
             <MenuItem Name="Settings" Header="Настройки" Foreground="Black" BorderBrush="Black" FontWeight="Bold" Height="30">
-                <!--<MenuItem Name="Mode" Header="Режим работы" Click="Mode_OnClick"/>-->
-                <Separator/>
+                <!--<MenuItem Name="Mode" Header="Режим работы" Click="Mode_OnClick"/>
+                <Separator/>-->
+            </MenuItem>
+            <MenuItem Name="Reports" Header="Отчеты" Foreground="Black" BorderBrush="Black" FontWeight="Bold" Height="30">
+                <MenuItem Name="RecipeReport" Header="Отчет по заданию" Click="RecipeReport_Click"/>
             </MenuItem>
             <MenuItem Name="Directory" Header="Справочник" Foreground="Black" BorderBrush="Black" FontWeight="Bold" Height="30">
                 <MenuItem Header="Типы материалов" Click="MaterialTypes_OnClick"></MenuItem>
