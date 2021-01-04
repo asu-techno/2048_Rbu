@@ -124,6 +124,34 @@ namespace _2048_Rbu.Elements.Mechs
             }
         }
 
+        private int _openState;
+        public int OpenState
+        {
+            get
+            {
+                return _openState;
+            }
+            set
+            {
+                _openState = value;
+                OnPropertyChanged(nameof(OpenState));
+            }
+        }
+
+        private bool _halfOpenState;
+        public bool HalfOpenState
+        {
+            get
+            {
+                return _halfOpenState;
+            }
+            set
+            {
+                _halfOpenState = value;
+                OnPropertyChanged(nameof(HalfOpenState));
+            }
+        }
+
         #region MyRegion
 
         private bool _alarmStatus;
@@ -131,6 +159,7 @@ namespace _2048_Rbu.Elements.Mechs
         private bool _closeStatus;
         private bool _manualMode;
         private bool _automatMode;
+        private int _percentOpen;
 
         public string Prefix { get; set; }
         public string ModePcy { get; set; }
@@ -154,12 +183,9 @@ namespace _2048_Rbu.Elements.Mechs
                     ImgOpen.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs/img_BigGate_Open.png", UriKind.Relative));
                     ImgAlarm.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs/img_BigGate_Alarm.png", UriKind.Relative));
                     ImgOpen.Width = 130;
-                    ImgClose.Margin = ImgAlarm.Margin = new Thickness(0, 0, 11, 0);
-                    ImgOpen.Margin = new Thickness(38, 0, 0, 0);
                     ImgClose.Width = ImgAlarm.Width = 81;
+                    RectObject.Width = ImgOpen.Width;
                 }
-
-                RectObject.Width = ImgOpen.Width + 14;
 
                 _isUnload = value;
             }
@@ -172,13 +198,13 @@ namespace _2048_Rbu.Elements.Mechs
             set
             {
                 if (value == Position.LeftUp)
-                    LblMode.Margin = new Thickness(-25, -25, 0, 0);
+                    LblMode.Margin = new Thickness(97, -25, 0, 0);
                 if (value == Position.Up)
                     LblMode.Margin = new Thickness(0, -40, 0, 0);
                 if (value == Position.RightUp)
-                    LblMode.Margin = new Thickness(25, -25, 0, 0);
+                    LblMode.Margin = new Thickness(70, -25, 0, 0);
                 if (value == Position.Left)
-                    LblMode.Margin = new Thickness(0, 24, 110, 0);
+                    LblMode.Margin = new Thickness(45, 25, 0, 0);
                 if (value == Position.Right)
                     LblMode.Margin = new Thickness(45, 0, 0, 0);
                 if (value == Position.LeftDown)
@@ -186,7 +212,7 @@ namespace _2048_Rbu.Elements.Mechs
                 if (value == Position.Down)
                     LblMode.Margin = new Thickness(0, 35, 0, 0);
                 if (value == Position.RightDown)
-                    LblMode.Margin = new Thickness(30, 25, 0, 0);
+                    LblMode.Margin = new Thickness(60, 25, 0, 0);
 
                 _modepos = value;
             }
@@ -222,7 +248,7 @@ namespace _2048_Rbu.Elements.Mechs
 
                 if (value == Position.Left)
                 {
-                    TbcName.Margin = new Thickness(0, -5, 140, 0);
+                    TbcName.Margin = new Thickness(0, 0, 140, 0);
                     TbcName.HorizontalAlignment = HorizontalAlignment.Right;
                     TbcName.TextAlignment = TextAlignment.Right;
                 }
@@ -236,7 +262,7 @@ namespace _2048_Rbu.Elements.Mechs
 
                 if (value == Position.LeftDown)
                 {
-                    TbcName.Margin = new Thickness(0, 20, 100, 0);
+                    TbcName.Margin = new Thickness(0, 22, 69, 0);
                     TbcName.HorizontalAlignment = HorizontalAlignment.Right;
                     TbcName.TextAlignment = TextAlignment.Right;
                 }
@@ -250,7 +276,7 @@ namespace _2048_Rbu.Elements.Mechs
 
                 if (value == Position.RightDown)
                 {
-                    TbcName.Margin = new Thickness(100, 20, 0, 0);
+                    TbcName.Margin = new Thickness(70, 22, 0, 0);
                     TbcName.HorizontalAlignment = HorizontalAlignment.Left;
                     TbcName.TextAlignment = TextAlignment.Left;
                 }
@@ -303,6 +329,8 @@ namespace _2048_Rbu.Elements.Mechs
                     ScaleTransform rotate = new ScaleTransform();
                     rotate.ScaleX = -1;
                     ObjectGrid.RenderTransform = rotate;
+                    RectObject.HorizontalAlignment = HorizontalAlignment.Right;
+                    RectObject.Margin = new Thickness(0, 0, 39, 0);
                 }
                 else
                 {
@@ -374,6 +402,12 @@ namespace _2048_Rbu.Elements.Mechs
             var modeManual = new OpcMonitoredItem(_opc.cl.GetNode(ManualPcy), OpcAttribute.Value);
             modeManual.DataChangeReceived += HandleManualChanged;
             OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(modeManual);
+            if (IssUnload)
+            {
+                var percentOpenItem = new OpcMonitoredItem(_opc.cl.GetNode(""), OpcAttribute.Value);
+                percentOpenItem.DataChangeReceived += HandlePercentChanged;
+                OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(percentOpenItem);
+            }
         }
 
         void HideImages()
@@ -381,6 +415,8 @@ namespace _2048_Rbu.Elements.Mechs
             VisAlarm = Visibility.Collapsed;
             VisOpen = Visibility.Collapsed;
             VisClose = Visibility.Collapsed;
+            _percentOpen = OpenState = 0;
+            HalfOpenState = false;
             ModeAutomat = true;
             Status = "- - - - -";
             Brush = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFC0C0C0"));
@@ -416,34 +452,69 @@ namespace _2048_Rbu.Elements.Mechs
             VisStatus();
         }
 
+        private void HandlePercentChanged(object sender, OpcDataChangeReceivedEventArgs e)
+        {
+            _percentOpen = int.Parse(e.Item.Value.ToString());
+            VisStatus();
+        }
+
         void VisStatus()
         {
             if (_alarmStatus)
             {
                 VisAlarm = Visibility.Visible;
+                VisOpen = Visibility.Collapsed;
+                VisClose = Visibility.Collapsed;
+                HalfOpenState = false; 
+                _percentOpen = OpenState = 0;
                 Status = "Авария";
                 Brush = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFEB1B22"));
             }
             else
             {
                 VisAlarm = Visibility.Collapsed;
-                if (!_openStatus && !_closeStatus && OpenPcy != "")
+                if (!_openStatus && !_closeStatus)
                 {
-                    VisOpen = Visibility.Collapsed;
-                    VisClose = Visibility.Collapsed;
-                    Status = "- - - - -";
-                    Brush = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFFFFF00"));
+                    if (IssUnload)
+                    {
+                        if (_percentOpen > 0 && _percentOpen <= 20)
+                            OpenState = 1;
+                        if (_percentOpen > 20 && _percentOpen <= 40)
+                            OpenState = 2;
+                        if (_percentOpen > 40 && _percentOpen <= 60)
+                            OpenState = 3;
+                        if (_percentOpen > 60 && _percentOpen <= 80)
+                            OpenState = 4;
+                        if (_percentOpen > 80)
+                            OpenState = 5;
+                    }
+                    if (OpenState == 0)
+                    {
+                        VisOpen = Visibility.Collapsed;
+                        VisClose = Visibility.Collapsed;
+                        HalfOpenState = false;
+                        Status = "- - - - -";
+                        Brush = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFFFFF00"));
+                    }
+                    else
+                    {
+                        HalfOpenState = true;
+                        Status = "Приоткрыта";
+                        Brush = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF2DE6C3"));
+                    }
                 }
                 else
                 {
-                    if (_openStatus || (OpenPcy == "" && !_closeStatus))
+                    HalfOpenState = false;
+                    _percentOpen = OpenState = 0;
+                    if (_openStatus)
                     {
                         VisOpen = Visibility.Visible;
                         VisClose = Visibility.Collapsed;
                         Status = "Открыта";
                         Brush = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF85fc84"));
                     }
-                    if (_closeStatus || (ClosePcy == "" && !_openStatus))
+                    if (_closeStatus)
                     {
                         VisOpen = Visibility.Collapsed;
                         VisClose = Visibility.Visible;
@@ -475,7 +546,7 @@ namespace _2048_Rbu.Elements.Mechs
                 if (ModePcy == null)
                     ModePcy = Prefix + ".gMode_Automat";
                 if (ManualPcy == null)
-                    ManualPcy = Prefix+".gMode_Manual";
+                    ManualPcy = Prefix + ".gMode_Manual";
                 if (OpenPcy == null)
                     OpenPcy = Prefix + ".DI_Opened";
                 if (ClosePcy == null)

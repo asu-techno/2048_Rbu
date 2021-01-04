@@ -55,12 +55,13 @@ namespace _2048_Rbu.Elements.Control
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private RecipesReader RecipesReader { get; set; } = new RecipesReader();
+        private TasksReader TasksReader { get; set; } = new TasksReader();
         private OPC_client _opc;
         private OpcServer.OpcList _opcName;
         private long _id, _currentId;
 
-        private int _partialUnload, _fullUnload;
+        private int _tempTimeProcess, _tempOrderCycle;
+        private double _tempPartial, _tempFull;
 
         public ViewModelMixer(OpcServer.OpcList opcName)
         {
@@ -78,35 +79,39 @@ namespace _2048_Rbu.Elements.Control
         private void CreateSubscription()
         {
             _opc = OpcServer.GetInstance().GetOpc(_opcName);
-            var idItem = new OpcMonitoredItem(_opc.cl.GetNode("TaskID_mixer"), OpcAttribute.Value);
+            var idItem = new OpcMonitoredItem(_opc.cl.GetNode("Mixer.TaskID_mixer"), OpcAttribute.Value);
             idItem.DataChangeReceived += HandleIdChanged;
             OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(idItem);
 
-            var orderActItem = new OpcMonitoredItem(_opc.cl.GetNode("CurrentMixing_batchNum"), OpcAttribute.Value);
+            var orderActItem = new OpcMonitoredItem(_opc.cl.GetNode("Mixer.CurrentMixing_batchNum"), OpcAttribute.Value);
             orderActItem.DataChangeReceived += HandleOrderActChanged;
             OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(orderActItem);
 
-            var orderItem = new OpcMonitoredItem(_opc.cl.GetNode("PAR_BatchesQuantity"), OpcAttribute.Value);
+            var orderItem = new OpcMonitoredItem(_opc.cl.GetNode("Mixer.PAR_BatchesQuantity"), OpcAttribute.Value);
             orderItem.DataChangeReceived += HandleOrderChanged;
             OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(orderItem);
 
-            var mixingItem = new OpcMonitoredItem(_opc.cl.GetNode("Current_MixingTime"), OpcAttribute.Value);
+            var mixingItem = new OpcMonitoredItem(_opc.cl.GetNode("Mixer.Current_MixingTime"), OpcAttribute.Value);
             mixingItem.DataChangeReceived += HandleMixingChanged;
             OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(mixingItem);
 
-            var timePrItem = new OpcMonitoredItem(_opc.cl.GetNode("PAR_MixingTime"), OpcAttribute.Value);
+            var timePrItem = new OpcMonitoredItem(_opc.cl.GetNode("Mixer.PAR_MixingTime"), OpcAttribute.Value);
             timePrItem.DataChangeReceived += HandleTimeProcessChanged;
             OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(timePrItem);
 
-            var razgruzkaItem = new OpcMonitoredItem(_opc.cl.GetNode("Current_UnloadTime"), OpcAttribute.Value);
-            razgruzkaItem.DataChangeReceived += HandleRazgruzkaChanged;
-            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(razgruzkaItem);
+            var currentPartialtem = new OpcMonitoredItem(_opc.cl.GetNode("Mixer.Current_PartUnloadTime"), OpcAttribute.Value);
+            currentPartialtem.DataChangeReceived += HandlePartialProcessChanged;
+            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(currentPartialtem);
 
-            var partialUnloadItem = new OpcMonitoredItem(_opc.cl.GetNode("PAR_TimePartialUnload"), OpcAttribute.Value);
+            var currentFullItem = new OpcMonitoredItem(_opc.cl.GetNode("Mixer.Current_UnloadTime"), OpcAttribute.Value);
+            currentFullItem.DataChangeReceived += HandleFullProcessChanged;
+            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(currentFullItem);
+
+            var partialUnloadItem = new OpcMonitoredItem(_opc.cl.GetNode("Mixer.PAR_TimePartialUnload"), OpcAttribute.Value);
             partialUnloadItem.DataChangeReceived += HandlePartialUnloadChanged;
             OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(partialUnloadItem);
 
-            var fullUnloadItem = new OpcMonitoredItem(_opc.cl.GetNode("PAR_TimeFullUnload"), OpcAttribute.Value);
+            var fullUnloadItem = new OpcMonitoredItem(_opc.cl.GetNode("Mixer.PAR_TimeFullUnload"), OpcAttribute.Value);
             fullUnloadItem.DataChangeReceived += HandleFullUnloadChanged;
             OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(fullUnloadItem);
         }
@@ -117,7 +122,6 @@ namespace _2048_Rbu.Elements.Control
             {
                 _id = long.Parse(e.Item.Value.ToString());
                 GetTable();
-                OpcServer.GetInstance().GetSubscription(_opcName).ApplyChanges();
             }
             catch (Exception exception)
             {
@@ -140,7 +144,7 @@ namespace _2048_Rbu.Elements.Control
         {
             try
             {
-                OrderCycle = int.Parse(e.Item.Value.ToString());
+                _tempOrderCycle = int.Parse(e.Item.Value.ToString());
                 GetTable();
             }
             catch (Exception exception)
@@ -164,7 +168,7 @@ namespace _2048_Rbu.Elements.Control
         {
             try
             {
-                TimeProcess = int.Parse(e.Item.Value.ToString());
+                _tempTimeProcess = int.Parse(e.Item.Value.ToString());
                 GetTable();
             }
             catch (Exception exception)
@@ -172,11 +176,23 @@ namespace _2048_Rbu.Elements.Control
             }
         }
 
-        private void HandleRazgruzkaChanged(object sender, OpcDataChangeReceivedEventArgs e)
+        private void HandlePartialProcessChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
             try
             {
-                RazgruzkaProcess = int.Parse(e.Item.Value.ToString());
+                PartialProcess = int.Parse(e.Item.Value.ToString());
+                GetTable();
+            }
+            catch (Exception exception)
+            {
+            }
+        }
+
+        private void HandleFullProcessChanged(object sender, OpcDataChangeReceivedEventArgs e)
+        {
+            try
+            {
+                FullProcess = int.Parse(e.Item.Value.ToString());
                 GetTable();
             }
             catch (Exception exception)
@@ -188,9 +204,9 @@ namespace _2048_Rbu.Elements.Control
         {
             try
             {
-                _partialUnload = int.Parse(e.Item.Value.ToString());
-                TimeUnload();
-                GetTable();
+                _tempPartial = double.Parse(e.Item.Value.ToString());
+                PartialUnload = Convert.ToInt32(_tempPartial);
+                GetProgressWidth();
             }
             catch (Exception exception)
             {
@@ -201,18 +217,20 @@ namespace _2048_Rbu.Elements.Control
         {
             try
             {
-                _fullUnload = int.Parse(e.Item.Value.ToString());
-                TimeUnload();
-                GetTable();
+                _tempFull = double.Parse(e.Item.Value.ToString());
+                FullUnload = Convert.ToInt32(_tempFull);
+                GetProgressWidth();
             }
             catch (Exception exception)
             {
             }
         }
 
-        private void TimeUnload()
+        private void GetProgressWidth()
         {
-            TimeRazgruzka = _partialUnload + _fullUnload;
+            WidthPartial = _tempPartial == 0.0? 64 : 214 * _tempPartial / (_tempPartial + _tempFull);
+            WidthFull = _tempFull == 0.0 ? 150:214 * _tempFull / (_tempPartial + _tempFull) * 214;
+            GetTable();
         }
 
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -220,25 +238,69 @@ namespace _2048_Rbu.Elements.Control
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private ObservableCollection<ApiRecipe> _recipes;
-        public ObservableCollection<ApiRecipe> Recipes
+        private double _widthPartial;
+        public double WidthPartial
         {
-            get { return _recipes; }
+            get { return _widthPartial; }
             set
             {
-                _recipes = value;
-                OnPropertyChanged(nameof(Recipes));
+                _widthPartial = value;
+                OnPropertyChanged(nameof(WidthPartial));
             }
         }
 
-        private ApiRecipe _selRecipes;
-        public ApiRecipe SelRecipes
+        private double _widthFull;
+        public double WidthFull
         {
-            get { return _selRecipes; }
+            get { return _widthFull; }
             set
             {
-                _selRecipes = value;
-                OnPropertyChanged(nameof(SelRecipes));
+                _widthFull = value;
+                OnPropertyChanged(nameof(WidthFull));
+            }
+        }
+
+        private ObservableCollection<ApiTask> _tasks;
+        public ObservableCollection<ApiTask> Tasks
+        {
+            get { return _tasks; }
+            set
+            {
+                _tasks = value;
+                OnPropertyChanged(nameof(Tasks));
+            }
+        }
+
+        private ApiTask _selTask;
+        public ApiTask SelTask
+        {
+            get { return _selTask; }
+            set
+            {
+                _selTask = value;
+                OnPropertyChanged(nameof(SelTask));
+            }
+        }
+
+        private int? _partialUnload;
+        public int? PartialUnload
+        {
+            get { return _partialUnload; }
+            set
+            {
+                _partialUnload = value;
+                OnPropertyChanged(nameof(PartialUnload));
+            }
+        }
+
+        private int? _fullUnload;
+        public int? FullUnload
+        {
+            get { return _fullUnload; }
+            set
+            {
+                _fullUnload = value;
+                OnPropertyChanged(nameof(FullUnload));
             }
         }
 
@@ -286,16 +348,28 @@ namespace _2048_Rbu.Elements.Control
             }
         }
 
-        private int? _razgruzkaProcess;
-        public int? RazgruzkaProcess
+        private int? _partialProcess;
+        public int? PartialProcess
         {
-            get { return _razgruzkaProcess; }
+            get { return _partialProcess; }
             set
             {
-                _razgruzkaProcess = value;
-                OnPropertyChanged(nameof(RazgruzkaProcess));
+                _partialProcess = value;
+                OnPropertyChanged(nameof(PartialProcess));
             }
         }
+
+        private int? _fullProcess;
+        public int? FullProcess
+        {
+            get { return _fullProcess; }
+            set
+            {
+                _fullProcess = value;
+                OnPropertyChanged(nameof(FullProcess));
+            }
+        }
+
         private int? _timeRazgruzka;
         public int? TimeRazgruzka
         {
@@ -312,6 +386,10 @@ namespace _2048_Rbu.Elements.Control
         {
             if (_id != 0)
             {
+                OrderCycle = _tempOrderCycle;
+                TimeProcess = _tempTimeProcess;
+                TimeRazgruzka = PartialUnload + FullUnload;
+
                 if (_id != _currentId)
                 {
                     try
@@ -327,13 +405,16 @@ namespace _2048_Rbu.Elements.Control
             }
             else
             {
-                Recipes = null;
-                SelRecipes = null;
+                Tasks = null;
+                SelTask = null;
                 OrderActCycle = null;
                 OrderCycle = null;
                 MixingProcess = null;
                 TimeProcess = null;
-                RazgruzkaProcess = null;
+                PartialProcess = null;
+                FullProcess = null;
+                PartialUnload = null;
+                FullUnload = null;
                 TimeRazgruzka = null;
                 _currentId = _id;
             }
@@ -341,8 +422,8 @@ namespace _2048_Rbu.Elements.Control
 
         private void GetTask(long id)
         {
-            Recipes = new ObservableCollection<ApiRecipe>(RecipesReader.ListRecipes());
-            SelRecipes = Recipes.FirstOrDefault(x => x.Id == id);
+            Tasks = new ObservableCollection<ApiTask>(TasksReader.ListTasks());
+            SelTask = Tasks.FirstOrDefault(x => x.Id == id);
         }
     }
 }

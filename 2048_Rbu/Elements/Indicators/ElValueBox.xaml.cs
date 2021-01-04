@@ -9,8 +9,10 @@ using _2048_Rbu.Interfaces;
 using AS_Library.Link;
 using AS_Library.Annotations;
 using _2048_Rbu.Classes;
+using _2048_Rbu.Windows;
 using Opc.UaFx;
 using Opc.UaFx.Client;
+using Unme.Common;
 
 namespace _2048_Rbu.Elements.Indicators
 {
@@ -22,6 +24,8 @@ namespace _2048_Rbu.Elements.Indicators
         private OPC_client _opc;
         private OpcServer.OpcList _opcName;
         private string _readVal;
+
+        private WindowWeight _windowWeight;
 
         private Visibility _vis;
         public Visibility Vis
@@ -53,6 +57,7 @@ namespace _2048_Rbu.Elements.Indicators
 
         #region MyRegion
 
+        public int GroupNumber { get; set; }
         public string VisValue { get; set; }
         public bool Logic { get; set; }
         public string Prefix { get; set; }
@@ -156,6 +161,15 @@ namespace _2048_Rbu.Elements.Indicators
         private void HandleVisChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
             Vis = bool.Parse(e.Item.Value.ToString()) == Logic ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private void ElValueBox_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (GroupNumber != 0)
+            {
+                _windowWeight = new WindowWeight(_opcName, (WindowWeight.TypeMaterial)GroupNumber);
+                _windowWeight.ShowDialog();
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

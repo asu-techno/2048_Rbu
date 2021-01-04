@@ -206,7 +206,7 @@
                     </Style>
                 </Button.Style>
             </Button>
-            <Button Grid.Row="6" Background="LightBlue" Width="110" Height="30" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="Выгрузить текущий рецепт" Command="{Binding StopLoadTaskCommand}">
+            <Button Grid.Row="6" Background="LightBlue" Width="110" Height="30" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="Выгрузить текущий рецепт" Command="{Binding UnloadTask}">
                 <Button.Content>
                     <TextBlock Text="Выгрузить" FontSize="13"/>
                 </Button.Content>

@@ -67,7 +67,7 @@ namespace _2048_Rbu.Classes
                 if (!_opcSubscriptions.ContainsKey(obj))
                 {
                     var opcSubscription = _opcDict[obj].cl.SubscribeNodes();
-                    opcSubscription.PublishingInterval = 2000;
+                    opcSubscription.PublishingInterval = 200;
                     _opcSubscriptions.Add(obj, opcSubscription);
                     return opcSubscription;
                 }

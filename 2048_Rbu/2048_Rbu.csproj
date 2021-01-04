@@ -39,8 +39,13 @@
     <None Remove="Images\Indicators\img_Water.png" />
     <None Remove="Images\Logo_ASU.png" />
     <None Remove="Images\Logo_ASU_Gray.png" />
+    <None Remove="Images\Mechs\img_BigGate_20Per_Open.png" />
+    <None Remove="Images\Mechs\img_BigGate_40Per_Open.png" />
+    <None Remove="Images\Mechs\img_BigGate_60Per_Open.png" />
+    <None Remove="Images\Mechs\img_BigGate_80Per_Open.png" />
     <None Remove="Images\Mechs\img_BigGate_Alarm.png" />
     <None Remove="Images\Mechs\img_BigGate_Close.png" />
+    <None Remove="Images\Mechs\img_BigGate_HalfOpen.png" />
     <None Remove="Images\Mechs\img_BigGate_Open.png" />
     <None Remove="Images\Mechs\img_Conv_Alarm.png" />
     <None Remove="Images\Mechs\img_Conv_On.png" />
@@ -144,8 +149,13 @@
     <Resource Include="Images\Indicators\img_Water.png" />
     <Resource Include="Images\Logo_ASU.png" />
     <Resource Include="Images\Logo_ASU_Gray.png" />
+    <Resource Include="Images\Mechs\img_BigGate_20Per_Open.png" />
+    <Resource Include="Images\Mechs\img_BigGate_40Per_Open.png" />
+    <Resource Include="Images\Mechs\img_BigGate_60Per_Open.png" />
+    <Resource Include="Images\Mechs\img_BigGate_80Per_Open.png" />
     <Resource Include="Images\Mechs\img_BigGate_Alarm.png" />
     <Resource Include="Images\Mechs\img_BigGate_Close.png" />
+    <Resource Include="Images\Mechs\img_BigGate_HalfOpen.png" />
     <Resource Include="Images\Mechs\img_BigGate_Open.png" />
     <Resource Include="Images\Mechs\img_Conv_Alarm.png" />
     <Resource Include="Images\Mechs\img_Conv_On.png" />
@@ -200,6 +210,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Elements\Mechs\ElMotor.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Windows\WindowWeight.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>

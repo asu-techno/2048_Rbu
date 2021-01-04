@@ -82,6 +82,7 @@ namespace _2048_Rbu.Classes
 
         public static OpcWriteNode GetOpcWriteNode(string value, ApiOpcParameter parameter)
         {
+            value = value.Replace(".", ",");
             switch (parameter.Type)
             {
                 case TagTypes.Decimal:

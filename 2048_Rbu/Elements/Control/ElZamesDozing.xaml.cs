@@ -48,10 +48,12 @@ namespace _2048_Rbu.Elements.Control
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private RecipesReader RecipesReader { get; set; } = new RecipesReader();
+        private TasksReader TasksReader { get; set; } = new TasksReader();
         private OPC_client _opc;
         private OpcServer.OpcList _opcName;
         private long _id, _currentId;
+
+        private int _tempOrderCycle;
 
         public ViewModelDozing(OpcServer.OpcList opcName)
         {
@@ -81,7 +83,7 @@ namespace _2048_Rbu.Elements.Control
             orderItem.DataChangeReceived += HandleOrderChanged;
             OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(orderItem);
 
-            var dozingItem = new OpcMonitoredItem(_opc.cl.GetNode(""), OpcAttribute.Value);
+            var dozingItem = new OpcMonitoredItem(_opc.cl.GetNode("CommonProgress"), OpcAttribute.Value);
             dozingItem.DataChangeReceived += HandleDozingChanged;
             OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(dozingItem);
         }
@@ -92,7 +94,6 @@ namespace _2048_Rbu.Elements.Control
             {
                 _id = long.Parse(e.Item.Value.ToString());
                 GetTable();
-                OpcServer.GetInstance().GetSubscription(_opcName).ApplyChanges();
             }
             catch (Exception exception)
             {
@@ -115,7 +116,7 @@ namespace _2048_Rbu.Elements.Control
         {
             try
             {
-                OrderCycle = int.Parse(e.Item.Value.ToString());
+                _tempOrderCycle = int.Parse(e.Item.Value.ToString());
                 GetTable();
             }
             catch (Exception exception)
@@ -127,7 +128,7 @@ namespace _2048_Rbu.Elements.Control
         {
             try
             {
-                DozingProcess = int.Parse(e.Item.Value.ToString());
+                DozingProcess = double.Parse(e.Item.Value.ToString());
                 GetTable();
             }
             catch (Exception exception)
@@ -140,25 +141,25 @@ namespace _2048_Rbu.Elements.Control
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private ObservableCollection<ApiRecipe> _recipes;
-        public ObservableCollection<ApiRecipe> Recipes
+        private ObservableCollection<ApiTask> _tasks;
+        public ObservableCollection<ApiTask> Tasks
         {
-            get { return _recipes; }
+            get { return _tasks; }
             set
             {
-                _recipes = value;
-                OnPropertyChanged(nameof(Recipes));
+                _tasks = value;
+                OnPropertyChanged(nameof(Tasks));
             }
         }
 
-        private ApiRecipe _selRecipes;
-        public ApiRecipe SelRecipes
+        private ApiTask _selTask;
+        public ApiTask SelTask
         {
-            get { return _selRecipes; }
+            get { return _selTask; }
             set
             {
-                _selRecipes = value;
-                OnPropertyChanged(nameof(SelRecipes));
+                _selTask = value;
+                OnPropertyChanged(nameof(SelTask));
             }
         }
 
@@ -184,8 +185,8 @@ namespace _2048_Rbu.Elements.Control
             }
         }
 
-        private int? _dozingProcess;
-        public int? DozingProcess
+        private double? _dozingProcess;
+        public double? DozingProcess
         {
             get { return _dozingProcess; }
             set
@@ -199,6 +200,7 @@ namespace _2048_Rbu.Elements.Control
         {
             if (_id != 0)
             {
+                OrderCycle = _tempOrderCycle;
                 if (_id != _currentId)
                 {
                     try
@@ -214,8 +216,8 @@ namespace _2048_Rbu.Elements.Control
             }
             else
             {
-                Recipes = null;
-                SelRecipes = null;
+                Tasks = null;
+                SelTask = null;
                 OrderActCycle = null;
                 OrderCycle = null;
                 DozingProcess = null;
@@ -225,8 +227,8 @@ namespace _2048_Rbu.Elements.Control
 
         private void GetTask(long id)
         {
-            Recipes = new ObservableCollection<ApiRecipe>(RecipesReader.ListRecipes());
-            SelRecipes = Recipes.FirstOrDefault(x => x.Id == id);
+            Tasks = new ObservableCollection<ApiTask>(TasksReader.ListTasks());
+            SelTask = Tasks.FirstOrDefault(x => x.Id == id);
         }
     }
 }

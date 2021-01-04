@@ -3,7 +3,7 @@
   "TaskId": "ID",
   "StartDt": "StartTime",
   "FinishDt": "FinishTime",
-  "BatchName": "Reports",
+  "BatchName": "Batches",
   "BatchStartDt": "StartTime",
   "BatchFinishDt": "FinishTime",
   "StartMixing": "Mixing_StartTime",
@@ -20,5 +20,5 @@
   "FinishWeightDosage": "Dozing_EndWeight",
   "MaterialId": "MaterialId",
   "ContainerId": "ContainerId",
-  "SetVolume": "SetValue"
+  "SetVolume": "Dozing_SetValue"
 }

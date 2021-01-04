@@ -1,6 +1,6 @@
 {
   "CurrentTaskId": "CurrentTaskId",
-  "MaterialSet": "MaterialSet",
+  "MaterialSet": "SetValue",
   "MixingTime": "MixingTime",
   "PercentOpenGate": "PercentOpenGate",
   "TimeFullUnload": "TimeFullUnload",

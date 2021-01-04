@@ -1,0 +1,22 @@
+﻿<Window x:Class="_2048_Rbu.Windows.WindowVibratorSettings"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:settings="clr-namespace:_2048_Rbu.Elements.Settings"
+        mc:Ignorable="d"
+        Title="Настройки работы вибраторов" MinHeight="200" MaxWidth="1400" Background="LightGray">
+    <WrapPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0" Background="LightGray">
+        <settings:ElVibratorSettings x:Name="ElVibratorM6"/>
+        <settings:ElVibratorSettings x:Name="ElVibratorM7"/>
+        <settings:ElVibratorSettings x:Name="ElVibratorM8"/>
+        <settings:ElVibratorSettings x:Name="ElVibratorM91"/>
+        <settings:ElVibratorSettings x:Name="ElVibratorM92"/>
+        <settings:ElVibratorSettings x:Name="ElVibratorM101"/>
+        <settings:ElVibratorSettings x:Name="ElVibratorM102"/>
+        <settings:ElVibratorSettings x:Name="ElVibratorM111"/>
+        <settings:ElVibratorSettings x:Name="ElVibratorM112"/>
+        <settings:ElVibratorSettings x:Name="ElVibratorM121"/>
+        <settings:ElVibratorSettings x:Name="ElVibratorM122"/>
+    </WrapPanel>
+</Window>

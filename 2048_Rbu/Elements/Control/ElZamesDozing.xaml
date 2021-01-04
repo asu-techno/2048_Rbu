@@ -15,7 +15,7 @@
         <Label Content="из" FontSize="16" FontWeight="Normal" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="141,77,83,0" Padding="0" VerticalAlignment="Top" Width="24" />
         <Label Background="Silver" BorderBrush="Black" BorderThickness="1" Content="{Binding Path=OrderCycle, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Height="22" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="168,76,30,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="50" />
         <Label Content="Дозирование" FontSize="16" FontWeight="Normal" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="12,101,12,0" Padding="0" VerticalAlignment="Top" Width="224" />
-        <Label Background="Silver" BorderBrush="Black" BorderThickness="1" Content="{Binding Path=SelRecipes.Name, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Height="22" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,46,0,0" Name="label1" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="270" />
+        <Label Background="Silver" BorderBrush="Black" BorderThickness="1" Content="{Binding Path=SelTask.Recipe.Name, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Height="22" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,46,0,0" Name="label1" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="270" />
         <Label Content="Название:" FontSize="16" FontWeight="Normal" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="97,23,97,0" Padding="0" VerticalAlignment="Top" Width="Auto" />
     </Grid>
 </UserControl>

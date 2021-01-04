@@ -11,7 +11,6 @@ using System.Windows.Input;
 using _2048_Rbu.Classes;
 using AS_Library.Annotations;
 using AS_Library.Link;
-using _2048_Rbu.Classes;
 using _2048_Rbu.Interfaces;
 using Opc.UaFx;
 using Opc.UaFx.Client;
@@ -130,19 +129,24 @@ namespace _2048_Rbu.Elements
                     _elementList.Add(warning);
                 }
 
+                if (item.GetType() == typeof(Control.ElDosingWait))
+                {
+                    var dosingWait = (Control.ElDosingWait)item;
+                    dosingWait.Initialize(_opcName);
+                    _elementList.Add(dosingWait);
+                }
+
                 if (item.GetType() == typeof(Indicators.ElContainer))
                 {
                     var container = (Indicators.ElContainer)item;
                     container.Initialize(_opcName);
                     _containerList.Add(container);
                 }
+
             }
 
             ElControlControl.Initialize(_opcName);
             _elementList.Add(ElControlControl);
-
-            ElControlDosingWait.Initialize(_opcName);
-            _elementList.Add(ElControlDosingWait);
 
             ElControlTabl.Initialize(_opcName);
             _elementList.Add(ElControlTabl);
@@ -180,27 +184,28 @@ namespace _2048_Rbu.Elements
             #region Timers
 
             LinkTimer = new DispatcherTimer();
-            LinkTimer.Interval = new TimeSpan(0, 0, 0, 1);
-            LinkTimer.Tick += new EventHandler(TimerTick1S);
+            LinkTimer.Interval = new TimeSpan(0, 0, 0, 0,500);
+            LinkTimer.Tick += new EventHandler(TimerTick500Ms);
             LinkTimer.Start();
 
             #endregion
         }
 
-        private void TimerTick1S(object sender, EventArgs e)
+        private void TimerTick500Ms(object sender, EventArgs e)
         {
             _viewModelScreenRbu.GetLink();
 
             _cycle++;
-            if (_cycle > 5)
+            if (_cycle > 15)
             {
                 foreach (var item in _containerList)
                 {
                     item.GetMaterial();
                 }
-                ElControlTabl.GetValue();
                 _cycle = 0;
             }
+
+            ElControlTabl.GetValue();
         }
 
         #region Menu
@@ -316,6 +321,81 @@ namespace _2048_Rbu.Elements
             window.Show();
         }
 
+        #region DosingSettings
+
+        private void DosingBunker1_Click(object sender, RoutedEventArgs e)
+        {
+            WindowDosingSettings window = new WindowDosingSettings(); 
+            var dosingSettingsViewModel = new DosingSettingsViewModel(_opcName, DosingSettingsViewModel.DosingSettingType.Inert, 1);
+            window.DataContext = dosingSettingsViewModel;
+            window.Show();
+        }
+        private void DosingBunker2_Click(object sender, RoutedEventArgs e)
+        {
+            WindowDosingSettings window = new WindowDosingSettings();
+            var dosingSettingsViewModel = new DosingSettingsViewModel(_opcName, DosingSettingsViewModel.DosingSettingType.Inert, 2);
+            window.DataContext = dosingSettingsViewModel;
+            window.Show();
+        }
+        private void DosingBunker3_Click(object sender, RoutedEventArgs e)
+        {
+            WindowDosingSettings window = new WindowDosingSettings();
+            var dosingSettingsViewModel = new DosingSettingsViewModel(_opcName, DosingSettingsViewModel.DosingSettingType.Inert, 3);
+            window.DataContext = dosingSettingsViewModel;
+            window.Show();
+        }
+        private void DosingBunker4_Click(object sender, RoutedEventArgs e)
+        {
+            WindowDosingSettings window = new WindowDosingSettings();
+            var dosingSettingsViewModel = new DosingSettingsViewModel(_opcName, DosingSettingsViewModel.DosingSettingType.Inert, 4);
+            window.DataContext = dosingSettingsViewModel;
+            window.Show();
+        }
+
+        private void DosingSilo1_Click(object sender, RoutedEventArgs e)
+        {
+            WindowDosingSettings window = new WindowDosingSettings();
+            var dosingSettingsViewModel = new DosingSettingsViewModel(_opcName, DosingSettingsViewModel.DosingSettingType.Cement, 5);
+            window.DataContext = dosingSettingsViewModel;
+            window.Show();
+        }
+        private void DosingSilo2_Click(object sender, RoutedEventArgs e)
+        {
+            WindowDosingSettings window = new WindowDosingSettings();
+            var dosingSettingsViewModel = new DosingSettingsViewModel(_opcName, DosingSettingsViewModel.DosingSettingType.Cement, 6);
+            window.DataContext = dosingSettingsViewModel;
+            window.Show();
+        }
+        private void DosingWater_Click(object sender, RoutedEventArgs e)
+        {
+            WindowDosingSettings window = new WindowDosingSettings();
+            var dosingSettingsViewModel = new DosingSettingsViewModel(_opcName, DosingSettingsViewModel.DosingSettingType.Water, 7);
+            window.DataContext = dosingSettingsViewModel;
+            window.Show();
+        }
+        private void DosingAdditive1_Click(object sender, RoutedEventArgs e)
+        {
+            WindowDosingSettings window = new WindowDosingSettings();
+            var dosingSettingsViewModel = new DosingSettingsViewModel(_opcName, DosingSettingsViewModel.DosingSettingType.Additive, 8);
+            window.DataContext = dosingSettingsViewModel;
+            window.Show();
+        }
+        private void DosingAdditive2_Click(object sender, RoutedEventArgs e)
+        {
+            WindowDosingSettings window = new WindowDosingSettings();
+            var dosingSettingsViewModel = new DosingSettingsViewModel(_opcName, DosingSettingsViewModel.DosingSettingType.Additive, 9);
+            window.DataContext = dosingSettingsViewModel;
+            window.Show();
+        }
+
+        #endregion
+
+        private void VibratorSettings_OnClick(object sender, RoutedEventArgs e)
+        {
+            WindowVibratorSettings window = new WindowVibratorSettings(_opcName);
+            window.Show();
+        }
+
         #endregion
     }
 
@@ -396,7 +476,7 @@ namespace _2048_Rbu.Elements
             CurrentDateTime = DateTime.Now.ToString("HH:mm:ss dd.MM.yyyy");
 
             _cycle++;
-            if (_cycle > 2)
+            if (_cycle > 5)
             {
                 Static.Link = (_linkValue != _currentLinkValue);
                 LinkMessage = !Static.Link;

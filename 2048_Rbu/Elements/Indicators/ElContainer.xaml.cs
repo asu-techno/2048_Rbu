@@ -24,8 +24,6 @@ namespace _2048_Rbu.Elements.Indicators
     {
         private ContainersReader ContainersReader { get; set; } = new ContainersReader();
 
-        private int _cycle;
-
         private ObservableCollection<ApiContainer> _containers;
         public ObservableCollection<ApiContainer> Containers
         {
@@ -61,49 +59,6 @@ namespace _2048_Rbu.Elements.Indicators
 
             GetMaterial();
         }
-
-        //public void Subscribe()
-        //{
-        //    //    CreateSubscription();
-        //}
-        //public void Unsubscribe()
-        //{
-        //}
-
-        //private void CreateSubscription()
-        //{
-        //    _opc = OpcServer.GetInstance().GetOpc(_opcName);
-        //    var idItem = new OpcMonitoredItem(_opc.cl.GetNode(ContainerId), OpcAttribute.Value);
-        //    idItem.DataChangeReceived += HandleIdChanged;
-        //    OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(idItem);
-        //    var idMaterialItem = new OpcMonitoredItem(_opc.cl.GetNode(ContainerId.Replace("ContainerID", "MaterialID")), OpcAttribute.Value);
-        //    idMaterialItem.DataChangeReceived += HandleIdMaterialChanged;
-        //    OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(idMaterialItem);
-        //}
-
-        //private void HandleIdChanged(object sender, OpcDataChangeReceivedEventArgs e)
-        //{
-        //    try
-        //    {
-        //        _containerId = int.Parse(e.Item.Value.ToString());
-        //        GetMaterial();
-        //    }
-        //    catch (Exception exception)
-        //    {
-        //    }
-        //}
-
-        //private void HandleIdMaterialChanged(object sender, OpcDataChangeReceivedEventArgs e)
-        //{
-        //    try
-        //    {
-        //        _materialId = int.Parse(e.Item.Value.ToString());
-        //        GetMaterial();
-        //    }
-        //    catch (Exception exception)
-        //    {
-        //    }
-        //}
 
         public async void GetMaterial()
         {

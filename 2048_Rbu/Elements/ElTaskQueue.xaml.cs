@@ -67,8 +67,8 @@ namespace _2048_Rbu.Elements
         }
         private int MaxOrder { get; set; }
 
-        public delegate void NotStopLoadTasksHandler(bool stopLoadTasks);
-        public NotStopLoadTasksHandler NotStopLoadTasks;
+        public delegate void CheckAndLoadTasksHandler(bool stopLoadTasks);
+        public CheckAndLoadTasksHandler CheckAndLoadTask;
 
 
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -81,16 +81,17 @@ namespace _2048_Rbu.Elements
             Logger = logger;
             Service = service;
             Service.Updated += ServiceOnUpdate;
-            ServiceOnUpdate();
             StopLoadTasks = true;
             var loadTaskHandler = new LoadTaskHandler(Service, logger);
-            NotStopLoadTasks += loadTaskHandler.NotStopLoadTasks;
+            CheckAndLoadTask += loadTaskHandler.CheckAndLoadTask;
+            ServiceOnUpdate();
         }
 
         private void ServiceOnUpdate()
         {
             TaskQueue = new ObservableCollection<ApiTaskQueueItem>(Service.List());
             MaxOrder = TaskQueue.Any() ? TaskQueue.Max(x => x.Order) : 0;
+            CheckAndLoadTask?.Invoke(StopLoadTasks);
         }
 
         #region Commands
@@ -206,7 +207,7 @@ namespace _2048_Rbu.Elements
                 return _stopLoadTaskCommand ??= new RelayCommand((o) =>
                 {
                     StopLoadTasks = !StopLoadTasks;
-                    NotStopLoadTasks?.Invoke(StopLoadTasks);
+                    CheckAndLoadTask?.Invoke(StopLoadTasks);
                 });
             }
         }

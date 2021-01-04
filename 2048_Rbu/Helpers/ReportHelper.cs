@@ -12,6 +12,7 @@ using Newtonsoft.Json;
 using NLog;
 using Opc.UaFx;
 using Opc.UaFx.Client;
+using Task = System.Threading.Tasks.Task;
 
 namespace _2048_Rbu.Helpers
 {
@@ -60,9 +61,9 @@ namespace _2048_Rbu.Helpers
             }
         }
 
-        private void Timer_Tick(object sender, EventArgs e)
+        private async void Timer_Tick(object sender, EventArgs e)
         {
-            ReportHandler();
+            await ReportHandler();
         }
         public void SubscribeReportSaving()
         {
@@ -76,31 +77,37 @@ namespace _2048_Rbu.Helpers
             _timer.Stop();
         }
 
-        public void ReportHandler()
+        public async Task ReportHandler()
         {
-            if (_opc != null && _reportAttributesDict != null)
+            await Task.Run(() =>
             {
-                for (var i = 1; i <= 10; i++)
+                if (_opc != null && _reportAttributesDict != null)
                 {
-                    var taskIdTag = _reportAttributesDict[ReportAttributes.ReportName] + $"[{i}]." + _reportAttributesDict[ReportAttributes.TaskId];
-                    var finishDtTag = _reportAttributesDict[ReportAttributes.ReportName] + $"[{i}]." + _reportAttributesDict[ReportAttributes.FinishDt];
-                    var taskId = _opc.ReadNode(taskIdTag.ToNode(), OpcAttribute.Value)?.ToString();
-                    var finishDt = _opc.ReadNode(finishDtTag.ToNode(), OpcAttribute.Value)?.ToString();
-                    if (!string.IsNullOrEmpty(taskId) && finishDt != "1/1/1990 12:00:00 AM")
+                    for (var i = 1; i <= 10; i++)
                     {
-                        long.TryParse(taskId, out var id);
-                        if (SearchReport(id))
+                        var taskIdTag = _reportAttributesDict[ReportAttributes.ReportName] + $"[{i}]." +
+                                        _reportAttributesDict[ReportAttributes.TaskId];
+                        var finishDtTag = _reportAttributesDict[ReportAttributes.ReportName] + $"[{i}]." +
+                                          _reportAttributesDict[ReportAttributes.FinishDt];
+                        var taskId = _opc.ReadNode(taskIdTag.ToNode(), OpcAttribute.Value)?.ToString();
+                        var finishDt = _opc.ReadNode(finishDtTag.ToNode(), OpcAttribute.Value)?.ToString();
+                        if (!string.IsNullOrEmpty(taskId) && finishDt != "1/1/1990 12:00:00 AM")
                         {
-                            _reports.Add(ReadReport(i, id, finishDt));
+                            long.TryParse(taskId, out var id);
+                            if (SearchReport(id))
+                            {
+                                _reports.Add(ReadReport(i, id, finishDt));
+                            }
                         }
                     }
+
+                    if (_reports.Any())
+                    {
+                        WriteReportList(_reports);
+                        _reports.Clear();
+                    }
                 }
-                if (_reports.Any())
-                {
-                    WriteReportList(_reports);
-                    _reports.Clear();
-                }
-            }
+            });
         }
 
         #region Search
@@ -116,7 +123,7 @@ namespace _2048_Rbu.Helpers
         {
             var report = new Report
             {
-                Task = new Task { Id = taskId },
+                Task = new AsuBetonLibrary.Classes.DbContext.Task { Id = taskId },
                 FinishDt = finishDt.StringDtParsing()
             };
             if (_reportAttributesDict.ContainsKey(ReportAttributes.StartDt))
@@ -190,39 +197,52 @@ namespace _2048_Rbu.Helpers
         {
             var batcherMaterials = new List<BatcherMaterial>();
             var batcherNames = BatchersReader.GetBatcherNames();
-            foreach (var batcherName in batcherNames)
+            if (_reportAttributesDict.ContainsKey(ReportAttributes.FinishLoading))
             {
-                var batcherMaterial = new BatcherMaterial();
-                if (_reportAttributesDict.ContainsKey(ReportAttributes.StartLoading))
+                foreach (var batcherName in batcherNames)
                 {
-                    var startLoadingTag = batch + $"{batcherName}." + _reportAttributesDict[ReportAttributes.StartLoading];
-                    var startLoadingDt = _opc.ReadNode(startLoadingTag.ToNode(), OpcAttribute.Value)?.ToString();
-                    batcherMaterial.StartLoading = startLoadingDt.StringDtParsing();
-                }
-                if (_reportAttributesDict.ContainsKey(ReportAttributes.FinishLoading))
-                {
-                    var finishLoadingTag = batch + $"{batcherName}." + _reportAttributesDict[ReportAttributes.FinishLoading];
-                    var finishLoadingDt = _opc.ReadNode(finishLoadingTag.ToNode(), OpcAttribute.Value)?.ToString();
-                    batcherMaterial.FinishLoading = finishLoadingDt.StringDtParsing();
-                }
-                if (_reportAttributesDict.ContainsKey(ReportAttributes.StartWeight))
-                {
-                    var startWeightTag = batch + $"{batcherName}." + _reportAttributesDict[ReportAttributes.StartWeight];
-                    var startWeightString = _opc.ReadNode(startWeightTag.ToNode(), OpcAttribute.Value)?.ToString();
-                    decimal.TryParse(startWeightString, out var startWeight);
-                    batcherMaterial.StartWeight = startWeight;
-                }
-                if (_reportAttributesDict.ContainsKey(ReportAttributes.FinishWeight))
-                {
-                    var finishWeightTag = batch + $"{batcherName}." + _reportAttributesDict[ReportAttributes.FinishWeight];
-                    var finishWeightString = _opc.ReadNode(finishWeightTag.ToNode(), OpcAttribute.Value)?.ToString();
-                    decimal.TryParse(finishWeightString, out var finishWeight);
-                    batcherMaterial.FinishWeight = finishWeight;
-                }
+                    var finishLoadingTag = batch + $"{batcherName}." +
+                                           _reportAttributesDict[ReportAttributes.FinishLoading];
+                    var finishLoadingDt = _opc.ReadNode(finishLoadingTag.ToNode(), OpcAttribute.Value)
+                        ?.ToString();
 
-                var batcherString = batch + $"{batcherName}.";
-                batcherMaterial.DosingSourceMaterials = GetDosingSourceMaterials(batcherString);
-                batcherMaterials.Add(batcherMaterial);
+                    if (finishLoadingDt != "1/1/1990 12:00:00 AM" && finishLoadingDt != "null")
+                    {
+                        var batcherMaterial = new BatcherMaterial { FinishLoading = finishLoadingDt.StringDtParsing() };
+                        if (_reportAttributesDict.ContainsKey(ReportAttributes.StartLoading))
+                        {
+                            var startLoadingTag = batch + $"{batcherName}." +
+                                                  _reportAttributesDict[ReportAttributes.StartLoading];
+                            var startLoadingDt =
+                                _opc.ReadNode(startLoadingTag.ToNode(), OpcAttribute.Value)?.ToString();
+                            batcherMaterial.StartLoading = startLoadingDt.StringDtParsing();
+                        }
+
+                        if (_reportAttributesDict.ContainsKey(ReportAttributes.StartWeight))
+                        {
+                            var startWeightTag = batch + $"{batcherName}." +
+                                                 _reportAttributesDict[ReportAttributes.StartWeight];
+                            var startWeightString =
+                                _opc.ReadNode(startWeightTag.ToNode(), OpcAttribute.Value)?.ToString();
+                            decimal.TryParse(startWeightString, out var startWeight);
+                            batcherMaterial.StartWeight = startWeight;
+                        }
+
+                        if (_reportAttributesDict.ContainsKey(ReportAttributes.FinishWeight))
+                        {
+                            var finishWeightTag = batch + $"{batcherName}." +
+                                                  _reportAttributesDict[ReportAttributes.FinishWeight];
+                            var finishWeightString =
+                                _opc.ReadNode(finishWeightTag.ToNode(), OpcAttribute.Value)?.ToString();
+                            decimal.TryParse(finishWeightString, out var finishWeight);
+                            batcherMaterial.FinishWeight = finishWeight;
+                        }
+
+                        var batcherString = batch + $"{batcherName}.";
+                        batcherMaterial.DosingSourceMaterials = GetDosingSourceMaterials(batcherString);
+                        batcherMaterials.Add(batcherMaterial);
+                    }
+                }
             }
 
             return batcherMaterials;
@@ -232,58 +252,78 @@ namespace _2048_Rbu.Helpers
         {
             var dosingSourceMaterials = new List<DosingSourceMaterial>();
             var dosingSourceNames = DosingSourcesReader.GetDosingSourceNames();
-            foreach (var dosingSourceName in dosingSourceNames)
+            if (_reportAttributesDict.ContainsKey(ReportAttributes.SetVolume))
             {
-                var dosingSourceMaterial = new DosingSourceMaterial();
-                if (_reportAttributesDict.ContainsKey(ReportAttributes.StartDosage))
+                foreach (var dosingSourceName in dosingSourceNames)
                 {
-                    var startDosageTag = batcher + $"{dosingSourceName}." + _reportAttributesDict[ReportAttributes.StartDosage];
-                    var startDosageDt = _opc.ReadNode(startDosageTag.ToNode(), OpcAttribute.Value)?.ToString();
-                    dosingSourceMaterial.StartDosage = startDosageDt.StringDtParsing();
-                }
-                if (_reportAttributesDict.ContainsKey(ReportAttributes.FinishDosage))
-                {
-                    var finishDosageTag = batcher + $"{dosingSourceName}." + _reportAttributesDict[ReportAttributes.FinishDosage];
-                    var finishDosageDt = _opc.ReadNode(finishDosageTag.ToNode(), OpcAttribute.Value)?.ToString();
-                    dosingSourceMaterial.FinishDosage = finishDosageDt.StringDtParsing();
-                }
-                if (_reportAttributesDict.ContainsKey(ReportAttributes.StartWeightDosage))
-                {
-                    var startWeightTag = batcher + $"{dosingSourceName}." + _reportAttributesDict[ReportAttributes.StartWeightDosage];
-                    var startWeightString = _opc.ReadNode(startWeightTag.ToNode(), OpcAttribute.Value)?.ToString();
-                    decimal.TryParse(startWeightString, out var startWeight);
-                    dosingSourceMaterial.StartWeightDosage = startWeight;
-                }
-                if (_reportAttributesDict.ContainsKey(ReportAttributes.FinishWeightDosage))
-                {
-                    var finishWeightTag = batcher + $"{dosingSourceName}." + _reportAttributesDict[ReportAttributes.FinishWeightDosage];
-                    var finishWeightString = _opc.ReadNode(finishWeightTag.ToNode(), OpcAttribute.Value)?.ToString();
-                    decimal.TryParse(finishWeightString, out var finishWeight);
-                    dosingSourceMaterial.FinishWeightDosage = finishWeight;
-                }
-                if (_reportAttributesDict.ContainsKey(ReportAttributes.MaterialId))
-                {
-                    var materialIdTag = batcher + $"{dosingSourceName}." + _reportAttributesDict[ReportAttributes.MaterialId];
-                    var materialIdString = _opc.ReadNode(materialIdTag.ToNode(), OpcAttribute.Value)?.ToString();
-                    long.TryParse(materialIdString, out var materialId);
-                    dosingSourceMaterial.MaterialId = materialId;
-                }
-                if (_reportAttributesDict.ContainsKey(ReportAttributes.ContainerId))
-                {
-                    var containerIdTag = batcher + $"{dosingSourceName}." + _reportAttributesDict[ReportAttributes.ContainerId];
-                    var containerIdString = _opc.ReadNode(containerIdTag.ToNode(), OpcAttribute.Value)?.ToString();
-                    long.TryParse(containerIdString, out var containerId);
-                    dosingSourceMaterial.ContainerId = containerId;
-                }
-                if (_reportAttributesDict.ContainsKey(ReportAttributes.SetVolume))
-                {
-                    var setVolumeTag = batcher + $"{dosingSourceName}." + _reportAttributesDict[ReportAttributes.SetVolume];
+                    var setVolumeTag = batcher + $"{dosingSourceName}." +
+                                       _reportAttributesDict[ReportAttributes.SetVolume];
                     var setVolumeString = _opc.ReadNode(setVolumeTag.ToNode(), OpcAttribute.Value)?.ToString();
                     decimal.TryParse(setVolumeString, out var setVolume);
-                    dosingSourceMaterial.SetVolume = setVolume;
-                }
 
-                dosingSourceMaterials.Add(dosingSourceMaterial);
+                    if (setVolume != 0)
+                    {
+                        var dosingSourceMaterial = new DosingSourceMaterial { SetVolume = setVolume };
+                        if (_reportAttributesDict.ContainsKey(ReportAttributes.StartDosage))
+                        {
+                            var startDosageTag = batcher + $"{dosingSourceName}." +
+                                                 _reportAttributesDict[ReportAttributes.StartDosage];
+                            var startDosageDt = _opc.ReadNode(startDosageTag.ToNode(), OpcAttribute.Value)?.ToString();
+                            dosingSourceMaterial.StartDosage = startDosageDt.StringDtParsing();
+                        }
+
+                        if (_reportAttributesDict.ContainsKey(ReportAttributes.FinishDosage))
+                        {
+                            var finishDosageTag = batcher + $"{dosingSourceName}." +
+                                                  _reportAttributesDict[ReportAttributes.FinishDosage];
+                            var finishDosageDt =
+                                _opc.ReadNode(finishDosageTag.ToNode(), OpcAttribute.Value)?.ToString();
+                            dosingSourceMaterial.FinishDosage = finishDosageDt.StringDtParsing();
+                        }
+
+                        if (_reportAttributesDict.ContainsKey(ReportAttributes.StartWeightDosage))
+                        {
+                            var startWeightTag = batcher + $"{dosingSourceName}." +
+                                                 _reportAttributesDict[ReportAttributes.StartWeightDosage];
+                            var startWeightString =
+                                _opc.ReadNode(startWeightTag.ToNode(), OpcAttribute.Value)?.ToString();
+                            decimal.TryParse(startWeightString, out var startWeight);
+                            dosingSourceMaterial.StartWeightDosage = startWeight;
+                        }
+
+                        if (_reportAttributesDict.ContainsKey(ReportAttributes.FinishWeightDosage))
+                        {
+                            var finishWeightTag = batcher + $"{dosingSourceName}." +
+                                                  _reportAttributesDict[ReportAttributes.FinishWeightDosage];
+                            var finishWeightString =
+                                _opc.ReadNode(finishWeightTag.ToNode(), OpcAttribute.Value)?.ToString();
+                            decimal.TryParse(finishWeightString, out var finishWeight);
+                            dosingSourceMaterial.FinishWeightDosage = finishWeight;
+                        }
+
+                        if (_reportAttributesDict.ContainsKey(ReportAttributes.MaterialId))
+                        {
+                            var materialIdTag = batcher + $"{dosingSourceName}." +
+                                                _reportAttributesDict[ReportAttributes.MaterialId];
+                            var materialIdString =
+                                _opc.ReadNode(materialIdTag.ToNode(), OpcAttribute.Value)?.ToString();
+                            long.TryParse(materialIdString, out var materialId);
+                            dosingSourceMaterial.MaterialId = materialId;
+                        }
+
+                        if (_reportAttributesDict.ContainsKey(ReportAttributes.ContainerId))
+                        {
+                            var containerIdTag = batcher + $"{dosingSourceName}." +
+                                                 _reportAttributesDict[ReportAttributes.ContainerId];
+                            var containerIdString =
+                                _opc.ReadNode(containerIdTag.ToNode(), OpcAttribute.Value)?.ToString();
+                            long.TryParse(containerIdString, out var containerId);
+                            dosingSourceMaterial.ContainerId = containerId;
+                        }
+
+                        dosingSourceMaterials.Add(dosingSourceMaterial);
+                    }
+                }
             }
 
             return dosingSourceMaterials;

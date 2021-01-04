@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Threading.Tasks;
 using AsuBetonLibrary.Abstract;
 using AsuBetonLibrary.Readers;
 using AsuBetonLibrary.Services;
@@ -77,29 +78,32 @@ namespace _2048_Rbu.Handlers
             }
         }
 
-        private void HandleTaskIdChanged(object sender, OpcDataChangeReceivedEventArgs e)
+        private async void HandleTaskIdChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
-            DoWork(e.Item.Value);
+            await DoWork(e.Item.Value);
         }
 
-        private void DoWork(OpcValue value)
+        private Task DoWork(OpcValue value)
         {
-            if (value != null && !StopLoadTasks)
+            return Task.Run(() =>
             {
-                var currentTaskId = Convert.ToInt64(value.ToString());
-                if (currentTaskId == 0)
+                if (value != null && value.Value != null && !StopLoadTasks)
                 {
-                    GetTaskToDosing();
+                    var currentTaskId = Convert.ToInt64(value.ToString());
+                    if (currentTaskId == 0)
+                    {
+                        GetTaskToDosing();
+                    }
+                    else
+                    {
+                        Logger.Error("Значение параметра CurrentTaskId не равно 0.");
+                    }
                 }
                 else
                 {
-                    Logger.Error("Значение параметра CurrentTaskId не равно 0.");
+                    Logger.Error("Значение параметра CurrentTaskId равно null.");
                 }
-            }
-            else
-            {
-                Logger.Error("Значение параметра CurrentTaskId равно null.");
-            }
+            });
         }
 
 
@@ -179,7 +183,8 @@ namespace _2048_Rbu.Handlers
                             x.Name == OpcHelper.GetTagName(OpcHelper.TagNames.MaterialSet));
                         if (materialSetParameter != null)
                         {
-                            result.Add(materialSetParameter, recipeMaterial.Volume.ToString(CultureInfo.InvariantCulture));
+                            var volume = Math.Round(recipeMaterial.Volume * task.BatchVolume, 1);
+                            result.Add(materialSetParameter, volume.ToString(CultureInfo.InvariantCulture));
                         }
                         else
                         {
@@ -286,21 +291,24 @@ namespace _2048_Rbu.Handlers
             return result.Count == recipe.RecipeMaterials.Count ? result : null;
         }
 
-        public void CheckAndLoad()
+        public Task CheckAndLoad()
         {
-            CurrentTaskIdParameter = GetCommonParameter(OpcHelper.TagNames.CurrentTaskId);
-            if (CurrentTaskIdParameter != null)
+            return Task.Run(async () =>
             {
-                var tagValue = OpcHelper.ReadTag(_opcName, CurrentTaskIdParameter.Tag);
-                DoWork(tagValue);
-            }
-            else
-            {
-                Logger.Error("Отсутствует параметр CurrentTaskId.");
-            }
+                CurrentTaskIdParameter = GetCommonParameter(OpcHelper.TagNames.CurrentTaskId);
+                if (CurrentTaskIdParameter != null)
+                {
+                    var tagValue = OpcHelper.ReadTag(_opcName, CurrentTaskIdParameter.Tag);
+                    await DoWork(tagValue);
+                }
+                else
+                {
+                    Logger.Error("Отсутствует параметр CurrentTaskId.");
+                }
+            });
         }
 
-        public void NotStopLoadTasks(bool stopLoadTasks)
+        public void CheckAndLoadTask(bool stopLoadTasks)
         {
             StopLoadTasks = stopLoadTasks;
             if (!stopLoadTasks)

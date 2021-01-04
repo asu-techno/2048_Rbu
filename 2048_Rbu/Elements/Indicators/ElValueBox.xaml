@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             Visibility="{Binding Vis}">
+             Visibility="{Binding Vis}" MouseLeftButtonDown="ElValueBox_OnMouseLeftButtonDown">
     <Grid Height="Auto" Width="Auto">
         <Label Name="LblValue" Width="25" Height="25" BorderThickness="1" BorderBrush="Black" Background="LightGray" HorizontalContentAlignment="Center" HorizontalAlignment="Left">
             <Label.Content>

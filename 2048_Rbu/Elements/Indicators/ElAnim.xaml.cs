@@ -42,6 +42,7 @@ namespace _2048_Rbu.Elements.Indicators
 
         public string Prefix { get; set; }
         public string OnPcy { get; set; }
+        public bool Logic { get; set; }
 
         private Environment _substance;
 
@@ -90,7 +91,7 @@ namespace _2048_Rbu.Elements.Indicators
         {
             CreateSubscription();
         }
-        
+
         public void Unsubscribe()
         {
         }
@@ -105,7 +106,7 @@ namespace _2048_Rbu.Elements.Indicators
 
         private void HandleVisChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
-            VisSens = bool.Parse(e.Item.Value.ToString()) ? Visibility.Visible : Visibility.Collapsed;
+            VisSens = (bool.Parse(e.Item.Value.ToString()) == Logic) ? Visibility.Visible : Visibility.Collapsed;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

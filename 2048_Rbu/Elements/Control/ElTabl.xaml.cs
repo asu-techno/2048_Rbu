@@ -7,6 +7,8 @@ using System.ComponentModel;
 using _2048_Rbu.Classes;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
+using System.Windows.Data;
 using _2048_Rbu.Interfaces;
 using AS_Library.Annotations;
 using AsuBetonLibrary.Abstract;
@@ -55,7 +57,7 @@ namespace _2048_Rbu.Elements.Control
         private ContainersReader ContainersReader { get; set; } = new ContainersReader();
         private OPC_client _opc;
         private OpcServer.OpcList _opcName;
-        private long _id, _currentId;
+        private long _id, _currentId, _batchNum;
 
         public ViewModelTabl(OpcServer.OpcList opcName)
         {
@@ -69,13 +71,18 @@ namespace _2048_Rbu.Elements.Control
         public void Unsubscribe()
         {
         }
-        
+
         private void CreateSubscription()
         {
             _opc = OpcServer.GetInstance().GetOpc(_opcName);
             var idItem = new OpcMonitoredItem(_opc.cl.GetNode("TaskID"), OpcAttribute.Value);
             idItem.DataChangeReceived += HandleIdChanged;
             OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(idItem);
+
+            _opc = OpcServer.GetInstance().GetOpc(_opcName);
+            var batchNumItem = new OpcMonitoredItem(_opc.cl.GetNode("Current_batchNum"), OpcAttribute.Value);
+            batchNumItem.DataChangeReceived += HandleBatchNumChanged;
+            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(batchNumItem);
         }
 
         private void HandleIdChanged(object sender, OpcDataChangeReceivedEventArgs e)
@@ -89,6 +96,24 @@ namespace _2048_Rbu.Elements.Control
             {
             }
         }
+
+        private void HandleBatchNumChanged(object sender, OpcDataChangeReceivedEventArgs e)
+        {
+            try
+            {
+                _batchNum = long.Parse(e.Item.Value.ToString());
+                GetTags();
+            }
+            catch (Exception exception)
+            {
+            }
+        }
+
+        private async void GetTags()
+        {
+            await Task.Run(() => { GetMaterial(); });
+        }
+
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -172,6 +197,7 @@ namespace _2048_Rbu.Elements.Control
             }
             else
             {
+                Tasks = null;
                 SelTask = null;
                 MaterialName = null;
                 SetValue = null;
@@ -190,70 +216,73 @@ namespace _2048_Rbu.Elements.Control
 
         private void GetMaterial()
         {
-            var recipes = new ObservableCollection<ApiRecipe>(RecipesReader.ListRecipes());
-            var selRecipe = recipes.FirstOrDefault(x => x.Id == SelTask.Recipe.Id);
-            var materials = new ObservableCollection<ApiRecipeMaterial>(selRecipe.RecipeMaterials);
-            MaterialName = new List<string>();
-            foreach (var mat in materials)
+            if (SelTask != null && _id != 0)
             {
-                if (mat.Material.Name != null)
-                    MaterialName.Add(mat.Material.Name);
-                else
-                    MaterialName.Add("");
-            }
-
-            _setValueTag = new string[materials.Count];
-            _currentValueTag = new string[materials.Count];
-            var containers = new ObservableCollection<ApiContainer>(ContainersReader.ListContainers());
-            for (int i = 0; i < materials.Count; i++)
-            {
-                var selContainer = containers.FirstOrDefault(x => x.CurrentMaterial.Id == materials[i].Material.Id);
-                switch (selContainer.Id)
+                var recipes = new ObservableCollection<ApiRecipe>(RecipesReader.ListRecipes());
+                var selRecipe = recipes.FirstOrDefault(x => x.Id == SelTask.Recipe.Id);
+                var materials = new ObservableCollection<ApiRecipeMaterial>(selRecipe.RecipeMaterials);
+                MaterialName = new List<string>();
+                foreach (var mat in materials)
                 {
-                    case 0:
-                        _setValueTag[i] = null;
-                        _currentValueTag[i] = null;
-                        break;
-                    case 1:
-                        _setValueTag[i] = "Reports[1].Batchers[1].Batcher_inert.Bunker1.Dozing_SetValue";
-                        _currentValueTag[i] = "Reports[1].Batchers[1].Batcher_inert.Bunker1.Dozing_DozedValue";
-                        break;
-                    case 2:
-                        _setValueTag[i] = "Reports[1].Batchers[1].Batcher_inert.Bunker2.Dozing_SetValue";
-                        _currentValueTag[i] = "Reports[1].Batchers[1].Batcher_inert.Bunker2.Dozing_DozedValue";
-                        break;
-                    case 3:
-                        _setValueTag[i] = "Reports[1].Batchers[1].Batcher_inert.Bunker3.Dozing_SetValue";
-                        _currentValueTag[i] = "Reports[1].Batchers[1].Batcher_inert.Bunker3.Dozing_DozedValue";
-                        break;
-                    case 4:
-                        _setValueTag[i] = "Reports[1].Batchers[1].Batcher_inert.Bunker4.Dozing_SetValue";
-                        _currentValueTag[i] = "Reports[1].Batchers[1].Batcher_inert.Bunker4.Dozing_DozedValue";
-                        break;
-                    case 5:
-                        _setValueTag[i] = "Reports[1].Batchers[1].Batcher_cement.Silos1.Dozing_SetValue";
-                        _currentValueTag[i] = "Reports[1].Batchers[1].Batcher_cement.Silos1.Dozing_DozedValue";
-                        break;
-                    case 6:
-                        _setValueTag[i] = "Reports[1].Batchers[1].Batcher_cement.Silos2.Dozing_SetValue";
-                        _currentValueTag[i] = "Reports[1].Batchers[1].Batcher_cement.Silos2.Dozing_DozedValue";
-                        break;
-                    case 7:
-                        _setValueTag[i] = "Reports[1].Batchers[1].Batcher_water.Water.Dozing_SetValue";
-                        _currentValueTag[i] = "Reports[1].Batchers[1].Batcher_water.Water.Dozing_DozedValue";
-                        break;
-                    case 8:
-                        _setValueTag[i] = "Reports[1].Batchers[1].Batcher_add.Tank1.Dozing_StartTime";
-                        _currentValueTag[i] = "Reports[1].Batchers[1].Batcher_add.Tank1.Dozing_DozedValue";
-                        break;
-                    case 9:
-                        _setValueTag[i] = "Reports[1].Batchers[1].Batcher_add.Tank2.Dozing_SetValue";
-                        _currentValueTag[i] = "Reports[1].Batchers[1].Batcher_add.Tank2.Dozing_DozedValue";
-                        break;
-                    default:
-                        _setValueTag[i] = null;
-                        _currentValueTag[i] = null;
-                        break;
+                    if (mat.Material.Name != null)
+                        MaterialName.Add(mat.Material.Name);
+                    else
+                        MaterialName.Add("");
+                }
+
+                _setValueTag = new string[materials.Count];
+                _currentValueTag = new string[materials.Count];
+                var containers = new ObservableCollection<ApiContainer>(ContainersReader.ListContainers());
+                for (int i = 0; i < materials.Count; i++)
+                {
+                    var selContainer = containers.FirstOrDefault(x => x.CurrentMaterial.Id == materials[i].Material.Id);
+                    switch (selContainer.Id)
+                    {
+                        case 0:
+                            _setValueTag[i] = null;
+                            _currentValueTag[i] = null;
+                            break;
+                        case 1:
+                            _setValueTag[i] = "PAR_Inert_Bunker_1_set";
+                            _currentValueTag[i] = "Reports[1].Batchers[" + _batchNum + "].Batcher_inert.Bunker1.Dozing_DozedValue";
+                            break;
+                        case 2:
+                            _setValueTag[i] = "PAR_Inert_Bunker_2_set";
+                            _currentValueTag[i] = "Reports[1].Batchers[" + _batchNum + "].Batcher_inert.Bunker2.Dozing_DozedValue";
+                            break;
+                        case 3:
+                            _setValueTag[i] = "PAR_Inert_Bunker_3_set";
+                            _currentValueTag[i] = "Reports[1].Batchers[" + _batchNum + "].Batcher_inert.Bunker3.Dozing_DozedValue";
+                            break;
+                        case 4:
+                            _setValueTag[i] = "PAR_Inert_Bunker_4_set";
+                            _currentValueTag[i] = "Reports[1].Batchers[" + _batchNum + "].Batcher_inert.Bunker4.Dozing_DozedValue";
+                            break;
+                        case 5:
+                            _setValueTag[i] = "PAR_Cement_Silos_1_set";
+                            _currentValueTag[i] = "Reports[1].Batchers[" + _batchNum + "].Batcher_cement.Silos1.Dozing_DozedValue";
+                            break;
+                        case 6:
+                            _setValueTag[i] = "PAR_Cement_Silos_2_set";
+                            _currentValueTag[i] = "Reports[1].Batchers[" + _batchNum + "].Batcher_cement.Silos2.Dozing_DozedValue";
+                            break;
+                        case 7:
+                            _setValueTag[i] = "PAR_Water_set";
+                            _currentValueTag[i] = "Reports[1].Batchers[" + _batchNum + "].Batcher_water.Water.Dozing_DozedValue";
+                            break;
+                        case 8:
+                            _setValueTag[i] = "PAR_Additive_Tank_1_set";
+                            _currentValueTag[i] = "Reports[1].Batchers[" + _batchNum + "].Batcher_add.Tank1.Dozing_DozedValue";
+                            break;
+                        case 9:
+                            _setValueTag[i] = "PAR_Additive_Tank_2_set";
+                            _currentValueTag[i] = "Reports[1].Batchers[" + _batchNum + "].Batcher_add.Tank2.Dozing_DozedValue";
+                            break;
+                        default:
+                            _setValueTag[i] = null;
+                            _currentValueTag[i] = null;
+                            break;
+                    }
                 }
             }
         }
@@ -262,11 +291,11 @@ namespace _2048_Rbu.Elements.Control
         {
             if (_id != 0)
             {
-                if (_currentId != _id)
-                {
-                    SetValue = new string[_setValueTag.Length];
-                    CurrentValue = new string[_setValueTag.Length];
-                }
+                //if (_currentId != _id)
+                //{
+                SetValue = new string[_setValueTag.Length];
+                CurrentValue = new string[_setValueTag.Length];
+                //}
                 for (int i = 0; i < _setValueTag.Length; i++)
                 {
                     if (_setValueTag[i] == null || _currentValueTag[i] == null)
@@ -276,12 +305,12 @@ namespace _2048_Rbu.Elements.Control
                     }
                     else
                     {
-                        SetValue[i] = _opc.cl.ReadReal(_setValueTag[i], out var err).ToString();
-                        CurrentValue[i] = _opc.cl.ReadReal(_currentValueTag[i], out var err1).ToString();
+                        SetValue[i] = Math.Round(_opc.cl.ReadReal(_setValueTag[i], out var err), 1).ToString("F1");
+                        CurrentValue[i] = Math.Round(_opc.cl.ReadReal(_currentValueTag[i], out var err1), 1).ToString("F1");
                         if (err)
-                            SetValue[i] = "ошибка";
+                            SetValue[i] = "";
                         if (err1)
-                            CurrentValue[i] = "ошибка";
+                            CurrentValue[i] = "";
                     }
                 }
             }
