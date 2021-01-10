@@ -73,7 +73,7 @@ namespace _2048_Rbu.Elements.Indicators
 
         private void HandleVisChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
-            Brush = bool.Parse(e.Item.Value.ToString()) ? Brushes.Lime : Brushes.White;
+            Brush = bool.Parse(e.Item.Value.ToString()) ? (SolidColorBrush)(new BrushConverter().ConvertFrom("##FF85FC84")) : Brushes.White;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

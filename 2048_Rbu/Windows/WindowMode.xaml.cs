@@ -17,11 +17,8 @@ namespace _2048_Rbu.Windows
     /// </summary>
     public partial class WindowMode : INotifyPropertyChanged
     {
-        OpcServer.OpcList _opcName;
         public delegate void CloseHandler();
         public event CloseHandler StopUpdate;
-        private OPC_client _opc;
-        private bool _err;
 
         private bool _modeAutomat;
         public bool ModeAutomat
@@ -51,62 +48,37 @@ namespace _2048_Rbu.Windows
             }
         }
 
-        public WindowMode(OpcServer.OpcList opcName)
+        private void BtnManual_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            _opcName = opcName;
+            ModeManual = true;
+            object btn = e.Source;
+            Methods.ButtonClick(btn, BtnManual, "btn_All_Manual", true, "Перевод всех механизмов в ручной режим работы");
+        }
 
+        private void BtnManual_OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            ModeManual = false;
+        }
+
+        private void BtnAutomat_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            ModeAutomat = true;
+            object btn = e.Source;
+            Methods.ButtonClick(btn, BtnAutomat, "btn_All_Automat", true, "Перевод всех механизмов в автоматический режим работы");
+        }
+
+        private void BtnAutomat_OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            ModeAutomat = false;
+        }
+
+        public WindowMode()
+        {
             InitializeComponent();
             KeyDown += OnKeyDown;
             Closed += Window_OnClosed;
 
             DataContext = this;
-        }
-
-        public void Subscribe()
-        {
-            CreateSubscription();
-        }
-        public void Unsubscribe()
-        {
-
-        }
-
-        private void CreateSubscription()
-        {
-            _opc = OpcServer.GetInstance().GetOpc(_opcName);
-            var manualItem = new OpcMonitoredItem(_opc.cl.GetNode("gMode_Manual"), OpcAttribute.Value);
-            manualItem.DataChangeReceived += HandleManualChanged;
-            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(manualItem);
-
-            var automatItem = new OpcMonitoredItem(_opc.cl.GetNode("gMode_Automat"), OpcAttribute.Value);
-            automatItem.DataChangeReceived += HandleAutomatChanged;
-            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(automatItem);
-
-            OpcServer.GetInstance().GetSubscription(_opcName).ApplyChanges();
-        }
-
-        private void HandleManualChanged(object sender, OpcDataChangeReceivedEventArgs e)
-        {
-            ModeManual = bool.Parse(e.Item.Value.ToString());
-        }
-
-        private void HandleAutomatChanged(object sender, OpcDataChangeReceivedEventArgs e)
-        {
-            ModeAutomat = bool.Parse(e.Item.Value.ToString());
-        }
-
-        private void BtnManual_Click(object sender, RoutedEventArgs e)
-        {
-            object btn = e.Source;
-            Methods.ButtonClick(btn, BtnManual, "gMode_Manual", true, "Ручной режим работы узла");
-            Methods.ButtonClick(btn, BtnManual, "gMode_Automat", false);
-        }
-
-        private void BtnAutomat_Click(object sender, RoutedEventArgs e)
-        {
-            object btn = e.Source;
-            Methods.ButtonClick(btn, BtnAutomat, "gMode_Automat", true, "Автоматический режим работы узла");
-            Methods.ButtonClick(btn, BtnAutomat, "gMode_Manual", false);
         }
 
         private void OnKeyDown(object sender, KeyEventArgs e)

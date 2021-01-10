@@ -49,7 +49,7 @@ namespace _2048_Rbu.Classes
             }
         }
 
-        public static void ButtonClick(object obj, object obj1, string tag, double value, string eventText)
+        public static void ButtonClick(object obj, object obj1, string tag, float value, string eventText)
         {
             if (Static.Link)
             {

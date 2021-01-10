@@ -10,7 +10,6 @@ using System.Windows.Media.Imaging;
 using _2048_Rbu.Classes;
 using _2048_Rbu.Interfaces;
 using AS_Library.Annotations;
-using _2048_Rbu.Classes;
 using AS_Library.Link;
 using Opc.UaFx;
 using Opc.UaFx.Client;
@@ -454,15 +453,13 @@ namespace _2048_Rbu.Elements.Mechs
         private void BtnManual_Click(object sender, RoutedEventArgs e)
         {
             object btn = e.Source;
-            Methods.ButtonClick(btn, BtnManual, ManualPcy, true);
-            Methods.ButtonClick(btn, BtnManual, ModePcy, false);
+            Methods.ButtonClick(btn, BtnManual, "btn_Mech_Manual", true, TxtPopupName.Text + ". Режим работы - ручной");
         }
 
         private void BtnAutomat_Click(object sender, RoutedEventArgs e)
         {
             object btn = e.Source;
-            Methods.ButtonClick(btn, BtnAutomat, ModePcy, true);
-            Methods.ButtonClick(btn, BtnAutomat, ManualPcy, false);
+            Methods.ButtonClick(btn, BtnAutomat, "btn_Mech_Automat", true, TxtPopupName.Text + ". Режим работы - автомат");
         }
 
         private void BtnStart_Click(object sender, RoutedEventArgs e)

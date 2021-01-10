@@ -202,12 +202,11 @@ namespace _2048_Rbu.Windows
         private void UpdateRecipes()
         {
             var recipes = RecipesReader.ListRecipes();
-            RecipeGroups = new ObservableCollection<ApiRecipeGroup>(recipes.GroupBy(x => x.Group)
-                .Select(x => new ApiRecipeGroup
-                {
-                    Name = x.Key.Name,
-                    Recipes = x.Select(p => p).ToList()
-                }).ToList());
+            RecipeGroups = new ObservableCollection<ApiRecipeGroup>(recipes.GroupBy(x => x.Group.Name).Select(x => new ApiRecipeGroup
+            {
+                Name = x.Key,
+                Recipes = x.Select(p => p).ToList()
+            }).ToList());
         }
 
         private void UpdateRecipeDetails()

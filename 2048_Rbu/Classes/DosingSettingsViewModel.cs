@@ -79,36 +79,36 @@ namespace _2048_Rbu.Classes
                     WorkMode[0].NameGate = "V-9-1";
                     WorkMode[1].NameGate = "V-9-2";
                     WorkMode[2].NameGate = "Обе";
-                    WorkMode[0].TagGate = "V_9_1.";
-                    WorkMode[1].TagGate = "V_9_2.";
-                    WorkMode[2].TagGate = "V_9_Both.";
+                    WorkMode[0].TagGate = "V_9_1";
+                    WorkMode[1].TagGate = "V_9_2";
+                    WorkMode[2].TagGate = "V_9_Both";
                     _tagWeight = "Inert_Bunker1";
                     break;
                 case 2:
                     WorkMode[0].NameGate = "V-10-1";
                     WorkMode[1].NameGate = "V-10-2";
                     WorkMode[2].NameGate = "Обе";
-                    WorkMode[0].TagGate = "V_10_1.";
-                    WorkMode[1].TagGate = "V_10_2.";
-                    WorkMode[2].TagGate = "V_10_Both.";
+                    WorkMode[0].TagGate = "V_10_1";
+                    WorkMode[1].TagGate = "V_10_2";
+                    WorkMode[2].TagGate = "V_10_Both";
                     _tagWeight = "Inert_Bunker2";
                     break;
                 case 3:
                     WorkMode[0].NameGate = "V-11-1";
                     WorkMode[1].NameGate = "V-11-2";
                     WorkMode[2].NameGate = "Обе";
-                    WorkMode[0].TagGate = "V_11_1.";
-                    WorkMode[1].TagGate = "V_11_2.";
-                    WorkMode[2].TagGate = "V_11_Both.";
+                    WorkMode[0].TagGate = "V_11_1";
+                    WorkMode[1].TagGate = "V_11_2";
+                    WorkMode[2].TagGate = "V_11_Both";
                     _tagWeight = "Inert_Bunker3";
                     break;
                 case 4:
                     WorkMode[0].NameGate = "V-12-1";
                     WorkMode[1].NameGate = "V-12-2";
                     WorkMode[2].NameGate = "Обе";
-                    WorkMode[0].TagGate = "V_12_1.";
-                    WorkMode[1].TagGate = "V_12_2.";
-                    WorkMode[2].TagGate = "V_12_Both.";
+                    WorkMode[0].TagGate = "V_12_1";
+                    WorkMode[1].TagGate = "V_12_2";
+                    WorkMode[2].TagGate = "V_12_Both";
                     _tagWeight = "Inert_Bunker4";
                     break;
                 case 5:
@@ -168,7 +168,7 @@ namespace _2048_Rbu.Classes
 
         private void HandleWeightChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
-            WeightDiff = double.Parse(e.Item.Value.ToString());
+            WeightDiff = double.Parse(e.Item.Value.ToString()).ToString("F1");
         }
 
         private WorkMode[] _workMode;
@@ -204,8 +204,8 @@ namespace _2048_Rbu.Classes
             }
         }
 
-        private double _weightDiff;
-        public double WeightDiff
+        private string _weightDiff;
+        public string WeightDiff
         {
             get { return _weightDiff; }
             set
@@ -222,7 +222,86 @@ namespace _2048_Rbu.Classes
             {
                 return _setWeightDiff ??= new RelayCommand((o) =>
                 {
-                    Methods.SetParameter(null, null, _opcName, NameWindow + ". Недосып", 0, 100, "WeightDiff_" + _tagWeight, "Real", null, 0, 1);
+                    Methods.SetParameter(null, null, _opcName, NameWindow + ". Недосып, кг", 0.0, 100.0, "WeightDiff_" + _tagWeight, "Real", null, 0, 1);
+                });
+            }
+        }
+
+        private RelayCommand _setLeftRought;
+        public RelayCommand SetLeftRought
+        {
+            get
+            {
+                return _setLeftRought ??= new RelayCommand((o) =>
+                {
+                    Methods.ButtonClick(null, null, "Rought."+WorkMode[0].TagGate, true, "Режим грубо:" + WorkMode[0].HeaderGate);
+                    Methods.ButtonClick(null, null, "Rought." + WorkMode[1].TagGate, false);
+                    Methods.ButtonClick(null, null, "Rought." + WorkMode[2].TagGate, false);
+                });
+            }
+        }
+        private RelayCommand _setRightRought;
+        public RelayCommand SetRightRought
+        {
+            get
+            {
+                return _setRightRought ??= new RelayCommand((o) =>
+                {
+                    Methods.ButtonClick(null, null, "Rought." + WorkMode[1].TagGate, true, "Режим грубо:" + WorkMode[1].HeaderGate);
+                    Methods.ButtonClick(null, null, "Rought." + WorkMode[0].TagGate, false);
+                    Methods.ButtonClick(null, null, "Rought." + WorkMode[2].TagGate, false);
+                });
+            }
+        }
+        private RelayCommand _setBothRought;
+        public RelayCommand SetBothRought
+        {
+            get
+            {
+                return _setBothRought ??= new RelayCommand((o) =>
+                {
+                    Methods.ButtonClick(null, null, "Rought." + WorkMode[2].TagGate, true, "Режим грубо:" + WorkMode[2].HeaderGate);
+                    Methods.ButtonClick(null, null, "Rought." + WorkMode[0].TagGate, false);
+                    Methods.ButtonClick(null, null, "Rought." + WorkMode[1].TagGate, false);
+                });
+            }
+        }
+        private RelayCommand _setLeftPrecise;
+        public RelayCommand SetLeftPrecise
+        {
+            get
+            {
+                return _setLeftPrecise ??= new RelayCommand((o) =>
+                {
+                    Methods.ButtonClick(null, null, "Precise." + WorkMode[0].TagGate, true, "Режим точно:" + WorkMode[0].HeaderGate);
+                    Methods.ButtonClick(null, null, "Precise." + WorkMode[1].TagGate, false);
+                    Methods.ButtonClick(null, null, "Precise." + WorkMode[2].TagGate, false);
+                });
+            }
+        }
+        private RelayCommand _setRightPrecise;
+        public RelayCommand SetRightPrecise
+        {
+            get
+            {
+                return _setRightPrecise ??= new RelayCommand((o) =>
+                {
+                    Methods.ButtonClick(null, null, "Precise." + WorkMode[1].TagGate, true, "Режим точно:" + WorkMode[1].HeaderGate);
+                    Methods.ButtonClick(null, null, "Precise." + WorkMode[0].TagGate, false);
+                    Methods.ButtonClick(null, null, "Precise." + WorkMode[2].TagGate, false);
+                });
+            }
+        }
+        private RelayCommand _setBothPrecise;
+        public RelayCommand SetBothPrecise
+        {
+            get
+            {
+                return _setBothPrecise ??= new RelayCommand((o) =>
+                {
+                    Methods.ButtonClick(null, null, "Precise." + WorkMode[2].TagGate, true, "Режим точно:" + WorkMode[2].HeaderGate);
+                    Methods.ButtonClick(null, null, "Precise." + WorkMode[0].TagGate, false);
+                    Methods.ButtonClick(null, null, "Precise." + WorkMode[1].TagGate, false);
                 });
             }
         }
@@ -254,27 +333,27 @@ namespace _2048_Rbu.Classes
         {
             _opc = OpcServer.GetInstance().GetOpc(_opcName);
 
-            var preciseModeItem = new OpcMonitoredItem(_opc.cl.GetNode(TagGate + "Precise_Active"), OpcAttribute.Value);
+            var preciseModeItem = new OpcMonitoredItem(_opc.cl.GetNode("Precise." + TagGate), OpcAttribute.Value);
             preciseModeItem.DataChangeReceived += HandlePreciseModeChanged;
             OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(preciseModeItem);
 
-            var roughtModeItem = new OpcMonitoredItem(_opc.cl.GetNode(TagGate + "Rought_Active"), OpcAttribute.Value);
+            var roughtModeItem = new OpcMonitoredItem(_opc.cl.GetNode("Rought." + TagGate), OpcAttribute.Value);
             roughtModeItem.DataChangeReceived += HandleRoughtModeChanged;
             OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(roughtModeItem);
 
-            var preciseWorkItem = new OpcMonitoredItem(_opc.cl.GetNode(TagGate + "Precise_Work"), OpcAttribute.Value);
+            var preciseWorkItem = new OpcMonitoredItem(_opc.cl.GetNode(TagGate + ".Precise_Work"), OpcAttribute.Value);
             preciseWorkItem.DataChangeReceived += HandlePreciseWorkChanged;
             OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(preciseWorkItem);
 
-            var precisePauseItem = new OpcMonitoredItem(_opc.cl.GetNode(TagGate + "Precise_Pause"), OpcAttribute.Value);
+            var precisePauseItem = new OpcMonitoredItem(_opc.cl.GetNode(TagGate + ".Precise_Pause"), OpcAttribute.Value);
             precisePauseItem.DataChangeReceived += HandlePrecisePauseChanged;
             OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(precisePauseItem);
 
-            var roughtWorkItem = new OpcMonitoredItem(_opc.cl.GetNode(TagGate + "Rought_Work"), OpcAttribute.Value);
+            var roughtWorkItem = new OpcMonitoredItem(_opc.cl.GetNode(TagGate + ".Rought_Work"), OpcAttribute.Value);
             roughtWorkItem.DataChangeReceived += HandleRoughtWorkChanged;
             OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(roughtWorkItem);
 
-            var roughtPauseItem = new OpcMonitoredItem(_opc.cl.GetNode(TagGate + "Rought_Pause"), OpcAttribute.Value);
+            var roughtPauseItem = new OpcMonitoredItem(_opc.cl.GetNode(TagGate + ".Rought_Pause"), OpcAttribute.Value);
             roughtPauseItem.DataChangeReceived += HandleRoughtPauseChanged;
             OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(roughtPauseItem);
         }
@@ -291,22 +370,22 @@ namespace _2048_Rbu.Classes
 
         private void HandlePreciseWorkChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
-            PreciseWorkParam = double.Parse(e.Item.Value.ToString());
+            PreciseWorkParam = double.Parse(e.Item.Value.ToString()).ToString("F1");
         }
 
         private void HandlePrecisePauseChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
-            PrecisePauseParam = double.Parse(e.Item.Value.ToString());
+            PrecisePauseParam = double.Parse(e.Item.Value.ToString()).ToString("F1");
         }
 
         private void HandleRoughtWorkChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
-            RoughtWorkParam = double.Parse(e.Item.Value.ToString());
+            RoughtWorkParam = double.Parse(e.Item.Value.ToString()).ToString("F1");
         }
 
         private void HandleRoughtPauseChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
-            RoughtPauseParam = double.Parse(e.Item.Value.ToString());
+            RoughtPauseParam = double.Parse(e.Item.Value.ToString()).ToString("F1");
         }
 
         private bool _preciseWork;
@@ -331,8 +410,8 @@ namespace _2048_Rbu.Classes
             }
         }
 
-        private double _preciseWorkParam;
-        public double PreciseWorkParam
+        private string _preciseWorkParam;
+        public string PreciseWorkParam
         {
             get { return _preciseWorkParam; }
             set
@@ -342,8 +421,8 @@ namespace _2048_Rbu.Classes
             }
         }
 
-        private double _precisePauseParam;
-        public double PrecisePauseParam
+        private string _precisePauseParam;
+        public string PrecisePauseParam
         {
             get { return _precisePauseParam; }
             set
@@ -353,8 +432,8 @@ namespace _2048_Rbu.Classes
             }
         }
 
-        private double _roughtWorkParam;
-        public double RoughtWorkParam
+        private string _roughtWorkParam;
+        public string RoughtWorkParam
         {
             get { return _roughtWorkParam; }
             set
@@ -364,8 +443,8 @@ namespace _2048_Rbu.Classes
             }
         }
 
-        private double _roughtPauseParam;
-        public double RoughtPauseParam
+        private string _roughtPauseParam;
+        public string RoughtPauseParam
         {
             get { return _roughtPauseParam; }
             set
@@ -413,7 +492,7 @@ namespace _2048_Rbu.Classes
             {
                 return _setPreciseWorkParam ??= new RelayCommand((o) =>
                 {
-                    Methods.SetParameter(null, null, _opcName, HeaderGate + ". Время работы в режиме работы \"Точно, с\"", 0, 100, TagGate + "Precise_Work", "Real", null, 0, 0);
+                    Methods.SetParameter(null, null, _opcName, HeaderGate + ". Время работы в режиме работы \"Точно\", с", 0.0, 10.0, TagGate + ".Precise_Work", "Real", null, 0, 0);
                 });
             }
         }
@@ -425,7 +504,7 @@ namespace _2048_Rbu.Classes
             {
                 return _setPrecisePauseParam ??= new RelayCommand((o) =>
                 {
-                    Methods.SetParameter(null, null, _opcName, HeaderGate + ". Время паузы в режиме работы \"Точно, с\"", 0, 100, TagGate + "Precise_Pause", "Real", null, 0, 0);
+                    Methods.SetParameter(null, null, _opcName, HeaderGate + ". Время паузы в режиме работы \"Точно\", с", 0.0, 30.0, TagGate + ".Precise_Pause", "Real", null, 0, 0);
                 });
             }
         }
@@ -437,7 +516,7 @@ namespace _2048_Rbu.Classes
             {
                 return _setRoughtWorkParam ??= new RelayCommand((o) =>
                 {
-                    Methods.SetParameter(null, null, _opcName, HeaderGate + ". Время работы в режиме работы \"Грубо, с\"", 0, 100, TagGate + "Rought_Work", "Real", null, 0, 0);
+                    Methods.SetParameter(null, null, _opcName, HeaderGate + ". Время работы в режиме работы \"Грубо\", с", 0.0, 10.0, TagGate + ".Rought_Work", "Real", null, 0, 0);
                 });
             }
         }
@@ -449,7 +528,7 @@ namespace _2048_Rbu.Classes
             {
                 return _setRoughtPauseParam ??= new RelayCommand((o) =>
                 {
-                    Methods.SetParameter(null, null, _opcName, HeaderGate + ". Время паузы в режиме работы \"Грубо, с\"", 0, 100, TagGate + "Rought_Pause", "Real", null, 0, 0);
+                    Methods.SetParameter(null, null, _opcName, HeaderGate + ". Время паузы в режиме работы \"Грубо\", с", 0.0, 30.0, TagGate + ".Rought_Pause", "Real", null, 0, 0);
                 });
             }
         }

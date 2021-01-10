@@ -5,18 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:settings="clr-namespace:_2048_Rbu.Elements.Settings"
         mc:Ignorable="d"
-        Title="Настройки работы вибраторов" MinHeight="200" MaxWidth="1400" Background="LightGray">
-    <WrapPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0" Background="LightGray">
-        <settings:ElVibratorSettings x:Name="ElVibratorM6"/>
-        <settings:ElVibratorSettings x:Name="ElVibratorM7"/>
-        <settings:ElVibratorSettings x:Name="ElVibratorM8"/>
-        <settings:ElVibratorSettings x:Name="ElVibratorM91"/>
-        <settings:ElVibratorSettings x:Name="ElVibratorM92"/>
-        <settings:ElVibratorSettings x:Name="ElVibratorM101"/>
-        <settings:ElVibratorSettings x:Name="ElVibratorM102"/>
-        <settings:ElVibratorSettings x:Name="ElVibratorM111"/>
-        <settings:ElVibratorSettings x:Name="ElVibratorM112"/>
-        <settings:ElVibratorSettings x:Name="ElVibratorM121"/>
-        <settings:ElVibratorSettings x:Name="ElVibratorM122"/>
-    </WrapPanel>
+        Title="Настройки работы вибраторов" Height="640" Width="1230" Background="LightGray" ResizeMode="NoResize" WindowState="Normal">
+    <StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0" Background="LightGray">
+        <TextBlock Text="Вибраторы цемента" FontSize="18" FontWeight="Bold" TextAlignment="Center" Margin="0,5,0,0"/>
+        <WrapPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5">
+            <settings:ElVibratorSettings x:Name="ElVibratorM6"/>
+            <settings:ElVibratorSettings x:Name="ElVibratorM7"/>
+            <settings:ElVibratorSettings x:Name="ElVibratorM8"/>
+        </WrapPanel>
+        <TextBlock Text="Вибраторы интертных материалов" FontSize="18" FontWeight="Bold" TextAlignment="Center"/>
+        <WrapPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5">
+            <settings:ElVibratorSettings x:Name="ElVibratorM91"/>
+            <settings:ElVibratorSettings x:Name="ElVibratorM92"/>
+            <settings:ElVibratorSettings x:Name="ElVibratorM101"/>
+            <settings:ElVibratorSettings x:Name="ElVibratorM102"/>
+            <settings:ElVibratorSettings x:Name="ElVibratorM111"/>
+            <settings:ElVibratorSettings x:Name="ElVibratorM112"/>
+            <settings:ElVibratorSettings x:Name="ElVibratorM121"/>
+            <settings:ElVibratorSettings x:Name="ElVibratorM122"/>
+        </WrapPanel>
+    </StackPanel>
+    
 </Window>

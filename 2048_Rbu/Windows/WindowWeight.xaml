@@ -4,15 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" Background="Silver"
-        Title="Весы " Width="320" Height="200" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Topmost="True">
+        Title="Весы " Width="330" Height="250" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Topmost="True">
     <Grid Background="Silver">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0" TextAlignment="Center" TextWrapping="NoWrap" FontSize="16" FontWeight="Normal" Text="Признак пустоты:"/>
-        <Label Name="LblEmpty" VerticalAlignment="Center" HorizontalAlignment="Right" Width="120" Height="32" Margin="10,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" FontSize="14" MouseLeftButtonDown="LblEmpty_OnMouseLeftButtonDown">
+        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Margin="15,0" TextAlignment="Center" TextWrapping="NoWrap" FontSize="16" FontWeight="Normal" Text="Признак пустоты, кг:"/>
+        <Label Name="LblEmpty" VerticalAlignment="Center" HorizontalAlignment="Right" Width="120" Height="32" Margin="15,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" FontSize="14" MouseLeftButtonDown="LblEmpty_OnMouseLeftButtonDown">
             <Label.Style>
                 <Style TargetType="{x:Type Label}">
                     <Setter Property="OverridesDefaultStyle" Value="True"/>
@@ -50,21 +51,31 @@
                     <Setter Property="FontWeight" Value="Normal"/>
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding ModeUseWeight}" Value="True">
-                            <Setter Property="Background" Value="Lime"/>
+                            <Setter Property="Background" Value="#FF85FC84"/>
                             <Setter Property="FontWeight" Value="Bold"/>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
             </Button.Style>
         </Button>
-        <Button Name="BtnEndUnload" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" Width="300" Height="45" Margin="0,0,0,5" BorderBrush="Black" BorderThickness="1" FontSize="18" Content="Закончить выгрузку" PreviewMouseLeftButtonDown="BtnEndUnload_OnPreviewMouseLeftButtonDown" PreviewMouseLeftButtonUp="BtnEndUnload_OnPreviewMouseLeftButtonUp">
+        <Button Name="BtnEndDosing" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" Width="300" Height="45" Margin="0" BorderBrush="Black" BorderThickness="1" FontSize="18" Content="Закончить дозирование" Background="LightBlue" PreviewMouseLeftButtonDown="BtnEndDosing_OnPreviewMouseLeftButtonDown" PreviewMouseLeftButtonUp="BtnEndDosing_OnPreviewMouseLeftButtonUp">
             <Button.Style>
                 <Style TargetType="{x:Type Button}">
-                    <Setter Property="Background" Value="LightBlue"/>
                     <Setter Property="FontWeight" Value="Normal"/>
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding}" Value="True">
-                            <Setter Property="Background" Value="Lime"/>
+                        <DataTrigger Binding="{Binding BtnClickDosing}" Value="True">
+                            <Setter Property="FontWeight" Value="Bold"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+        <Button Name="BtnEndUnload" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center" Width="300" Height="45" Margin="0,0,0,5" BorderBrush="Black" BorderThickness="1" FontSize="18" Content="Закончить выгрузку" Background="LightBlue" PreviewMouseLeftButtonDown="BtnEndUnload_OnPreviewMouseLeftButtonDown" PreviewMouseLeftButtonUp="BtnEndUnload_OnPreviewMouseLeftButtonUp">
+            <Button.Style>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="FontWeight" Value="Normal"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding BtnClickUnload}" Value="True">
                             <Setter Property="FontWeight" Value="Bold"/>
                         </DataTrigger>
                     </Style.Triggers>

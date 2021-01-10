@@ -60,8 +60,9 @@ namespace _2048_Rbu.Elements.Control
         private OpcServer.OpcList _opcName;
         private long _id, _currentId;
 
-        private int _tempTimeProcess, _tempOrderCycle;
-        private double _tempPartial, _tempFull;
+        private int _tempCurrentBatchNum, _tempBatchesQuantity, _tempMixingProcess, _tempParMixingProcess,
+            _tempPartialUnloadProcess, _tempFullUnloadProcess, _tempParPartialUnload, _tempParFullUnload;
+        private double _tempPartialWidth, _tempFullWidth;
 
         public ViewModelMixer(OpcServer.OpcList opcName)
         {
@@ -83,37 +84,37 @@ namespace _2048_Rbu.Elements.Control
             idItem.DataChangeReceived += HandleIdChanged;
             OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(idItem);
 
-            var orderActItem = new OpcMonitoredItem(_opc.cl.GetNode("Mixer.CurrentMixing_batchNum"), OpcAttribute.Value);
-            orderActItem.DataChangeReceived += HandleOrderActChanged;
-            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(orderActItem);
+            var currentBatchNumItem = new OpcMonitoredItem(_opc.cl.GetNode("Mixer.CurrentMixing_batchNum"), OpcAttribute.Value);
+            currentBatchNumItem.DataChangeReceived += HandleCurrentBatchNumChanged;
+            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(currentBatchNumItem);
 
-            var orderItem = new OpcMonitoredItem(_opc.cl.GetNode("Mixer.PAR_BatchesQuantity"), OpcAttribute.Value);
-            orderItem.DataChangeReceived += HandleOrderChanged;
-            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(orderItem);
+            var batchesQuantityItem = new OpcMonitoredItem(_opc.cl.GetNode("Mixer.PAR_BatchesQuantity"), OpcAttribute.Value);
+            batchesQuantityItem.DataChangeReceived += HandleBatchesQuantityChanged;
+            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(batchesQuantityItem);
 
-            var mixingItem = new OpcMonitoredItem(_opc.cl.GetNode("Mixer.Current_MixingTime"), OpcAttribute.Value);
-            mixingItem.DataChangeReceived += HandleMixingChanged;
-            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(mixingItem);
+            var mixingProcessItem = new OpcMonitoredItem(_opc.cl.GetNode("Mixer.Current_MixingTime"), OpcAttribute.Value);
+            mixingProcessItem.DataChangeReceived += HandleMixingProcessChanged;
+            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(mixingProcessItem);
 
-            var timePrItem = new OpcMonitoredItem(_opc.cl.GetNode("Mixer.PAR_MixingTime"), OpcAttribute.Value);
-            timePrItem.DataChangeReceived += HandleTimeProcessChanged;
-            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(timePrItem);
+            var parMixingProcessItem = new OpcMonitoredItem(_opc.cl.GetNode("Mixer.PAR_MixingTime"), OpcAttribute.Value);
+            parMixingProcessItem.DataChangeReceived += HandleParMixingProcessChanged;
+            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(parMixingProcessItem);
 
-            var currentPartialtem = new OpcMonitoredItem(_opc.cl.GetNode("Mixer.Current_PartUnloadTime"), OpcAttribute.Value);
-            currentPartialtem.DataChangeReceived += HandlePartialProcessChanged;
-            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(currentPartialtem);
+            var currentPartialUnloadItem = new OpcMonitoredItem(_opc.cl.GetNode("Mixer.Current_PartUnloadTime"), OpcAttribute.Value);
+            currentPartialUnloadItem.DataChangeReceived += HandlePartialUnloadProcessChanged;
+            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(currentPartialUnloadItem);
 
-            var currentFullItem = new OpcMonitoredItem(_opc.cl.GetNode("Mixer.Current_UnloadTime"), OpcAttribute.Value);
-            currentFullItem.DataChangeReceived += HandleFullProcessChanged;
-            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(currentFullItem);
+            var currentFullUnloadItem = new OpcMonitoredItem(_opc.cl.GetNode("Mixer.Current_UnloadTime"), OpcAttribute.Value);
+            currentFullUnloadItem.DataChangeReceived += HandleFullUnloadProcessChanged;
+            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(currentFullUnloadItem);
 
-            var partialUnloadItem = new OpcMonitoredItem(_opc.cl.GetNode("Mixer.PAR_TimePartialUnload"), OpcAttribute.Value);
-            partialUnloadItem.DataChangeReceived += HandlePartialUnloadChanged;
-            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(partialUnloadItem);
+            var parPartialUnloadItem = new OpcMonitoredItem(_opc.cl.GetNode("Mixer.PAR_TimePartialUnload"), OpcAttribute.Value);
+            parPartialUnloadItem.DataChangeReceived += HandleParPartialUnloadChanged;
+            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(parPartialUnloadItem);
 
-            var fullUnloadItem = new OpcMonitoredItem(_opc.cl.GetNode("Mixer.PAR_TimeFullUnload"), OpcAttribute.Value);
-            fullUnloadItem.DataChangeReceived += HandleFullUnloadChanged;
-            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(fullUnloadItem);
+            var parFullUnloadItem = new OpcMonitoredItem(_opc.cl.GetNode("Mixer.PAR_TimeFullUnload"), OpcAttribute.Value);
+            parFullUnloadItem.DataChangeReceived += HandleParFullUnloadChanged;
+            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(parFullUnloadItem);
         }
 
         private void HandleIdChanged(object sender, OpcDataChangeReceivedEventArgs e)
@@ -128,11 +129,11 @@ namespace _2048_Rbu.Elements.Control
             }
         }
 
-        private void HandleOrderActChanged(object sender, OpcDataChangeReceivedEventArgs e)
+        private void HandleCurrentBatchNumChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
             try
             {
-                OrderActCycle = int.Parse(e.Item.Value.ToString());
+                _tempCurrentBatchNum = int.Parse(e.Item.Value.ToString());
                 GetTable();
             }
             catch (Exception exception)
@@ -140,11 +141,11 @@ namespace _2048_Rbu.Elements.Control
             }
         }
 
-        private void HandleOrderChanged(object sender, OpcDataChangeReceivedEventArgs e)
+        private void HandleBatchesQuantityChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
             try
             {
-                _tempOrderCycle = int.Parse(e.Item.Value.ToString());
+                _tempBatchesQuantity = int.Parse(e.Item.Value.ToString());
                 GetTable();
             }
             catch (Exception exception)
@@ -152,11 +153,11 @@ namespace _2048_Rbu.Elements.Control
             }
         }
 
-        private void HandleMixingChanged(object sender, OpcDataChangeReceivedEventArgs e)
+        private void HandleMixingProcessChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
             try
             {
-                MixingProcess = int.Parse(e.Item.Value.ToString());
+                _tempMixingProcess = int.Parse(e.Item.Value.ToString());
                 GetTable();
             }
             catch (Exception exception)
@@ -164,11 +165,11 @@ namespace _2048_Rbu.Elements.Control
             }
         }
 
-        private void HandleTimeProcessChanged(object sender, OpcDataChangeReceivedEventArgs e)
+        private void HandleParMixingProcessChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
             try
             {
-                _tempTimeProcess = int.Parse(e.Item.Value.ToString());
+                _tempParMixingProcess = int.Parse(e.Item.Value.ToString());
                 GetTable();
             }
             catch (Exception exception)
@@ -176,11 +177,11 @@ namespace _2048_Rbu.Elements.Control
             }
         }
 
-        private void HandlePartialProcessChanged(object sender, OpcDataChangeReceivedEventArgs e)
+        private void HandlePartialUnloadProcessChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
             try
             {
-                PartialProcess = int.Parse(e.Item.Value.ToString());
+                _tempPartialUnloadProcess = int.Parse(e.Item.Value.ToString());
                 GetTable();
             }
             catch (Exception exception)
@@ -188,11 +189,11 @@ namespace _2048_Rbu.Elements.Control
             }
         }
 
-        private void HandleFullProcessChanged(object sender, OpcDataChangeReceivedEventArgs e)
+        private void HandleFullUnloadProcessChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
             try
             {
-                FullProcess = int.Parse(e.Item.Value.ToString());
+                _tempFullUnloadProcess = int.Parse(e.Item.Value.ToString());
                 GetTable();
             }
             catch (Exception exception)
@@ -200,12 +201,12 @@ namespace _2048_Rbu.Elements.Control
             }
         }
 
-        private void HandlePartialUnloadChanged(object sender, OpcDataChangeReceivedEventArgs e)
+        private void HandleParPartialUnloadChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
             try
             {
-                _tempPartial = double.Parse(e.Item.Value.ToString());
-                PartialUnload = Convert.ToInt32(_tempPartial);
+                _tempPartialWidth = double.Parse(e.Item.Value.ToString());
+                _tempParPartialUnload = Convert.ToInt32(_tempPartialWidth);
                 GetProgressWidth();
             }
             catch (Exception exception)
@@ -213,12 +214,12 @@ namespace _2048_Rbu.Elements.Control
             }
         }
 
-        private void HandleFullUnloadChanged(object sender, OpcDataChangeReceivedEventArgs e)
+        private void HandleParFullUnloadChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
             try
             {
-                _tempFull = double.Parse(e.Item.Value.ToString());
-                FullUnload = Convert.ToInt32(_tempFull);
+                _tempFullWidth = double.Parse(e.Item.Value.ToString());
+                _tempParFullUnload = Convert.ToInt32(_tempFullWidth);
                 GetProgressWidth();
             }
             catch (Exception exception)
@@ -228,8 +229,8 @@ namespace _2048_Rbu.Elements.Control
 
         private void GetProgressWidth()
         {
-            WidthPartial = _tempPartial == 0.0? 64 : 214 * _tempPartial / (_tempPartial + _tempFull);
-            WidthFull = _tempFull == 0.0 ? 150:214 * _tempFull / (_tempPartial + _tempFull) * 214;
+            WidthPartial = _tempPartialWidth == 0.0 ? 64 : 214 * _tempPartialWidth / (_tempPartialWidth + _tempFullWidth);
+            WidthFull = _tempPartialWidth == 0.0 ? 150 : 214 * _tempFullWidth / (_tempPartialWidth + _tempFullWidth);
             GetTable();
         }
 
@@ -282,47 +283,47 @@ namespace _2048_Rbu.Elements.Control
             }
         }
 
-        private int? _partialUnload;
-        public int? PartialUnload
+        private int? _parPartialUnload;
+        public int? ParPartialUnload
         {
-            get { return _partialUnload; }
+            get { return _parPartialUnload; }
             set
             {
-                _partialUnload = value;
-                OnPropertyChanged(nameof(PartialUnload));
+                _parPartialUnload = value;
+                OnPropertyChanged(nameof(ParPartialUnload));
             }
         }
 
-        private int? _fullUnload;
-        public int? FullUnload
+        private int? _parFullUnload;
+        public int? ParFullUnload
         {
-            get { return _fullUnload; }
+            get { return _parFullUnload; }
             set
             {
-                _fullUnload = value;
-                OnPropertyChanged(nameof(FullUnload));
+                _parFullUnload = value;
+                OnPropertyChanged(nameof(ParFullUnload));
             }
         }
 
-        private int? _orderActCycle;
-        public int? OrderActCycle
+        private int? _currentBatchNum;
+        public int? CurrentBatchNum
         {
-            get { return _orderActCycle; }
+            get { return _currentBatchNum; }
             set
             {
-                _orderActCycle = value;
-                OnPropertyChanged(nameof(OrderActCycle));
+                _currentBatchNum = value;
+                OnPropertyChanged(nameof(CurrentBatchNum));
             }
         }
 
-        private int? _orderCycle;
-        public int? OrderCycle
+        private int? _batchesQuantity;
+        public int? BatchesQuantity
         {
-            get { return _orderCycle; }
+            get { return _batchesQuantity; }
             set
             {
-                _orderCycle = value;
-                OnPropertyChanged(nameof(OrderCycle));
+                _batchesQuantity = value;
+                OnPropertyChanged(nameof(BatchesQuantity));
             }
         }
 
@@ -337,47 +338,47 @@ namespace _2048_Rbu.Elements.Control
             }
         }
 
-        private int? _timeProcess;
-        public int? TimeProcess
+        private int? _parMixingProcess;
+        public int? ParMixingProcess
         {
-            get { return _timeProcess; }
+            get { return _parMixingProcess; }
             set
             {
-                _timeProcess = value;
-                OnPropertyChanged(nameof(TimeProcess));
+                _parMixingProcess = value;
+                OnPropertyChanged(nameof(ParMixingProcess));
             }
         }
 
-        private int? _partialProcess;
-        public int? PartialProcess
+        private int? _partialUnloadProcess;
+        public int? PartialUnloadProcess
         {
-            get { return _partialProcess; }
+            get { return _partialUnloadProcess; }
             set
             {
-                _partialProcess = value;
-                OnPropertyChanged(nameof(PartialProcess));
+                _partialUnloadProcess = value;
+                OnPropertyChanged(nameof(PartialUnloadProcess));
             }
         }
 
-        private int? _fullProcess;
-        public int? FullProcess
+        private int? _fullUnloadProcess;
+        public int? FullUnloadProcess
         {
-            get { return _fullProcess; }
+            get { return _fullUnloadProcess; }
             set
             {
-                _fullProcess = value;
-                OnPropertyChanged(nameof(FullProcess));
+                _fullUnloadProcess = value;
+                OnPropertyChanged(nameof(FullUnloadProcess));
             }
         }
 
-        private int? _timeRazgruzka;
-        public int? TimeRazgruzka
+        private int? _parSumUnload;
+        public int? ParSumUnload
         {
-            get { return _timeRazgruzka; }
+            get { return _parSumUnload; }
             set
             {
-                _timeRazgruzka = value;
-                OnPropertyChanged(nameof(TimeRazgruzka));
+                _parSumUnload = value;
+                OnPropertyChanged(nameof(ParSumUnload));
             }
         }
 
@@ -386,9 +387,15 @@ namespace _2048_Rbu.Elements.Control
         {
             if (_id != 0)
             {
-                OrderCycle = _tempOrderCycle;
-                TimeProcess = _tempTimeProcess;
-                TimeRazgruzka = PartialUnload + FullUnload;
+                CurrentBatchNum = _tempCurrentBatchNum;
+                BatchesQuantity = _tempBatchesQuantity;
+                MixingProcess = _tempMixingProcess;
+                ParMixingProcess = _tempParMixingProcess;
+                PartialUnloadProcess = _tempPartialUnloadProcess;
+                FullUnloadProcess = _tempFullUnloadProcess;
+                ParPartialUnload = _tempParPartialUnload;
+                ParFullUnload = _tempParFullUnload;
+                ParSumUnload = _tempParPartialUnload + _tempParFullUnload;
 
                 if (_id != _currentId)
                 {
@@ -407,15 +414,15 @@ namespace _2048_Rbu.Elements.Control
             {
                 Tasks = null;
                 SelTask = null;
-                OrderActCycle = null;
-                OrderCycle = null;
+                CurrentBatchNum = null;
+                BatchesQuantity = null;
                 MixingProcess = null;
-                TimeProcess = null;
-                PartialProcess = null;
-                FullProcess = null;
-                PartialUnload = null;
-                FullUnload = null;
-                TimeRazgruzka = null;
+                ParMixingProcess = null;
+                PartialUnloadProcess = null;
+                FullUnloadProcess = null;
+                ParPartialUnload = null;
+                ParFullUnload = null;
+                ParSumUnload = null;
                 _currentId = _id;
             }
         }

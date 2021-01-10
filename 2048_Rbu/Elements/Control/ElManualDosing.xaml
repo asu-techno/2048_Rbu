@@ -1,0 +1,45 @@
+﻿<UserControl x:Class="_2048_Rbu.Elements.Control.ElManualDosing"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:_2048_Rbu.Elements.Control"
+             mc:Ignorable="d" 
+             d:DesignHeight="25" d:DesignWidth="94">
+    <UserControl.Style>
+        <Style TargetType="{x:Type UserControl}">
+            <Setter Property="Visibility" Value="Collapsed"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Vis}" Value="True">
+                    <Setter Property="Visibility" Value="Visible"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Style>
+    <Grid>
+        <Button Name="BtnRought" VerticalAlignment="Center" HorizontalAlignment="Left" Width="45" Height="25" Margin="0,0,0,0" Background="#9FD1DD" BorderBrush="Black" BorderThickness="1" Content="Грубо" PreviewMouseLeftButtonDown="BtnRought_OnPreviewMouseLeftButtonDown" PreviewMouseLeftButtonUp="BtnRought_OnPreviewMouseLeftButtonUp">
+            <Button.Style>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="FontWeight" Value="Normal"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Rought}" Value="True">
+                            <Setter Property="FontWeight" Value="Bold"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+        <Button Name="BtnPrecise" VerticalAlignment="Center" HorizontalAlignment="Left" Width="45" Height="25" Margin="48,0,0,0" Background="#9FD1DD" BorderBrush="Black" BorderThickness="1" Content="Точно" PreviewMouseLeftButtonDown="BtnPrecise_OnPreviewMouseLeftButtonDown" PreviewMouseLeftButtonUp="BtnPrecise_OnPreviewMouseLeftButtonUp">
+            <Button.Style>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="FontWeight" Value="Normal"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Precise}" Value="True">
+                            <Setter Property="FontWeight" Value="Bold"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+    </Grid>
+</UserControl>

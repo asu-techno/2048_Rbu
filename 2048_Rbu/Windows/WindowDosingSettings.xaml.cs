@@ -18,9 +18,33 @@ namespace _2048_Rbu.Windows
     /// </summary>
     public partial class WindowDosingSettings : Window
     {
+        public delegate void CloseHandler();
+        public event CloseHandler StopUpdate;
         public WindowDosingSettings()
         {
             InitializeComponent();
+
+            KeyDown += OnKeyDown;
+            Closed += Window_OnClosed;
+        }
+
+        private void OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                if (StopUpdate != null) StopUpdate();
+                KeyDown -= OnKeyDown;
+                Closed -= Window_OnClosed;
+                Close();
+            }
+        }
+
+        private void Window_OnClosed(object sender, EventArgs e)
+        {
+            if (StopUpdate != null) StopUpdate();
+            KeyDown -= OnKeyDown;
+            Closed -= Window_OnClosed;
+            Close();
         }
     }
 }

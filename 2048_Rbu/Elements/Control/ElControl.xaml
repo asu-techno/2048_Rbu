@@ -16,7 +16,7 @@
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding Running}" Value="True">
                             <Setter Property="Content" Value="Работает"/>
-                            <Setter Property="Background" Value="Lime"/>
+                            <Setter Property="Background" Value="#85fc84"/>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
@@ -34,7 +34,7 @@
                 </Style>
             </Label.Style>
         </Label>
-        <Button Name="BtnStart" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,90,150,0" Width="140" Height="30" BorderBrush="Black" BorderThickness="1" Background="Lime" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="16" FontWeight="Bold" Content="Пуск" Click="BtnStart_OnClick">
+        <Button Name="BtnStart" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,90,150,0" Width="140" Height="30" BorderBrush="Black" BorderThickness="1" Background="#85fc84" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="16" FontWeight="Bold" Content="Пуск" Click="BtnStart_OnClick">
             <Button.Style>
                 <Style TargetType="{x:Type Button}">
                     <Setter Property="IsEnabled" Value="False"/>

@@ -15,6 +15,7 @@ using NLog;
 using _2048_Rbu.Windows;
 using AS_Library.Events.Classes;
 using ServiceLib.Classes;
+using ServiceLib.Windows;
 
 namespace _2048_Rbu
 {
@@ -24,13 +25,11 @@ namespace _2048_Rbu
     public partial class MainWindow : Window
     {
         private readonly ElScreenRbu _elScreen = new ElScreenRbu();
+        private Logger _logger;
         private bool _isLoad;
 
         public MainWindow()
         {
-            WindowSplash splash = new WindowSplash();
-            splash.Show();
-
             ServiceData.Init(@"Data/Service.xlsx");
             Opc.UaFx.Client.Licenser.LicenseKey =
                 "AALOERR5OO7EKFNQCABINGCH6TYOVHPLFC2QCUYAV3IYL7FGRNBJ4TYJX2GM6HKSCKZLBJWGHUWWXQ5HKWI7OFVYYMERDPQDC7ZW7ZTLPTM" +
@@ -56,15 +55,17 @@ namespace _2048_Rbu
 
             InitializeComponent();
 
+            //Login();
+
             #region Init
-            var logger = Service.GetInstance().GetLogger();
-            LibService.Init(logger);
+            _logger = Service.GetInstance().GetLogger();
+            LibService.Init(_logger);
             LibService.GetInstance().SetDbConnectionString(Service.GetInstance().GetOpcDict()["DbConnectionString"]);
-            NewOpcServer.Init(logger);
+            NewOpcServer.Init(_logger);
             NewOpcServer.GetInstance().InitOpc(NewOpcServer.OpcList.Rbu);
             NewOpcServer.GetInstance().ConnectOpc(NewOpcServer.OpcList.Rbu);
 
-            var reportHelper = new ReportHelper(logger);
+            var reportHelper = new ReportHelper(_logger);
             reportHelper.SubscribeReportSaving();
 
             OpcServer.Init(@"Data/Service.xlsx");
@@ -82,19 +83,6 @@ namespace _2048_Rbu
 
             #endregion
 
-            #region LoadScreen
-            if (!_isLoad)
-            {
-                _elScreen.Initialize(logger);
-                ScreenGrid.Children.Add(_elScreen);
-                _elScreen.Visibility = Visibility.Visible;
-                _isLoad = true;
-                //EventsBase.GetInstance().GetControlEvents(OpcServer.OpcList.Rbu).AddEvent("Программа управления открыта", SystemEventType.Message);
-            }
-            #endregion
-
-            this.Show();
-
             #region AutoEvent
 
             //var events = EventsBase.GetInstance().GetControlEvents(OpcServer.OpcList.Rbu);
@@ -103,7 +91,58 @@ namespace _2048_Rbu
 
             #endregion
 
-            splash.Close();
+            if (!_isLoad)
+            {
+                _elScreen.Initialize(_logger);
+                ScreenGrid.Children.Add(_elScreen);
+                _elScreen.Visibility = Visibility.Visible;
+                _isLoad = true;
+                //EventsBase.GetInstance().GetControlEvents(OpcServer.OpcList.Rbu).AddEvent("Программа управления открыта", SystemEventType.Message);
+            }
+
+            this.Show();
+        }
+
+        private void Login()
+        {
+            WindowLogin login = new WindowLogin(ServiceData.GetInstance().GetTitle());
+            login.LoginViewModel.PasswordCorrect += LoginPasswordCorrect;
+            login.LoginViewModel.CloseMainWindow += CloseMainWindow;
+            this.Hide();
+            login.LoginViewModel.Create();
+        }
+
+        private void LoginPasswordCorrect(User user)
+        {
+            //EventsBase.GetInstance().CreateControlEvents(OpcList.System);
+            SelUser.GetInstance().SetSelUser(user);
+
+            if (!_isLoad)
+            {
+                _elScreen.Initialize(_logger);
+                ScreenGrid.Children.Add(_elScreen);
+                _elScreen.Visibility = Visibility.Visible;
+                _isLoad = true;
+                //EventsBase.GetInstance().GetControlEvents(OpcServer.OpcList.Rbu).AddEvent("Программа управления открыта", SystemEventType.Message);
+            }
+
+            this.Show();
+        }
+
+        private void Login_OnClick(object sender, RoutedEventArgs e)
+        {
+            Login();
+        }
+
+        private void Users_OnClick(object sender, RoutedEventArgs e)
+        {
+            //WindowUser window = new WindowUser(_systemEvents);
+            //window.ShowDialog();
+        }
+
+        private void CloseMainWindow()
+        {
+            Close();
         }
 
         private void Program_Closed(object sender, EventArgs e)

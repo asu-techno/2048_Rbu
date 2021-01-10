@@ -33,8 +33,8 @@ namespace _2048_Rbu.Windows
             Inert
         }
 
-        private double _signEmpty;
-        public double SignEmpty
+        private string _signEmpty;
+        public string SignEmpty
         {
             get
             {
@@ -61,17 +61,31 @@ namespace _2048_Rbu.Windows
             }
         }
 
-        private bool _btnClick;
-        public bool BtnClick
+        private bool _btnClickDosing;
+        public bool BtnClickDosing
         {
             get
             {
-                return _btnClick;
+                return _btnClickDosing;
             }
             set
             {
-                _btnClick = value;
-                OnPropertyChanged(nameof(BtnClick));
+                _btnClickDosing = value;
+                OnPropertyChanged(nameof(BtnClickDosing));
+            }
+        }
+
+        private bool _btnClickUnload;
+        public bool BtnClickUnload
+        {
+            get
+            {
+                return _btnClickUnload;
+            }
+            set
+            {
+                _btnClickUnload = value;
+                OnPropertyChanged(nameof(BtnClickUnload));
             }
         }
 
@@ -141,35 +155,47 @@ namespace _2048_Rbu.Windows
 
         private void HandleEmptyChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
-            SignEmpty = double.Parse(e.Item.Value.ToString());
-        }
-
-        private void BtnUseWeight_Click(object sender, RoutedEventArgs e)
-        {
-            object btn = e.Source;
-            if (!_opc.cl.ReadBool("UseWeight_"+_tagName, out _err))
-                Methods.ButtonClick(btn, BtnUseWeight, "UseWeight_" + _tagName, true, "Весы " + _materialName + ". Использовать вес");
-            else
-                Methods.ButtonClick(btn, BtnUseWeight, "UseWeight_" + _tagName, false, "Весы " + _materialName + ". Не использовать вес");
-        }
-
-        private void BtnEndUnload_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            BtnClick = true;
-            object btn = e.Source;
-            Methods.ButtonClick(btn, BtnEndUnload, "btn_DozingDone_" + _tagName, true, "Весы " + _materialName + ". Закончить выгрузку");
-        }
-
-        private void BtnEndUnload_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            BtnClick = false;
+            SignEmpty = double.Parse(e.Item.Value.ToString()).ToString("F1");
         }
 
         private void LblEmpty_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             object btn = e.Source;
 
-            Methods.SetParameter(LblEmpty, btn, _opcName, "Весы " + _materialName + ".Признак пустоты", 0, 100, "Scale_isEmpty_" + _tagName, "Real", null, 0, 1);
+            Methods.SetParameter(LblEmpty, btn, _opcName, "Весы " + _materialName + ".Признак пустоты, кг", 0.0, 100.0, "Scale_isEmpty_" + _tagName, "Real", null, 0, 1);
+        }
+
+        private void BtnUseWeight_Click(object sender, RoutedEventArgs e)
+        {
+            object btn = e.Source;
+            if (!_opc.cl.ReadBool("UseWeight_" + _tagName, out _err))
+                Methods.ButtonClick(btn, BtnUseWeight, "UseWeight_" + _tagName, true, "Весы " + _materialName + ". Использовать вес");
+            else
+                Methods.ButtonClick(btn, BtnUseWeight, "UseWeight_" + _tagName, false, "Весы " + _materialName + ". Не использовать вес");
+        }
+
+        private void BtnEndDosing_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            BtnClickDosing = true;
+            object btn = e.Source;
+            Methods.ButtonClick(btn, BtnEndDosing, "btn_DozingDone_" + _tagName, true, "Весы " + _materialName + ". Закончить дозирование");
+        }
+
+        private void BtnEndDosing_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            BtnClickDosing = false;
+        }
+
+        private void BtnEndUnload_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            BtnClickUnload = true;
+            object btn = e.Source;
+            Methods.ButtonClick(btn, BtnEndUnload, "btn_UnloadingDone_" + _tagName, true, "Весы " + _materialName + ". Закончить выгрузку");
+        }
+
+        private void BtnEndUnload_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            BtnClickUnload = false;
         }
 
         private void OnKeyDown(object sender, KeyEventArgs e)

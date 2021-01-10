@@ -136,6 +136,13 @@ namespace _2048_Rbu.Elements
                     _elementList.Add(dosingWait);
                 }
 
+                if (item.GetType() == typeof(Control.ElManualDosing))
+                {
+                    var manualDosing = (Control.ElManualDosing)item;
+                    manualDosing.Initialize(_opcName);
+                    _elementList.Add(manualDosing);
+                }
+
                 if (item.GetType() == typeof(Indicators.ElContainer))
                 {
                     var container = (Indicators.ElContainer)item;
@@ -151,8 +158,8 @@ namespace _2048_Rbu.Elements
             ElControlTabl.Initialize(_opcName);
             _elementList.Add(ElControlTabl);
 
-            ElControlZamesDozing.Initialize(_opcName);
-            _elementList.Add(ElControlZamesDozing);
+            ElControlZamesDosing.Initialize(_opcName);
+            _elementList.Add(ElControlZamesDosing);
 
             ElControlZamesMixer.Initialize(_opcName);
             _elementList.Add(ElControlZamesMixer);
@@ -184,7 +191,7 @@ namespace _2048_Rbu.Elements
             #region Timers
 
             LinkTimer = new DispatcherTimer();
-            LinkTimer.Interval = new TimeSpan(0, 0, 0, 0,500);
+            LinkTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
             LinkTimer.Tick += new EventHandler(TimerTick500Ms);
             LinkTimer.Start();
 
@@ -233,10 +240,23 @@ namespace _2048_Rbu.Elements
             Methods.ButtonClick(btn, BtnAck, "cmd_Ack_Alarm", true, "Сброс звонка");
         }
 
+        private void BtnBell_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            _viewModelScreenRbu.DriverBell = true;
+            object btn = e.Source;
+            Methods.ButtonClick(btn, BtnBell, "btn_Operator_Bell", true, "Звонок водителю");
+        }
+
+        private void BtnBell_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            _viewModelScreenRbu.DriverBell = false;
+            object btn = e.Source;
+            Methods.ButtonClick(btn, BtnBell, "btn_Operator_Bell", false);
+        }
+
         private void Mode_OnClick(object sender, RoutedEventArgs e)
         {
-            _mode = new WindowMode(_opcName);
-            _mode.Subscribe();
+            _mode = new WindowMode();
             _mode.ShowDialog();
         }
 
@@ -325,7 +345,7 @@ namespace _2048_Rbu.Elements
 
         private void DosingBunker1_Click(object sender, RoutedEventArgs e)
         {
-            WindowDosingSettings window = new WindowDosingSettings(); 
+            WindowDosingSettings window = new WindowDosingSettings();
             var dosingSettingsViewModel = new DosingSettingsViewModel(_opcName, DosingSettingsViewModel.DosingSettingType.Inert, 1);
             window.DataContext = dosingSettingsViewModel;
             window.Show();
@@ -357,6 +377,7 @@ namespace _2048_Rbu.Elements
             WindowDosingSettings window = new WindowDosingSettings();
             var dosingSettingsViewModel = new DosingSettingsViewModel(_opcName, DosingSettingsViewModel.DosingSettingType.Cement, 5);
             window.DataContext = dosingSettingsViewModel;
+            window.Height = 130;
             window.Show();
         }
         private void DosingSilo2_Click(object sender, RoutedEventArgs e)
@@ -364,6 +385,7 @@ namespace _2048_Rbu.Elements
             WindowDosingSettings window = new WindowDosingSettings();
             var dosingSettingsViewModel = new DosingSettingsViewModel(_opcName, DosingSettingsViewModel.DosingSettingType.Cement, 6);
             window.DataContext = dosingSettingsViewModel;
+            window.Height = 130;
             window.Show();
         }
         private void DosingWater_Click(object sender, RoutedEventArgs e)
@@ -371,6 +393,7 @@ namespace _2048_Rbu.Elements
             WindowDosingSettings window = new WindowDosingSettings();
             var dosingSettingsViewModel = new DosingSettingsViewModel(_opcName, DosingSettingsViewModel.DosingSettingType.Water, 7);
             window.DataContext = dosingSettingsViewModel;
+            window.Height = 130;
             window.Show();
         }
         private void DosingAdditive1_Click(object sender, RoutedEventArgs e)
@@ -378,6 +401,7 @@ namespace _2048_Rbu.Elements
             WindowDosingSettings window = new WindowDosingSettings();
             var dosingSettingsViewModel = new DosingSettingsViewModel(_opcName, DosingSettingsViewModel.DosingSettingType.Additive, 8);
             window.DataContext = dosingSettingsViewModel;
+            window.Height = 130;
             window.Show();
         }
         private void DosingAdditive2_Click(object sender, RoutedEventArgs e)
@@ -385,6 +409,7 @@ namespace _2048_Rbu.Elements
             WindowDosingSettings window = new WindowDosingSettings();
             var dosingSettingsViewModel = new DosingSettingsViewModel(_opcName, DosingSettingsViewModel.DosingSettingType.Additive, 9);
             window.DataContext = dosingSettingsViewModel;
+            window.Height = 130;
             window.Show();
         }
 
@@ -448,6 +473,16 @@ namespace _2048_Rbu.Elements
             }
         }
 
+        private bool _driverBell;
+        public bool DriverBell
+        {
+            get { return _driverBell; }
+            set
+            {
+                _driverBell = value;
+                OnPropertyChanged(nameof(DriverBell));
+            }
+        }
 
         public void Subscribe()
         {

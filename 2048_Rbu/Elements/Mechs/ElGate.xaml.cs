@@ -7,7 +7,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using _2048_Rbu.Classes;
-using _2048_Rbu.Classes;
 using _2048_Rbu.Interfaces;
 using AS_Library.Annotations;
 using AS_Library.Link;
@@ -96,6 +95,20 @@ namespace _2048_Rbu.Elements.Mechs
             }
         }
 
+        private bool _modeManualDosing;
+        public bool ModeManualDosing
+        {
+            get
+            {
+                return _modeManualDosing;
+            }
+            set
+            {
+                _modeManualDosing = value;
+                OnPropertyChanged(nameof(ModeManualDosing));
+            }
+        }
+
         private SolidColorBrush _brush;
         public SolidColorBrush Brush
         {
@@ -152,18 +165,34 @@ namespace _2048_Rbu.Elements.Mechs
             }
         }
 
+        private bool _isDosing;
+        public bool IsDosing
+        {
+            get
+            {
+                return _isDosing;
+            }
+            set
+            {
+                _isDosing = value;
+                OnPropertyChanged(nameof(IsDosing));
+            }
+        }
+
         #region MyRegion
 
         private bool _alarmStatus;
         private bool _openStatus;
         private bool _closeStatus;
         private bool _manualMode;
+        private bool _manualDosingMode;
         private bool _automatMode;
         private int _percentOpen;
 
         public string Prefix { get; set; }
         public string ModePcy { get; set; }
         public string ManualPcy { get; set; }
+        public string ManualDosingPcy { get; set; }
         public string OpenPcy { get; set; }
         public string ClosePcy { get; set; }
         public string AlarmPcy { get; set; }
@@ -172,7 +201,7 @@ namespace _2048_Rbu.Elements.Mechs
         public int ValueNumMech { get; set; }
 
         private bool _isUnload;
-        public bool IssUnload
+        public bool IsUnload
         {
             get { return _isUnload; }
             set
@@ -215,6 +244,33 @@ namespace _2048_Rbu.Elements.Mechs
                     LblMode.Margin = new Thickness(60, 25, 0, 0);
 
                 _modepos = value;
+            }
+        }
+
+        private Position _modeDosingPos;
+        public Position ModeDosingPos
+        {
+            get { return _modeDosingPos; }
+            set
+            {
+                if (value == Position.LeftUp)
+                    LblModeDosing.Margin = new Thickness(95, -23, 0, 0);
+                if (value == Position.Up)
+                    LblModeDosing.Margin = new Thickness(0, -38, 0, 0);
+                if (value == Position.RightUp)
+                    LblModeDosing.Margin = new Thickness(68, -23, 0, 0);
+                if (value == Position.Left)
+                    LblModeDosing.Margin = new Thickness(43, 23, 0, 0);
+                if (value == Position.Right)
+                    LblModeDosing.Margin = new Thickness(43, 0, 0, 0);
+                if (value == Position.LeftDown)
+                    LblModeDosing.Margin = new Thickness(-30, 23, 0, 0);
+                if (value == Position.Down)
+                    LblModeDosing.Margin = new Thickness(0, 33, 0, 0);
+                if (value == Position.RightDown)
+                    LblModeDosing.Margin = new Thickness(58, 23, 0, 0);
+
+                _modeDosingPos = value;
             }
         }
 
@@ -362,20 +418,6 @@ namespace _2048_Rbu.Elements.Mechs
         public void Subscribe()
         {
             CreateSubscription();
-
-            try
-            {
-                if (PopupObject.IsOpen)
-                {
-                    _opc.cl.WriteInt16(Static.NumMech, (short)ValueNumMech, out _err);
-                    if (_err)
-                        MessageBox.Show("Возможно запись не прошла.\nПроверьте OPC-сервер или соответствующий тег", "Предупреждение");
-                }
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Нет связи с OPC-сервером!", "Ошибка");
-            }
         }
 
         public void Unsubscribe()
@@ -402,9 +444,15 @@ namespace _2048_Rbu.Elements.Mechs
             var modeManual = new OpcMonitoredItem(_opc.cl.GetNode(ManualPcy), OpcAttribute.Value);
             modeManual.DataChangeReceived += HandleManualChanged;
             OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(modeManual);
-            if (IssUnload)
+            if (IsDosing)
             {
-                var percentOpenItem = new OpcMonitoredItem(_opc.cl.GetNode(""), OpcAttribute.Value);
+                var modeManualDosingItem = new OpcMonitoredItem(_opc.cl.GetNode(ManualDosingPcy), OpcAttribute.Value);
+                modeManualDosingItem.DataChangeReceived += HandleManualDosingChanged;
+                OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(modeManualDosingItem);
+            }
+            if (IsUnload)
+            {
+                var percentOpenItem = new OpcMonitoredItem(_opc.cl.GetNode("gr_Valve_PercentOpen"), OpcAttribute.Value);
                 percentOpenItem.DataChangeReceived += HandlePercentChanged;
                 OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(percentOpenItem);
             }
@@ -425,6 +473,12 @@ namespace _2048_Rbu.Elements.Mechs
         private void HandleManualChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
             _manualMode = bool.Parse(e.Item.Value.ToString());
+            VisMode();
+        }
+
+        private void HandleManualDosingChanged(object sender, OpcDataChangeReceivedEventArgs e)
+        {
+            _manualDosingMode = bool.Parse(e.Item.Value.ToString());
             VisMode();
         }
 
@@ -465,7 +519,7 @@ namespace _2048_Rbu.Elements.Mechs
                 VisAlarm = Visibility.Visible;
                 VisOpen = Visibility.Collapsed;
                 VisClose = Visibility.Collapsed;
-                HalfOpenState = false; 
+                HalfOpenState = false;
                 _percentOpen = OpenState = 0;
                 Status = "Авария";
                 Brush = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFEB1B22"));
@@ -475,7 +529,7 @@ namespace _2048_Rbu.Elements.Mechs
                 VisAlarm = Visibility.Collapsed;
                 if (!_openStatus && !_closeStatus)
                 {
-                    if (IssUnload)
+                    if (IsUnload)
                     {
                         if (_percentOpen > 0 && _percentOpen <= 20)
                             OpenState = 1;
@@ -531,11 +585,13 @@ namespace _2048_Rbu.Elements.Mechs
             {
                 ModeAutomat = true;
                 ModeManual = false;
+                ModeManualDosing = false;
             }
             else
             {
                 ModeAutomat = false;
                 ModeManual = _manualMode;
+                ModeManualDosing = _manualDosingMode;
             }
         }
 
@@ -546,13 +602,22 @@ namespace _2048_Rbu.Elements.Mechs
                 if (ModePcy == null)
                     ModePcy = Prefix + ".gMode_Automat";
                 if (ManualPcy == null)
-                    ManualPcy = Prefix + ".gMode_Manual";
+                {
+                    if (IsDosing)
+                        ManualPcy = Prefix + ".gMode_Naladka";
+                    else
+                        ManualPcy = Prefix + ".gMode_Manual";
+                }
                 if (OpenPcy == null)
                     OpenPcy = Prefix + ".DI_Opened";
                 if (ClosePcy == null)
                     ClosePcy = Prefix + ".DI_Closed";
                 if (AlarmPcy == null)
                     AlarmPcy = Prefix + ".gb_ALARM";
+                if (ManualDosingPcy == null)
+                {
+                    ManualDosingPcy = Prefix + ".gMode_Manual";
+                }
             }
 
             OpenPcx = "btn_Valve_Open";
@@ -590,16 +655,22 @@ namespace _2048_Rbu.Elements.Mechs
         private void BtnManual_Click(object sender, RoutedEventArgs e)
         {
             object btn = e.Source;
-            Methods.ButtonClick(btn, BtnManual, ManualPcy, true);
-            Methods.ButtonClick(btn, BtnManual, ModePcy, false);
+            if (IsDosing)
+                Methods.ButtonClick(btn, BtnManual, "btn_Valve_Naladka", true, TxtPopupName.Text + ". Режим работы - наладка");
+            else
+                Methods.ButtonClick(btn, BtnManual, "btn_Valve_Manual", true, TxtPopupName.Text + ". Режим работы - ручной");
         }
 
         private void BtnAutomat_Click(object sender, RoutedEventArgs e)
         {
             object btn = e.Source;
-            Methods.ButtonClick(btn, BtnAutomat, ModePcy, true);
-            Methods.ButtonClick(btn, BtnAutomat, ManualPcy, false);
+            Methods.ButtonClick(btn, BtnAutomat, "btn_Valve_Automat", true, TxtPopupName.Text + ". Режим работы - автомат");
+        }
 
+        private void BtnManualDosing_Click(object sender, RoutedEventArgs e)
+        {
+            object btn = e.Source;
+            Methods.ButtonClick(btn, BtnManualDosing, "btn_Valve_Manual", true, TxtPopupName.Text + ". Режим работы - ручное дозирование");
         }
 
         private void BtnOpen_Click(object sender, RoutedEventArgs e)

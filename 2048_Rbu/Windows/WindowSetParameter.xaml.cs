@@ -31,7 +31,6 @@ namespace _2048_Rbu.Windows
         private bool _err;
         private readonly int _numStation;
         private readonly int _digit;
-        private Label _lbl;
 
         public WindowSetParameter(OpcServer.OpcList opcName, string name, double minVal, double maxVal, string parameter, string variableType, Popup popup = null, int numStation = 0, int digit = 0)
         {
@@ -88,29 +87,6 @@ namespace _2048_Rbu.Windows
             txt_Val.Focus();
         }
 
-        public WindowSetParameter(Label lbl, string name, double minVal, double maxVal, string parameter, int digit = 0)
-        {
-            InitializeComponent();
-
-            KeyDown += OnKeyDown;
-
-            _minVal = minVal;
-            _maxVal = maxVal;
-            _parameter = parameter;
-            _name = name;
-            TxtName.Text = name;
-            lbl_Min.Content = minVal.ToString();
-            lbl_Max.Content = maxVal.ToString();
-            _digit = digit;
-            _lbl = lbl;
-            btn_Save.Content = "Продолжить";
-
-            txt_Val.Text = _parameter;
-
-            txt_Val.SelectAll();
-            txt_Val.Focus();
-        }
-
         void Save()
         {
             try
@@ -121,42 +97,33 @@ namespace _2048_Rbu.Windows
                 Double.TryParse(txt, out _endValue);
                 if (_endValue <= _maxVal && _endValue >= _minVal)
                 {
-                    if (_lbl != null)
+                    if (_variableType == "Real")
                     {
-                        _lbl.Content = _endValue.ToString($"F{_digit}");
-                        _lbl.Content = _lbl.Content.ToString().Replace(".", ",");
-                        EventsBase.GetInstance().GetControlEvents(OpcServer.OpcList.Rbu).AddEvent("Редактируемый параметр базы материалов\"" + _name + "\" установлен на " + _lbl.Content.ToString(), SystemEventType.UserDoing);
+                        _opc.cl.WriteReal(_parameter, (float)_endValue, out _err);
                     }
-                    else
+                    if (_variableType == "Byte")
                     {
-                        if (_variableType == "Real")
-                        {
-                            _opc.cl.WriteReal(_parameter, _endValue, out _err);
-                        }
-                        if (_variableType == "Byte")
-                        {
-                            _opc.cl.WriteByte(_parameter, Convert.ToByte(_endValue), out _err);
-                        }
-                        if (_variableType == "Int16")
-                        {
-                            _opc.cl.WriteInt16(_parameter, Convert.ToInt16(_endValue), out _err);
-                        }
-                        if (_variableType == "UInt16")
-                        {
-                            _opc.cl.WriteUInt16(_parameter, Convert.ToUInt16(_endValue), out _err);
-                        }
-                        if (_variableType == "UInt32")
-                        {
-                            _opc.cl.WriteUInt32(_parameter, Convert.ToUInt32(_endValue) * 1000, out _err);
-                        }
-                        if (_variableType == "UInt32m")
-                        {
-                            _opc.cl.WriteUInt32(_parameter, Convert.ToUInt32(_endValue) * 60000, out _err);
-                        }
-                        EventsBase.GetInstance().GetControlEvents(OpcServer.OpcList.Rbu).AddEvent("Параметр \"" + _name + "\" изменен с " + _startValue + " на " + txt, SystemEventType.UserDoing);
-                        if (_err)
-                            MessageBox.Show("Возможно запись не прошла.\nПроверьте OPC-сервер или соответствующий тег", "Предупреждение");
+                        _opc.cl.WriteByte(_parameter, Convert.ToByte(_endValue), out _err);
                     }
+                    if (_variableType == "Int16")
+                    {
+                        _opc.cl.WriteInt16(_parameter, Convert.ToInt16(_endValue), out _err);
+                    }
+                    if (_variableType == "UInt16")
+                    {
+                        _opc.cl.WriteUInt16(_parameter, Convert.ToUInt16(_endValue), out _err);
+                    }
+                    if (_variableType == "UInt32")
+                    {
+                        _opc.cl.WriteUInt32(_parameter, Convert.ToUInt32(_endValue) * 1000, out _err);
+                    }
+                    if (_variableType == "UInt32m")
+                    {
+                        _opc.cl.WriteUInt32(_parameter, Convert.ToUInt32(_endValue) * 60000, out _err);
+                    }
+                    //EventsBase.GetInstance().GetControlEvents(OpcServer.OpcList.Rbu).AddEvent("Параметр \"" + _name + "\" изменен с " + _startValue + " на " + txt, SystemEventType.UserDoing);
+                    if (_err)
+                        MessageBox.Show("Возможно запись не прошла.\nПроверьте OPC-сервер или соответствующий тег", "Предупреждение");
                     Close();
                 }
                 else

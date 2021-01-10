@@ -47,47 +47,47 @@ namespace _2048_Rbu.Classes
             {
                 case VibratorSettingsItem.M6:
                     _tagVibro = "M_6";
-                    NameVibro = "Вибратор М-6";
+                    NameVibro = "Вибратор М-6 (Силос 1)";
                     break;
                 case VibratorSettingsItem.M7:
                     _tagVibro = "M_7";
-                    NameVibro = "Вибратор М-7";
+                    NameVibro = "Вибратор М-7 (Силос 2)";
                     break;
                 case VibratorSettingsItem.M8:
                     _tagVibro = "M_8";
-                    NameVibro = "Вибратор М-8";
+                    NameVibro = "Вибратор М-8 (Дозатор цемента)";
                     break;
                 case VibratorSettingsItem.M91:
                     _tagVibro = "M_9_1";
-                    NameVibro = "Вибратор М-9-1";
+                    NameVibro = "Вибратор М-9-1 (Бункер 1)";
                     break;
                 case VibratorSettingsItem.M92:
                     _tagVibro = "M_9_2";
-                    NameVibro = "Вибратор М-9-2";
+                    NameVibro = "Вибратор М-9-2 (Бункер 1)";
                     break;
                 case VibratorSettingsItem.M101:
                     _tagVibro = "M_10_1";
-                    NameVibro = "Вибратор М-10-1";
+                    NameVibro = "Вибратор М-10-1 (Бункер 2)";
                     break;
                 case VibratorSettingsItem.M102:
                     _tagVibro = "M_10_2";
-                    NameVibro = "Вибратор М-10-2";
+                    NameVibro = "Вибратор М-10-2 (Бункер 2)";
                     break;
                 case VibratorSettingsItem.M111:
                     _tagVibro = "M_11_1";
-                    NameVibro = "Вибратор М-11-1";
+                    NameVibro = "Вибратор М-11-1 (Бункер 3)";
                     break;
                 case VibratorSettingsItem.M112:
                     _tagVibro = "M_11_2";
-                    NameVibro = "Вибратор М-11-2";
+                    NameVibro = "Вибратор М-11-2 (Бункер 3)";
                     break;
                 case VibratorSettingsItem.M121:
                     _tagVibro = "M_12_1";
-                    NameVibro = "Вибратор М-12-1";
+                    NameVibro = "Вибратор М-12-1 (Бункер 4)";
                     break;
                 case VibratorSettingsItem.M122:
                     _tagVibro = "M_12_2";
-                    NameVibro = "Вибратор М-12-2";
+                    NameVibro = "Вибратор М-12-2 (Бункер 4)";
                     break;
             }
 
@@ -111,19 +111,19 @@ namespace _2048_Rbu.Classes
         private void CreateSubscription()
         {
             _opc = OpcServer.GetInstance().GetOpc(_opcName);
-            var activeVibroItem = new OpcMonitoredItem(_opc.cl.GetNode(_tagVibro+""), OpcAttribute.Value);
+            var activeVibroItem = new OpcMonitoredItem(_opc.cl.GetNode(_tagVibro+ ".Active"), OpcAttribute.Value);
             activeVibroItem.DataChangeReceived += HandleActiveVibroChanged;
             OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(activeVibroItem);
 
-            var onQuantityItem = new OpcMonitoredItem(_opc.cl.GetNode(_tagVibro + ""), OpcAttribute.Value);
+            var onQuantityItem = new OpcMonitoredItem(_opc.cl.GetNode(_tagVibro + ".Work_Count"), OpcAttribute.Value);
             onQuantityItem.DataChangeReceived += HandleOnQuantityChanged;
             OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(onQuantityItem);
 
-            var onTimeItem = new OpcMonitoredItem(_opc.cl.GetNode(_tagVibro + ""), OpcAttribute.Value);
+            var onTimeItem = new OpcMonitoredItem(_opc.cl.GetNode(_tagVibro + ".Work_Time"), OpcAttribute.Value);
             onTimeItem.DataChangeReceived += HandleOnTimeChanged;
             OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(onTimeItem);
 
-            var pauseTimeItem = new OpcMonitoredItem(_opc.cl.GetNode(_tagVibro + ""), OpcAttribute.Value);
+            var pauseTimeItem = new OpcMonitoredItem(_opc.cl.GetNode(_tagVibro + ".Pause_Time"), OpcAttribute.Value);
             pauseTimeItem.DataChangeReceived += HandlePauseTimeChanged;
             OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(pauseTimeItem);
 
@@ -142,12 +142,12 @@ namespace _2048_Rbu.Classes
 
         private void HandleOnTimeChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
-            OnTime = double.Parse(e.Item.Value.ToString());
+            OnTime = double.Parse(e.Item.Value.ToString()).ToString("F1");
         }
 
         private void HandlePauseTimeChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
-            PauseTime = double.Parse(e.Item.Value.ToString());
+            PauseTime = double.Parse(e.Item.Value.ToString()).ToString("F1");
         }
 
         private string _nameVibro;
@@ -183,8 +183,8 @@ namespace _2048_Rbu.Classes
             }
         }
 
-        private double _onTime;
-        public double OnTime
+        private string _onTime;
+        public string OnTime
         {
             get { return _onTime; }
             set
@@ -194,8 +194,8 @@ namespace _2048_Rbu.Classes
             }
         }
 
-        private double _pauseTime;
-        public double PauseTime
+        private string _pauseTime;
+        public string PauseTime
         {
             get { return _pauseTime; }
             set
@@ -212,10 +212,10 @@ namespace _2048_Rbu.Classes
             {
                 return _setActiveVibro ??= new RelayCommand((o) =>
                 {
-                    if (!_opc.cl.ReadBool(_tagVibro, out var err))
-                        Methods.ButtonClick(null, null, _tagVibro, true, NameVibro + ". Активен");
+                    if (!_opc.cl.ReadBool(_tagVibro+ ".Active", out var err))
+                        Methods.ButtonClick(null, null, _tagVibro+ ".Active", true, NameVibro + ". Активен");
                     else
-                        Methods.ButtonClick(null, null, _tagVibro, false, NameVibro + ". Не активен");
+                        Methods.ButtonClick(null, null, _tagVibro + ".Active", false, NameVibro + ". Не активен");
                 });
             }
         }
@@ -227,7 +227,7 @@ namespace _2048_Rbu.Classes
             {
                 return _setOnQuantity ??= new RelayCommand((o) =>
                 {
-                    Methods.SetParameter(null, null, _opcName, NameVibro+". Количество включений", 0, 100, _tagVibro+"", "Real", null, 0, 0);
+                    Methods.SetParameter(null, null, _opcName, NameVibro+". Количество включений", 0, 10, _tagVibro+ ".Work_Count", "Int16", null, 0, 0);
                 });
             }
         }
@@ -239,7 +239,7 @@ namespace _2048_Rbu.Classes
             {
                 return _setOnTime ??= new RelayCommand((o) =>
                 {
-                    Methods.SetParameter(null, null, _opcName, NameVibro+". Длительность включений", 0, 100, _tagVibro + "", "Real", null, 0, 1);
+                    Methods.SetParameter(null, null, _opcName, NameVibro+". Длительность включений, с", 0.0, 10.0, _tagVibro + ".Work_Time", "Real", null, 0, 1);
                 });
             }
         }
@@ -251,7 +251,7 @@ namespace _2048_Rbu.Classes
             {
                 return _setPauseTime ??= new RelayCommand((o) =>
                 {
-                    Methods.SetParameter(null, null, _opcName, NameVibro + ". Длительность паузы", 0, 100, _tagVibro + "", "Real", null, 0, 1);
+                    Methods.SetParameter(null, null, _opcName, NameVibro + ". Длительность паузы, с", 0.0, 10.0, _tagVibro + ".Pause_Time", "Real", null, 0, 1);
                 });
             }
         }

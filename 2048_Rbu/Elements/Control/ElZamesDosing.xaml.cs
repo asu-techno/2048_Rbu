@@ -18,25 +18,25 @@ using Opc.UaFx.Client;
 
 namespace _2048_Rbu.Elements.Control
 {
-    public partial class ElZamesDozing : IElementsUpdater
+    public partial class ElZamesDosing : IElementsUpdater
     {
-        public ViewModelDozing _viewModelDozing;
+        public ViewModelDosing _viewModelDosing;
 
-        public ElZamesDozing()
+        public ElZamesDosing()
         {
             InitializeComponent();
         }
 
         public void Initialize(OpcServer.OpcList opcName)
         {
-            _viewModelDozing = new ViewModelDozing(opcName);
-            DataContext = _viewModelDozing;
+            _viewModelDosing = new ViewModelDosing(opcName);
+            DataContext = _viewModelDosing;
 
         }
 
         public void Subscribe()
         {
-            _viewModelDozing.Subscribe();
+            _viewModelDosing.Subscribe();
         }
 
         public void Unsubscribe()
@@ -44,7 +44,7 @@ namespace _2048_Rbu.Elements.Control
         }
     }
 
-    public sealed class ViewModelDozing : UserControl, INotifyPropertyChanged
+    public sealed class ViewModelDosing : UserControl, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -53,9 +53,10 @@ namespace _2048_Rbu.Elements.Control
         private OpcServer.OpcList _opcName;
         private long _id, _currentId;
 
-        private int _tempOrderCycle;
+        private int _tempCurrentBatchNum, _tempBatchesQuantity; 
+        private double _tempDosingProcess;
 
-        public ViewModelDozing(OpcServer.OpcList opcName)
+        public ViewModelDosing(OpcServer.OpcList opcName)
         {
             _opcName = opcName;
         }
@@ -75,17 +76,17 @@ namespace _2048_Rbu.Elements.Control
             idItem.DataChangeReceived += HandleIdChanged;
             OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(idItem);
 
-            var orderActItem = new OpcMonitoredItem(_opc.cl.GetNode("Current_batchNum"), OpcAttribute.Value);
-            orderActItem.DataChangeReceived += HandleOrderActChanged;
-            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(orderActItem);
+            var currentBatchNumItem = new OpcMonitoredItem(_opc.cl.GetNode("Current_batchNum"), OpcAttribute.Value);
+            currentBatchNumItem.DataChangeReceived += HandleCurrentBatchNumChanged;
+            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(currentBatchNumItem);
 
-            var orderItem = new OpcMonitoredItem(_opc.cl.GetNode("PAR_BatchesQuantity"), OpcAttribute.Value);
-            orderItem.DataChangeReceived += HandleOrderChanged;
-            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(orderItem);
+            var batchesQuantityItem = new OpcMonitoredItem(_opc.cl.GetNode("PAR_BatchesQuantity"), OpcAttribute.Value);
+            batchesQuantityItem.DataChangeReceived += HandleBatchesQuantityChanged;
+            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(batchesQuantityItem);
 
-            var dozingItem = new OpcMonitoredItem(_opc.cl.GetNode("CommonProgress"), OpcAttribute.Value);
-            dozingItem.DataChangeReceived += HandleDozingChanged;
-            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(dozingItem);
+            var dosingProcessItem = new OpcMonitoredItem(_opc.cl.GetNode("CommonProgress"), OpcAttribute.Value);
+            dosingProcessItem.DataChangeReceived += HandleDosingProcessChanged;
+            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(dosingProcessItem);
         }
 
         private void HandleIdChanged(object sender, OpcDataChangeReceivedEventArgs e)
@@ -100,11 +101,11 @@ namespace _2048_Rbu.Elements.Control
             }
         }
 
-        private void HandleOrderActChanged(object sender, OpcDataChangeReceivedEventArgs e)
+        private void HandleCurrentBatchNumChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
             try
             {
-                OrderActCycle = int.Parse(e.Item.Value.ToString());
+                _tempCurrentBatchNum = int.Parse(e.Item.Value.ToString());
                 GetTable();
             }
             catch (Exception exception)
@@ -112,11 +113,11 @@ namespace _2048_Rbu.Elements.Control
             }
         }
 
-        private void HandleOrderChanged(object sender, OpcDataChangeReceivedEventArgs e)
+        private void HandleBatchesQuantityChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
             try
             {
-                _tempOrderCycle = int.Parse(e.Item.Value.ToString());
+                _tempBatchesQuantity = int.Parse(e.Item.Value.ToString());
                 GetTable();
             }
             catch (Exception exception)
@@ -124,11 +125,11 @@ namespace _2048_Rbu.Elements.Control
             }
         }
 
-        private void HandleDozingChanged(object sender, OpcDataChangeReceivedEventArgs e)
+        private void HandleDosingProcessChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
             try
             {
-                DozingProcess = double.Parse(e.Item.Value.ToString());
+                _tempDosingProcess = double.Parse(e.Item.Value.ToString());
                 GetTable();
             }
             catch (Exception exception)
@@ -163,36 +164,36 @@ namespace _2048_Rbu.Elements.Control
             }
         }
 
-        private int? _orderActCycle;
-        public int? OrderActCycle
+        private int? _currentBatchNum;
+        public int? CurrentBatchNum
         {
-            get { return _orderActCycle; }
+            get { return _currentBatchNum; }
             set
             {
-                _orderActCycle = value;
-                OnPropertyChanged(nameof(OrderActCycle));
+                _currentBatchNum = value;
+                OnPropertyChanged(nameof(CurrentBatchNum));
             }
         }
 
-        private int? _orderCycle;
-        public int? OrderCycle
+        private int? _batchesQuantity;
+        public int? BatchesQuantity
         {
-            get { return _orderCycle; }
+            get { return _batchesQuantity; }
             set
             {
-                _orderCycle = value;
-                OnPropertyChanged(nameof(OrderCycle));
+                _batchesQuantity = value;
+                OnPropertyChanged(nameof(BatchesQuantity));
             }
         }
 
-        private double? _dozingProcess;
-        public double? DozingProcess
+        private double? _dosingProcess;
+        public double? DosingProcess
         {
-            get { return _dozingProcess; }
+            get { return _dosingProcess; }
             set
             {
-                _dozingProcess = value;
-                OnPropertyChanged(nameof(DozingProcess));
+                _dosingProcess = value;
+                OnPropertyChanged(nameof(DosingProcess));
             }
         }
 
@@ -200,7 +201,9 @@ namespace _2048_Rbu.Elements.Control
         {
             if (_id != 0)
             {
-                OrderCycle = _tempOrderCycle;
+                BatchesQuantity = _tempBatchesQuantity;
+                CurrentBatchNum = _tempCurrentBatchNum;
+                DosingProcess = _tempDosingProcess;
                 if (_id != _currentId)
                 {
                     try
@@ -218,9 +221,9 @@ namespace _2048_Rbu.Elements.Control
             {
                 Tasks = null;
                 SelTask = null;
-                OrderActCycle = null;
-                OrderCycle = null;
-                DozingProcess = null;
+                BatchesQuantity = null;
+                CurrentBatchNum = null;
+                DosingProcess = null;
                 _currentId = _id;
             }
         }

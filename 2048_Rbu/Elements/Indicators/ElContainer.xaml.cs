@@ -62,11 +62,18 @@ namespace _2048_Rbu.Elements.Indicators
 
         public async void GetMaterial()
         {
-            await Task.Run(() =>
+            try
             {
-                Containers = new ObservableCollection<ApiContainer>(ContainersReader.ListContainers());
-                SelContainer = Containers.FirstOrDefault(x => x.Id == ContainerId);
-            });
+                await Task.Run(() =>
+{
+    Containers = new ObservableCollection<ApiContainer>(ContainersReader.ListContainers());
+    SelContainer = Containers.FirstOrDefault(x => x.Id == ContainerId);
+});
+            }
+            catch (Exception e)
+            {
+
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

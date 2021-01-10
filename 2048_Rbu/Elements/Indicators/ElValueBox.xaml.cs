@@ -64,6 +64,21 @@ namespace _2048_Rbu.Elements.Indicators
         public string ValuePcay { get; set; }
         public int Digit { get; set; }
 
+        private bool _isSmall;
+        public bool IsSmall
+        {
+            get { return _isSmall; }
+            set
+            {
+                if (value)
+                {
+                    LblText.Height = LblValue.Height = 18;
+                    TxtText.FontSize = TxtValue.FontSize = 12;
+                }
+                _isSmall = value;
+            }
+        }
+
         private string _measure;
         public new string Measure
         {
@@ -73,7 +88,7 @@ namespace _2048_Rbu.Elements.Indicators
                 TxtText.Text = value;
                 var length = value.Length;
                 if (length != 0)
-                    LblText.Width = Math.Max(length * 8 + 1, 25);
+                    LblText.Width = IsSmall ? Math.Max(length * 5 + 1, 18) : Math.Max(length * 8 + 1, 25);
                 else
                     LblText.Width = 0;
                 _measure = value;
@@ -151,7 +166,7 @@ namespace _2048_Rbu.Elements.Indicators
         {
             try
             {
-                Value = $"{decimal.Parse(e.Item.Value.ToString(), System.Globalization.NumberStyles.Float):0.##}";
+                Value = decimal.Parse(e.Item.Value.ToString(), System.Globalization.NumberStyles.Float).ToString($"F{Digit}");
             }
             catch (Exception exception)
             {
@@ -170,6 +185,18 @@ namespace _2048_Rbu.Elements.Indicators
                 _windowWeight = new WindowWeight(_opcName, (WindowWeight.TypeMaterial)GroupNumber);
                 _windowWeight.ShowDialog();
             }
+        }
+
+        private void Rect_OnMouseEnter(object sender, MouseEventArgs e)
+        {
+            if (GroupNumber != 0)
+                RectObject.Opacity = 1;
+        }
+
+        private void Rect_OnMouseLeave(object sender, MouseEventArgs e)
+        {
+            if (GroupNumber != 0)
+                RectObject.Opacity = 0;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
