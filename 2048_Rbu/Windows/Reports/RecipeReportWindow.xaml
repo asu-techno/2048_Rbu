@@ -34,6 +34,8 @@
         <Button Margin="0,11,10,0" Width="80" Height="53" HorizontalAlignment="Right" VerticalAlignment="Top" Content="  Найти&#xa;задания" BorderBrush="Black" BorderThickness="1" Background="LightBlue" Command="{Binding FindBatchTasksCommand}"/>
         <viewer:StiWpfViewerControl x:Name="viewer" Grid.Column="1" Report="{Binding Report}" ShowReportOpen="False" ZoomMode="Advanced" Margin="0" HorizontalAlignment="Left" Grid.ColumnSpan="2" UseLayoutRounding="False" MinWidth="200" MinHeight="200"/>
         <StackPanel Margin="0,80,0,0">
+            <Button Margin="0,10,0,0" Width="380" Height="26" Content="Отчет по всем заданиям за выбранный период" BorderBrush="Black" BorderThickness="1" Background="LightBlue" Command="{Binding UpdateCommand2}"/>
+            <Button Margin="0,10,0,0" Width="380" Height="26" Content="Отчет о расходе материалов за выбранный период" BorderBrush="Black" BorderThickness="1" Background="LightBlue" Command="{Binding UpdateCommand3}"/>
             <ListBox Margin="0,10,0,0" Width="380" Height="600" ItemsSource="{Binding BatchTasks}" SelectedItem="{Binding SelectedTask}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -41,7 +43,7 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <Button Margin="0,30,0,0" Width="120" Height="26" Content="Отчет" BorderBrush="Black" BorderThickness="1" Background="LightBlue" Command="{Binding UpdateCommand}"/>
+            <Button Margin="0,10,0,0" Width="380" Height="26" Content="Отчет по выбранному заданию" BorderBrush="Black" BorderThickness="1" Background="LightBlue" Command="{Binding UpdateCommand}"/>
         </StackPanel>
     </Grid>
 </Window>

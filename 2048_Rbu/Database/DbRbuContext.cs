@@ -1,7 +1,8 @@
 ﻿using System;
-using _2048_Rbu.Classes;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using _2048_Rbu.Classes;
 
 #nullable disable
 
@@ -44,7 +45,12 @@ namespace _2048_Rbu.Database
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseNpgsql(OpcServer.GetInstance().GetConnectionStringData(OpcServer.OpcList.Rbu));
+                Dictionary<string, string> serviceDictionary = Service.GetInstance().GetOpcDict();
+
+                if (serviceDictionary.ContainsKey("DbConnectionString"))
+                {
+                    optionsBuilder.UseNpgsql(serviceDictionary["DbConnectionString"]);
+                }
             }
         }
 

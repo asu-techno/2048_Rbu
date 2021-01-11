@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Linq;
@@ -8,9 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
-using AS_Library.Classes;
 using RelayCommand = AS_Library.Classes.RelayCommand;
-using AS_Library.Readers;
 using Stimulsoft.Report;
 using System.Collections.ObjectModel;
 using Microsoft.EntityFrameworkCore;
@@ -147,33 +144,30 @@ namespace _2048_Rbu.Windows.Reports
                 _batchTasks.Clear();
             }
 
-            GetDateTime();
-            using (DbRbuContext db = new DbRbuContext())
+            using DbRbuContext db = new DbRbuContext();
+            foreach (var report in db.Reports.Where(x => x.StartDt >= DateTimeFrom && x.FinishDt <= DateTimeTo).Include(t => t.Task).Include(r => r.Task.Recipe).Include(c => c.Task.Customer))
             {
-                foreach (var report in db.Reports.Where(x => x.StartDt >= DateTimeFrom && x.FinishDt <= DateTimeTo).Include(t => t.Task).Include(r => r.Task.Recipe).Include(c => c.Task.Customer))
+                BatchTask batchTask = new BatchTask()
                 {
-                    BatchTask batchTask = new BatchTask()
-                    {
-                        TaskId = report.TaskId.Value,
+                    TaskId = report.TaskId.Value,
 
-                        RecipeId = report.Task.RecipeId.Value,
-                        RecipeName = report.Task.Recipe.Name,
+                    RecipeId = report.Task.RecipeId.Value,
+                    RecipeName = report.Task.Recipe.Name,
 
-                        CustomerId = report.Task.CustomerId.Value,
-                        Customer = report.Task.Customer.Name,
+                    CustomerId = report.Task.CustomerId,
+                    Customer = report.Task.CustomerId != null ? report.Task.Customer.Name : "не указан",
 
-                        Volume = report.Task.Volume,
-                        BatchesCount = report.Task.BatchesAmount,
-                        BatchVolume = report.Task.BatchVolume,
+                    Volume = report.Task.Volume,
+                    BatchesCount = report.Task.BatchesAmount,
+                    BatchVolume = report.Task.BatchVolume,
 
-                        ReportId = report.Id,                       
-                        StartTime = report.StartDt,
-                        FinishTime = report.FinishDt
-                    };
-                    batchTask.Description = $"Зад. №{batchTask.TaskId} {batchTask.StartTime}: {batchTask.RecipeName} ({batchTask.Volume} м3: {batchTask.BatchesCount} x {batchTask.BatchVolume} м3)";
+                    ReportId = report.Id,
+                    StartTime = report.StartDt,
+                    FinishTime = report.FinishDt
+                };
+                batchTask.Description = $"Зад. №{batchTask.TaskId} {batchTask.StartTime}: {batchTask.RecipeName} ({batchTask.Volume} м3: {batchTask.BatchesCount} x {batchTask.BatchVolume} м3)";
 
-                    _batchTasks.Add(batchTask);
-                }
+                _batchTasks.Add(batchTask);
             }
         }
 
@@ -183,113 +177,198 @@ namespace _2048_Rbu.Windows.Reports
             {
                 ReportCollection<BatchReport> batchReports = new ReportCollection<BatchReport>();
 
-                using (DbRbuContext db = new DbRbuContext())
+                using DbRbuContext db = new DbRbuContext();
+                var materials = db.Materials.Include(x => x.MaterialType).ToList();
+                var batchers = db.Batchers.ToList();
+                var dosingSources = db.DosingSources.ToList();
+
+                foreach (var batch in db.Batches.Include(x => x.Report).Where(r => r.Report.Id == _selectedTask.ReportId).Include(b => b.BatcherMaterials).ThenInclude(d => d.DosingSourceMaterials))
                 {
-                    var materials = db.Materials.Include(x => x.MaterialType).ToList();
-                    var batchers = db.Batchers.ToList();
-                    var dosingSources = db.DosingSources.ToList();
-
-                    foreach (var batch in db.Batches.Include(x => x.Report).Where(r => r.Report.Id == _selectedTask.ReportId).Include(b => b.BatcherMaterials).ThenInclude(d => d.DosingSourceMaterials))
+                    BatchReport batchReport = new BatchReport { Id = batch.Id, StartTime = batch.StartDt, FinishTime = batch.FinishDt };
+                    foreach (var unload in batch.BatcherMaterials)
                     {
-                        BatchReport batchReport = new BatchReport { Id = batch.Id, StartTime = batch.StartDt, FinishTime = batch.FinishDt };
-                        foreach (var unload in batch.BatcherMaterials)
+                        MaterialsUnloadReport unloadReport = new MaterialsUnloadReport
                         {
-                            MaterialsUnloadReport unloadReport = new MaterialsUnloadReport
-                            {
-                                StartWeight = unload.StartWeight,
-                                FinishWeight = unload.FinishWeight,
-                                StartTime = unload.StartLoading,
-                                FinishTime = unload.FinishLoading
-                            };
+                            StartWeight = unload.StartWeight,
+                            FinishWeight = unload.FinishWeight,
+                            StartTime = unload.StartLoading,
+                            FinishTime = unload.FinishLoading
+                        };
 
-                            if (unload.DosingSourceMaterials.Count != 0)
+                        if (unload.DosingSourceMaterials.Count != 0)
+                        {
+                            long? containerID = unload.DosingSourceMaterials.First().ContainerId;
+                            if (containerID.HasValue)
                             {
-                                long? containerID = unload.DosingSourceMaterials.First().ContainerId;
-                                if (containerID.HasValue)
+                                var dosingSource = dosingSources.Where(x => x.ContainerId == containerID);
+                                if (dosingSource.Any())
                                 {
-                                    var dosingSource = dosingSources.Where(x => x.ContainerId == containerID);
-                                    if (dosingSource.Any())
-                                    {
-                                        long? batcherId = dosingSource.First().BatcherId;
+                                    long? batcherId = dosingSource.First().BatcherId;
 
-                                        var batcher = batchers.Where(x => x.Id == batcherId).FirstOrDefault();
-                                        if (batcher != null)
-                                        {
-                                            unloadReport.Batcher = batcher.Name;
-                                        }
+                                    var batcher = batchers.Where(x => x.Id == batcherId).FirstOrDefault();
+                                    if (batcher != null)
+                                    {
+                                        unloadReport.Batcher = batcher.Name;
                                     }
                                 }
                             }
-
-                            foreach (var dosing in unload.DosingSourceMaterials)
-                            {
-                                MaterialsDosingReport dosingReport = new MaterialsDosingReport
-                                {
-                                    SetVolume = dosing.SetVolume.Value,
-                                    StartWeight = dosing.StartWeightDosage,
-                                    FinishWeight = dosing.FinishWeightDosage,
-                                    StartTime = dosing.StartDosage,
-                                    FinishTime = dosing.FinishDosage
-                                };
-
-                                dosingReport.Material = dosing.MaterialId.ToString();
-
-                                unloadReport.MaterialsDosingReports.Add(dosingReport);
-                            }
-
-                            foreach (MaterialsDosingReport report in unloadReport.MaterialsDosingReports)
-                            {
-                                long materialId = 0;
-                                if (Int64.TryParse(report.Material, out materialId))
-                                {
-                                    var material = materials.Where(x=>x.Id == materialId).FirstOrDefault();
-                                    if (material != null)
-                                    {
-                                        report.Material = material.Name;
-                                    }
-                                }
-                            }
-
-                            batchReport.MaterialsUnloadReports.Add(unloadReport);
                         }
 
-                        batchReports.Add(batchReport);
+                        foreach (var dosing in unload.DosingSourceMaterials)
+                        {
+                            MaterialsDosingReport dosingReport = new MaterialsDosingReport
+                            {
+                                SetVolume = dosing.SetVolume.Value,
+                                StartWeight = dosing.StartWeightDosage,
+                                FinishWeight = dosing.FinishWeightDosage,
+                                StartTime = dosing.StartDosage,
+                                FinishTime = dosing.FinishDosage
+                            };
 
-                        //foreach (var materials in db.RecipeMaterials.Where(x => x.RecipeId == _selectedTask.RecipeId).Include(m => m.Material))
-                        //{
-                        //    Material materialsReport
-                        //}
+                            dosingReport.Material = dosing.MaterialId.ToString();
+
+                            unloadReport.MaterialsDosingReports.Add(dosingReport);
+                        }
+
+                        foreach (MaterialsDosingReport report in unloadReport.MaterialsDosingReports)
+                        {
+                            if (Int64.TryParse(report.Material, out long materialId))
+                            {
+                                var material = materials.Where(x => x.Id == materialId).FirstOrDefault();
+                                if (material != null)
+                                {
+                                    report.Material = material.Name;
+                                }
+                            }
+                        }
+
+                        batchReport.MaterialsUnloadReports.Add(unloadReport);
                     }
 
-
-                    Report.Load(@"Data\ReportTemplates\TaskReport.mrt");
-
-                    Report["TaskId"] = _selectedTask.TaskId;
-                    Report["RecipeGroup"] = "TBD";
-                    Report["RecipeName"] = _selectedTask.RecipeName;
-                    Report["Volume"] = _selectedTask.Volume;
-                    Report["BatchVolume"] = _selectedTask.BatchVolume;
-                    Report["BatchesCount"] = _selectedTask.BatchesCount;
-                    Report["Customer"] = _selectedTask.Customer;
-                    Report["StartTime"] = _selectedTask.StartTime;
-                    Report["FinishTime"] = _selectedTask.FinishTime;
-
-                    Report.RegData("Batches", batchReports);
+                    batchReports.Add(batchReport);
+                }
 
 
-                    if (_designerMode)
-                    {
-                        Report.DesignWithWpf(false);
+                Report.Load(@"Data\ReportTemplates\TaskReport.mrt");
 
-                        _designerMode = false;
-                    }
-                    else
-                    {
-                        Report.Render(true);
-                    }
+                Report["TaskId"] = _selectedTask.TaskId;
+                Report["RecipeGroup"] = "TBD";
+                Report["RecipeName"] = _selectedTask.RecipeName;
+                Report["Volume"] = _selectedTask.Volume;
+                Report["BatchVolume"] = _selectedTask.BatchVolume;
+                Report["BatchesCount"] = _selectedTask.BatchesCount;
+                Report["Customer"] = _selectedTask.Customer;
+                Report["StartTime"] = _selectedTask.StartTime;
+                Report["FinishTime"] = _selectedTask.FinishTime;
+
+                Report.RegData("Batches", batchReports);
+
+
+                if (_designerMode)
+                {
+                    Report.DesignWithWpf(false);
+
+                    _designerMode = false;
+                }
+                else
+                {
+                    Report.Render(true);
                 }
             }
-        }       
+        }
+
+        private void UpdateMaterialReport()
+        {
+            ReportCollection<MaterialReport> materialReports = new ReportCollection<MaterialReport>();
+
+            using DbRbuContext db = new DbRbuContext();
+            var materials = db.Materials.ToList();
+            var containers = db.Containers.ToList();
+
+            foreach (var materialDosingReports in db.DosingSourceMaterials.Where(x => x.BatcherMaterial.Batch.StartDt >= DateTimeFrom && x.BatcherMaterial.Batch.FinishDt <= DateTimeTo).AsEnumerable().GroupBy(x => x.MaterialId))
+            {
+                var material = materials.Find(x => x.Id == materialDosingReports.Key.GetValueOrDefault());
+                string materialName = material != null ? material.Name : "нет в справочнике";
+
+                foreach (var containerGroup in materialDosingReports.GroupBy(x => x.ContainerId))
+                {
+                    var container = containers.Find(x => x.Id == containerGroup.Key.GetValueOrDefault());
+                    string containerName = container != null ? container.Name : "нет в справочнике";
+
+                    materialReports.Add(new MaterialReport
+                    {
+                        MaterialName = materialName,
+                        Storage = containerName,
+                        SetVolume = materialDosingReports.Sum(x => x.SetVolume.Value),
+                        Volume = materialDosingReports.Sum(x => x.FinishWeightDosage - x.StartWeightDosage)
+                    });
+                }
+            }
+
+            Report.Load(@"Data\ReportTemplates\MaterialsReport.mrt");
+
+            Report["DateTimeFrom"] = DateTimeFrom;
+            Report["DateTimeTo"] = DateTimeTo;
+
+            Report.RegData("MaterialReports", materialReports);
+
+
+            if (_designerMode)
+            {
+                Report.DesignWithWpf(false);
+
+                _designerMode = false;
+            }
+            else
+            {
+                Report.Render(true);
+            }
+        }
+
+        private void UpdateTasksReport()
+        {
+            ReportCollection<TaskReport> taskReports = new ReportCollection<TaskReport>();
+
+            using DbRbuContext db = new DbRbuContext();
+            var materials = db.Materials.ToList();
+            var containers = db.Containers.ToList();
+
+            foreach (var report in db.Reports.Where(x => x.StartDt >= DateTimeFrom && x.FinishDt <= DateTimeTo).Include(c => c.Task.Customer).Include(t=>t.Task).ThenInclude(r=>r.Recipe).ThenInclude(rg=>rg.RecipeGroup))
+            {
+                TaskReport taskReport = new TaskReport
+                {
+                    Customer = (report.Task != null && report.Task.Customer != null) ? report.Task.Customer.Name : "не указан",
+                    Recipe = (report.Task != null && report.Task.Recipe != null) ? report.Task.Recipe.Name : "не указан",
+                    RecipeGroup = (report.Task != null && report.Task.Recipe != null && report.Task.Recipe.RecipeGroup != null) ? report.Task.Recipe.RecipeGroup.Name : "не указана",
+                    StartTime = report.StartDt,
+                    FinishTime = report.FinishDt,
+                    Volume = report.Task != null ? report.Task.Volume : 0,
+                    BatchCount = report.Task != null ? report.Task.BatchesAmount : 0,
+                    BatchVolume = report.Task != null ? report.Task.BatchVolume : 0
+                };
+
+                taskReports.Add(taskReport);
+            }
+
+            Report.Load(@"Data\ReportTemplates\TasksReport.mrt");
+
+            Report["DateTimeFrom"] = DateTimeFrom;
+            Report["DateTimeTo"] = DateTimeTo;
+
+            Report.RegData("TaskReports", taskReports);
+
+
+            if (_designerMode)
+            {
+                Report.DesignWithWpf(false);
+
+                _designerMode = false;
+            }
+            else
+            {
+                Report.Render(true);
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -305,15 +384,15 @@ namespace _2048_Rbu.Windows.Reports
         {
             get
             {
-                return _findBatchTasksCommand ??
-                       (_findBatchTasksCommand = new RelayCommand((o) =>
+                return _findBatchTasksCommand ??= new RelayCommand((o) =>
                        {
                            _isUpdating = true;
 
+                           GetDateTime();
                            FindTasks();
 
                            _isUpdating = false;
-                       }));
+                       });
             }
         }
 
@@ -322,15 +401,48 @@ namespace _2048_Rbu.Windows.Reports
         {
             get
             {
-                return _updateCommand ??
-                       (_updateCommand = new RelayCommand((o) =>
+                return _updateCommand ??= new RelayCommand((o) =>
                        {
                            _isUpdating = true;
 
+                           GetDateTime();
                            UpdateReport();
 
                            _isUpdating = false;
-                       }));
+                       });
+            }
+        }
+
+        private RelayCommand _updateCommand2;
+        public RelayCommand UpdateCommand2
+        {
+            get
+            {
+                return _updateCommand2 ??= new RelayCommand((o) =>
+                {
+                    _isUpdating = true;
+
+                    GetDateTime();
+                    UpdateTasksReport();
+
+                    _isUpdating = false;
+                });
+            }
+        }
+        private RelayCommand _updateCommand3;
+        public RelayCommand UpdateCommand3
+        {
+            get
+            {
+                return _updateCommand3 ??= new RelayCommand((o) =>
+                {
+                    _isUpdating = true;
+
+                    GetDateTime();
+                    UpdateMaterialReport();
+
+                    _isUpdating = false;
+                });
             }
         }
 
@@ -344,7 +456,7 @@ namespace _2048_Rbu.Windows.Reports
         public long RecipeId { get; set; }
         public string RecipeName { get; set; }
 
-        public long CustomerId { get; set; }
+        public long? CustomerId { get; set; }
         public string Customer { get; set; }
 
         public decimal Volume { get; set; }
@@ -396,6 +508,26 @@ namespace _2048_Rbu.Windows.Reports
         public decimal FinishWeight { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime FinishTime { get; set; }
+    }
+
+    public class MaterialReport
+    {
+        public string MaterialName { get; set; }
+        public string Storage { get; set; }
+        public decimal SetVolume { get; set; }
+        public decimal Volume { get; set; }
+    }
+
+    public class TaskReport
+    {
+        public string Customer { get; set; }
+        public string Recipe { get; set; }
+        public string RecipeGroup { get; set; }
+        public DateTime StartTime { get; set; }
+        public DateTime FinishTime { get; set; }
+        public decimal Volume { get; set; }
+        public decimal BatchCount { get; set; }
+        public decimal BatchVolume { get; set; }
     }
 
     public class ReportCollection<T> : CollectionBase
