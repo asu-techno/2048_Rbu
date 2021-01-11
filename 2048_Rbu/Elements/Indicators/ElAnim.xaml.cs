@@ -21,7 +21,7 @@ namespace _2048_Rbu.Elements.Indicators
     {
         private OPC_client _opc;
         private OpcServer.OpcList _opcName;
-        public enum Environment { Solution, Water, Inert, Cement, EditInert }
+        public enum Environment { Solution, Water, Inert, Cement}
 
         private Visibility _visSens;
 
@@ -57,8 +57,6 @@ namespace _2048_Rbu.Elements.Indicators
                     ImgSubstance.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Indicators/img_Water.png", UriKind.Relative));
                 if (value == Environment.Inert)
                     ImgSubstance.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Indicators/img_Inert.png", UriKind.Relative));
-                if (value == Environment.EditInert)
-                    ImgSubstance.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Indicators/img_Inert_Edit.png", UriKind.Relative));
                 if (value == Environment.Solution)
                     ImgSubstance.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Indicators/img_Solution.png", UriKind.Relative));
 

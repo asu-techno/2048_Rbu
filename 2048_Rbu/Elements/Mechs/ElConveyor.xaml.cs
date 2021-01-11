@@ -143,8 +143,8 @@ namespace _2048_Rbu.Elements.Mechs
                 {
                     ImgKm.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs/img_Conv_On.png", UriKind.Relative));
                     ImgAlarm.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs/img_Conv_Alarm.png", UriKind.Relative));
-                    ImgKm.Width = ImgAlarm.Width = 673;
-                    ImgKm.Height = ImgAlarm.Height = 13;
+                    ImgKm.Width = ImgAlarm.Width = 685;
+                    ImgKm.Height = ImgAlarm.Height = 24;
                 }
                 RectObject.Width = ImgKm.Width + 6;
                 RectObject.Height = ImgKm.Height + 4;

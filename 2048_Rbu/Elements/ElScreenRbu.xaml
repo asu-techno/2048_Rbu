@@ -60,6 +60,8 @@
                 </MenuItem>
                 <Separator/>
                 <MenuItem Name="VibratorSettings" Header="Настройки вибраторов" Click="VibratorSettings_OnClick"/>
+                <Separator/>
+                <MenuItem Name="MainSettings" Header="Общие настройки" Click="MainSettings_OnClick"/>
             </MenuItem>
             <MenuItem Name="Reports" Header="Отчеты" Foreground="Black" BorderBrush="Black" BorderThickness="1,0" FontWeight="Bold" Height="30">
                 <MenuItem Name="RecipeReport" Header="Отчет по заданию" Click="RecipeReport_Click"/>
@@ -129,7 +131,6 @@
             </Button.Style>
         </Button>
         <Image VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="1920" Height="990" Margin="0" Source="/2048_Rbu;component/Images/Mnemo_Rbu.png"/>
-        <indicators:ElValueBox VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="48" Height="18" Margin="549,783,0,0" IsSmall="True" Count="3" Digit="0" Color="CornflowerBlue" Measure="%" ValuePcay="gr_Valve_PercentOpen"/>
         <indicators:ElAnim VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="16" Height="32" Margin="478,402,0,0" Substance="Cement" Logic="True" OnPcy="LoadCement_1"/>
         <indicators:ElAnim VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="16" Height="32" Margin="593,402,0,0" Substance="Cement" Logic="True" OnPcy="LoadCement_2"/>
         <indicators:ElAnim VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="16" Height="32" Margin="533,569,0,0" Substance="Cement" Logic="True" OnPcy="UnloadCement"/>
@@ -139,7 +140,7 @@
         <indicators:ElAnim VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="16" Height="32" Margin="909,246,0,0" Substance="Water" Logic="True" OnPcy="LoadAdditive_2"/>
         <indicators:ElAnim VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="16" Height="32" Margin="719,569,0,0" Substance="Water" Logic="True" OnPcy="UnloadWater"/>
         <indicators:ElAnim VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="16" Height="32" Margin="760,569,0,0" Substance="Inert" Logic="True" OnPcy="M_2.DI_ON"/>
-        <indicators:ElAnim VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="16" Height="32" Margin="989,648,0,0" Substance="EditInert" Logic="True" OnPcy="UnloadInert"/>
+        <indicators:ElAnim VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="16" Height="32" Margin="989,648,0,0" Substance="Inert" Logic="True" OnPcy="UnloadInert"/>
         <indicators:ElAnim VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="16" Height="32" Margin="1026,598,0,0" Substance="Inert" Logic="True" OnPcy="LoadInert_1_1"/>
         <indicators:ElAnim VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="16" Height="32" Margin="1046,598,0,0" Substance="Inert" Logic="True" OnPcy="LoadInert_1_2"/>
         <indicators:ElAnim VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="16" Height="32" Margin="1216,598,0,0" Substance="Inert" Logic="True" OnPcy="LoadInert_2_1"/>
@@ -190,8 +191,9 @@
         <indicators:ElValueBox VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="85" Height="25" Margin="500,443,0,0" Count="6" Digit="1" Color="CornflowerBlue" Measure="кг" GroupNumber="1" ValuePcay="Cement"/>
         <indicators:ElValueBox VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="85" Height="25" Margin="774,443,0,0" Count="6" Digit="1" Color="CornflowerBlue" Measure="кг" GroupNumber="2" ValuePcay="Water"/>
         <indicators:ElValueBox VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="85" Height="25" Margin="844,287,0,0" Count="6" Digit="1" Color="CornflowerBlue" Measure="кг" GroupNumber="3" ValuePcay="Additive"/>
-        <indicators:ElValueBox VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="85" Height="25" Margin="1661,623,0,0" Count="6" Digit="1" Color="CornflowerBlue" Measure="кг" GroupNumber="4" ValuePcay="Inert"/>
-        <indicators:ElValueBox VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="85" Height="25" Margin="610,680,0,0" Count="6" Digit="1" Color="Beige" Measure="А" ValuePcay="Test"/>
+        <indicators:ElValueBox VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="85" Height="25" Margin="1681,626,0,0" Count="6" Digit="1" Color="CornflowerBlue" Measure="кг" GroupNumber="4" ValuePcay="Inert"/>
+        <indicators:ElValueBox VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="48" Height="18" Margin="748,694,0,0" Count="3" Digit="0" IsSmall="True" Color="Beige" Measure="А" ValuePcay="gr_Current"/>
+        <indicators:ElValueBox VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="48" Height="18" Margin="549,783,0,0" Count="3" Digit="0" IsSmall="True" Color="Beige" Measure="%" ValuePcay="gr_Valve_PercentOpen"/>
         <indicators:ElDone VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="30" Height="15" Margin="445,346,0,0" OnPcy="Test"/>
         <indicators:ElDone VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="30" Height="15" Margin="445,189,0,0" OnPcy="Test"/>
         <indicators:ElDone VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="30" Height="15" Margin="560,346,0,0" OnPcy="Test"/>

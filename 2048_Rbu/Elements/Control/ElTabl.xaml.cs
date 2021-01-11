@@ -63,7 +63,7 @@ namespace _2048_Rbu.Elements.Control
         private OpcServer.OpcList _opcName;
         private long _id, _currentId;
         private int _batchNum;
-
+        public static string SelTaskName;
         private string[,] _materialTags;
 
         public ViewModelTabl(OpcServer.OpcList opcName)
@@ -211,6 +211,7 @@ namespace _2048_Rbu.Elements.Control
         {
             Tasks = new ObservableCollection<ApiTask>(TasksReader.ListTasks());
             SelTask = Tasks.FirstOrDefault(x => x.Id == id);
+            SelTaskName = SelTask?.Recipe.Name;
         }
 
         private void GetMaterials()
@@ -243,63 +244,62 @@ namespace _2048_Rbu.Elements.Control
             {
                 for (int i = 0; i < _materials.Count; i++)
                 {
-                    var selContainer =
-                        _containers.FirstOrDefault(x => x.CurrentMaterial?.Id == _materials[i].Material.Id);
+                    var selContainer = _containers.FirstOrDefault(x => x.CurrentMaterial?.Id == _materials[i].Material.Id);
                     if (selContainer != null)
                     {
                         switch (selContainer.Id)
                         {
                             case 1:
                                 _materialTags[i, 0] = "PAR_Inert_Bunker_1_set";
-                                _materialTags[i, 1] = "Reports[1].Batchers[" + _batchNum +
+                                _materialTags[i, 1] = "Reports[1].Batches[" + _batchNum +
                                                       "].Batcher_inert.Bunker1.Dozing_DozedValue";
                                 _materialTags[i, 2] = "Progress_Components[6]";
                                 break;
                             case 2:
                                 _materialTags[i, 0] = "PAR_Inert_Bunker_2_set";
-                                _materialTags[i, 1] = "Reports[1].Batchers[" + _batchNum +
+                                _materialTags[i, 1] = "Reports[1].Batches[" + _batchNum +
                                                       "].Batcher_inert.Bunker2.Dozing_DozedValue";
                                 _materialTags[i, 2] = "Progress_Components[7]";
                                 break;
                             case 3:
                                 _materialTags[i, 0] = "PAR_Inert_Bunker_3_set";
-                                _materialTags[i, 1] = "Reports[1].Batchers[" + _batchNum +
+                                _materialTags[i, 1] = "Reports[1].Batches[" + _batchNum +
                                                       "].Batcher_inert.Bunker3.Dozing_DozedValue";
                                 _materialTags[i, 2] = "Progress_Components[8]";
                                 break;
                             case 4:
                                 _materialTags[i, 0] = "PAR_Inert_Bunker_4_set";
-                                _materialTags[i, 1] = "Reports[1].Batchers[" + _batchNum +
+                                _materialTags[i, 1] = "Reports[1].Batches[" + _batchNum +
                                                       "].Batcher_inert.Bunker4.Dozing_DozedValue";
                                 _materialTags[i, 2] = "Progress_Components[9]";
                                 break;
                             case 5:
                                 _materialTags[i, 0] = "PAR_Cement_Silos_1_set";
-                                _materialTags[i, 1] = "Reports[1].Batchers[" + _batchNum +
+                                _materialTags[i, 1] = "Reports[1].Batches[" + _batchNum +
                                                       "].Batcher_cement.Silos1.Dozing_DozedValue";
                                 _materialTags[i, 2] = "Progress_Components[3]";
                                 break;
                             case 6:
                                 _materialTags[i, 0] = "PAR_Cement_Silos_2_set";
-                                _materialTags[i, 1] = "Reports[1].Batchers[" + _batchNum +
+                                _materialTags[i, 1] = "Reports[1].Batches[" + _batchNum +
                                                       "].Batcher_cement.Silos2.Dozing_DozedValue";
                                 _materialTags[i, 2] = "Progress_Components[4]";
                                 break;
                             case 7:
                                 _materialTags[i, 0] = "PAR_Water_set";
-                                _materialTags[i, 1] = "Reports[1].Batchers[" + _batchNum +
+                                _materialTags[i, 1] = "Reports[1].Batches[" + _batchNum +
                                                       "].Batcher_water.Water.Dozing_DozedValue";
                                 _materialTags[i, 2] = "Progress_Components[5]";
                                 break;
                             case 8:
                                 _materialTags[i, 0] = "PAR_Additive_Tank_1_set";
-                                _materialTags[i, 1] = "Reports[1].Batchers[" + _batchNum +
+                                _materialTags[i, 1] = "Reports[1].Batches[" + _batchNum +
                                                       "].Batcher_add.Tank1.Dozing_DozedValue";
                                 _materialTags[i, 2] = "Progress_Components[1]";
                                 break;
                             case 9:
                                 _materialTags[i, 0] = "PAR_Additive_Tank_2_set";
-                                _materialTags[i, 1] = "Reports[1].Batchers[" + _batchNum +
+                                _materialTags[i, 1] = "Reports[1].Batches[" + _batchNum +
                                                       "].Batcher_add.Tank2.Dozing_DozedValue";
                                 _materialTags[i, 2] = "Progress_Components[2]";
                                 break;

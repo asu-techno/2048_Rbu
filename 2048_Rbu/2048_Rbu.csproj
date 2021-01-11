@@ -144,7 +144,6 @@
     <Resource Include="Images\img_SaveAct_Color.png" />
     <Resource Include="Images\Indicators\img_Cement.png" />
     <Resource Include="Images\Indicators\img_Inert.png" />
-    <Resource Include="Images\Indicators\img_Inert_Edit.png" />
     <Resource Include="Images\Indicators\img_Solution.png" />
     <Resource Include="Images\Indicators\img_Water.png" />
     <Resource Include="Images\Logo_ASU.png" />

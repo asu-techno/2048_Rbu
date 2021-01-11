@@ -421,6 +421,12 @@ namespace _2048_Rbu.Elements
             window.Show();
         }
 
+        private void MainSettings_OnClick(object sender, RoutedEventArgs e)
+        {
+            WindowParam window = new WindowParam(_opcName);
+            window.Show();
+        }
+
         #endregion
     }
 

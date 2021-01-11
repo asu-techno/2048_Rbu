@@ -7,6 +7,7 @@
              Height="Auto" Width="Auto" MouseEnter="Rect_OnMouseEnter" MouseLeave="Rect_OnMouseLeave">
     <Grid Name="MainGrid">
         <Grid Name="ObjectGrid" VerticalAlignment="Center" HorizontalAlignment="Center" Width="Auto" Height="Auto" Margin="0">
+            <!--<Image Name="ImgBase" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Visibility="{Binding VisOn}"/>-->
             <Image Name="ImgKm" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Visibility="{Binding VisOn}"/>
             <Image Name="ImgAlarm" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Visibility="{Binding VisAlarm}"/>
         </Grid>
