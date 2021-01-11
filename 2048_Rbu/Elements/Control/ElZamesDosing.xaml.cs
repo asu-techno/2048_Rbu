@@ -48,7 +48,6 @@ namespace _2048_Rbu.Elements.Control
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private TasksReader TasksReader { get; set; } = new TasksReader();
         private OPC_client _opc;
         private OpcServer.OpcList _opcName;
         private long _id, _currentId;
@@ -142,25 +141,14 @@ namespace _2048_Rbu.Elements.Control
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private ObservableCollection<ApiTask> _tasks;
-        public ObservableCollection<ApiTask> Tasks
+        private string _selTaskName;
+        public string SelTaskName
         {
-            get { return _tasks; }
+            get { return _selTaskName; }
             set
             {
-                _tasks = value;
-                OnPropertyChanged(nameof(Tasks));
-            }
-        }
-
-        private ApiTask _selTask;
-        public ApiTask SelTask
-        {
-            get { return _selTask; }
-            set
-            {
-                _selTask = value;
-                OnPropertyChanged(nameof(SelTask));
+                _selTaskName = value;
+                OnPropertyChanged(nameof(SelTaskName));
             }
         }
 
@@ -208,7 +196,7 @@ namespace _2048_Rbu.Elements.Control
                 {
                     try
                     {
-                        GetTask(_id);
+                        SelTaskName = ViewModelTabl.SelTaskName;
                         _currentId = _id;
                     }
                     catch (Exception ex)
@@ -219,19 +207,12 @@ namespace _2048_Rbu.Elements.Control
             }
             else
             {
-                Tasks = null;
-                SelTask = null;
+                SelTaskName = null;
                 BatchesQuantity = null;
                 CurrentBatchNum = null;
                 DosingProcess = null;
                 _currentId = _id;
             }
-        }
-
-        private void GetTask(long id)
-        {
-            Tasks = new ObservableCollection<ApiTask>(TasksReader.ListTasks());
-            SelTask = Tasks.FirstOrDefault(x => x.Id == id);
         }
     }
 }

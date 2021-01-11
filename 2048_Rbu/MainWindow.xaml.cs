@@ -30,6 +30,9 @@ namespace _2048_Rbu
 
         public MainWindow()
         {
+            var splash = new WindowSplash();
+            splash.Show();
+
             ServiceData.Init(@"Data/Service.xlsx");
             Opc.UaFx.Client.Licenser.LicenseKey =
                 "AALOERR5OO7EKFNQCABINGCH6TYOVHPLFC2QCUYAV3IYL7FGRNBJ4TYJX2GM6HKSCKZLBJWGHUWWXQ5HKWI7OFVYYMERDPQDC7ZW7ZTLPTM" +
@@ -74,14 +77,14 @@ namespace _2048_Rbu
             
             Title += " v." + Assembly.GetExecutingAssembly().GetName().Version.ToString();
             
-            #region Масштаб экрана
+            //#region Масштаб экрана
 
-            var rect = SystemParameters.WorkArea;
-            if (rect.Width != 1920)
-                MainGrid.LayoutTransform =
-                    new ScaleTransform(Math.Min(rect.Width, 1920) / 1920, Math.Min(rect.Height, 1080) / 1080);
+            //var rect = SystemParameters.WorkArea;
+            //if (rect.Width != 1920)
+            //    MainGrid.LayoutTransform =
+            //        new ScaleTransform(Math.Min(rect.Width, 1920) / 1920, Math.Min(rect.Height, 1080) / 1080);
 
-            #endregion
+            //#endregion
 
             #region AutoEvent
 
@@ -101,6 +104,8 @@ namespace _2048_Rbu
             }
 
             this.Show();
+
+            splash.Close();
         }
 
         private void Login()

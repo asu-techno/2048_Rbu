@@ -1,0 +1,12 @@
+﻿<Window x:Class="_2048_Rbu.Windows.WindowParam"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:settings="clr-namespace:_2048_Rbu.Elements.Settings"
+        mc:Ignorable="d"
+        Title="Общие настройки" SizeToContent="WidthAndHeight" ResizeMode="NoResize" Topmost="True" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <settings:ElParam x:Name="Param"/>
+    </Grid>
+</Window>

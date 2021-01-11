@@ -58,6 +58,7 @@ namespace _2048_Rbu.Elements.Indicators
         {
             _opcName = opcName;
             _readVal = readVal;
+            Brush = Brushes.White;
 
             DataContext = this;
         }

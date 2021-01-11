@@ -19,7 +19,7 @@
         </Grid.ColumnDefinitions>
         <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" FontWeight="Bold" FontSize="16" Text="Очередь заданий"/>
         <!--<ListBox Grid.Row="1" Grid.Column="0" ItemsSource="{Binding TaskQueue}" DisplayMemberPath="Name" SelectedItem="{Binding Path=SelTaskQueueItem, UpdateSourceTrigger=PropertyChanged}" Margin="5,8,0,8" FontSize="14" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="Black" MinWidth="300" />-->
-        <Button Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Width="180" Height="25" Margin="0,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center" ToolTip="Запретить загрузку рецептов" Command="{Binding StopLoadTaskCommand}">
+        <Button Grid.Row="0" Grid.Column="0" Width="180" Height="25" Margin="5,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" ToolTip="Запретить загрузку рецептов" Command="{Binding StopLoadTaskCommand}">
             <Button.Content>
                 <TextBlock Text="Запрет загрузки рецептов" FontSize="13"/>
             </Button.Content>
@@ -37,7 +37,7 @@
         <ListView Grid.Row="1" Grid.Column="0" ItemsSource="{Binding TaskQueue}" SelectedItem="{Binding Path=SelTaskQueueItem, UpdateSourceTrigger=PropertyChanged}" Margin="4,4,0,4" FontSize="13" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" BorderBrush="Black" MinWidth="300">
             <ListView.View>
                 <GridView >
-                    <GridViewColumn Width="28" DisplayMemberBinding="{Binding Order}">
+                    <GridViewColumn Width="52" DisplayMemberBinding="{Binding Id}">
                         <GridViewColumnHeader Background="#fff5f5f5">
                             <TextBlock Text="№" TextAlignment="Center" TextWrapping="WrapWithOverflow"/>
                         </GridViewColumnHeader>
@@ -57,17 +57,17 @@
                             <TextBlock Text="Рецепт" TextAlignment="Center" TextWrapping="WrapWithOverflow"/>
                         </GridViewColumnHeader>
                     </GridViewColumn>
-                    <GridViewColumn Width="88" DisplayMemberBinding="{Binding Task.Volume}">
+                    <GridViewColumn Width="82" DisplayMemberBinding="{Binding Task.Volume}">
                         <GridViewColumnHeader Background="#fff5f5f5">
                             <TextBlock Text="Объем задания" TextAlignment="Center" TextWrapping="WrapWithOverflow"/>
                         </GridViewColumnHeader>
                     </GridViewColumn>
-                    <GridViewColumn Width="88" DisplayMemberBinding="{Binding Task.BatchVolume}">
+                    <GridViewColumn Width="82" DisplayMemberBinding="{Binding Task.BatchVolume}">
                         <GridViewColumnHeader Background="#fff5f5f5">
                             <TextBlock Text="Объем замеса" TextAlignment="Center" TextWrapping="WrapWithOverflow"/>
                         </GridViewColumnHeader>
                     </GridViewColumn>
-                    <GridViewColumn Width="88" DisplayMemberBinding="{Binding Task.BatchesAmount}">
+                    <GridViewColumn Width="82" DisplayMemberBinding="{Binding Task.BatchesAmount}">
                         <GridViewColumnHeader Background="#fff5f5f5">
                             <TextBlock Text="Количество замесов" TextAlignment="Center" TextWrapping="WrapWithOverflow"/>
                         </GridViewColumnHeader>

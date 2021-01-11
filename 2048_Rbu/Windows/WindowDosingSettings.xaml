@@ -6,12 +6,12 @@
         xmlns:classes="clr-namespace:_2048_Rbu.Classes"
         mc:Ignorable="d" 
         d:DataContext="{d:DesignInstance Type={x:Type classes:DosingSettingsViewModel}, IsDesignTimeCreatable = False}"
-        Background="LightGray" Height="710" Width="480" Title="{Binding NameWindow}" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Background="LightGray" SizeToContent="WidthAndHeight" Title="{Binding NameWindow}" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <StackPanel Background="LightGray" Orientation="Vertical" Width="450" Margin="0" HorizontalAlignment="Center">
         <TextBlock VerticalAlignment="Top" HorizontalAlignment="Center" Width="440" Margin="5" TextAlignment="Center" TextWrapping="WrapWithOverflow" FontSize="16" FontWeight="Bold" Text="{Binding NameWindow}"/>
         <Grid VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0" Width="450">
             <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0" TextAlignment="Center" TextWrapping="NoWrap" FontSize="14" FontWeight="Normal" Text="Недосып, кг:"/>
-            <Label Name="LblWeightDiff" VerticalAlignment="Center" HorizontalAlignment="Right" Width="100" Height="32" Margin="10,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" FontSize="14">
+            <Label Name="LblWeightDiff" VerticalAlignment="Center" HorizontalAlignment="Right" Width="100" Height="32" Margin="10,0,10,5" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" FontSize="14">
                 <Label.InputBindings>
                     <MouseBinding Command="{Binding SetWeightDiff}" MouseAction="LeftClick"/>
                 </Label.InputBindings>
@@ -46,7 +46,7 @@
                 </Label.Style>
             </Label>
         </Grid>
-        <StackPanel Margin="0,5" Orientation="Vertical" Width="450">
+        <StackPanel Margin="0,0,0,5" Orientation="Vertical" Width="450">
             <StackPanel.Style>
                 <Style TargetType="{x:Type StackPanel}">
                     <Setter Property="Visibility" Value="Collapsed"/>

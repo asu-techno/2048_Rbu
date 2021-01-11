@@ -4,8 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" Background="Silver"
-        Title="Весы " Width="330" Height="250" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Topmost="True">
-    <Grid Background="Silver">
+        Title="Весы " SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Topmost="True">
+    <Grid Background="Silver" Width="330" Height="240">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
