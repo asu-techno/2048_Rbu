@@ -7,7 +7,7 @@
     <DataSources isList="true" count="1">
       <TaskReports Ref="2" type="DataTableSource" isKey="true">
         <Alias>TaskReports</Alias>
-        <Columns isList="true" count="10">
+        <Columns isList="true" count="11">
           <value>Customer,System.String</value>
           <value>Recipe,System.String</value>
           <value>RecipeGroup,System.String</value>
@@ -18,6 +18,7 @@
           <value>BatchVolume,System.Decimal</value>
           <value>_ID,System.Int32</value>
           <value>_Current,System.Object</value>
+          <value>TaskId,System.Int32</value>
         </Columns>
         <Dictionary isRef="1" />
         <Key>a824392f8f8b48488bac5fa752de616b</Key>
@@ -58,7 +59,7 @@
               <Name>Text1</Name>
               <Page isRef="3" />
               <Parent isRef="4" />
-              <Text>Отчет по заданиям</Text>
+              <Text>Сводный отчет по работе</Text>
               <TextBrush>[31:73:125]</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
@@ -154,11 +155,11 @@
         <HeaderBand1 Ref="11" type="HeaderBand" isKey="true">
           <Brush>Transparent</Brush>
           <ClientRectangle>0,3.6,19,0.8</ClientRectangle>
-          <Components isList="true" count="8">
+          <Components isList="true" count="9">
             <Text39 Ref="12" type="Text" isKey="true">
               <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
               <Brush>[141:179:226]</Brush>
-              <ClientRectangle>0.6,0,2.8,0.8</ClientRectangle>
+              <ClientRectangle>1,0,2.8,0.8</ClientRectangle>
               <ComponentStyle>Header</ComponentStyle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
@@ -177,7 +178,7 @@
             <Text40 Ref="13" type="Text" isKey="true">
               <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
               <Brush>[141:179:226]</Brush>
-              <ClientRectangle>3.4,0,2.8,0.8</ClientRectangle>
+              <ClientRectangle>6.6,0,2.8,0.8</ClientRectangle>
               <ComponentStyle>Header</ComponentStyle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
@@ -196,7 +197,7 @@
             <Text2 Ref="14" type="Text" isKey="true">
               <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
               <Brush>[141:179:226]</Brush>
-              <ClientRectangle>6.2,0,2.8,0.8</ClientRectangle>
+              <ClientRectangle>3.8,0,2.8,0.8</ClientRectangle>
               <ComponentStyle>Header</ComponentStyle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
@@ -215,7 +216,7 @@
             <Text3 Ref="15" type="Text" isKey="true">
               <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
               <Brush>[141:179:226]</Brush>
-              <ClientRectangle>9,0,2.4,0.8</ClientRectangle>
+              <ClientRectangle>9.4,0,1.6,0.8</ClientRectangle>
               <ComponentStyle>Header</ComponentStyle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
@@ -234,7 +235,7 @@
             <Text8 Ref="16" type="Text" isKey="true">
               <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
               <Brush>[141:179:226]</Brush>
-              <ClientRectangle>11.4,0,2.4,0.8</ClientRectangle>
+              <ClientRectangle>11,0,2,0.8</ClientRectangle>
               <ComponentStyle>Header</ComponentStyle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
@@ -251,29 +252,10 @@
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text8>
-            <Text9 Ref="17" type="Text" isKey="true">
+            <Text10 Ref="17" type="Text" isKey="true">
               <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
               <Brush>[141:179:226]</Brush>
-              <ClientRectangle>13.8,0,2.4,0.8</ClientRectangle>
-              <ComponentStyle>Header</ComponentStyle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <Font>Segoe UI,7</Font>
-              <Guid>3ae746e2fadc4ecb94f726ebf67898a6</Guid>
-              <HorAlignment>Center</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text9</Name>
-              <Page isRef="3" />
-              <Parent isRef="11" />
-              <Text>Объем замеса, м3</Text>
-              <TextBrush>Black</TextBrush>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Text9>
-            <Text10 Ref="18" type="Text" isKey="true">
-              <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
-              <Brush>[141:179:226]</Brush>
-              <ClientRectangle>16.2,0,2.8,0.8</ClientRectangle>
+              <ClientRectangle>17,0,2,0.8</ClientRectangle>
               <ComponentStyle>Header</ComponentStyle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
@@ -284,15 +266,16 @@
               <Name>Text10</Name>
               <Page isRef="3" />
               <Parent isRef="11" />
-              <Text>Время выполнения</Text>
+              <Text>Время
+выполнения</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text10>
-            <Text15 Ref="19" type="Text" isKey="true">
+            <Text15 Ref="18" type="Text" isKey="true">
               <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
               <Brush>[141:179:226]</Brush>
-              <ClientRectangle>0,0,0.6,0.8</ClientRectangle>
+              <ClientRectangle>0,0,1,0.8</ClientRectangle>
               <ComponentStyle>Header</ComponentStyle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
@@ -303,11 +286,50 @@
               <Name>Text15</Name>
               <Page isRef="3" />
               <Parent isRef="11" />
-              <Text>№</Text>
+              <Text>ID
+задания</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text15>
+            <Text9 Ref="19" type="Text" isKey="true">
+              <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
+              <Brush>[141:179:226]</Brush>
+              <ClientRectangle>15,0,2,0.8</ClientRectangle>
+              <ComponentStyle>Header</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Segoe UI,7</Font>
+              <Guid>f804827cd17346a5a18de0f8f995245a</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text9</Name>
+              <Page isRef="3" />
+              <Parent isRef="11" />
+              <Text>Завершение</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text9>
+            <Text11 Ref="20" type="Text" isKey="true">
+              <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
+              <Brush>[141:179:226]</Brush>
+              <ClientRectangle>13,0,2,0.8</ClientRectangle>
+              <ComponentStyle>Header</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Segoe UI,7</Font>
+              <Guid>abda012d199749969a1c3923e5a4d403</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text11</Name>
+              <Page isRef="3" />
+              <Parent isRef="11" />
+              <Text>Начало</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text11>
           </Components>
           <Conditions isList="true" count="0" />
           <Expressions isList="true" count="0" />
@@ -316,15 +338,16 @@
           <Parent isRef="3" />
           <PrintIfEmpty>True</PrintIfEmpty>
         </HeaderBand1>
-        <DataBand1 Ref="20" type="DataBand" isKey="true">
+        <DataBand1 Ref="21" type="DataBand" isKey="true">
           <Brush>Transparent</Brush>
+          <BusinessObjectGuid isNull="true" />
           <ClientRectangle>0,5.2,19,0.8</ClientRectangle>
-          <Components isList="true" count="8">
-            <Text42 Ref="21" type="Text" isKey="true">
+          <Components isList="true" count="9">
+            <Text42 Ref="22" type="Text" isKey="true">
               <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
               <Brush>[198:217:240]</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>3.4,0,2.8,0.8</ClientRectangle>
+              <ClientRectangle>6.6,0,2.8,0.8</ClientRectangle>
               <ComponentStyle>Data</ComponentStyle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
@@ -335,17 +358,17 @@
               <Margins>0,0,0,0</Margins>
               <Name>Text42</Name>
               <Page isRef="3" />
-              <Parent isRef="20" />
+              <Parent isRef="21" />
               <Text>{TaskReports.Recipe}</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text42>
-            <Text38 Ref="22" type="Text" isKey="true">
+            <Text38 Ref="23" type="Text" isKey="true">
               <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
               <Brush>[198:217:240]</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>0.6,0,2.8,0.8</ClientRectangle>
+              <ClientRectangle>1,0,2.8,0.8</ClientRectangle>
               <ComponentStyle>Data</ComponentStyle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
@@ -356,17 +379,17 @@
               <Margins>0,0,0,0</Margins>
               <Name>Text38</Name>
               <Page isRef="3" />
-              <Parent isRef="20" />
+              <Parent isRef="21" />
               <Text>{TaskReports.Customer}</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text38>
-            <Text4 Ref="23" type="Text" isKey="true">
+            <Text4 Ref="24" type="Text" isKey="true">
               <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
               <Brush>[198:217:240]</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>6.2,0,2.8,0.8</ClientRectangle>
+              <ClientRectangle>3.8,0,2.8,0.8</ClientRectangle>
               <ComponentStyle>Data</ComponentStyle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
@@ -377,17 +400,17 @@
               <Margins>0,0,0,0</Margins>
               <Name>Text4</Name>
               <Page isRef="3" />
-              <Parent isRef="20" />
+              <Parent isRef="21" />
               <Text>{TaskReports.RecipeGroup}</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text4>
-            <Text5 Ref="24" type="Text" isKey="true">
+            <Text5 Ref="25" type="Text" isKey="true">
               <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
               <Brush>[198:217:240]</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>9,0,2.4,0.8</ClientRectangle>
+              <ClientRectangle>9.4,0,1.6,0.8</ClientRectangle>
               <ComponentStyle>Data</ComponentStyle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
@@ -398,17 +421,17 @@
               <Margins>0,0,0,0</Margins>
               <Name>Text5</Name>
               <Page isRef="3" />
-              <Parent isRef="20" />
+              <Parent isRef="21" />
               <Text>{TaskReports.Volume}</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text5>
-            <Text6 Ref="25" type="Text" isKey="true">
+            <Text6 Ref="26" type="Text" isKey="true">
               <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
               <Brush>[198:217:240]</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>11.4,0,2.4,0.8</ClientRectangle>
+              <ClientRectangle>11,0,2,0.8</ClientRectangle>
               <ComponentStyle>Data</ComponentStyle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
@@ -419,38 +442,17 @@
               <Margins>0,0,0,0</Margins>
               <Name>Text6</Name>
               <Page isRef="3" />
-              <Parent isRef="20" />
-              <Text>{TaskReports.BatchCount}</Text>
+              <Parent isRef="21" />
+              <Text>{String.Format("{0} x {1}м3",TaskReports.BatchCount,TaskReports.BatchVolume)}</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text6>
-            <Text11 Ref="26" type="Text" isKey="true">
-              <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
-              <Brush>[198:217:240]</Brush>
-              <CanGrow>True</CanGrow>
-              <ClientRectangle>13.8,0,2.4,0.8</ClientRectangle>
-              <ComponentStyle>Data</ComponentStyle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <Font>Segoe UI,8</Font>
-              <GrowToHeight>True</GrowToHeight>
-              <Guid>85e4daafc12b45a1a370a0fb330d23e2</Guid>
-              <HorAlignment>Center</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text11</Name>
-              <Page isRef="3" />
-              <Parent isRef="20" />
-              <Text>{TaskReports.BatchVolume}</Text>
-              <TextBrush>Black</TextBrush>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Text11>
             <Text12 Ref="27" type="Text" isKey="true">
               <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
               <Brush>[198:217:240]</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>16.2,0,2.8,0.8</ClientRectangle>
+              <ClientRectangle>17,0,2,0.8</ClientRectangle>
               <ComponentStyle>Data</ComponentStyle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
@@ -461,7 +463,7 @@
               <Margins>0,0,0,0</Margins>
               <Name>Text12</Name>
               <Page isRef="3" />
-              <Parent isRef="20" />
+              <Parent isRef="21" />
               <Text>{string.Format("{0:D2}:{1:D2}:{2:D2}", DateDiff(TaskReports.FinishTime, TaskReports.StartTime).Hours, DateDiff(TaskReports.FinishTime, TaskReports.StartTime).Minutes, DateDiff(TaskReports.FinishTime, TaskReports.StartTime).Seconds)}</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
@@ -471,7 +473,7 @@
               <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
               <Brush>[198:217:240]</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>-0,0,0.6,0.8</ClientRectangle>
+              <ClientRectangle>-0,0,1,0.8</ClientRectangle>
               <ComponentStyle>Data</ComponentStyle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
@@ -482,12 +484,56 @@
               <Margins>0,0,0,0</Margins>
               <Name>Text16</Name>
               <Page isRef="3" />
-              <Parent isRef="20" />
-              <Text>{Line}</Text>
+              <Parent isRef="21" />
+              <Text>{TaskReports.TaskId}</Text>
               <TextBrush>Black</TextBrush>
-              <Type>SystemVariables</Type>
+              <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text16>
+            <Text14 Ref="29" type="Text" isKey="true">
+              <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
+              <Brush>[198:217:240]</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>13,0,2,0.8</ClientRectangle>
+              <ComponentStyle>Data</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Segoe UI,8</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <Guid>bc54ecd4861b4e3da31f5384a3c8fd30</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text14</Name>
+              <Page isRef="3" />
+              <Parent isRef="21" />
+              <Text>{TaskReports.StartTime}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text14>
+            <Text18 Ref="30" type="Text" isKey="true">
+              <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
+              <Brush>[198:217:240]</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>15,0,2,0.8</ClientRectangle>
+              <ComponentStyle>Data</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Segoe UI,8</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <Guid>11f78d3bebed4ec99d4104bd8a647d3b</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text18</Name>
+              <Page isRef="3" />
+              <Parent isRef="21" />
+              <Text>{TaskReports.FinishTime}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text18>
           </Components>
           <Conditions isList="true" count="0" />
           <DataRelationName isNull="true" />
@@ -499,117 +545,108 @@
           <Parent isRef="3" />
           <Sort isList="true" count="0" />
         </DataBand1>
-        <FooterBand1 Ref="29" type="FooterBand" isKey="true">
+        <FooterBand1 Ref="31" type="FooterBand" isKey="true">
           <Brush>Transparent</Brush>
           <ClientRectangle>0,6.8,19,1.4</ClientRectangle>
           <Components isList="true" count="5">
-            <Text7 Ref="30" type="Text" isKey="true">
+            <Text7 Ref="32" type="Text" isKey="true">
               <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
               <Brush>[141:179:226]</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>16.2,0,2.8,0.8</ClientRectangle>
+              <ClientRectangle>17,0,2,0.8</ClientRectangle>
               <ComponentStyle>Header</ComponentStyle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
-              <Font>Segoe UI,7</Font>
+              <Font>Segoe UI,8,Bold</Font>
               <Guid>8328c8ba514446c483b2bf08371b33fd</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text7</Name>
               <Page isRef="3" />
-              <Parent isRef="29" />
-              <Text>{Sum(string.Format("{0:D2}:{1:D2}:{2:D2}", DateDiff(TaskReports.FinishTime, TaskReports.StartTime).Hours, DateDiff(TaskReports.FinishTime, TaskReports.StartTime).Minutes, DateDiff(TaskReports.FinishTime, TaskReports.StartTime).Seconds))}</Text>
+              <Parent isRef="31" />
+              <Text>{SumTime(DateDiff(TaskReports.FinishTime, TaskReports.StartTime))}</Text>
               <TextBrush>Black</TextBrush>
-              <TextFormat Ref="31" type="PercentageFormat" isKey="true">
-                <DecimalDigits>2</DecimalDigits>
-                <DecimalSeparator>,</DecimalSeparator>
-                <GroupSeparator> </GroupSeparator>
-                <NegativePattern>0</NegativePattern>
-                <PositivePattern>0</PositivePattern>
-                <Symbol>%</Symbol>
-              </TextFormat>
+              <TextFormat Ref="33" type="TimeFormat" isKey="true" />
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text7>
-            <Text55 Ref="32" type="Text" isKey="true">
+            <Text56 Ref="34" type="Text" isKey="true">
               <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
               <Brush>[141:179:226]</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>13.8,0,2.4,0.8</ClientRectangle>
+              <ClientRectangle>11,0,2,0.8</ClientRectangle>
               <ComponentStyle>Header</ComponentStyle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
-              <Font>Segoe UI,7</Font>
-              <Guid>879630e28ee44217a7d76ea542ebfa8c</Guid>
-              <HorAlignment>Center</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text55</Name>
-              <Page isRef="3" />
-              <Parent isRef="29" />
-              <Text>{Sum(TaskReports.BatchVolume)}</Text>
-              <TextBrush>Black</TextBrush>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Text55>
-            <Text56 Ref="33" type="Text" isKey="true">
-              <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
-              <Brush>[141:179:226]</Brush>
-              <CanGrow>True</CanGrow>
-              <ClientRectangle>11.4,0,2.4,0.8</ClientRectangle>
-              <ComponentStyle>Header</ComponentStyle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <Font>Segoe UI,7</Font>
+              <Font>Segoe UI,8,Bold</Font>
               <Guid>f9c24da41bab4831b5fbcc2371091721</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text56</Name>
               <Page isRef="3" />
-              <Parent isRef="29" />
+              <Parent isRef="31" />
               <Text>{Sum(TaskReports.BatchCount)}</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text56>
-            <Text60 Ref="34" type="Text" isKey="true">
+            <Text60 Ref="35" type="Text" isKey="true">
               <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
               <Brush>[141:179:226]</Brush>
-              <ClientRectangle>0,0,9,0.8</ClientRectangle>
+              <ClientRectangle>0,0,9.4,0.8</ClientRectangle>
               <ComponentStyle>Header</ComponentStyle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
-              <Font>Segoe UI,7</Font>
+              <Font>Segoe UI,8,Bold</Font>
               <Guid>d04a0da1122b4973b12fe2f511b44f2a</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text60</Name>
               <Page isRef="3" />
-              <Parent isRef="29" />
+              <Parent isRef="31" />
               <Text>ИТОГО:</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text60>
-            <Text13 Ref="35" type="Text" isKey="true">
+            <Text13 Ref="36" type="Text" isKey="true">
               <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
               <Brush>[141:179:226]</Brush>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>9,0,2.4,0.8</ClientRectangle>
+              <ClientRectangle>9.4,0,1.6,0.8</ClientRectangle>
               <ComponentStyle>Header</ComponentStyle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
-              <Font>Segoe UI,7</Font>
+              <Font>Segoe UI,8,Bold</Font>
               <Guid>9ddedf3270d34859bdf6aaa3a4132423</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text13</Name>
               <Page isRef="3" />
-              <Parent isRef="29" />
+              <Parent isRef="31" />
               <Text>{Sum(TaskReports.Volume)}</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text13>
+            <Text17 Ref="37" type="Text" isKey="true">
+              <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
+              <Brush>[141:179:226]</Brush>
+              <ClientRectangle>13,0,4,0.8</ClientRectangle>
+              <ComponentStyle>Header</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Segoe UI,7</Font>
+              <Guid>979ab223211748ad80b91aa0ee6837f0</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text17</Name>
+              <Page isRef="3" />
+              <Parent isRef="31" />
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text17>
           </Components>
           <Conditions isList="true" count="0" />
           <Expressions isList="true" count="0" />
@@ -640,9 +677,9 @@
     <value>Stimulsoft.Report.Dll</value>
   </ReferencedAssemblies>
   <ReportAlias>Report</ReportAlias>
-  <ReportChanged>12/30/2020 10:30:11 PM</ReportChanged>
+  <ReportChanged>1/19/2021 12:46:40 PM</ReportChanged>
   <ReportCreated>12/22/2020 7:22:15 AM</ReportCreated>
-  <ReportGuid>b654581378e84aeaa6bfdf0205f815e4</ReportGuid>
+  <ReportGuid>cf5e1e0cb26b4d768facb0121c53006d</ReportGuid>
   <ReportName>Report</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2020.5.2.0</ReportVersion>
@@ -671,7 +708,7 @@ namespace Reports
 </Script>
   <ScriptLanguage>CSharp</ScriptLanguage>
   <Styles isList="true" count="3">
-    <Text Ref="36" type="Stimulsoft.Report.StiStyle" isKey="true">
+    <Text Ref="38" type="Stimulsoft.Report.StiStyle" isKey="true">
       <AllowUseVertAlignment>True</AllowUseVertAlignment>
       <Brush>Transparent</Brush>
       <Conditions isList="true" count="0" />
@@ -682,7 +719,8 @@ namespace Reports
       <TextBrush>[31:73:125]</TextBrush>
       <VertAlignment>Center</VertAlignment>
     </Text>
-    <Header Ref="37" type="Stimulsoft.Report.StiStyle" isKey="true">
+    <Header Ref="39" type="Stimulsoft.Report.StiStyle" isKey="true">
+      <AllowUseFont>False</AllowUseFont>
       <AllowUseHorAlignment>True</AllowUseHorAlignment>
       <AllowUseVertAlignment>True</AllowUseVertAlignment>
       <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
@@ -695,7 +733,7 @@ namespace Reports
       <TextBrush>Black</TextBrush>
       <VertAlignment>Center</VertAlignment>
     </Header>
-    <Data Ref="38" type="Stimulsoft.Report.StiStyle" isKey="true">
+    <Data Ref="40" type="Stimulsoft.Report.StiStyle" isKey="true">
       <AllowUseHorAlignment>True</AllowUseHorAlignment>
       <AllowUseVertAlignment>True</AllowUseVertAlignment>
       <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>

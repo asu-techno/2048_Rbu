@@ -49,13 +49,69 @@ namespace _2048_Rbu.Windows.Reports
         {
 
         }
+
+        private void SetTodayInterval(object sender, RoutedEventArgs e)
+        {
+            FromDate.SelectedDate = DateTime.Now.Date;
+            FromHour.Text = "0";
+
+            ToDate.SelectedDate = DateTime.Now.Date.AddDays(1);
+            ToHour.Text = "0";
+        }
+
+        private void SetThisWeekInterval(object sender, RoutedEventArgs e)
+        {
+            FromDate.SelectedDate = DateTime.Now.Date.AddDays(-1 * (7 + (DateTime.Now.DayOfWeek - DayOfWeek.Monday)) % 7);
+            FromHour.Text = "0";
+
+            ToDate.SelectedDate = FromDate.SelectedDate.Value.AddDays(7);
+            ToHour.Text = "0";
+        }
+
+        private void SetThisMonthInterval(object sender, RoutedEventArgs e)
+        {
+            DateTime monthStartDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            FromDate.SelectedDate = monthStartDate;
+            FromHour.Text = "0";
+
+            ToDate.SelectedDate = monthStartDate.AddMonths(1);
+            ToHour.Text = "0";
+        }
+
+        private void SetYesterdayInterval(object sender, RoutedEventArgs e)
+        {
+            FromDate.SelectedDate = DateTime.Now.Date.AddDays(-1);
+            FromHour.Text = "0";
+
+            ToDate.SelectedDate = DateTime.Now.Date;
+            ToHour.Text = "0";
+        }
+
+        private void SetPreviousWeekInterval(object sender, RoutedEventArgs e)
+        {
+            FromDate.SelectedDate = DateTime.Now.Date.AddDays(-1 * (7 + (DateTime.Now.DayOfWeek - DayOfWeek.Monday)) % 7 - 7);
+            FromHour.Text = "0";
+
+            ToDate.SelectedDate = FromDate.SelectedDate.Value.AddDays(7);
+            ToHour.Text = "0";
+        }
+
+        private void SetPreviousMonthInterval(object sender, RoutedEventArgs e)
+        {
+            DateTime monthStartDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            FromDate.SelectedDate = monthStartDate.AddMonths(-1);
+            FromHour.Text = "0";
+
+            ToDate.SelectedDate = monthStartDate;
+            ToHour.Text = "0";
+        }
     }
 
     public sealed class RecipeReportViewModel : INotifyPropertyChanged
     {
         public StiReport Report { get; set; }
-        public int TimeFrom { get; set; } = 8;
-        public int TimeTo { get; set; } = 8;
+        public int TimeFrom { get; set; } = 0;
+        public int TimeTo { get; set; } = 0;
 
         public DateTime DateFrom { get; set; }
         public DateTime DateTo { get; set; }
@@ -123,8 +179,8 @@ namespace _2048_Rbu.Windows.Reports
             _batchTasks = new ObservableCollection<BatchTask>();
             _selectedTask = new BatchTask();
 
-            DateFrom = DateTime.Now - new TimeSpan(1, 0, 0, 0);
-            DateTo = DateTime.Now;
+            DateFrom = DateTime.Now.Date;
+            DateTo = DateTime.Now.Date.AddDays(1);
         }
 
         void GetDateTime()
@@ -228,6 +284,8 @@ namespace _2048_Rbu.Windows.Reports
                             dosingReport.Material = dosing.MaterialId.ToString();
 
                             unloadReport.MaterialsDosingReports.Add(dosingReport);
+                            unloadReport.SetVolumeTotal += dosingReport.SetVolume;
+                            unloadReport.DosingWeightTotal += dosingReport.FinishWeight - dosingReport.StartWeight;
                         }
 
                         foreach (MaterialsDosingReport report in unloadReport.MaterialsDosingReports)
@@ -294,11 +352,13 @@ namespace _2048_Rbu.Windows.Reports
                 {
                     var container = containers.Find(x => x.Id == containerGroup.Key.GetValueOrDefault());
                     string containerName = container != null ? container.Name : "нет в справочнике";
+                    int storageId = container != null ? Convert.ToInt32(container.Id) : 0;
 
                     materialReports.Add(new MaterialReport
                     {
                         MaterialName = materialName,
                         Storage = containerName,
+                        StorageId = storageId,
                         SetVolume = materialDosingReports.Sum(x => x.SetVolume.Value),
                         Volume = materialDosingReports.Sum(x => x.FinishWeightDosage - x.StartWeightDosage)
                     });
@@ -309,6 +369,10 @@ namespace _2048_Rbu.Windows.Reports
 
             Report["DateTimeFrom"] = DateTimeFrom;
             Report["DateTimeTo"] = DateTimeTo;
+
+            Report["TaskCount"] = _batchTasks.Count();
+            Report["TaskVolume"] = _batchTasks.Sum(x=>x.Volume);
+            Report["BatchCount"] = _batchTasks.Sum(x=>x.BatchesCount);
 
             Report.RegData("MaterialReports", materialReports);
 
@@ -337,6 +401,7 @@ namespace _2048_Rbu.Windows.Reports
             {
                 TaskReport taskReport = new TaskReport
                 {
+                    TaskId = Convert.ToInt32(report.TaskId.Value),
                     Customer = (report.Task != null && report.Task.Customer != null) ? report.Task.Customer.Name : "не указан",
                     Recipe = (report.Task != null && report.Task.Recipe != null) ? report.Task.Recipe.Name : "не указан",
                     RecipeGroup = (report.Task != null && report.Task.Recipe != null && report.Task.Recipe.RecipeGroup != null) ? report.Task.Recipe.RecipeGroup.Name : "не указана",
@@ -492,6 +557,9 @@ namespace _2048_Rbu.Windows.Reports
         public DateTime StartTime { get; set; }
         public DateTime FinishTime { get; set; }
 
+        public decimal SetVolumeTotal { get; set; }
+        public decimal DosingWeightTotal { get; set; }
+
         public ReportCollection<MaterialsDosingReport> MaterialsDosingReports { get; set; }
 
         public MaterialsUnloadReport()
@@ -514,12 +582,14 @@ namespace _2048_Rbu.Windows.Reports
     {
         public string MaterialName { get; set; }
         public string Storage { get; set; }
+        public int StorageId { get; set; }
         public decimal SetVolume { get; set; }
         public decimal Volume { get; set; }
     }
 
     public class TaskReport
     {
+        public int TaskId { get; set; }
         public string Customer { get; set; }
         public string Recipe { get; set; }
         public string RecipeGroup { get; set; }
