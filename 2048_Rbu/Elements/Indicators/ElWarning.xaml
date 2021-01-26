@@ -5,11 +5,16 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
             Visibility="{Binding Vis}">
-    <Grid Height="Auto" Width="Auto">
-        <Label Name="lbl_object" Width="150" Height="60" BorderThickness="1" BorderBrush="Black" Background="Yellow" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Top" >
-            <Label.Content>
-                <TextBlock Name="txt_object" Text="Температура пастеризации не в норме!" TextWrapping="Wrap" FontWeight="Bold" TextAlignment="Center"></TextBlock>
-            </Label.Content>
-        </Label>
-    </Grid>
+    <Border BorderThickness="1" BorderBrush="Black" >
+        <Grid Name="MainGrid" Height="Auto" Width="Auto" Background="Yellow" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label Name="LblObject" Grid.Row="0" HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center" >
+                <TextBlock Name="TxtObject" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Температура пастеризации не в норме!" TextWrapping="Wrap" FontWeight="Bold" TextAlignment="Center"></TextBlock>
+            </Label>
+            <Button Name="BtnRepeat" Visibility="Collapsed" Grid.Row="1" Width="100" Height="25" Margin="0,0,0,5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="LightBlue" BorderThickness="1" BorderBrush="Black" FontWeight="Bold" Content="Повторить" Click="BtnRepeat_OnClick"/>
+        </Grid>
+    </Border>
 </UserControl>

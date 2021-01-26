@@ -5,6 +5,46 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              MinHeight="50" MinWidth="50" Background="Silver">
-    <StackPanel Name="Settings" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,10,10,10" Orientation="Vertical">
+    <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,10,10,10" Orientation="Vertical">
+        <StackPanel Name="Settings" VerticalAlignment="Top" HorizontalAlignment="Left" Orientation="Vertical"/>
+        <Grid VerticalAlignment="Top" HorizontalAlignment="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock VerticalAlignment="Top" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="0" TextAlignment="Center" TextWrapping="NoWrap" FontSize="14" FontWeight="Bold" Text="Режим выгрузки компонентов:"/>
+            <Button Name="BtnTimer" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="0" Height="32" Width="180" Margin="5,7,5,0" BorderThickness="1" BorderBrush="Black" FontSize="14" Content="По времени" Click="BtnTimer_OnClick">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Background" Value="LightBlue"/>
+                        <Setter Property="FontWeight" Value="Normal"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding BySensor}" Value="False">
+                                <Setter Property="Background" Value="#FF85FC84"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button Name="BtnSensor" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1" Height="32" Width="180" Margin="5,7,5,0" BorderThickness="1" BorderBrush="Black" FontSize="14" Content="По датчику" Click="BtnSensor_OnClick">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Background" Value="LightBlue"/>
+                        <Setter Property="FontWeight" Value="Normal"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding BySensor}" Value="True">
+                                <Setter Property="Background" Value="#FF85FC84"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+        </Grid>
     </StackPanel>
 </UserControl>

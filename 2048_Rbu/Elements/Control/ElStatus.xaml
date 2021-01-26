@@ -1,0 +1,220 @@
+﻿<UserControl x:Class="_2048_Rbu.Elements.Control.ElStatus"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:_2048_Rbu.Elements.Control"
+      mc:Ignorable="d"
+      d:DataContext="{d:DesignInstance Type={x:Type local:ElStatus}, IsDesignTimeCreatable=False}"
+      Width="525" Height="117" Background="DarkGray" BorderThickness="1" BorderBrush="Black">
+    <Grid Background="DarkGray">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0" FontSize="12" TextAlignment="Left" Text="Стоповая кнопка ШУ К"/>
+        <Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0" Width="18" Height="18" BorderBrush="Black" BorderThickness="1">
+            <Label.Style>
+                <Style TargetType="{x:Type Label}">
+                    <Setter Property="Background" Value="Salmon"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding StatusArray[0].StatusItem}" Value="True">
+                            <Setter Property="Background" Value="#85fc84"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Label.Style>
+        </Label>
+        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0" FontSize="12" TextAlignment="Left" Text="Стоповая кнопка ШУ ИФ"/>
+        <Label Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0" Width="18" Height="18" BorderBrush="Black" BorderThickness="1">
+            <Label.Style>
+                <Style TargetType="{x:Type Label}">
+                    <Setter Property="Background" Value="Salmon"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding StatusArray[1].StatusItem}" Value="True">
+                            <Setter Property="Background" Value="#85fc84"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Label.Style>
+        </Label>
+        <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0" FontSize="12" TextAlignment="Left" Text="Стоповая кнопка ШУ Д"/>
+        <Label Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0" Width="18" Height="18" BorderBrush="Black" BorderThickness="1">
+            <Label.Style>
+                <Style TargetType="{x:Type Label}">
+                    <Setter Property="Background" Value="Salmon"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding StatusArray[2].StatusItem}" Value="True">
+                            <Setter Property="Background" Value="#85fc84"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Label.Style>
+        </Label>
+        <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0" FontSize="12" TextAlignment="Left" Text="Стоповая кнопка ШУ Ц"/>
+        <Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0" Width="18" Height="18" BorderBrush="Black" BorderThickness="1">
+            <Label.Style>
+                <Style TargetType="{x:Type Label}">
+                    <Setter Property="Background" Value="Salmon"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding StatusArray[3].StatusItem}" Value="True">
+                            <Setter Property="Background" Value="#85fc84"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Label.Style>
+        </Label>
+        <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0" FontSize="12" TextAlignment="Left" Text="Стоповая кнопка ШУ ЖК"/>
+        <Label Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0" Width="18" Height="18" BorderBrush="Black" BorderThickness="1">
+            <Label.Style>
+                <Style TargetType="{x:Type Label}">
+                    <Setter Property="Background" Value="Salmon"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding StatusArray[4].StatusItem}" Value="True">
+                            <Setter Property="Background" Value="#85fc84"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Label.Style>
+        </Label>
+        <TextBlock Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0" FontSize="12" TextAlignment="Left" Text="Стоповая кнопка ШУ Б"/>
+        <Label Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0" Width="18" Height="18" BorderBrush="Black" BorderThickness="1">
+            <Label.Style>
+                <Style TargetType="{x:Type Label}">
+                    <Setter Property="Background" Value="Salmon"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding StatusArray[5].StatusItem}" Value="True">
+                            <Setter Property="Background" Value="#85fc84"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Label.Style>
+        </Label>
+        <TextBlock Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0" FontSize="12" TextAlignment="Left" Text="Связь с весами цемента"/>
+        <Label Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0" Width="18" Height="18" BorderBrush="Black" BorderThickness="1">
+            <Label.Style>
+                <Style TargetType="{x:Type Label}">
+                    <Setter Property="Background" Value="Salmon"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding StatusArray[6].StatusItem}" Value="False">
+                            <Setter Property="Background" Value="#85fc84"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Label.Style>
+        </Label>
+        <TextBlock Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0" FontSize="12" TextAlignment="Left" Text="Связь с весами воды"/>
+        <Label Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0" Width="18" Height="18" BorderBrush="Black" BorderThickness="1">
+            <Label.Style>
+                <Style TargetType="{x:Type Label}">
+                    <Setter Property="Background" Value="Salmon"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding StatusArray[7].StatusItem}" Value="False">
+                            <Setter Property="Background" Value="#85fc84"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Label.Style>
+        </Label>
+        <TextBlock Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0" FontSize="12" TextAlignment="Left" Text="Связь с весами инерт. фр."/>
+        <Label Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0" Width="18" Height="18" BorderBrush="Black" BorderThickness="1">
+            <Label.Style>
+                <Style TargetType="{x:Type Label}">
+                    <Setter Property="Background" Value="Salmon"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding StatusArray[8].StatusItem}" Value="False">
+                            <Setter Property="Background" Value="#85fc84"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Label.Style>
+        </Label>
+        <TextBlock Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0" FontSize="12" TextAlignment="Left" Text="Связь с весами хим. доб."/>
+        <Label Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0" Width="18" Height="18" BorderBrush="Black" BorderThickness="1">
+            <Label.Style>
+                <Style TargetType="{x:Type Label}">
+                    <Setter Property="Background" Value="Salmon"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding StatusArray[9].StatusItem}" Value="False">
+                            <Setter Property="Background" Value="#85fc84"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Label.Style>
+        </Label>
+        <TextBlock Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0" FontSize="12" TextAlignment="Left" Text="Насос гидростанции"/>
+        <Label Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0" Width="18" Height="18" BorderBrush="Black" BorderThickness="1">
+            <Label.Style>
+                <Style TargetType="{x:Type Label}">
+                    <Setter Property="Background" Value="Salmon"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding StatusArray[10].StatusItem}" Value="False">
+                            <Setter Property="Background" Value="#85fc84"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Label.Style>
+        </Label>
+        <TextBlock Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0" FontSize="12" TextAlignment="Left" Text="Давление гидр. магистр."/>
+        <Label Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0" Width="18" Height="18" BorderBrush="Black" BorderThickness="1">
+            <Label.Style>
+                <Style TargetType="{x:Type Label}">
+                    <Setter Property="Background" Value="Salmon"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding StatusArray[11].StatusItem}" Value="False">
+                            <Setter Property="Background" Value="#85fc84"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Label.Style>
+        </Label>
+        <TextBlock Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0" FontSize="12" TextAlignment="Left" Text="M-18 - давление смазки"/>
+        <Label Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0" Width="18" Height="18" BorderBrush="Black" BorderThickness="1">
+            <Label.Style>
+                <Style TargetType="{x:Type Label}">
+                    <Setter Property="Background" Value="Salmon"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding StatusArray[12].StatusItem}" Value="False">
+                            <Setter Property="Background" Value="#85fc84"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Label.Style>
+        </Label>
+        
+        <TextBlock Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0" FontSize="12" TextAlignment="Left" Text="М-18 - автоматич. режим"/>
+        <Label Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0" Width="18" Height="18" BorderBrush="Black" BorderThickness="1">
+            <Label.Style>
+                <Style TargetType="{x:Type Label}">
+                    <Setter Property="Background" Value="Salmon"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding StatusArray[13].StatusItem}" Value="True">
+                            <Setter Property="Background" Value="#85fc84"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Label.Style>
+        </Label>
+        <TextBlock Grid.Row="4" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0" FontSize="12" TextAlignment="Left" Text="М-9 - автоматич. режим"/>
+        <Label Grid.Row="4" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0" Width="18" Height="18" BorderBrush="Black" BorderThickness="1">
+            <Label.Style>
+                <Style TargetType="{x:Type Label}">
+                    <Setter Property="Background" Value="Salmon"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding StatusArray[14].StatusItem}" Value="True">
+                            <Setter Property="Background" Value="#85fc84"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Label.Style>
+        </Label>
+    </Grid>
+</UserControl>

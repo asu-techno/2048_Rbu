@@ -136,29 +136,27 @@ namespace _2048_Rbu.Elements.Mechs
                 {
                     ImgKm.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs/img_Shnek_On.png", UriKind.Relative));
                     ImgAlarm.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs/img_Shnek_Alarm.png", UriKind.Relative));
-                    ImgKm.Width = ImgAlarm.Width = 75;
+                    ImgKm.Width = ImgAlarm.Width = 85;
                     ImgKm.Height = ImgAlarm.Height = 17;
                 }
                 if (value == Mech.Conveyor)
                 {
                     ImgKm.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs/img_Conv_On.png", UriKind.Relative));
                     ImgAlarm.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs/img_Conv_Alarm.png", UriKind.Relative));
-                    ImgKm.Width = ImgAlarm.Width = 685;
+                    ImgKm.Width = ImgAlarm.Width = 755;
                     ImgKm.Height = ImgAlarm.Height = 24;
+                    RectObject.Margin = new Thickness(0, -10, 0, 0);
                 }
-                RectObject.Width = ImgKm.Width + 6;
-                RectObject.Height = ImgKm.Height + 4;
-
                 if (value == Mech.Skip)
                 {
                     ImgKm.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs/img_Skip_On.png", UriKind.Relative));
                     ImgAlarm.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs/img_Skip_Alarm.png", UriKind.Relative));
-                    ImgKm.Width = ImgAlarm.Width = 258;
-                    ImgKm.Height = ImgAlarm.Height = 152;
-                    RectObject.Width = ImgKm.Width + 40;
-                    RectObject.Height = 20;
-                    RectObject.RenderTransform = new RotateTransform(30, 149, 10);
+                    ImgKm.Width = ImgAlarm.Width = 325;
+                    ImgKm.Height = ImgAlarm.Height = 24;
+                    RectObject.Margin = new Thickness(0, -10, 0, 0);
                 }
+                RectObject.Width = ImgKm.Width + 6;
+                RectObject.Height = ImgKm.Height + 4;
 
                 _typeMech = value;
             }
@@ -177,13 +175,13 @@ namespace _2048_Rbu.Elements.Mechs
                 if (value == Position.RightUp)
                     LblMode.Margin = new Thickness(0, -100, 85, 0);
                 if (value == Position.Left)
-                    LblMode.Margin = new Thickness(2, 35, 0, 0);
+                    LblMode.Margin = new Thickness(0, 35, 0, 0);
                 if (value == Position.Right)
                     LblMode.Margin = new Thickness(0, 17, 0, 0);
                 if (value == Position.LeftDown)
-                    LblMode.Margin = new Thickness(0, 26, 500, 0);
+                    LblMode.Margin = new Thickness(0, 26, 595, 0);
                 if (value == Position.Down)
-                    LblMode.Margin = new Thickness(0, 44, 0, 0);
+                    LblMode.Margin = new Thickness(0, 26, 165, 0);
                 if (value == Position.RightDown)
                     LblMode.Margin = new Thickness(40, 25, 0, 0);
 
@@ -199,7 +197,7 @@ namespace _2048_Rbu.Elements.Mechs
             {
                 if (value == Position.LeftUp)
                 {
-                    TbcName.Margin = new Thickness(0, 30, 50, 0);
+                    TbcName.Margin = new Thickness(0, 30, 60, 0);
                     TbcName.HorizontalAlignment = HorizontalAlignment.Center;
                     TbcName.TextAlignment = TextAlignment.Center;
                 }
@@ -217,7 +215,7 @@ namespace _2048_Rbu.Elements.Mechs
                 }
                 if (value == Position.Left)
                 {
-                    TbcName.Margin = new Thickness(0, 26, 550, 0);
+                    TbcName.Margin = new Thickness(0, 26, 645, 0);
                     TbcName.HorizontalAlignment = HorizontalAlignment.Center;
                     TbcName.TextAlignment = TextAlignment.Center;
                 }
@@ -235,7 +233,7 @@ namespace _2048_Rbu.Elements.Mechs
                 }
                 if (value == Position.Down)
                 {
-                    TbcName.Margin = new Thickness(0, 55, 0, 0);
+                    TbcName.Margin = new Thickness(0, 26, 215, 0);
                     TbcName.HorizontalAlignment = HorizontalAlignment.Center;
                     TbcName.TextAlignment = TextAlignment.Center;
                 }
@@ -258,7 +256,7 @@ namespace _2048_Rbu.Elements.Mechs
             {
                 TbcName.Text = value;
                 if (_typeMech != Mech.Shnek)
-                    TxtPopupName.Text = "Транспортер " + value;
+                    TxtPopupName.Text = "Конвейер " + value;
                 else
                     TxtPopupName.Text = "Шнек " + value;
                 _nameObject = value;
@@ -342,26 +340,54 @@ namespace _2048_Rbu.Elements.Mechs
 
         private void HandleManualChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
-            _manualMode = bool.Parse(e.Item.Value.ToString());
-            VisMode();
+            try
+            {
+                _manualMode = bool.Parse(e.Item.Value.ToString());
+                VisMode();
+            }
+            catch
+            {
+
+            }
         }
 
         private void HandleAutomatChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
-            _automatMode = bool.Parse(e.Item.Value.ToString());
-            VisMode();
+            try
+            {
+                _automatMode = bool.Parse(e.Item.Value.ToString());
+                VisMode();
+            }
+            catch
+            {
+
+            }
         }
 
         private void HandleKmStatusChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
-            _kmStatus = bool.Parse(e.Item.Value.ToString());
-            VisStatus();
+            try
+            {
+                _kmStatus = bool.Parse(e.Item.Value.ToString());
+                VisStatus();
+            }
+            catch
+            {
+
+            }
         }
 
         private void HandleAlarmStatusChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
-            _alarmStatus = bool.Parse(e.Item.Value.ToString());
-            VisStatus();
+            try
+            {
+                _alarmStatus = bool.Parse(e.Item.Value.ToString());
+                VisStatus();
+            }
+            catch
+            {
+
+            }
         }
 
         void VisStatus()

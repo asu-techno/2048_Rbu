@@ -16,6 +16,7 @@ using _2048_Rbu.Windows;
 using AS_Library.Events.Classes;
 using ServiceLib.Classes;
 using ServiceLib.Windows;
+using System.Threading.Tasks;
 
 namespace _2048_Rbu
 {
@@ -30,10 +31,8 @@ namespace _2048_Rbu
 
         public MainWindow()
         {
-            var splash = new WindowSplash();
-            splash.Show();
-
             ServiceData.Init(@"Data/Service.xlsx");
+
             Opc.UaFx.Client.Licenser.LicenseKey =
                 "AALOERR5OO7EKFNQCABINGCH6TYOVHPLFC2QCUYAV3IYL7FGRNBJ4TYJX2GM6HKSCKZLBJWGHUWWXQ5HKWI7OFVYYMERDPQDC7ZW7ZTLPTM" +
                 "LWLMY3RMLD2UQ6OXKUKC2YBBPBRGK6SBRI4DBXF4NGVKZUATMW3VI7EALG5FQNCETII7JG7OTOCL2EPO55TO5D4GPJROX5FHSUSALQX56E6" +
@@ -58,8 +57,6 @@ namespace _2048_Rbu
 
             InitializeComponent();
 
-            //Login();
-
             #region Init
             _logger = Service.GetInstance().GetLogger();
             LibService.Init(_logger);
@@ -74,17 +71,20 @@ namespace _2048_Rbu
             OpcServer.Init(@"Data/Service.xlsx");
             OpcServer.GetInstance();
             #endregion
-            
-            Title += " v." + Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            
-            //#region Масштаб экрана
+
+            GetVersion();
+            Login();
+
+            Title += Static.Version + " " + Static.Copyright;
+
+            #region Масштаб экрана (comment)
 
             //var rect = SystemParameters.WorkArea;
             //if (rect.Width != 1920)
             //    MainGrid.LayoutTransform =
             //        new ScaleTransform(Math.Min(rect.Width, 1920) / 1920, Math.Min(rect.Height, 1080) / 1080);
 
-            //#endregion
+            #endregion
 
             #region AutoEvent
 
@@ -93,33 +93,35 @@ namespace _2048_Rbu
             //events.AddAutoEvent("6_1_1.ServiceMode", SystemEventType.Warning, "Задвижка 6.1.1 - включен сервисный режим", ResponseType.Rising);
 
             #endregion
+        }
 
-            if (!_isLoad)
-            {
-                _elScreen.Initialize(_logger);
-                ScreenGrid.Children.Add(_elScreen);
-                _elScreen.Visibility = Visibility.Visible;
-                _isLoad = true;
-                //EventsBase.GetInstance().GetControlEvents(OpcServer.OpcList.Rbu).AddEvent("Программа управления открыта", SystemEventType.Message);
-            }
-
-            this.Show();
-
-            splash.Close();
+        private void GetVersion()
+        {
+            var myVersion = Assembly.GetExecutingAssembly().GetName().Version;
+            var compileTime = new DateTime(2000, 1, 1).AddDays(myVersion.Build).AddSeconds(myVersion.Revision * 2);
+            Static.Version = " v." + myVersion.Major + "." + myVersion.Minor + "." + compileTime.Day.ToString("D2") + compileTime.Month.ToString("D2") + "." + compileTime.Hour.ToString("D2") + compileTime.Minute.ToString("D2");
+            Static.Copyright = "© ООО «‎АСУ-Техно»‎, " + compileTime.Year;
         }
 
         private void Login()
         {
-            WindowLogin login = new WindowLogin(ServiceData.GetInstance().GetTitle());
+            WindowLogin login = new WindowLogin(ServiceData.GetInstance().GetTitle(), Static.Version);
             login.LoginViewModel.PasswordCorrect += LoginPasswordCorrect;
             login.LoginViewModel.CloseMainWindow += CloseMainWindow;
             this.Hide();
             login.LoginViewModel.Create();
         }
 
+        private void User()
+        {
+            WindowUser window = new WindowUser(null);
+            window.ShowDialog();
+        }
+
         private void LoginPasswordCorrect(User user)
         {
             //EventsBase.GetInstance().CreateControlEvents(OpcList.System);
+
             SelUser.GetInstance().SetSelUser(user);
 
             if (!_isLoad)
@@ -127,22 +129,13 @@ namespace _2048_Rbu
                 _elScreen.Initialize(_logger);
                 ScreenGrid.Children.Add(_elScreen);
                 _elScreen.Visibility = Visibility.Visible;
+                _elScreen.LoginClick += Login;
+                _elScreen.UserClick += User;
                 _isLoad = true;
                 //EventsBase.GetInstance().GetControlEvents(OpcServer.OpcList.Rbu).AddEvent("Программа управления открыта", SystemEventType.Message);
             }
-
+            _elScreen.ViewModelScreenRbu.GetUserPermit();
             this.Show();
-        }
-
-        private void Login_OnClick(object sender, RoutedEventArgs e)
-        {
-            Login();
-        }
-
-        private void Users_OnClick(object sender, RoutedEventArgs e)
-        {
-            //WindowUser window = new WindowUser(_systemEvents);
-            //window.ShowDialog();
         }
 
         private void CloseMainWindow()

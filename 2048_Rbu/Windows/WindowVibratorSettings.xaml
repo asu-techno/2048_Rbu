@@ -5,25 +5,33 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:settings="clr-namespace:_2048_Rbu.Elements.Settings"
         mc:Ignorable="d"
-        Title="Настройки работы вибраторов" SizeToContent="WidthAndHeight" MaxWidth="1500" Background="LightGray" ResizeMode="NoResize" WindowState="Normal">
+        Title="Настройки работы вибраторов" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen" MaxWidth="1200" Background="LightGray" ResizeMode="NoResize" WindowState="Normal">
     <StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0" Background="LightGray">
-        <TextBlock Text="Вибраторы цемента" FontSize="18" FontWeight="Bold" TextAlignment="Center" Margin="0,5,0,0"/>
-        <WrapPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5">
-            <settings:ElVibratorSettings x:Name="ElVibratorM6"/>
-            <settings:ElVibratorSettings x:Name="ElVibratorM7"/>
-            <settings:ElVibratorSettings x:Name="ElVibratorM8"/>
-        </WrapPanel>
-        <TextBlock Text="Вибраторы интертных материалов" FontSize="18" FontWeight="Bold" TextAlignment="Center"/>
-        <WrapPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5">
-            <settings:ElVibratorSettings x:Name="ElVibratorM91"/>
-            <settings:ElVibratorSettings x:Name="ElVibratorM92"/>
-            <settings:ElVibratorSettings x:Name="ElVibratorM101"/>
-            <settings:ElVibratorSettings x:Name="ElVibratorM102"/>
-            <settings:ElVibratorSettings x:Name="ElVibratorM111"/>
-            <settings:ElVibratorSettings x:Name="ElVibratorM112"/>
-            <settings:ElVibratorSettings x:Name="ElVibratorM121"/>
-            <settings:ElVibratorSettings x:Name="ElVibratorM122"/>
-        </WrapPanel>
+        <StackPanel Name="VibratorsParameter" Visibility="Collapsed" Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Center">
+            <TextBlock Text="Вибраторы цемента" FontSize="18" FontWeight="Bold" TextAlignment="Center" Margin="0,5,0,0"/>
+            <WrapPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5">
+                <settings:ElVibratorSettings x:Name="ElVibratorM13"/>
+                <settings:ElVibratorSettings x:Name="ElVibratorM14"/>
+                <settings:ElVibratorSettings x:Name="ElVibratorM10"/>
+            </WrapPanel>
+            <TextBlock Text="Вибраторы интертных материалов" FontSize="18" FontWeight="Bold" TextAlignment="Center"/>
+            <WrapPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5">
+                <settings:ElVibratorSettings x:Name="ElVibratorM2"/>
+                <settings:ElVibratorSettings x:Name="ElVibratorM3"/>
+                <settings:ElVibratorSettings x:Name="ElVibratorM4"/>
+                <settings:ElVibratorSettings x:Name="ElVibratorM5"/>
+                <settings:ElVibratorSettings x:Name="ElVibratorM6"/>
+                <settings:ElVibratorSettings x:Name="ElVibratorM7"/>
+                <!--<settings:ElVibratorSettings x:Name="ElVibratorM121"/>
+                <settings:ElVibratorSettings x:Name="ElVibratorM122"/>-->
+            </WrapPanel>
+        </StackPanel>
+        <StackPanel Name="AeratorsParameter" Visibility="Collapsed" Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Center">
+            <TextBlock Text="Настройки работы аэраторов" FontSize="18" FontWeight="Bold" TextAlignment="Center"/>
+            <WrapPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5">
+                <settings:ElVibratorSettings x:Name="ElAeration1"/>
+                <settings:ElVibratorSettings x:Name="ElAeration2"/>
+            </WrapPanel>
+        </StackPanel>
     </StackPanel>
-    
 </Window>

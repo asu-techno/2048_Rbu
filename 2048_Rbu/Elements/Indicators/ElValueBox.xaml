@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             Visibility="{Binding Vis}" MouseEnter="Rect_OnMouseEnter" MouseLeave="Rect_OnMouseLeave" >
+             Visibility="{Binding Vis}" MouseEnter="Rect_OnMouseEnter" MouseLeave="Rect_OnMouseLeave">
     <Grid Height="Auto" Width="Auto">
         <Label Name="LblValue" Width="25" Height="25" BorderThickness="1" BorderBrush="Black" Background="LightGray" HorizontalContentAlignment="Center" HorizontalAlignment="Left">
             <Label.Content>
@@ -16,6 +16,6 @@
                 <TextBlock Name="TxtText" FontSize="16" Margin="-4,-4"></TextBlock>
             </Label.Content>
         </Label>
-        <Rectangle Name="RectObject" Fill="Transparent" StrokeThickness="0.5" Margin="-3,-2,-3,-3" Stroke="Black" Opacity="0" MouseLeftButtonUp="ElValueBox_OnMouseLeftButtonDown"/>
+        <Rectangle Name="RectObject" Fill="Transparent" StrokeThickness="0.5" Margin="-3" Stroke="Black" Opacity="0" MouseLeftButtonUp="ElValueBox_OnMouseLeftButtonDown" ToolTip="Контроль уровня"/>
     </Grid>
 </UserControl>

@@ -112,7 +112,7 @@ namespace _2048_Rbu.Handlers
             var taskQueueItems = TaskQueueItemsService.ListTaskQueueItems();
             if (taskQueueItems.Any())
             {
-                var taskQueueItem = taskQueueItems.OrderByDescending(x => x.Order).First();
+                var taskQueueItem = taskQueueItems.OrderBy(x => x.Order).First();
                 var task = TasksReader.GetById(taskQueueItem.Task.Id);
                 var recipe = RecipesReader.GetById(task.Recipe.Id);
                 var containers = CheckMaterials(recipe);

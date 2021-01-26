@@ -88,7 +88,7 @@
             <Border BorderBrush="Black" BorderThickness="1">
                 <Grid Background="Beige" Width="180">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="25"/>
+                        <RowDefinition MinHeight="25" Height="Auto"/>
                         <RowDefinition Height="35"/>
                         <RowDefinition Height="35"/>
                         <RowDefinition Height="Auto"/>
@@ -108,7 +108,9 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Name="TxtPopupName" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Black" FontWeight="Bold" FontSize="16" Text="Клапан"/>
+                    <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" FontSize="16">
+                        <TextBlock Name="TxtPopupName" TextAlignment="Center" TextWrapping="Wrap" Text="Клапан"/>
+                    </Label>
                     <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="4,0,0,0" TextAlignment="Left" Text="Состояние:"/>
                     <Label Grid.Row="1" Grid.Column="1" Width="75" Height="25" BorderBrush="Black" BorderThickness="1" Background="{Binding Brush}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" Content="{Binding Status}"/>
                     <Button Name="BtnManual" Grid.Row="2" Grid.Column="0" Width="75" Height="25" BorderBrush="Black" BorderThickness="1" Click="BtnManual_Click">

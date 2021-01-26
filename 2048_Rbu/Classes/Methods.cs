@@ -16,9 +16,9 @@ using AS_Library.Events.Classes;
 
 namespace _2048_Rbu.Classes
 {
-    class Methods
+    public class Methods
     {
-        public static void ButtonClick(object obj, object obj1, string tag, bool logic, string eventText = null, bool confirm = false)
+        public static void ButtonClick(object obj, object obj1, string tag, bool logic, string eventText = null)
         {
             if (Static.Link)
             {
@@ -31,7 +31,8 @@ namespace _2048_Rbu.Classes
                         //if (eventText != null)
                         //    EventsBase.GetInstance().GetControlEvents(OpcServer.OpcList.Rbu).AddEvent(eventText, SystemEventType.UserDoing);
                         if (err)
-                            MessageBox.Show("Возможно запись не прошла.\nПроверьте OPC-сервер или соответствующий тег", "Предупреждение");
+                            MessageBox.Show("Возможно запись не прошла.\nПроверьте OPC-сервер или соответствующий тег",
+                                "Предупреждение");
                     }
                     catch (Exception)
                     {
@@ -49,49 +50,62 @@ namespace _2048_Rbu.Classes
             }
         }
 
-        public static void ButtonClick(object obj, object obj1, string tag, float value, string eventText)
+        public static void ButtonClick(string tag, bool logic, string eventText = null)
         {
             if (Static.Link)
             {
-                if (Equals(obj, obj1))
+                try
                 {
-                    try
-                    {
-                        bool err;
-                        OpcServer.GetInstance().GetOpc(OpcServer.OpcList.Rbu).cl.WriteReal(tag, value, out err);
-                        //EventsBase.GetInstance().GetControlEvents(OpcServer.OpcList.Rbu).AddEvent(eventText, SystemEventType.UserDoing);
-                        if (err)
-                            MessageBox.Show("Возможно запись не прошла.\nПроверьте OPC-сервер или соответствующий тег", "Предупреждение");
-                    }
-                    catch (Exception)
-                    {
-                        MessageBox.Show("Запись не прошла. Повторите ввод", "Ошибка");
-                    }
+                    bool err;
+                    OpcServer.GetInstance().GetOpc(OpcServer.OpcList.Rbu).cl.WriteBool(tag, logic, out err);
+                    //if (eventText != null)
+                    //    EventsBase.GetInstance().GetControlEvents(OpcServer.OpcList.Rbu).AddEvent(eventText, SystemEventType.UserDoing);
+                    if (err)
+                        MessageBox.Show("Возможно запись не прошла.\nПроверьте OPC-сервер или соответствующий тег",
+                            "Предупреждение");
                 }
-                else
+                catch (Exception)
                 {
-                    MessageBox.Show("Ошибка проверки элемента", "Ошибка");
+                    MessageBox.Show("Запись не прошла. Повторите ввод", "Ошибка");
                 }
             }
             else
+
             {
                 MessageBox.Show("Нет связи с ПЛК", "Ошибка");
             }
         }
 
-        public static void SetParameter(object lbl, object lbl1, OpcServer.OpcList opcName, string name, double minVal, double maxVal, string parameter, string VariableType, Popup popup, int numStation, int digit)
+        public static void SetParameter(object lbl, object lbl1, OpcServer.OpcList opcName, string parameterName, double minValue, double maxValue, string opcTag, WindowSetParameter.ValueType valueType, Popup popup = null, int digit = 0, double? firstPrompt = null, double? secondPrompt = null, double? thirdPrompt = null, double? fourthPrompt = null, double? stepFeed = null)
         {
             if (Static.Link)
             {
                 if (Equals(lbl, lbl1))
                 {
-                    WindowSetParameter window = new WindowSetParameter(opcName, name, minVal, maxVal, parameter, VariableType, popup, numStation, digit);
+                    if (maxValue < minValue)
+                        maxValue = minValue;
+                    WindowSetParameter window = new WindowSetParameter(opcName, parameterName, minValue, maxValue, opcTag, valueType, popup, digit, firstPrompt, secondPrompt, thirdPrompt, fourthPrompt, stepFeed);
                     window.ShowDialog();
                 }
                 else
                 {
                     MessageBox.Show("Ошибка проверки элемента", "Ошибка");
                 }
+            }
+            else
+            {
+                MessageBox.Show("Нет связи с ПЛК", "Ошибка");
+            }
+        }
+
+        public static void SetParameter(OpcServer.OpcList opcName, string parameterName, double minValue, double maxValue, string opcTag, WindowSetParameter.ValueType valueType, Popup popup = null, int digit = 0, double? firstPrompt = null, double? secondPrompt = null, double? thirdPrompt = null, double? fourthPrompt = null, double? stepFeed = null)
+        {
+            if (Static.Link)
+            {
+                if (maxValue < minValue)
+                    maxValue = minValue;
+                WindowSetParameter window = new WindowSetParameter(opcName, parameterName, minValue, maxValue, opcTag, valueType, popup, digit, firstPrompt, secondPrompt, thirdPrompt, fourthPrompt, stepFeed);
+                window.ShowDialog();
             }
             else
             {

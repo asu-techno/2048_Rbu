@@ -4,11 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d"
-             d:DesignWidth="130" d:DesignHeight="220" MouseEnter="Rect_OnMouseEnter" MouseLeave="Rect_OnMouseLeave">
+             d:DesignWidth="183" d:DesignHeight="219" MouseEnter="Rect_OnMouseEnter" MouseLeave="Rect_OnMouseLeave">
     <Grid>
-        <Grid Name="ValveGrid" VerticalAlignment="Top" HorizontalAlignment="Left" Width="120" Height="190" Margin="5,25,5,0">
-            <Image Name="ImgOn" VerticalAlignment="Top" HorizontalAlignment="Left" Width="110" Height="180" Margin="5" Visibility="{Binding VisOn}" Source="../../Images/Mechs/img_Mixer_On.png"/>
-            <Image Name="ImgAlarm" VerticalAlignment="Top" HorizontalAlignment="Left" Width="110" Height="180" Margin="5" Visibility="{Binding VisAlarm}" Source="../../Images/Mechs/img_Mixer_Alarm.png"/>
+        <Grid Name="ValveGrid" VerticalAlignment="Top" HorizontalAlignment="Left" Width="173" Height="209" Margin="5,5,5,0">
+            <Image Name="ImgOn" VerticalAlignment="Top" HorizontalAlignment="Left" Width="163" Height="199" Margin="5" Visibility="{Binding VisOn}" Source="../../Images/Mechs/img_Mixer_On.png"/>
+            <Image Name="ImgAlarm" VerticalAlignment="Top" HorizontalAlignment="Left" Width="163" Height="199" Margin="5" Visibility="{Binding VisAlarm}" Source="../../Images/Mechs/img_Mixer_Alarm.png"/>
         </Grid>
         <TextBlock Name="tbc_name" FontSize="14" Text="МXXX" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,0" TextAlignment="Left" ></TextBlock>
         <Label Name="lbl_mode" Width="12" Height="12" BorderThickness="1" BorderBrush="Black" Background="Yellow" Margin="-70,0,0,0">
@@ -26,7 +26,7 @@
                 <TextBlock Text="Р" FontSize="10" Margin="-3,-7"></TextBlock>
             </Label.Content>
         </Label>
-        <Rectangle Name="rect_object" VerticalAlignment="Top" HorizontalAlignment="Left" Width="60" Height="60" Margin="35,25" StrokeThickness="0.5" Fill="Transparent" Stroke="Black" Opacity="0" MouseLeftButtonUp="ValveGrid_OnMouseRightButtonDown"/>
+        <Rectangle Name="rect_object" VerticalAlignment="Top" HorizontalAlignment="Left" Width="60" Height="60" Margin="62,5,0,0" StrokeThickness="0.5" Fill="Transparent" Stroke="Black" Opacity="0" MouseLeftButtonUp="ValveGrid_OnMouseRightButtonDown"/>
         <Popup Name="PopupObject" Placement="Bottom" StaysOpen="False">
             <Border BorderBrush="Black" BorderThickness="1">
                 <Grid Background="Beige" Width="180">

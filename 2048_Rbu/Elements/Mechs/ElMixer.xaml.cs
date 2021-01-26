@@ -12,6 +12,7 @@ using _2048_Rbu.Classes;
 using _2048_Rbu.Interfaces;
 using AS_Library.Annotations;
 using _2048_Rbu.Classes;
+using _2048_Rbu.Windows;
 using AS_Library.Events.Classes;
 using AS_Library.Link;
 using Opc.UaFx;
@@ -176,11 +177,11 @@ namespace _2048_Rbu.Elements.Mechs
             set
             {
                 if (value == Position.LeftUp)
-                    lbl_mode.Margin = new Thickness(0, 0, 62, 73);
+                    lbl_mode.Margin = new Thickness(0, 0, 60, 120);
                 if (value == Position.Up)
                     lbl_mode.Margin = new Thickness(0, -10, 5, 0);
                 if (value == Position.RightUp)
-                    lbl_mode.Margin = new Thickness(62, 0, 0, 23);
+                    lbl_mode.Margin = new Thickness(60, 0, 0, 180);
                 if (value == Position.Left)
                     lbl_mode.Margin = new Thickness(0, 0, 70, 0);
                 if (value == Position.Right)
@@ -210,7 +211,7 @@ namespace _2048_Rbu.Elements.Mechs
                 }
                 if (value == Position.Up)
                 {
-                    tbc_name.Margin = new Thickness(0, 10, 0, 0);
+                    tbc_name.Margin = new Thickness(0, 10, 80, 0);
                     tbc_name.HorizontalAlignment = HorizontalAlignment.Center;
                     tbc_name.TextAlignment = TextAlignment.Center;
                 }
@@ -280,7 +281,7 @@ namespace _2048_Rbu.Elements.Mechs
             set
             {
                 tbc_name.Text = value;
-                TxtPopupName.Text = value;
+                TxtPopupName.Text = "Бетоносмеситель " + value;
                 _nameObject = value;
             }
         }
@@ -365,31 +366,66 @@ namespace _2048_Rbu.Elements.Mechs
 
         private void HandleFreqChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
-            Freq = Math.Round(double.Parse(FreqPcay), 2).ToString(CultureInfo.InvariantCulture);
+            try
+            {
+                Freq = Math.Round(double.Parse(FreqPcay), 2).ToString(CultureInfo.InvariantCulture);
+            }
+            catch
+            {
+
+            }
         }
 
         private void HandleManualChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
-            _manualMode = bool.Parse(e.Item.Value.ToString());
-            VisMode();
+            try
+            {
+                _manualMode = bool.Parse(e.Item.Value.ToString());
+                VisMode();
+            }
+            catch
+            {
+
+            }
         }
 
         private void HandleAutomatChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
-            _automatMode = bool.Parse(e.Item.Value.ToString());
-            VisMode();
+            try
+            {
+                _automatMode = bool.Parse(e.Item.Value.ToString());
+                VisMode();
+            }
+            catch
+            {
+
+            }
         }
 
         private void HandleKmStatusChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
-            _onStatus = bool.Parse(e.Item.Value.ToString());
-            VisStatus();
+            try
+            {
+                _onStatus = bool.Parse(e.Item.Value.ToString());
+                VisStatus();
+            }
+            catch
+            {
+
+            }
         }
 
         private void HandleAlarmStatusChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
-            _alarmStatus = bool.Parse(e.Item.Value.ToString());
-            VisStatus();
+            try
+            {
+                _alarmStatus = bool.Parse(e.Item.Value.ToString());
+                VisStatus();
+            }
+            catch
+            {
+
+            }
         }
 
         void VisStatus()
@@ -488,7 +524,7 @@ namespace _2048_Rbu.Elements.Mechs
         {
             object btn = e.Source;
 
-            Methods.SetParameter(LblParam, btn, _opcName, "Частота мешалки " + _nameObject + ", Гц", 0, 50, FreqPcay, "Real", PopupObject, 0, 1);
+            Methods.SetParameter(LblParam, btn, _opcName, "Частота мешалки " + _nameObject + ", Гц", 0, 50, FreqPcay, WindowSetParameter.ValueType.Real, PopupObject, 1);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

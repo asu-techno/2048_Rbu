@@ -7,7 +7,7 @@
              xmlns:classes="clr-namespace:AsuBetonLibrary.Classes;assembly=AsuBetonLibrary"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance Type={x:Type local:ElQueueViewModel}, IsDesignTimeCreatable = False}"
-             Background="DarkGray" d:DesignHeight="300" d:DesignWidth="880" BorderThickness="1" BorderBrush="Black">
+             Background="DarkGray" d:DesignHeight="380" d:DesignWidth="1030" BorderThickness="1" BorderBrush="Black">
     <Grid Background="DarkGray">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -42,17 +42,17 @@
                             <TextBlock Text="№" TextAlignment="Center" TextWrapping="WrapWithOverflow"/>
                         </GridViewColumnHeader>
                     </GridViewColumn>
-                    <GridViewColumn Width="150" DisplayMemberBinding="{Binding Task.Customer.Name}">
+                    <GridViewColumn Width="200" DisplayMemberBinding="{Binding Task.Customer.Name}">
                         <GridViewColumnHeader Background="#fff5f5f5">
                             <TextBlock Text="Заказчик" TextAlignment="Center" TextWrapping="WrapWithOverflow"/>
                         </GridViewColumnHeader>
                     </GridViewColumn>
-                    <GridViewColumn Width="150" DisplayMemberBinding="{Binding Task.Recipe.Group.Name}">
+                    <GridViewColumn Width="200" DisplayMemberBinding="{Binding Task.Recipe.Group.Name}">
                         <GridViewColumnHeader Background="#fff5f5f5">
                             <TextBlock Text="Группа рецептов" TextAlignment="Center" TextWrapping="WrapWithOverflow"/>
                         </GridViewColumnHeader>
                     </GridViewColumn>
-                    <GridViewColumn Width="150" DisplayMemberBinding="{Binding Task.Recipe.Name}">
+                    <GridViewColumn Width="200" DisplayMemberBinding="{Binding Task.Recipe.Name}">
                         <GridViewColumnHeader Background="#fff5f5f5">
                             <TextBlock Text="Рецепт" TextAlignment="Center" TextWrapping="WrapWithOverflow"/>
                         </GridViewColumnHeader>

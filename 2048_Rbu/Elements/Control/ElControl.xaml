@@ -5,10 +5,10 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:indicators="clr-namespace:_2048_Rbu.Elements.Indicators"
       mc:Ignorable="d" 
-      Width="330" Height="175" Background="DarkGray" BorderThickness="1" BorderBrush="Black">
+      Width="384" Height="145" Background="DarkGray" BorderThickness="1" BorderBrush="Black">
     <Grid Background="DarkGray">
-        <TextBlock VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,10,0,0" TextAlignment="Center" FontSize="18" FontWeight="Bold" Text="Управление"/>
-        <Label VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,45,0,0" Width="160" Height="30" BorderBrush="Black" BorderThickness="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="16" Padding="0">
+        <TextBlock VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,2,0,0" TextAlignment="Center" FontSize="18" FontWeight="Bold" Text="Управление"/>
+        <Label VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,30,0,0" Width="160" Height="30" BorderBrush="Black" BorderThickness="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="16" Padding="0">
             <Label.Style>
                 <Style TargetType="{x:Type Label}">
                     <Setter Property="Content" Value="Остановлена"/>
@@ -22,7 +22,7 @@
                 </Style>
             </Label.Style>
         </Label>
-        <Label VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,45,0,0" Width="160" Height="30" BorderBrush="Black" BorderThickness="1" Background="Yellow" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="16" Padding="0" Content="Пауза">
+        <Label VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,30,0,0" Width="160" Height="30" BorderBrush="Black" BorderThickness="1" Background="Yellow" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="16" Padding="0" Content="Пауза">
             <Label.Style>
                 <Style TargetType="{x:Type Label}">
                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -34,7 +34,7 @@
                 </Style>
             </Label.Style>
         </Label>
-        <Button Name="BtnStart" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,90,150,0" Width="140" Height="30" BorderBrush="Black" BorderThickness="1" Background="#85fc84" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="16" FontWeight="Bold" Content="Пуск" Click="BtnStart_OnClick">
+        <Button Name="BtnStart" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,70,165,0" Width="160" Height="30" BorderBrush="Black" BorderThickness="1" Background="#85fc84" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="16" FontWeight="Bold" Content="Пуск" Click="BtnStart_OnClick">
             <Button.Style>
                 <Style TargetType="{x:Type Button}">
                     <Setter Property="IsEnabled" Value="False"/>
@@ -46,7 +46,7 @@
                 </Style>
             </Button.Style>
         </Button>
-        <Button Name="BtnStop" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="150,90,0,0" Width="140" Height="30" BorderBrush="Black" BorderThickness="1" Background="Salmon" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="16" FontWeight="Bold" Content="Стоп" Click="BtnStop_OnClick">
+        <Button Name="BtnStop" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="165,70,0,0" Width="160" Height="30" BorderBrush="Black" BorderThickness="1" Background="Salmon" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="16" FontWeight="Bold" Content="Стоп" Click="BtnStop_OnClick">
             <Button.Style>
                 <Style TargetType="{x:Type Button}">
                     <Setter Property="IsEnabled" Value="False"/>
@@ -58,7 +58,7 @@
                 </Style>
             </Button.Style>
         </Button>
-        <Button Name="BtnPause" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,130,0,0" Width="140" Height="30" BorderBrush="Black" BorderThickness="1" Background="Yellow" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="16" FontWeight="Bold" Content="Пауза" Click="BtnPause_OnClick">
+        <Button Name="BtnPause" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,105,0,0" Width="170" Height="30" BorderBrush="Black" BorderThickness="1" Background="Yellow" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="16" FontWeight="Bold" Content="Пауза" Click="BtnPause_OnClick">
             <Button.Style>
                 <Style TargetType="{x:Type Button}">
                     <Setter Property="IsEnabled" Value="False"/>

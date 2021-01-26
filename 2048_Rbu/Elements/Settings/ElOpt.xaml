@@ -1,14 +1,15 @@
 ﻿<UserControl x:Class="_2048_Rbu.Elements.Settings.ElOpt"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             Height="40" Width="550" Margin="0" >
+             Height="40" Width="550"
+             xml:lang="ru-RU">
     <Grid Background="Silver">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="440"/>
             <ColumnDefinition Width="110"/>
         </Grid.ColumnDefinitions>
-        <TextBlock Name="TxtName" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0" TextAlignment="Left" TextWrapping="Wrap" FontSize="14" Text="Параметры"/>
-        <Label Name="lbl_param" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Width="100" Height="32" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" FontSize="14" MouseLeftButtonDown="SetParam_MouseDown">
+        <TextBlock Name="TxtName" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0" TextAlignment="Left" TextWrapping="Wrap" FontSize="14" Text="{Binding ParameterName}"/>
+        <Label Name="LblParam" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Width="100" Height="32" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" FontSize="14" MouseLeftButtonDown="SetParam_MouseDown">
             <Label.Style>
                 <Style TargetType="{x:Type Label}">
                     <Setter Property="OverridesDefaultStyle" Value="True"/>

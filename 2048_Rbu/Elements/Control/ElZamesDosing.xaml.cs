@@ -6,6 +6,8 @@ using AS_Library.Link;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
+using System.Windows.Media;
 using _2048_Rbu.Classes;
 using _2048_Rbu.Interfaces;
 using AS_Library.Annotations;
@@ -47,12 +49,17 @@ namespace _2048_Rbu.Elements.Control
     public sealed class ViewModelDosing : UserControl, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-
+        private RecipesReader RecipesReader { get; set; } = new RecipesReader();
+        private ContainersReader ContainersReader { get; set; } = new ContainersReader();
+        private ObservableCollection<ApiRecipeMaterial> _materials;
+        private ObservableCollection<ApiContainer> _containers;
+        static object lockerValue = new object();
         private OPC_client _opc;
         private OpcServer.OpcList _opcName;
         private long _id, _currentId;
+        private string[,] _materialTags;
 
-        private int _tempCurrentBatchNum, _tempBatchesQuantity; 
+        private int _tempCurrentBatchNum, _tempBatchesQuantity;
         private double _tempDosingProcess;
 
         public ViewModelDosing(OpcServer.OpcList opcName)
@@ -86,6 +93,11 @@ namespace _2048_Rbu.Elements.Control
             var dosingProcessItem = new OpcMonitoredItem(_opc.cl.GetNode("CommonProgress"), OpcAttribute.Value);
             dosingProcessItem.DataChangeReceived += HandleDosingProcessChanged;
             OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(dosingProcessItem);
+
+            var componentWights = new OpcMonitoredItem(_opc.cl.GetNode("ComponentsWeight"), OpcAttribute.Value);
+            componentWights.DataChangeReceived += HandleComponentsWeightChanged;
+            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(componentWights);
+
         }
 
         private void HandleIdChanged(object sender, OpcDataChangeReceivedEventArgs e)
@@ -136,20 +148,20 @@ namespace _2048_Rbu.Elements.Control
             }
         }
 
+        private void HandleComponentsWeightChanged(object sender, OpcDataChangeReceivedEventArgs e)
+        {
+            try
+            {
+                ComponentsWeight = double.Parse(e.Item.Value.ToString());
+            }
+            catch (Exception exception)
+            {
+            }
+        }
+
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        private string _selTaskName;
-        public string SelTaskName
-        {
-            get { return _selTaskName; }
-            set
-            {
-                _selTaskName = value;
-                OnPropertyChanged(nameof(SelTaskName));
-            }
         }
 
         private int? _currentBatchNum;
@@ -185,34 +197,282 @@ namespace _2048_Rbu.Elements.Control
             }
         }
 
-        public void GetTable()
+        private double _componentsWeight;
+        public double ComponentsWeight
         {
-            if (_id != 0)
+            get { return _componentsWeight; }
+            set
             {
-                BatchesQuantity = _tempBatchesQuantity;
-                CurrentBatchNum = _tempCurrentBatchNum;
-                DosingProcess = _tempDosingProcess;
-                if (_id != _currentId)
+                _componentsWeight = value;
+                OnPropertyChanged(nameof(ComponentsWeight));
+            }
+        }
+
+        private ObservableCollection<ViewDosingTask> _dosingTask;
+        public ObservableCollection<ViewDosingTask> DosingTask
+        {
+            get { return _dosingTask; }
+            set
+            {
+                _dosingTask = value;
+                OnPropertyChanged(nameof(DosingTask));
+            }
+        }
+
+        public async void GetTable()
+        {
+            await Task.Run(() =>
+            {
+                lock (lockerValue)
                 {
                     try
                     {
-                        SelTaskName = ViewModelTabl.SelTaskName;
-                        _currentId = _id;
+                        if (_id != 0)
+                        {
+                            if (_id != _currentId || ViewModelTabl.CurrentSelTask == null)
+                            {
+                                GetMaterials();
+                                _currentId = _id;
+                            }
+                            if ((_tempCurrentBatchNum != CurrentBatchNum) || (_tempCurrentBatchNum != 0 && CurrentBatchNum == null))
+                                GetTags();
+                            CurrentBatchNum = _tempCurrentBatchNum;
+                            BatchesQuantity = _tempBatchesQuantity;
+                            DosingProcess = _tempDosingProcess;
+
+                            GetValue();
+                        }
+                        else
+                        {
+                            DosingTask = null;
+                            BatchesQuantity = null;
+                            CurrentBatchNum = null;
+                            DosingProcess = null;
+                            _currentId = _id;
+                        }
                     }
                     catch (Exception ex)
                     {
-                        System.IO.File.WriteAllText(@"Log\log.txt", DateTime.Now + " - " + ex.Message + "->" + _id);
+                        System.IO.File.AppendAllText(@"log.txt", DateTime.Now + " - " + ex.Message + "->" + _id);
+                    }
+                }
+            });
+        }
+
+        private void GetMaterials()
+        {
+            if (ViewModelTabl.CurrentSelTask != null)
+            {
+                var recipes = new ObservableCollection<ApiRecipe>(RecipesReader.ListRecipes());
+                var selRecipe = recipes.FirstOrDefault(x => x.Id == ViewModelTabl.CurrentSelTask.Recipe.Id);
+                _materials = new ObservableCollection<ApiRecipeMaterial>(selRecipe.RecipeMaterials);
+                _containers = new ObservableCollection<ApiContainer>(ContainersReader.ListContainers());
+
+                DosingTask = new ObservableCollection<ViewDosingTask>();
+                _materialTags = new string[_materials.Count, 4];
+
+                for (int i = 0; i < _materials.Count; i++)
+                {
+                    DosingTask.Add(new ViewDosingTask());
+
+                    if (_materials[i].Material.Name != null)
+                        DosingTask[i].MaterialName = _materials[i].Material.Name;
+                    else
+                        DosingTask[i].MaterialName = "";
+                }
+            }
+        }
+
+        private void GetTags()
+        {
+            if (ViewModelTabl.CurrentSelTask != null && _materials != null)
+            {
+                for (int i = 0; i < _materials.Count; i++)
+                {
+                    var selContainer = _containers.FirstOrDefault(x => x.CurrentMaterial?.Id == _materials[i].Material.Id);
+                    if (selContainer != null)
+                    {
+                        switch (selContainer.Id)
+                        {
+                            case 1:
+                                _materialTags[i, 0] = "PAR_Inert_Bunker_1_set";
+                                _materialTags[i, 1] = "Reports[1].Batches[" + _tempCurrentBatchNum +
+                                                      "].Batcher_inert.Bunker1.Dozing_DozedValue";
+                                _materialTags[i, 2] = "Progress_Components[6]";
+                                _materialTags[i, 3] = "InertDozing.Tank_1_ON";
+                                break;
+                            case 2:
+                                _materialTags[i, 0] = "PAR_Inert_Bunker_2_set";
+                                _materialTags[i, 1] = "Reports[1].Batches[" + _tempCurrentBatchNum +
+                                                      "].Batcher_inert.Bunker2.Dozing_DozedValue";
+                                _materialTags[i, 2] = "Progress_Components[7]";
+                                _materialTags[i, 3] = "InertDozing.Tank_2_ON";
+                                break;
+                            case 3:
+                                _materialTags[i, 0] = "PAR_Inert_Bunker_3_set";
+                                _materialTags[i, 1] = "Reports[1].Batches[" + _tempCurrentBatchNum +
+                                                      "].Batcher_inert.Bunker3.Dozing_DozedValue";
+                                _materialTags[i, 2] = "Progress_Components[8]";
+                                _materialTags[i, 3] = "InertDozing.Tank_3_ON";
+                                break;
+                            case 4:
+                                _materialTags[i, 0] = "PAR_Inert_Bunker_4_set";
+                                _materialTags[i, 1] = "Reports[1].Batches[" + _tempCurrentBatchNum +
+                                                      "].Batcher_inert.Bunker4.Dozing_DozedValue";
+                                _materialTags[i, 2] = "Progress_Components[9]";
+                                _materialTags[i, 3] = "InertDozing.Tank_4_ON";
+                                break;
+                            case 5:
+                                _materialTags[i, 0] = "PAR_Cement_Silos_1_set";
+                                _materialTags[i, 1] = "Reports[1].Batches[" + _tempCurrentBatchNum +
+                                                      "].Batcher_cement.Silos1.Dozing_DozedValue";
+                                _materialTags[i, 2] = "Progress_Components[3]";
+                                _materialTags[i, 3] = "CementDozing.Silo_1_ON";
+                                break;
+                            case 6:
+                                _materialTags[i, 0] = "PAR_Cement_Silos_2_set";
+                                _materialTags[i, 1] = "Reports[1].Batches[" + _tempCurrentBatchNum +
+                                                      "].Batcher_cement.Silos2.Dozing_DozedValue";
+                                _materialTags[i, 2] = "Progress_Components[4]";
+                                _materialTags[i, 3] = "CementDozing.Silo_2_ON";
+                                break;
+                            case 7:
+                                _materialTags[i, 0] = "Reports[1].Batches[" + _tempCurrentBatchNum +
+                                                      "].Batcher_water.Water.Dozing_SetValue";
+                                _materialTags[i, 1] = "Reports[1].Batches[" + _tempCurrentBatchNum +
+                                                      "].Batcher_water.Water.Dozing_DozedValue";
+                                _materialTags[i, 2] = "Progress_Components[5]";
+                                _materialTags[i, 3] = "DozingWater_ON";
+                                break;
+                            case 8:
+                                _materialTags[i, 0] = "PAR_Additive_Tank_1_set";
+                                _materialTags[i, 1] = "Reports[1].Batches[" + _tempCurrentBatchNum +
+                                                      "].Batcher_add.Tank1.Dozing_DozedValue";
+                                _materialTags[i, 2] = "Progress_Components[1]";
+                                _materialTags[i, 3] = "AdditiveDozing.Tank_1_ON";
+                                break;
+                            case 9:
+                                _materialTags[i, 0] = "PAR_Additive_Tank_2_set";
+                                _materialTags[i, 1] = "Reports[1].Batches[" + _tempCurrentBatchNum +
+                                                      "].Batcher_add.Tank2.Dozing_DozedValue";
+                                _materialTags[i, 2] = "Progress_Components[2]";
+                                _materialTags[i, 3] = "AdditiveDozing.Tank_2_ON";
+                                break;
+                            default:
+                                _materialTags[i, 0] = "";
+                                _materialTags[i, 1] = "";
+                                _materialTags[i, 2] = "";
+                                _materialTags[i, 3] = "";
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        _materialTags[i, 0] = "";
+                        _materialTags[i, 1] = "";
+                        _materialTags[i, 2] = "";
+                        _materialTags[i, 3] = "";
                     }
                 }
             }
-            else
+        }
+
+        public void GetValue()
+        {
+            if (ViewModelTabl.CurrentSelTask != null && _tempCurrentBatchNum != 0 && _materials != null)
             {
-                SelTaskName = null;
-                BatchesQuantity = null;
-                CurrentBatchNum = null;
-                DosingProcess = null;
-                _currentId = _id;
+                for (int i = 0; i < _materials.Count; i++)
+                {
+                    DosingTask[i].SetValue = Math.Round(_opc.cl.ReadReal(_materialTags[i, 0], out var errSet), 1).ToString("F1");
+                    DosingTask[i].CurrentValue = Math.Round(_opc.cl.ReadReal(_materialTags[i, 1], out var errCurrent), 1).ToString("F1");
+                    DosingTask[i].CurrentProgress = _opc.cl.ReadReal(_materialTags[i, 2], out var errProgress);
+                    DosingTask[i].InProgress = _opc.cl.ReadBool(_materialTags[i, 3], out var errInProgress);
+                    if (errSet)
+                        DosingTask[i].SetValue = "";
+                    if (errCurrent)
+                        DosingTask[i].CurrentValue = "";
+                    if (errProgress)
+                        DosingTask[i].CurrentProgress = 0;
+
+                    DosingTask[i].ProgressDone = DosingTask[i].CurrentProgress == ComponentsWeight || DosingProcess == 100.0;
+                }
             }
+        }
+    }
+
+    public sealed class ViewDosingTask : INotifyPropertyChanged
+    {
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private double _currentProgress;
+        public double CurrentProgress
+        {
+            get { return _currentProgress; }
+            set
+            {
+                _currentProgress = value;
+                OnPropertyChanged(nameof(CurrentProgress));
+            }
+        }
+
+        private bool _progressDone;
+        public bool ProgressDone
+        {
+            get { return _progressDone; }
+            set
+            {
+                _progressDone = value;
+                OnPropertyChanged(nameof(ProgressDone));
+            }
+        }
+
+        private bool _inProgress;
+        public bool InProgress
+        {
+            get { return _inProgress; }
+            set
+            {
+                _inProgress = value;
+                OnPropertyChanged(nameof(InProgress));
+            }
+        }
+
+        private string _materialName;
+        public string MaterialName
+        {
+            get { return _materialName; }
+            set
+            {
+                _materialName = value;
+                OnPropertyChanged(nameof(MaterialName));
+            }
+        }
+
+        private string _setValue;
+        public string SetValue
+        {
+            get { return _setValue; }
+            set
+            {
+                _setValue = value;
+                OnPropertyChanged(nameof(SetValue));
+            }
+        }
+
+        private string _currentValue;
+        public string CurrentValue
+        {
+            get { return _currentValue; }
+            set
+            {
+                _currentValue = value;
+                OnPropertyChanged(nameof(CurrentValue));
+            }
+        }
+
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

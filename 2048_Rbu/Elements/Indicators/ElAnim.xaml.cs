@@ -21,10 +21,11 @@ namespace _2048_Rbu.Elements.Indicators
     {
         private OPC_client _opc;
         private OpcServer.OpcList _opcName;
-        public enum Environment { Solution, Water, Inert, Cement}
+        public enum Environment { Solution, Water, Inert, Cement }
+
+        private bool _on, _onSecond;
 
         private Visibility _visSens;
-
         public Visibility VisSens
         {
             get
@@ -40,7 +41,7 @@ namespace _2048_Rbu.Elements.Indicators
 
         #region MyRegion
 
-        public string Prefix { get; set; }
+        public string OnSecondPcy { get; set; }
         public string OnPcy { get; set; }
         public bool Logic { get; set; }
 
@@ -97,14 +98,35 @@ namespace _2048_Rbu.Elements.Indicators
         private void CreateSubscription()
         {
             _opc = OpcServer.GetInstance().GetOpc(_opcName);
-            var visItem = new OpcMonitoredItem(_opc.cl.GetNode(Prefix + OnPcy), OpcAttribute.Value);
+            var visItem = new OpcMonitoredItem(_opc.cl.GetNode(OnPcy), OpcAttribute.Value);
             visItem.DataChangeReceived += HandleVisChanged;
             OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(visItem);
+            if (OnSecondPcy != null)
+            {
+                var visSecondItem = new OpcMonitoredItem(_opc.cl.GetNode(OnSecondPcy), OpcAttribute.Value);
+                visSecondItem.DataChangeReceived += HandleVisSecondChanged;
+                OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(visSecondItem);
+            }
         }
 
         private void HandleVisChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
-            VisSens = (bool.Parse(e.Item.Value.ToString()) == Logic) ? Visibility.Visible : Visibility.Collapsed;
+            _on = bool.Parse(e.Item.Value.ToString());
+            GetVis();
+        }
+
+        private void HandleVisSecondChanged(object sender, OpcDataChangeReceivedEventArgs e)
+        {
+            _onSecond = bool.Parse(e.Item.Value.ToString());
+            GetVis();
+        }
+
+        private void GetVis()
+        {
+            if (OnSecondPcy == null)
+                VisSens = _on == Logic ? Visibility.Visible : Visibility.Collapsed;
+            else
+                VisSens = _on == Logic && _onSecond == Logic ? Visibility.Visible : Visibility.Collapsed;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

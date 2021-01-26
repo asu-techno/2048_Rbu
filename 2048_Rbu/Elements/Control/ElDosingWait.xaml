@@ -7,6 +7,13 @@
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance Type={x:Type local:ElDosingWait}, IsDesignTimeCreatable=False}"
              Width="200" MinHeight="90" BorderBrush="Black" BorderThickness="1" Background="DarkGray">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../Resources/Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <UserControl.Style>
         <Style TargetType="{x:Type UserControl}">
             <Setter Property="Visibility" Value="Collapsed" />
@@ -22,6 +29,6 @@
         <Label VerticalAlignment="Top" HorizontalAlignment="Center" Width="175" Height="30" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="0,3,0,0" BorderThickness="1" BorderBrush="Black" Background="Yellow" FontSize="16">
             <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="ожидание..."/>
         </Label>
-        <Button Name="BtnContinue" VerticalAlignment="Top" HorizontalAlignment="Center" Width="150" Height="28" Margin="0,5,0,3" BorderThickness="1" BorderBrush="Black" Background="LightBlue" FontSize="14" Content="Продолжить" Click="BtnContinue_OnClick"/>
+        <Button Name="BtnContinue" Style="{StaticResource PressButton}" VerticalAlignment="Top" HorizontalAlignment="Center" Width="150" Height="28" Margin="0,5,0,3" BorderThickness="1" BorderBrush="Black" Background="LightBlue" FontSize="14" Content="Продолжить" Click="BtnContinue_OnClick"/>
     </StackPanel>
 </UserControl>

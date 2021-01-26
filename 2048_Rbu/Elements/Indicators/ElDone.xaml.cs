@@ -19,9 +19,9 @@ namespace _2048_Rbu.Elements.Indicators
     {
         private OpcServer.OpcList _opcName;
         private string _readVal;
-        private SolidColorBrush _brush;
         private OPC_client _opc;
 
+        private SolidColorBrush _brush;
         public SolidColorBrush Brush
         {
             get { return _brush; }
@@ -74,7 +74,7 @@ namespace _2048_Rbu.Elements.Indicators
 
         private void HandleVisChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
-            Brush = bool.Parse(e.Item.Value.ToString()) ? (SolidColorBrush)(new BrushConverter().ConvertFrom("##FF85FC84")) : Brushes.White;
+            Brush = bool.Parse(e.Item.Value.ToString()) ? (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF85FC84")) : Brushes.White;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

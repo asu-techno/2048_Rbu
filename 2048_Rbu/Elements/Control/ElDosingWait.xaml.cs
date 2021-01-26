@@ -25,9 +25,6 @@ namespace _2048_Rbu.Elements.Control
     {
         private OPC_client _opc;
         private OpcServer.OpcList _opcName;
-        private ContainersReader ContainersReader { get; set; } = new ContainersReader();
-
-        string _materialName;
 
         private bool _vis;
         public bool Vis
@@ -59,10 +56,7 @@ namespace _2048_Rbu.Elements.Control
 
         public string TagContainer { get; set; }
         public string NameContainer { get; set; }
-        public long ContainerId { get; set; }
-
-        private ObservableCollection<ApiContainer> _containers;
-        private ApiContainer _selContainer;
+        public Static.ContainerItem ContainerItem { get; set; }
 
         public ElDosingWait()
         {
@@ -72,24 +66,7 @@ namespace _2048_Rbu.Elements.Control
         public void Initialize(OpcServer.OpcList opcName)
         {
             _opcName = opcName;
-
-            try
-            {
-                if (ContainerId != 0)
-                {
-                    GetNameMaterial();
-                    DosingName = _materialName != null ? _selContainer.Name + ". " + _materialName + ". Дозирование" : _selContainer?.Name + ". Дозирование";
-                }
-                else
-                {
-                    DosingName = NameContainer != null ? NameContainer : "Дозирование";
-                }
-            }
-            catch (Exception exception)
-            {
-                DosingName = NameContainer != null ? NameContainer : "Дозирование";
-            }
-
+            
             DataContext = this;
         }
 
@@ -114,17 +91,30 @@ namespace _2048_Rbu.Elements.Control
             try
             {
                 Vis = bool.Parse(e.Item.Value.ToString());
+                GetName();
             }
             catch (Exception exception)
             {
             }
         }
 
-        private void GetNameMaterial()
+        private void GetName()
         {
-            _containers = new ObservableCollection<ApiContainer>(ContainersReader.ListContainers());
-            _selContainer = _containers.FirstOrDefault(x => x.Id == ContainerId);
-            _materialName = _selContainer.CurrentMaterial?.Name;
+            try
+            {
+                if (ContainerItem != 0)
+                {
+                    DosingName = Static.СontainerNameDictionary[ContainerItem] + " (" + Static.СontainerMaterialDictionary[ContainerItem] + ")" + ". Дозирование";
+                }
+                else
+                {
+                    DosingName = NameContainer != null ? NameContainer : "Дозирование";
+                }
+            }
+            catch (Exception exception)
+            {
+                DosingName = NameContainer != null ? NameContainer : "Дозирование";
+            }
         }
 
         private void BtnContinue_OnClick(object sender, RoutedEventArgs e)

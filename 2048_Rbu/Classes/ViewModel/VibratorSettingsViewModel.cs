@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows.Input;
+using _2048_Rbu.Windows;
 using AS_Library.Classes;
 using AS_Library.Link;
 using AsuBetonLibrary.Abstract;
@@ -13,7 +14,7 @@ using AsuBetonLibrary.Readers;
 using Opc.UaFx;
 using Opc.UaFx.Client;
 
-namespace _2048_Rbu.Classes
+namespace _2048_Rbu.Classes.ViewModel
 {
     public class VibratorSettingsViewModel : INotifyPropertyChanged
     {
@@ -21,17 +22,19 @@ namespace _2048_Rbu.Classes
 
         public enum VibratorSettingsItem
         {
+            M13,
+            M14,
+            M10,
+            M2,
+            M3,
+            M4,
+            M5,
             M6,
             M7,
-            M8,
-            M91,
-            M92,
-            M101,
-            M102,
-            M111,
-            M112,
             M121,
-            M122
+            M122,
+            Aeration1,
+            Aeration2
         }
 
         private OPC_client _opc;
@@ -45,49 +48,57 @@ namespace _2048_Rbu.Classes
 
             switch (vibratorSettingsItem)
             {
+                case VibratorSettingsItem.M13:
+                    _tagVibro = "M_13";
+                    NameVibro = "Вибратор M-13 (Силос 1)";
+                    break;
+                case VibratorSettingsItem.M14:
+                    _tagVibro = "M_14";
+                    NameVibro = "Вибратор M-14 (Силос 2)";
+                    break;
+                case VibratorSettingsItem.M10:
+                    _tagVibro = "M_10";
+                    NameVibro = "Вибратор M-10 (Дозатор цемента)";
+                    break;
+                case VibratorSettingsItem.M2:
+                    _tagVibro = "M_2";
+                    NameVibro = "Вибратор M-2 (Бункер 1)";
+                    break;
+                case VibratorSettingsItem.M3:
+                    _tagVibro = "M_3";
+                    NameVibro = "Вибратор M-3 (Бункер 1)";
+                    break;
+                case VibratorSettingsItem.M4:
+                    _tagVibro = "M_4";
+                    NameVibro = "Вибратор M-4 (Бункер 2)";
+                    break;
+                case VibratorSettingsItem.M5:
+                    _tagVibro = "M_5";
+                    NameVibro = "Вибратор M-5 (Бункер 2)";
+                    break;
                 case VibratorSettingsItem.M6:
                     _tagVibro = "M_6";
-                    NameVibro = "Вибратор М-6 (Силос 1)";
+                    NameVibro = "Вибратор M-6 (Бункер 3)";
                     break;
                 case VibratorSettingsItem.M7:
                     _tagVibro = "M_7";
-                    NameVibro = "Вибратор М-7 (Силос 2)";
-                    break;
-                case VibratorSettingsItem.M8:
-                    _tagVibro = "M_8";
-                    NameVibro = "Вибратор М-8 (Дозатор цемента)";
-                    break;
-                case VibratorSettingsItem.M91:
-                    _tagVibro = "M_9_1";
-                    NameVibro = "Вибратор М-9-1 (Бункер 1)";
-                    break;
-                case VibratorSettingsItem.M92:
-                    _tagVibro = "M_9_2";
-                    NameVibro = "Вибратор М-9-2 (Бункер 1)";
-                    break;
-                case VibratorSettingsItem.M101:
-                    _tagVibro = "M_10_1";
-                    NameVibro = "Вибратор М-10-1 (Бункер 2)";
-                    break;
-                case VibratorSettingsItem.M102:
-                    _tagVibro = "M_10_2";
-                    NameVibro = "Вибратор М-10-2 (Бункер 2)";
-                    break;
-                case VibratorSettingsItem.M111:
-                    _tagVibro = "M_11_1";
-                    NameVibro = "Вибратор М-11-1 (Бункер 3)";
-                    break;
-                case VibratorSettingsItem.M112:
-                    _tagVibro = "M_11_2";
-                    NameVibro = "Вибратор М-11-2 (Бункер 3)";
+                    NameVibro = "Вибратор M-7 (Бункер 3)";
                     break;
                 case VibratorSettingsItem.M121:
                     _tagVibro = "M_12_1";
-                    NameVibro = "Вибратор М-12-1 (Бункер 4)";
+                    NameVibro = "Вибратор M-12-1 (Бункер 4)";
                     break;
                 case VibratorSettingsItem.M122:
                     _tagVibro = "M_12_2";
-                    NameVibro = "Вибратор М-12-2 (Бункер 4)";
+                    NameVibro = "Вибратор M-12-2 (Бункер 4)";
+                    break;
+                case VibratorSettingsItem.Aeration1:
+                    _tagVibro = "Air_Cement1";
+                    NameVibro = "Аэратор силоса цемента 1";
+                    break;
+                case VibratorSettingsItem.Aeration2:
+                    _tagVibro = "Air_Cement2";
+                    NameVibro = "Аэратор силоса цемента 2";
                     break;
             }
 
@@ -111,7 +122,7 @@ namespace _2048_Rbu.Classes
         private void CreateSubscription()
         {
             _opc = OpcServer.GetInstance().GetOpc(_opcName);
-            var activeVibroItem = new OpcMonitoredItem(_opc.cl.GetNode(_tagVibro+ ".Active"), OpcAttribute.Value);
+            var activeVibroItem = new OpcMonitoredItem(_opc.cl.GetNode(_tagVibro + ".Active"), OpcAttribute.Value);
             activeVibroItem.DataChangeReceived += HandleActiveVibroChanged;
             OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(activeVibroItem);
 
@@ -212,10 +223,10 @@ namespace _2048_Rbu.Classes
             {
                 return _setActiveVibro ??= new RelayCommand((o) =>
                 {
-                    if (!_opc.cl.ReadBool(_tagVibro+ ".Active", out var err))
-                        Methods.ButtonClick(null, null, _tagVibro+ ".Active", true, NameVibro + ". Активен");
+                    if (!_opc.cl.ReadBool(_tagVibro + ".Active", out var err))
+                        Methods.ButtonClick(_tagVibro + ".Active", true, NameVibro + ". Активен");
                     else
-                        Methods.ButtonClick(null, null, _tagVibro + ".Active", false, NameVibro + ". Не активен");
+                        Methods.ButtonClick(_tagVibro + ".Active", false, NameVibro + ". Не активен");
                 });
             }
         }
@@ -227,7 +238,7 @@ namespace _2048_Rbu.Classes
             {
                 return _setOnQuantity ??= new RelayCommand((o) =>
                 {
-                    Methods.SetParameter(null, null, _opcName, NameVibro+". Количество включений", 0, 10, _tagVibro+ ".Work_Count", "Int16", null, 0, 0);
+                    Methods.SetParameter(_opcName, NameVibro + ". Количество включений", 0, 10, _tagVibro + ".Work_Count", WindowSetParameter.ValueType.Int16, null, 0, 0, 1, 3, 5, 1);
                 });
             }
         }
@@ -239,7 +250,7 @@ namespace _2048_Rbu.Classes
             {
                 return _setOnTime ??= new RelayCommand((o) =>
                 {
-                    Methods.SetParameter(null, null, _opcName, NameVibro+". Длительность включений, с", 0.0, 10.0, _tagVibro + ".Work_Time", "Real", null, 0, 1);
+                    Methods.SetParameter(_opcName, NameVibro + ". Длительность включений, с", 0.0, 10.0, _tagVibro + ".Work_Time", WindowSetParameter.ValueType.Real, null, 1, 0.5, 1.0, 2.0, 5.0, 1.0);
                 });
             }
         }
@@ -251,7 +262,7 @@ namespace _2048_Rbu.Classes
             {
                 return _setPauseTime ??= new RelayCommand((o) =>
                 {
-                    Methods.SetParameter(null, null, _opcName, NameVibro + ". Длительность паузы, с", 0.0, 10.0, _tagVibro + ".Pause_Time", "Real", null, 0, 1);
+                    Methods.SetParameter(_opcName, NameVibro + ". Длительность паузы, с", 0.0, 10.0, _tagVibro + ".Pause_Time", WindowSetParameter.ValueType.Real, null, 1, 0.5, 1.0, 2.0, 5.0, 1.0);
                 });
             }
         }

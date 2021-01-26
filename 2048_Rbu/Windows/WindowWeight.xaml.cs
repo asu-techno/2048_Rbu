@@ -18,8 +18,6 @@ namespace _2048_Rbu.Windows
     public partial class WindowWeight : INotifyPropertyChanged
     {
         OpcServer.OpcList _opcName;
-        public delegate void CloseHandler();
-        public event CloseHandler StopUpdate;
         private OPC_client _opc;
         private bool _err;
         private string _materialName;
@@ -58,34 +56,6 @@ namespace _2048_Rbu.Windows
             {
                 _modeUseWeight = value;
                 OnPropertyChanged(nameof(ModeUseWeight));
-            }
-        }
-
-        private bool _btnClickDosing;
-        public bool BtnClickDosing
-        {
-            get
-            {
-                return _btnClickDosing;
-            }
-            set
-            {
-                _btnClickDosing = value;
-                OnPropertyChanged(nameof(BtnClickDosing));
-            }
-        }
-
-        private bool _btnClickUnload;
-        public bool BtnClickUnload
-        {
-            get
-            {
-                return _btnClickUnload;
-            }
-            set
-            {
-                _btnClickUnload = value;
-                OnPropertyChanged(nameof(BtnClickUnload));
             }
         }
 
@@ -162,7 +132,7 @@ namespace _2048_Rbu.Windows
         {
             object btn = e.Source;
 
-            Methods.SetParameter(LblEmpty, btn, _opcName, "Весы " + _materialName + ".Признак пустоты, кг", 0.0, 100.0, "Scale_isEmpty_" + _tagName, "Real", null, 0, 1);
+            Methods.SetParameter(LblEmpty, btn, _opcName, "Весы " + _materialName + ".Признак пустоты, кг", 0.0, 100.0, "Scale_isEmpty_" + _tagName, WindowSetParameter.ValueType.Real, null, 1, 10.0, 20.0, 50.0, 100.0, 10.0);
         }
 
         private void BtnUseWeight_Click(object sender, RoutedEventArgs e)
@@ -174,35 +144,22 @@ namespace _2048_Rbu.Windows
                 Methods.ButtonClick(btn, BtnUseWeight, "UseWeight_" + _tagName, false, "Весы " + _materialName + ". Не использовать вес");
         }
 
-        private void BtnEndDosing_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void BtnEndDosing_OnClick(object sender, RoutedEventArgs e)
         {
-            BtnClickDosing = true;
             object btn = e.Source;
             Methods.ButtonClick(btn, BtnEndDosing, "btn_DozingDone_" + _tagName, true, "Весы " + _materialName + ". Закончить дозирование");
         }
 
-        private void BtnEndDosing_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void BtnEndUnload_OnClick(object sender, RoutedEventArgs e)
         {
-            BtnClickDosing = false;
-        }
-
-        private void BtnEndUnload_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            BtnClickUnload = true;
             object btn = e.Source;
             Methods.ButtonClick(btn, BtnEndUnload, "btn_UnloadingDone_" + _tagName, true, "Весы " + _materialName + ". Закончить выгрузку");
-        }
-
-        private void BtnEndUnload_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            BtnClickUnload = false;
         }
 
         private void OnKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
             {
-                if (StopUpdate != null) StopUpdate();
                 KeyDown -= OnKeyDown;
                 Closed -= Window_OnClosed;
                 Close();
@@ -211,7 +168,6 @@ namespace _2048_Rbu.Windows
 
         private void Window_OnClosed(object sender, EventArgs e)
         {
-            if (StopUpdate != null) StopUpdate();
             KeyDown -= OnKeyDown;
             Closed -= Window_OnClosed;
             Close();
@@ -224,6 +180,5 @@ namespace _2048_Rbu.Windows
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
     }
 }

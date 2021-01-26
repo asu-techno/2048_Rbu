@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows.Input;
+using _2048_Rbu.Windows;
 using AS_Library.Classes;
 using AS_Library.Link;
 using AsuBetonLibrary.Abstract;
@@ -13,7 +14,7 @@ using AsuBetonLibrary.Readers;
 using Opc.UaFx;
 using Opc.UaFx.Client;
 
-namespace _2048_Rbu.Classes
+namespace _2048_Rbu.Classes.ViewModel
 {
     public class DosingSettingsViewModel : INotifyPropertyChanged
     {
@@ -29,43 +30,36 @@ namespace _2048_Rbu.Classes
 
         private OPC_client _opc;
         private OpcServer.OpcList _opcName;
-        private ContainersReader ContainersReader { get; set; } = new ContainersReader();
-        private ObservableCollection<ApiContainer> _containers;
-        private ApiContainer _selContainer;
         private string _tagWeight;
-        private int _containerId;
+        private Static.ContainerItem _containerItem;
+        private long _containerId;
 
-        public DosingSettingsViewModel(OpcServer.OpcList opcName, DosingSettingType typeMaterial, int containerId)
+        public DosingSettingsViewModel(OpcServer.OpcList opcName, DosingSettingType typeMaterial, Static.ContainerItem containerItem)
         {
             _opcName = opcName;
-            _containerId = containerId;
-
-            _containers = new ObservableCollection<ApiContainer>(ContainersReader.ListContainers());
-            _selContainer = _containers.FirstOrDefault(x => x.Id == containerId);
+            _containerItem = containerItem;
+            _containerId = Static.IdСontainerDictionary.FirstOrDefault(x => x.Value == _containerItem).Key;
 
             switch (typeMaterial)
             {
                 case DosingSettingType.Cement:
-                    NameWindow = "Настройки дозирования цемента. ";
+                    NameWindow = "Настройки дозирования цемента.\n";
                     break;
                 case DosingSettingType.Water:
-                    NameWindow = "Настройки дозирования воды. ";
+                    NameWindow = "Настройки дозирования воды.\n";
                     break;
                 case DosingSettingType.Additive:
-                    NameWindow = "Настройки дозирования химической добавки. ";
+                    NameWindow = "Настройки дозирования химической добавки.\n";
                     break;
                 case DosingSettingType.Inert:
-                    NameWindow = "Настройки дозирования инертного материала. ";
+                    NameWindow = "Настройки дозирования инертного материала.\n";
                     IsInertBunker = true;
                     break;
             }
 
-            if (_selContainer.CurrentMaterial != null)
-                NameWindow += _selContainer.Name + " (" + _selContainer.CurrentMaterial.Name + ")";
-            else
-                NameWindow += _selContainer.Name;
+            NameWindow += Static.СontainerNameDictionary[_containerItem] + " (" + Static.СontainerMaterialDictionary[_containerItem] + ")";
 
-            if (containerId > 0 && containerId < 5)
+            if (_containerId > 0 && _containerId < 5)
             {
                 WorkMode = new WorkMode[3];
                 WorkMode[0] = new WorkMode(opcName);
@@ -73,7 +67,7 @@ namespace _2048_Rbu.Classes
                 WorkMode[2] = new WorkMode(opcName);
             }
 
-            switch (containerId)
+            switch (_containerId)
             {
                 case 1:
                     WorkMode[0].NameGate = "V-9-1";
@@ -128,7 +122,7 @@ namespace _2048_Rbu.Classes
                     break;
             }
 
-            if (containerId > 0 && containerId < 5)
+            if (_containerId > 0 && _containerId < 5)
             {
                 WorkMode[0].HeaderGate = "Работа задвижкой " + WorkMode[0].NameGate;
                 WorkMode[1].HeaderGate = "Работа задвижкой " + WorkMode[1].NameGate;
@@ -222,7 +216,7 @@ namespace _2048_Rbu.Classes
             {
                 return _setWeightDiff ??= new RelayCommand((o) =>
                 {
-                    Methods.SetParameter(null, null, _opcName, NameWindow + ". Недосып, кг", 0.0, 100.0, "WeightDiff_" + _tagWeight, "Real", null, 0, 1);
+                    Methods.SetParameter(_opcName, NameWindow + ". Недосып, кг", 0.0, 100.0, "WeightDiff_" + _tagWeight, WindowSetParameter.ValueType.Real, null, 1, 10.0, 20.0, 50.0, 100.0, 10.0);
                 });
             }
         }
@@ -234,9 +228,9 @@ namespace _2048_Rbu.Classes
             {
                 return _setLeftRought ??= new RelayCommand((o) =>
                 {
-                    Methods.ButtonClick(null, null, "Rought."+WorkMode[0].TagGate, true, "Режим грубо:" + WorkMode[0].HeaderGate);
-                    Methods.ButtonClick(null, null, "Rought." + WorkMode[1].TagGate, false);
-                    Methods.ButtonClick(null, null, "Rought." + WorkMode[2].TagGate, false);
+                    Methods.ButtonClick("Rought." + WorkMode[0].TagGate, true, "Режим грубо:" + WorkMode[0].HeaderGate);
+                    Methods.ButtonClick("Rought." + WorkMode[1].TagGate, false);
+                    Methods.ButtonClick("Rought." + WorkMode[2].TagGate, false);
                 });
             }
         }
@@ -247,9 +241,9 @@ namespace _2048_Rbu.Classes
             {
                 return _setRightRought ??= new RelayCommand((o) =>
                 {
-                    Methods.ButtonClick(null, null, "Rought." + WorkMode[1].TagGate, true, "Режим грубо:" + WorkMode[1].HeaderGate);
-                    Methods.ButtonClick(null, null, "Rought." + WorkMode[0].TagGate, false);
-                    Methods.ButtonClick(null, null, "Rought." + WorkMode[2].TagGate, false);
+                    Methods.ButtonClick("Rought." + WorkMode[1].TagGate, true, "Режим грубо:" + WorkMode[1].HeaderGate);
+                    Methods.ButtonClick("Rought." + WorkMode[0].TagGate, false);
+                    Methods.ButtonClick("Rought." + WorkMode[2].TagGate, false);
                 });
             }
         }
@@ -260,9 +254,9 @@ namespace _2048_Rbu.Classes
             {
                 return _setBothRought ??= new RelayCommand((o) =>
                 {
-                    Methods.ButtonClick(null, null, "Rought." + WorkMode[2].TagGate, true, "Режим грубо:" + WorkMode[2].HeaderGate);
-                    Methods.ButtonClick(null, null, "Rought." + WorkMode[0].TagGate, false);
-                    Methods.ButtonClick(null, null, "Rought." + WorkMode[1].TagGate, false);
+                    Methods.ButtonClick("Rought." + WorkMode[2].TagGate, true, "Режим грубо:" + WorkMode[2].HeaderGate);
+                    Methods.ButtonClick("Rought." + WorkMode[0].TagGate, false);
+                    Methods.ButtonClick("Rought." + WorkMode[1].TagGate, false);
                 });
             }
         }
@@ -273,9 +267,9 @@ namespace _2048_Rbu.Classes
             {
                 return _setLeftPrecise ??= new RelayCommand((o) =>
                 {
-                    Methods.ButtonClick(null, null, "Precise." + WorkMode[0].TagGate, true, "Режим точно:" + WorkMode[0].HeaderGate);
-                    Methods.ButtonClick(null, null, "Precise." + WorkMode[1].TagGate, false);
-                    Methods.ButtonClick(null, null, "Precise." + WorkMode[2].TagGate, false);
+                    Methods.ButtonClick("Precise." + WorkMode[0].TagGate, true, "Режим точно:" + WorkMode[0].HeaderGate);
+                    Methods.ButtonClick("Precise." + WorkMode[1].TagGate, false);
+                    Methods.ButtonClick("Precise." + WorkMode[2].TagGate, false);
                 });
             }
         }
@@ -286,9 +280,9 @@ namespace _2048_Rbu.Classes
             {
                 return _setRightPrecise ??= new RelayCommand((o) =>
                 {
-                    Methods.ButtonClick(null, null, "Precise." + WorkMode[1].TagGate, true, "Режим точно:" + WorkMode[1].HeaderGate);
-                    Methods.ButtonClick(null, null, "Precise." + WorkMode[0].TagGate, false);
-                    Methods.ButtonClick(null, null, "Precise." + WorkMode[2].TagGate, false);
+                    Methods.ButtonClick("Precise." + WorkMode[1].TagGate, true, "Режим точно:" + WorkMode[1].HeaderGate);
+                    Methods.ButtonClick("Precise." + WorkMode[0].TagGate, false);
+                    Methods.ButtonClick("Precise." + WorkMode[2].TagGate, false);
                 });
             }
         }
@@ -299,9 +293,9 @@ namespace _2048_Rbu.Classes
             {
                 return _setBothPrecise ??= new RelayCommand((o) =>
                 {
-                    Methods.ButtonClick(null, null, "Precise." + WorkMode[2].TagGate, true, "Режим точно:" + WorkMode[2].HeaderGate);
-                    Methods.ButtonClick(null, null, "Precise." + WorkMode[0].TagGate, false);
-                    Methods.ButtonClick(null, null, "Precise." + WorkMode[1].TagGate, false);
+                    Methods.ButtonClick("Precise." + WorkMode[2].TagGate, true, "Режим точно:" + WorkMode[2].HeaderGate);
+                    Methods.ButtonClick("Precise." + WorkMode[0].TagGate, false);
+                    Methods.ButtonClick("Precise." + WorkMode[1].TagGate, false);
                 });
             }
         }
@@ -492,7 +486,7 @@ namespace _2048_Rbu.Classes
             {
                 return _setPreciseWorkParam ??= new RelayCommand((o) =>
                 {
-                    Methods.SetParameter(null, null, _opcName, HeaderGate + ". Время работы в режиме работы \"Точно\", с", 0.0, 10.0, TagGate + ".Precise_Work", "Real", null, 0, 0);
+                    Methods.SetParameter(_opcName, HeaderGate + ". Время работы в режиме работы \"Точно\", с", 0.0, 10.0, TagGate + ".Precise_Work", WindowSetParameter.ValueType.Real, null, 1, 0.5, 1.0, 2.0, 5.0, 1.0);
                 });
             }
         }
@@ -504,7 +498,7 @@ namespace _2048_Rbu.Classes
             {
                 return _setPrecisePauseParam ??= new RelayCommand((o) =>
                 {
-                    Methods.SetParameter(null, null, _opcName, HeaderGate + ". Время паузы в режиме работы \"Точно\", с", 0.0, 30.0, TagGate + ".Precise_Pause", "Real", null, 0, 0);
+                    Methods.SetParameter(_opcName, HeaderGate + ". Время паузы в режиме работы \"Точно\", с", 0.0, 30.0, TagGate + ".Precise_Pause", WindowSetParameter.ValueType.Real, null, 1, 0.5, 1.0, 2.0, 5.0, 1.0);
                 });
             }
         }
@@ -516,7 +510,7 @@ namespace _2048_Rbu.Classes
             {
                 return _setRoughtWorkParam ??= new RelayCommand((o) =>
                 {
-                    Methods.SetParameter(null, null, _opcName, HeaderGate + ". Время работы в режиме работы \"Грубо\", с", 0.0, 10.0, TagGate + ".Rought_Work", "Real", null, 0, 0);
+                    Methods.SetParameter(_opcName, HeaderGate + ". Время работы в режиме работы \"Грубо\", с", 0.0, 10.0, TagGate + ".Rought_Work", WindowSetParameter.ValueType.Real, null, 1, 0.5, 1.0, 2.0, 5.0, 1.0);
                 });
             }
         }
@@ -528,7 +522,7 @@ namespace _2048_Rbu.Classes
             {
                 return _setRoughtPauseParam ??= new RelayCommand((o) =>
                 {
-                    Methods.SetParameter(null, null, _opcName, HeaderGate + ". Время паузы в режиме работы \"Грубо\", с", 0.0, 30.0, TagGate + ".Rought_Pause", "Real", null, 0, 0);
+                    Methods.SetParameter(_opcName, HeaderGate + ". Время паузы в режиме работы \"Грубо\", с", 0.0, 30.0, TagGate + ".Rought_Pause", WindowSetParameter.ValueType.Real, null, 1, 0.5, 1.0, 2.0, 5.0, 1.0);
                 });
             }
         }
