@@ -6,19 +6,19 @@
              xmlns:local="clr-namespace:_2048_Rbu.Elements.Control"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance Type={x:Type local:ViewModelMixer}, IsDesignTimeCreatable=False}"
-             Height="205" Width="330" Background="DarkGray" BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Center">
+             Height="205" Width="384" Background="DarkGray" BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Center">
     <Grid Background="DarkGray">
         <Label Content="Узел бетоносмесителя" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" Margin="0" Padding="0" HorizontalContentAlignment="Center"/>
         <Label Content="Название:" FontSize="16" FontWeight="Normal" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="94,22,94,0" Padding="0" VerticalAlignment="Top" Width="79"/>
-        <Label Background="Silver" BorderBrush="Black" BorderThickness="1" Content="{Binding Path=SelTask.Recipe.Name, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Height="22" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,44,0,0" Name="label1" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="270"/>
+        <Label Background="Silver" BorderBrush="Black" BorderThickness="1" Content="{Binding Path=SelTaskName, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Height="22" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,44,0,0" Name="label1" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="300"/>
         <Label Content="Замес" FontSize="16" FontWeight="Normal" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="27,75,165,0" Padding="0" VerticalAlignment="Top" Width="56"/>
         <Label Name="lbl_State" Content="{Binding Path=CurrentBatchNum, UpdateSourceTrigger=PropertyChanged}" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="87,74,111,0" BorderBrush="Black" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Width="50" Height="22" Background="Silver"/>
         <Label Content="из" FontSize="16" FontWeight="Normal" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="141,75,83,0" Padding="0" VerticalAlignment="Top" Width="24"/>
         <Label Background="Silver" BorderBrush="Black" BorderThickness="1" Content="{Binding Path=BatchesQuantity, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Height="22" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="168,74,30,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="50" />
         <Label Content="Смешивание" FontSize="16" FontWeight="Normal" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="12,100,9,0" Padding="0" VerticalAlignment="Top" Width="227"/>
-        <Border BorderThickness="1" BorderBrush="Black" Width="214" Height="22" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="15,125,71,0">
+        <Border BorderThickness="1" BorderBrush="Black" Width="244" Height="22" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="15,125,71,0">
             <Grid>
-                <ProgressBar Name="ProgressMixing" Value="{Binding Path=MixingProcess, UpdateSourceTrigger=PropertyChanged}" Maximum="{Binding Path=ParMixingProcess, UpdateSourceTrigger=PropertyChanged}" BorderBrush="Black" Height="22" HorizontalAlignment="Center" Margin="0" Minimum="0" VerticalAlignment="Center" Width="214" Foreground="#FF85FC84"/>
+                <ProgressBar Name="ProgressMixing" Value="{Binding Path=MixingProcess, UpdateSourceTrigger=PropertyChanged}" Maximum="{Binding Path=ParMixingProcess, UpdateSourceTrigger=PropertyChanged}" BorderBrush="Black" Height="22" HorizontalAlignment="Center" Margin="0" Minimum="0" VerticalAlignment="Center" Width="244" Foreground="#FF85FC84"/>
                 <TextBlock Text="{Binding ElementName=ProgressMixing, Path=Value, StringFormat={}{0:0} с}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" FontSize="12">
                     <TextBlock.Style>
                         <Style TargetType="{x:Type TextBlock}">
@@ -33,10 +33,10 @@
                 </TextBlock>
             </Grid>
         </Border>
-        <Label Background="Silver" BorderBrush="Black" BorderThickness="1" Content="{Binding Path=ParMixingProcess, UpdateSourceTrigger=PropertyChanged}" ContentStringFormat="{}{0:0} с" FontSize="14" Height="22" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="235,125,15,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="50" Name="t_mixer"/>
+        <Label Background="Silver" BorderBrush="Black" BorderThickness="1" Content="{Binding Path=ParMixingProcess, UpdateSourceTrigger=PropertyChanged}" ContentStringFormat="{}{0:0} с" FontSize="14" Height="22" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="291,125,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="50" Name="t_mixer"/>
         <Label Content="Разгрузка" FontSize="16" FontWeight="Normal" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="12,149,12,0" Padding="0" VerticalAlignment="Top" Width="224" />
-        <Label Background="Silver" BorderBrush="Black" BorderThickness="1" Content="{Binding Path=ParSumUnload, StringFormat={}{0:0} с, UpdateSourceTrigger=PropertyChanged}" ContentStringFormat="{}{0:0} с" FontSize="14" Height="22" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="235,174,15,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="50" Name="t_razgr"/>
-        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" Height="22" Width="214" Margin="15,174,71,0" Orientation="Horizontal">
+        <Label Background="Silver" BorderBrush="Black" BorderThickness="1" Content="{Binding Path=ParSumUnload, StringFormat={}{0:0} с, UpdateSourceTrigger=PropertyChanged}" ContentStringFormat="{}{0:0} с" FontSize="14" Height="22" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="291,174,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="50" Name="t_razgr"/>
+        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" Height="22" Width="244" Margin="15,174,71,0" Orientation="Horizontal">
             <Border BorderThickness="1" BorderBrush="Black" Width="{Binding WidthPartial}" Height="22" VerticalAlignment="Top" HorizontalAlignment="Center">
                 <Grid>
                     <ProgressBar Name="ProgressPartial" Value="{Binding Path=PartialUnloadProcess, UpdateSourceTrigger=PropertyChanged}" Maximum="{Binding Path=ParPartialUnload, UpdateSourceTrigger=PropertyChanged}" BorderBrush="Black" BorderThickness="0" Height="22" HorizontalAlignment="Center" Minimum="0" VerticalAlignment="Center" Width="{Binding WidthPartial}" Margin="0,0,0,0" Foreground="#FF85FC84"/>

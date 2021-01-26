@@ -1,0 +1,13 @@
+﻿<Window x:Class="_2048_Rbu.Windows.WindowContainerSettings"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:classes="clr-namespace:_2048_Rbu.Classes.ViewModel"
+        xmlns:settings="clr-namespace:_2048_Rbu.Elements.Settings"
+        mc:Ignorable="d" 
+        d:DataContext="{d:DesignInstance Type={x:Type classes:ContainerSettingsViewModel}, IsDesignTimeCreatable = False}"
+        Background="LightGray" SizeToContent="WidthAndHeight" MaxWidth="1500" Title="{Binding NameContainer}" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <WrapPanel Name="MainWrapPanel" Orientation="Horizontal" Background="LightGray" Margin="5">
+    </WrapPanel>
+</Window>

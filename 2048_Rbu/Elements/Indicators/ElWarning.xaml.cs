@@ -19,6 +19,7 @@ namespace _2048_Rbu.Elements.Indicators
     {
         private OPC_client _opc;
         private OpcServer.OpcList _opcName;
+        private string _startName = "";
 
         private Visibility _vis;
         public Visibility Vis
@@ -36,10 +37,9 @@ namespace _2048_Rbu.Elements.Indicators
 
         #region MyRegion
 
-        private bool _visPcy, _visAddPcy;
-
         public string ValuePcy { get; set; }
-        public string ValueAddPcy { get; set; }
+        public string ValueTime { get; set; }
+        public bool Logic { get; set; }
 
         private string _nameObject;
         public string NameObject
@@ -47,8 +47,19 @@ namespace _2048_Rbu.Elements.Indicators
             get { return _nameObject; }
             set
             {
-                txt_object.Text = value;
+                TxtObject.Text = value;
                 _nameObject = value;
+            }
+        }
+
+        private string _valueBtn;
+        public string ValueBtn
+        {
+            get { return _valueBtn; }
+            set
+            {
+                BtnRepeat.Visibility = value != null ? Visibility.Visible : Visibility.Collapsed;
+                _valueBtn = value;
             }
         }
 
@@ -58,7 +69,7 @@ namespace _2048_Rbu.Elements.Indicators
             get { return _myWidth; }
             set
             {
-                lbl_object.Width = value;
+                MainGrid.Width = value;
                 _myWidth = value;
             }
         }
@@ -69,19 +80,17 @@ namespace _2048_Rbu.Elements.Indicators
             get { return _myHeight; }
             set
             {
-                lbl_object.Height = value;
+                MainGrid.Height = value;
                 _myHeight = value;
             }
         }
-
-        public bool Logic { get; set; }
 
         private Brush _color;
         public Brush Color
         {
             set
             {
-                lbl_object.Background = value;
+                MainGrid.Background = value;
                 _color = value;
             }
             get
@@ -96,7 +105,7 @@ namespace _2048_Rbu.Elements.Indicators
             get { return _myPadding; }
             set
             {
-                lbl_object.Padding = value;
+                LblObject.Padding = value;
                 _myPadding = value;
             }
         }
@@ -121,53 +130,45 @@ namespace _2048_Rbu.Elements.Indicators
         {
             _opcName = opcName;
 
+            _startName = NameObject;
+
             DataContext = this;
         }
         private void CreateSubscription()
         {
             _opc = OpcServer.GetInstance().GetOpc(_opcName);
-            if (ValuePcy != null)
+            var visItem = new OpcMonitoredItem(_opc.cl.GetNode(ValuePcy), OpcAttribute.Value);
+            visItem.DataChangeReceived += HandleVisChanged;
+            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(visItem);
+
+            if (ValueTime != null)
             {
-                var visItem = new OpcMonitoredItem(_opc.cl.GetNode(ValuePcy), OpcAttribute.Value);
-                visItem.DataChangeReceived += HandleVisChanged;
-                OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(visItem);
-            }
-            if (ValueAddPcy != null)
-            {
-                var visAddItem = new OpcMonitoredItem(_opc.cl.GetNode(ValueAddPcy), OpcAttribute.Value);
-                visAddItem.DataChangeReceived += HandleVisAddChanged;
-                OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(visAddItem);
+                var valueTimeItem = new OpcMonitoredItem(_opc.cl.GetNode(ValueTime), OpcAttribute.Value);
+                valueTimeItem.DataChangeReceived += HandleValueTimeChanged;
+                OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(valueTimeItem);
             }
         }
+
         private void HandleVisChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
             try
             {
-                _visPcy = bool.Parse(e.Item.Value.ToString());
-                UpdateVis();
-            }
-            catch (System.Exception)
-            {
-            }
-        }
-        private void HandleVisAddChanged(object sender, OpcDataChangeReceivedEventArgs e)
-        {
-            try
-            {
-                _visAddPcy = bool.Parse(e.Item.Value.ToString());
-                UpdateVis();
+                Vis = bool.Parse(e.Item.Value.ToString()) == Logic ? Visibility.Visible : Visibility.Collapsed;
             }
             catch (System.Exception)
             {
             }
         }
 
-        public void UpdateVis()
+        private void HandleValueTimeChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
-            if (ValueAddPcy != null)
-                Vis = (_visPcy || _visAddPcy) == Logic ? Visibility.Visible : Visibility.Collapsed;
-            else
-                Vis = _visPcy == Logic ? Visibility.Visible : Visibility.Collapsed;
+            try
+            {
+                NameObject = _startName != null ? _startName + " " + int.Parse(e.Item.Value.ToString()) + " с" : "";
+            }
+            catch (System.Exception)
+            {
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -176,6 +177,13 @@ namespace _2048_Rbu.Elements.Indicators
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void BtnRepeat_OnClick(object sender, RoutedEventArgs e)
+        {
+            object btn = e.Source;
+
+            Methods.ButtonClick(btn, BtnRepeat, ValueBtn, true, NameObject + ". Повторить");
         }
     }
 }

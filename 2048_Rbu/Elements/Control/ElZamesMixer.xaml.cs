@@ -42,13 +42,6 @@ namespace _2048_Rbu.Elements.Control
         public void Unsubscribe()
         {
         }
-
-        private void lbl_t_razgr_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            object btn = e.Source;
-
-            Methods.SetParameter(t_razgr, btn, _opcName, "Длительность разгрузки, c", 0, 100, "PAR_TimeFullUnload", "Real", null, 0, 0);
-        }
     }
 
     public class ViewModelMixer : INotifyPropertyChanged
@@ -229,8 +222,8 @@ namespace _2048_Rbu.Elements.Control
 
         private void GetProgressWidth()
         {
-            WidthPartial = _tempPartialWidth == 0.0 ? 64 : 214 * _tempPartialWidth / (_tempPartialWidth + _tempFullWidth);
-            WidthFull = _tempPartialWidth == 0.0 ? 150 : 214 * _tempFullWidth / (_tempPartialWidth + _tempFullWidth);
+            WidthPartial = _tempPartialWidth == 0.0 ? 64 : 244 * _tempPartialWidth / (_tempPartialWidth + _tempFullWidth);
+            WidthFull = _tempPartialWidth == 0.0 ? 180 : 244 * _tempFullWidth / (_tempPartialWidth + _tempFullWidth);
             GetTable();
         }
 
@@ -382,6 +375,16 @@ namespace _2048_Rbu.Elements.Control
             }
         }
 
+        private string _selTaskName;
+        public string SelTaskName
+        {
+            get { return _selTaskName; }
+            set
+            {
+                _selTaskName = value;
+                OnPropertyChanged(nameof(SelTaskName));
+            }
+        }
 
         public void GetTable()
         {
@@ -406,12 +409,13 @@ namespace _2048_Rbu.Elements.Control
                     }
                     catch (Exception ex)
                     {
-                        System.IO.File.WriteAllText(@"Log\log.txt", DateTime.Now + " - " + ex.Message + "->" + _id);
+                        System.IO.File.AppendAllText(@"log.txt", DateTime.Now + " - " + ex.Message + "->" + _id);
                     }
                 }
             }
             else
             {
+                SelTaskName = null;
                 Tasks = null;
                 SelTask = null;
                 CurrentBatchNum = null;
@@ -431,6 +435,7 @@ namespace _2048_Rbu.Elements.Control
         {
             Tasks = new ObservableCollection<ApiTask>(TasksReader.ListTasks());
             SelTask = Tasks.FirstOrDefault(x => x.Id == id);
+            SelTaskName = SelTask.Id + " - " + SelTask.Recipe.Name;
         }
     }
 }

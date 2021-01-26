@@ -10,6 +10,7 @@ using System.Windows.Media.Imaging;
 using _2048_Rbu.Classes;
 using _2048_Rbu.Classes;
 using _2048_Rbu.Interfaces;
+using _2048_Rbu.Windows;
 using AS_Library.Annotations;
 using AS_Library.Events.Classes;
 using AS_Library.Link;
@@ -233,7 +234,7 @@ namespace _2048_Rbu.Elements.Mechs
                 }
                 if (value == Position.Up)
                 {
-                    tbc_name.Margin = new Thickness(0, 10, 0, 0);
+                    tbc_name.Margin = new Thickness(0, 14, 0, 0);
                     tbc_name.HorizontalAlignment = HorizontalAlignment.Center;
                     tbc_name.TextAlignment = TextAlignment.Center;
                 }
@@ -284,7 +285,7 @@ namespace _2048_Rbu.Elements.Mechs
             set
             {
                 tbc_name.Text = value;
-                TxtPopupName.Text = value;
+                TxtPopupName.Text = "Насос " + value;
                 _nameObject = value;
             }
         }
@@ -345,31 +346,66 @@ namespace _2048_Rbu.Elements.Mechs
 
         private void HandleFreqChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
-            Freq = Math.Round(double.Parse(e.Item.Value.ToString()), 2).ToString(CultureInfo.InvariantCulture);
+            try
+            {
+                Freq = Math.Round(double.Parse(e.Item.Value.ToString()), 2).ToString(CultureInfo.InvariantCulture);
+            }
+            catch (Exception)
+            {
+
+            }
         }
 
         private void HandleManualChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
-            _manualMode = bool.Parse(e.Item.Value.ToString());
-            VisMode();
+            try
+            {
+                _manualMode = bool.Parse(e.Item.Value.ToString());
+                VisMode();
+            }
+            catch (Exception)
+            {
+
+            }
         }
 
         private void HandleAutomatChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
-            _automatMode = bool.Parse(e.Item.Value.ToString());
-            VisMode();
+            try
+            {
+                _automatMode = bool.Parse(e.Item.Value.ToString());
+                VisMode();
+            }
+            catch (Exception)
+            {
+
+            }
         }
 
         private void HandleKmStatusChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
-            _onStatus = bool.Parse(e.Item.Value.ToString());
-            VisStatus();
+            try
+            {
+                _onStatus = bool.Parse(e.Item.Value.ToString());
+                VisStatus();
+            }
+            catch (Exception)
+            {
+
+            }
         }
 
         private void HandleAlarmStatusChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
-            _alarmStatus = bool.Parse(e.Item.Value.ToString());
-            VisStatus();
+            try
+            {
+                _alarmStatus = bool.Parse(e.Item.Value.ToString());
+                VisStatus();
+            }
+            catch (Exception)
+            {
+
+            }
         }
 
         void HideImages()
@@ -495,7 +531,7 @@ namespace _2048_Rbu.Elements.Mechs
         {
             object btn = e.Source;
 
-            Methods.SetParameter(LblParam, btn, _opcName, "Частота насоса " + _nameObject + ", Гц", 0, 50, FreqPcay, "Real", PopupObject, 0, 1);
+            Methods.SetParameter(LblParam, btn, _opcName, "Частота насоса " + _nameObject + ", Гц", 0, 50, FreqPcay, WindowSetParameter.ValueType.Real, PopupObject, 1);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

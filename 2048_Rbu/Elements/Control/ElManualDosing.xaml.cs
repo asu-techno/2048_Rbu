@@ -40,34 +40,6 @@ namespace _2048_Rbu.Elements.Control
             }
         }
 
-        private bool _rought;
-        public bool Rought
-        {
-            get
-            {
-                return _rought;
-            }
-            set
-            {
-                _rought = value;
-                OnPropertyChanged(nameof(Rought));
-            }
-        }
-
-        private bool _precise;
-        public bool Precise
-        {
-            get
-            {
-                return _precise;
-            }
-            set
-            {
-                _precise = value;
-                OnPropertyChanged(nameof(Precise));
-            }
-        }
-
         public ElManualDosing()
         {
             InitializeComponent();
@@ -120,28 +92,24 @@ namespace _2048_Rbu.Elements.Control
 
         private void BtnRought_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Rought = true;
             object btn = e.Source;
             Methods.ButtonClick(btn, BtnRought, RoughtPcy, true, EventText != null? EventText:"" + ". Грубое дозирование");
         }
 
         private void BtnRought_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            Rought = false;
             object btn = e.Source;
             Methods.ButtonClick(btn, BtnRought, RoughtPcy, false);
         }
 
         private void BtnPrecise_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Precise = true;
             object btn = e.Source;
             Methods.ButtonClick(btn, BtnPrecise, PrecisePcy, true, EventText != null ? EventText : "" + ". Точное дозирование");
         }
 
         private void BtnPrecise_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            Precise = false;
             object btn = e.Source;
             Methods.ButtonClick(btn, BtnPrecise, PrecisePcy, false);
         }

@@ -33,12 +33,19 @@ namespace _2048_Rbu.Classes
 
         public static void Archive_OnClick(OpcServer.OpcList opcName, string nameStation = "")
         {
-            bool postgresql = ServiceData.GetInstance().GetSqlName() == "PostgreSQL";
-            WindowArchive window = new WindowArchive(OpcServer.GetInstance().GetConnectionStringData(opcName), OpcServer.GetInstance().GetObjectData(opcName).TableName,
-                0, true, OpcServer.GetInstance().GetOpc(opcName).AnalogTags, OpcServer.GetInstance().GetOpc(opcName).DiscreteTags,
-                postgresql, OpcServer.GetInstance().GetObjectData(opcName).SqlTableName, nameStation, new DataNewArchiverReader());
-            window.SaveGraphLeg += OnSaveGraphLeg;
-            window.Show();
+            try
+            {
+                bool postgresql = ServiceData.GetInstance().GetSqlName() == "PostgreSQL";
+                WindowArchive window = new WindowArchive(OpcServer.GetInstance().GetConnectionStringData(opcName), OpcServer.GetInstance().GetObjectData(opcName).TableName,
+                    0, true, OpcServer.GetInstance().GetOpc(opcName).AnalogTags, OpcServer.GetInstance().GetOpc(opcName).DiscreteTags,
+                    postgresql, OpcServer.GetInstance().GetObjectData(opcName).SqlTableName, nameStation, new DataNewArchiverReader());
+                window.SaveGraphLeg += OnSaveGraphLeg;
+                window.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка:" + ex.Message);
+            }
         }
 
         private static void OnSaveGraphLeg(Tag tag, string nameBase)

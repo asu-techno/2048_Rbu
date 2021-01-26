@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:elements="clr-namespace:_2048_Rbu.Elements"
         Background="Silver"
-        Title='Программа управления растоворо-бетонным узлом' WindowStartupLocation="CenterScreen" Width="1920" Height="1040" WindowState="Maximized" Closing="Program_Closing" Closed="Program_Closed">
-    <Grid Name="MainGrid" Background="Silver">
+        Title='Программа управления растворо-бетонным узлом' WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight" WindowState="Maximized" Closing="Program_Closing" Closed="Program_Closed">
+    <Grid Name="MainGrid" Background="Silver" VerticalAlignment="Top" HorizontalAlignment="Left">
         <Grid Name="ScreenGrid" VerticalAlignment="Top" HorizontalAlignment="Left"/>
     </Grid>
 </Window>

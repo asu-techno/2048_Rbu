@@ -187,7 +187,7 @@ namespace _2048_Rbu.Elements.Mechs
         private bool _manualMode;
         private bool _manualDosingMode;
         private bool _automatMode;
-        private int _percentOpen;
+        private double _percentOpen;
 
         public string Prefix { get; set; }
         public string ModePcy { get; set; }
@@ -199,6 +199,7 @@ namespace _2048_Rbu.Elements.Mechs
         public string OpenPcx { get; set; }
         public string ClosePcx { get; set; }
         public int ValueNumMech { get; set; }
+        public string AerationName { get; set; }
 
         private bool _isUnload;
         public bool IsUnload
@@ -220,6 +221,26 @@ namespace _2048_Rbu.Elements.Mechs
             }
         }
 
+        private bool _isAeration;
+        public bool IsAeration
+        {
+            get { return _isAeration; }
+            set
+            {
+                if (value)
+                {
+                    ImgClose.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs/img_Aeration_Close.png", UriKind.Relative));
+                    ImgOpen.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs/img_Aeration_Open.png", UriKind.Relative));
+                    ImgAlarm.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs/img_Aeration_Alarm.png", UriKind.Relative));
+                    ImgOpen.Width = ImgClose.Width = ImgAlarm.Width = 72;
+                    ImgOpen.Height = ImgClose.Height = ImgAlarm.Height = 9;
+                    RectObject.Width = ImgOpen.Width;
+                }
+
+                _isAeration = value;
+            }
+        }
+
         private Position _modepos;
         public Position ModePos
         {
@@ -233,7 +254,7 @@ namespace _2048_Rbu.Elements.Mechs
                 if (value == Position.RightUp)
                     LblMode.Margin = new Thickness(70, -25, 0, 0);
                 if (value == Position.Left)
-                    LblMode.Margin = new Thickness(45, 25, 0, 0);
+                    LblMode.Margin = new Thickness(44, 25, 0, 0);
                 if (value == Position.Right)
                     LblMode.Margin = new Thickness(45, 0, 0, 0);
                 if (value == Position.LeftDown)
@@ -275,7 +296,6 @@ namespace _2048_Rbu.Elements.Mechs
         }
 
         private Position _namepos;
-
         public Position NamePos
         {
             get { return _namepos; }
@@ -311,7 +331,7 @@ namespace _2048_Rbu.Elements.Mechs
 
                 if (value == Position.Right)
                 {
-                    TbcName.Margin = new Thickness(45, 22, 0, 0);
+                    TbcName.Margin = new Thickness(75, 27, 0, 0);
                     TbcName.HorizontalAlignment = HorizontalAlignment.Left;
                     TbcName.TextAlignment = TextAlignment.Left;
                 }
@@ -348,7 +368,7 @@ namespace _2048_Rbu.Elements.Mechs
             set
             {
                 TbcName.Text = value;
-                TxtPopupName.Text = "Задвижка " + value;
+                TxtPopupName.Text = AerationName == null ? "Задвижка " + value : AerationName;
 
                 _nameObject = value;
             }
@@ -463,7 +483,7 @@ namespace _2048_Rbu.Elements.Mechs
             VisAlarm = Visibility.Collapsed;
             VisOpen = Visibility.Collapsed;
             VisClose = Visibility.Collapsed;
-            _percentOpen = OpenState = 0;
+            OpenState = 0;
             HalfOpenState = false;
             ModeAutomat = true;
             Status = "- - - - -";
@@ -472,44 +492,93 @@ namespace _2048_Rbu.Elements.Mechs
 
         private void HandleManualChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
-            _manualMode = bool.Parse(e.Item.Value.ToString());
-            VisMode();
+            try
+            {
+                _manualMode = bool.Parse(e.Item.Value.ToString());
+                VisMode();
+            }
+            catch
+            {
+
+            }
         }
 
         private void HandleManualDosingChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
-            _manualDosingMode = bool.Parse(e.Item.Value.ToString());
-            VisMode();
+            try
+            {
+                _manualDosingMode = bool.Parse(e.Item.Value.ToString());
+                VisMode();
+            }
+            catch
+            {
+
+            }
         }
 
         private void HandleAutomatChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
-            _automatMode = bool.Parse(e.Item.Value.ToString());
-            VisMode();
+            try
+            {
+                _automatMode = bool.Parse(e.Item.Value.ToString());
+                VisMode();
+            }
+            catch
+            {
+
+            }
         }
 
         private void HandleCloseStatusChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
-            _closeStatus = bool.Parse(e.Item.Value.ToString());
-            VisStatus();
+            try
+            {
+                _closeStatus = bool.Parse(e.Item.Value.ToString());
+                VisStatus();
+            }
+            catch
+            {
+
+            }
         }
 
         private void HandleOpenStatusChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
-            _openStatus = bool.Parse(e.Item.Value.ToString());
-            VisStatus();
+            try
+            {
+                _openStatus = bool.Parse(e.Item.Value.ToString());
+                VisStatus();
+            }
+            catch
+            {
+
+            }
         }
 
         private void HandleAlarmStatusChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
-            _alarmStatus = bool.Parse(e.Item.Value.ToString());
-            VisStatus();
+            try
+            {
+                _alarmStatus = bool.Parse(e.Item.Value.ToString());
+                VisStatus();
+            }
+            catch
+            {
+
+            }
         }
 
         private void HandlePercentChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
-            _percentOpen = int.Parse(e.Item.Value.ToString());
-            VisStatus();
+            try
+            {
+                _percentOpen = double.Parse(e.Item.Value.ToString());
+                VisStatus();
+            }
+            catch
+            {
+
+            }
         }
 
         void VisStatus()
@@ -520,7 +589,7 @@ namespace _2048_Rbu.Elements.Mechs
                 VisOpen = Visibility.Collapsed;
                 VisClose = Visibility.Collapsed;
                 HalfOpenState = false;
-                _percentOpen = OpenState = 0;
+                OpenState = 0;
                 Status = "Авария";
                 Brush = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFEB1B22"));
             }
@@ -529,23 +598,26 @@ namespace _2048_Rbu.Elements.Mechs
                 VisAlarm = Visibility.Collapsed;
                 if (!_openStatus && !_closeStatus)
                 {
+                    VisOpen = Visibility.Collapsed;
+                    VisClose = Visibility.Collapsed;
+
                     if (IsUnload)
                     {
-                        if (_percentOpen > 0 && _percentOpen <= 20)
+                        if (_percentOpen <= 0)
+                            OpenState = 0;
+                        if (_percentOpen > 0 && _percentOpen < 20)
                             OpenState = 1;
-                        if (_percentOpen > 20 && _percentOpen <= 40)
+                        if (_percentOpen >= 20 && _percentOpen < 40)
                             OpenState = 2;
-                        if (_percentOpen > 40 && _percentOpen <= 60)
+                        if (_percentOpen >= 40 && _percentOpen < 60)
                             OpenState = 3;
-                        if (_percentOpen > 60 && _percentOpen <= 80)
+                        if (_percentOpen >= 60 && _percentOpen < 80)
                             OpenState = 4;
-                        if (_percentOpen > 80)
+                        if (_percentOpen >= 80)
                             OpenState = 5;
                     }
                     if (OpenState == 0)
                     {
-                        VisOpen = Visibility.Collapsed;
-                        VisClose = Visibility.Collapsed;
                         HalfOpenState = false;
                         Status = "- - - - -";
                         Brush = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFFFFF00"));
@@ -560,7 +632,7 @@ namespace _2048_Rbu.Elements.Mechs
                 else
                 {
                     HalfOpenState = false;
-                    _percentOpen = OpenState = 0;
+                    OpenState = 0;
                     if (_openStatus)
                     {
                         VisOpen = Visibility.Visible;

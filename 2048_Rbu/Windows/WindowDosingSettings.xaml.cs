@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using _2048_Rbu.Classes;
+using _2048_Rbu.Classes.ViewModel;
 
 namespace _2048_Rbu.Windows
 {
@@ -20,9 +21,13 @@ namespace _2048_Rbu.Windows
     {
         public delegate void CloseHandler();
         public event CloseHandler StopUpdate;
-        public WindowDosingSettings()
+        public WindowDosingSettings(OpcServer.OpcList opcName, DosingSettingsViewModel dosingSettingsViewModel)
         {
             InitializeComponent();
+
+            ElDosingSettings.Initialize(opcName, dosingSettingsViewModel);
+
+            DataContext = dosingSettingsViewModel;
 
             KeyDown += OnKeyDown;
             Closed += Window_OnClosed;

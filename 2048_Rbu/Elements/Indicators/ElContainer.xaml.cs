@@ -22,31 +22,20 @@ namespace _2048_Rbu.Elements.Indicators
 {
     public partial class ElContainer : INotifyPropertyChanged
     {
-        private ContainersReader ContainersReader { get; set; } = new ContainersReader();
+        private static ContainersReader ContainersReader { get; set; } = new ContainersReader();
 
-        private ObservableCollection<ApiContainer> _containers;
-        public ObservableCollection<ApiContainer> Containers
+        private string _nameContainerMaterial;
+        public string NameContainerMaterial
         {
-            get { return _containers; }
+            get { return _nameContainerMaterial; }
             set
             {
-                _containers = value;
-                OnPropertyChanged(nameof(Containers));
+                _nameContainerMaterial = value;
+                OnPropertyChanged(nameof(NameContainerMaterial));
             }
         }
 
-        private ApiContainer _selContainer;
-        public ApiContainer SelContainer
-        {
-            get { return _selContainer; }
-            set
-            {
-                _selContainer = value;
-                OnPropertyChanged(nameof(SelContainer));
-            }
-        }
-
-        public int ContainerId { get; set; }
+        public Static.ContainerItem ContainerItem { get; set; }
 
         public ElContainer()
         {
@@ -57,23 +46,42 @@ namespace _2048_Rbu.Elements.Indicators
         {
             DataContext = this;
 
-            GetMaterial();
+            GetContainerMaterial();
+            GetMaterialName();
         }
 
-        public async void GetMaterial()
+        public static void GetContainerMaterial()
         {
             try
             {
-                await Task.Run(() =>
-{
-    Containers = new ObservableCollection<ApiContainer>(ContainersReader.ListContainers());
-    SelContainer = Containers.FirstOrDefault(x => x.Id == ContainerId);
-});
+                var containers = new ObservableCollection<ApiContainer>(ContainersReader.ListContainers());
+
+                foreach (var item in containers)
+                {
+                    if (Static.IdСontainerDictionary.ContainsKey(item.Id))
+                        Static.СontainerMaterialDictionary[Static.IdСontainerDictionary[item.Id]] = item.CurrentMaterial != null ? (item.CurrentMaterial.Name != null ? item.CurrentMaterial.Name : "") : "";
+                }
             }
             catch (Exception e)
             {
 
             }
+
+        }
+
+        public void GetMaterialName()
+        {
+            NameContainerMaterial = Static.СontainerMaterialDictionary[ContainerItem];
+        }
+
+        private void Rect_OnMouseEnter(object sender, MouseEventArgs e)
+        {
+            RectObject.Opacity = 1;
+        }
+
+        private void Rect_OnMouseLeave(object sender, MouseEventArgs e)
+        {
+            RectObject.Opacity = 0;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -88,7 +96,7 @@ namespace _2048_Rbu.Elements.Indicators
         {
             if (e.ClickCount == 2)
             {
-                WindowMatchingMaterials window = new WindowMatchingMaterials();
+                Windows.WindowMatchingMaterials window = new Windows.WindowMatchingMaterials(ContainerItem);
                 window.Show();
             }
         }

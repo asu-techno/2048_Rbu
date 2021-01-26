@@ -6,6 +6,7 @@ using System.Windows.Media;
 using _2048_Rbu.Classes;
 using System.Runtime.CompilerServices;
 using _2048_Rbu.Interfaces;
+using _2048_Rbu.Windows;
 using AS_Library.Annotations;
 using AS_Library.Link;
 using Opc.UaFx;
@@ -14,16 +15,17 @@ using Opc.UaFx.Client;
 namespace _2048_Rbu.Elements.Settings
 {
     /// <summary>
-    /// Логика взаимодействия для el_Screen.xaml
+    /// Логика взаимодействия для ElOpt.xaml
     /// </summary>
     public partial class ElOpt : INotifyPropertyChanged, IElementsUpdater
     {
         private OpcServer.OpcList _opcName;
         private OPC_client _opc;
-        string _varName, _paramRead, _paramWrite, _type;
-        double _min, _max;
-        int _numStation, _digit;
-        private bool _err;
+        private WindowSetParameter.ValueType _valueType;
+        private string _opcTag;
+        private double _minValue, _maxValue;
+        private int _digit;
+        private double? _firstPrompt, _secondPrompt, _thirdPrompt, _fourthPrompt, _stepFeed;
 
         private string _value;
         public string Value
@@ -39,6 +41,20 @@ namespace _2048_Rbu.Elements.Settings
             }
         }
 
+        private string _parameterName;
+        public string ParameterName
+        {
+            get
+            {
+                return _parameterName;
+            }
+            set
+            {
+                _parameterName = value;
+                OnPropertyChanged(nameof(ParameterName));
+            }
+        }
+
         public ElOpt()
         {
             InitializeComponent();
@@ -46,23 +62,20 @@ namespace _2048_Rbu.Elements.Settings
             DataContext = this;
         }
 
-        public void Initialize(OpcServer.OpcList opcName, string varName, double min, double max, string paramRead, string type, int numStation = 0, int digit = 0, string paramWrite = "", Brush brush = null)
+        public void Initialize(OpcServer.OpcList opcName, string parameterName, double minValue, double maxValue, string opcTag, WindowSetParameter.ValueType valueType, int digit = 0, double? firstPrompt = null, double? secondPrompt = null, double? thirdPrompt = null, double? fourthPrompt = null, double? stepFeed = null)
         {
             _opcName = opcName;
-
-            _varName = varName;
-            _type = type;
-            _paramRead = paramRead;
-            _paramWrite = paramWrite;
-            _min = min;
-            _max = max;
-            _numStation = numStation;
+            ParameterName = parameterName;
+            _minValue = minValue;
+            _maxValue = maxValue;
+            _opcTag = opcTag;
+            _valueType = valueType;
             _digit = digit;
-
-            TxtName.Text = varName;
-
-            if (brush != null)
-                lbl_param.Background = brush;
+            _firstPrompt = firstPrompt;
+            _secondPrompt = secondPrompt;
+            _thirdPrompt = thirdPrompt;
+            _fourthPrompt = fourthPrompt;
+            _stepFeed = stepFeed;
         }
 
         public void Subscribe()
@@ -77,7 +90,7 @@ namespace _2048_Rbu.Elements.Settings
         private void CreateSubscription()
         {
             _opc = OpcServer.GetInstance().GetOpc(_opcName);
-            var paramItem = new OpcMonitoredItem(_opc.cl.GetNode(_paramRead), OpcAttribute.Value);
+            var paramItem = new OpcMonitoredItem(_opc.cl.GetNode(_opcTag), OpcAttribute.Value);
             paramItem.DataChangeReceived += HandleIdChanged;
             OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(paramItem);
         }
@@ -97,7 +110,7 @@ namespace _2048_Rbu.Elements.Settings
         {
             object btn = e.Source;
 
-            Methods.SetParameter(lbl_param, btn, _opcName, _varName, _min, _max, _paramRead, _type, null, _numStation, _digit);
+            Methods.SetParameter(LblParam, btn, _opcName, ParameterName, _minValue, _maxValue, _opcTag, _valueType, null, _digit,_firstPrompt,_secondPrompt,_thirdPrompt,_fourthPrompt,_stepFeed);
 
         }
 

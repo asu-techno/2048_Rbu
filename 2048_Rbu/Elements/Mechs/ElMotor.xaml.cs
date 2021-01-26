@@ -11,6 +11,7 @@ using _2048_Rbu.Classes;
 using _2048_Rbu.Interfaces;
 using AS_Library.Annotations;
 using _2048_Rbu.Classes;
+using _2048_Rbu.Windows;
 using AS_Library.Events.Classes;
 using AS_Library.Link;
 using Opc.UaFx;
@@ -204,9 +205,9 @@ namespace _2048_Rbu.Elements.Mechs
                 if (value == Position.LeftUp)
                 {
                     tbc_name.FontSize = 13;
-                    tbc_name.Margin = new Thickness(0, -3, 21, 0);
-                    tbc_name.HorizontalAlignment = HorizontalAlignment.Right;
-                    tbc_name.TextAlignment = TextAlignment.Right;
+                    tbc_name.Margin = new Thickness(-8, -3, 0, 0);
+                    tbc_name.HorizontalAlignment = HorizontalAlignment.Center;
+                    tbc_name.TextAlignment = TextAlignment.Center;
                 }
                 if (value == Position.Up)
                 {
@@ -281,7 +282,7 @@ namespace _2048_Rbu.Elements.Mechs
             set
             {
                 tbc_name.Text = value;
-                TxtPopupName.Text = value;
+                TxtPopupName.Text = "Вибратор " + value;
                 _nameObject = value;
             }
         }
@@ -390,31 +391,64 @@ namespace _2048_Rbu.Elements.Mechs
 
         private void HandleFreqChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
-            Freq = Math.Round(double.Parse(FreqPcay), 2).ToString(CultureInfo.InvariantCulture);
+            try
+            {
+                Freq = Math.Round(double.Parse(FreqPcay), 2).ToString(CultureInfo.InvariantCulture);
+            }
+            catch (Exception)
+            {
+
+            }
         }
 
         private void HandleManualChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
-            _manualMode = bool.Parse(e.Item.Value.ToString());
-            VisMode();
+            try
+            {
+                _manualMode = bool.Parse(e.Item.Value.ToString());
+                VisMode();
+            }
+            catch (Exception)
+            {
+
+            }
         }
 
         private void HandleAutomatChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
-            _automatMode = bool.Parse(e.Item.Value.ToString());
-            VisMode();
+            try
+            {
+                _automatMode = bool.Parse(e.Item.Value.ToString());
+                VisMode();
+            }
+            catch (Exception)
+            {
+
+            }
         }
 
         private void HandleKmStatusChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
-            _onStatus = bool.Parse(e.Item.Value.ToString());
-            VisStatus();
+            try
+            {
+                _onStatus = bool.Parse(e.Item.Value.ToString());
+                VisStatus();
+            }
+            catch (Exception)
+            {
+            }
         }
 
         private void HandleAlarmStatusChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
-            _alarmStatus = bool.Parse(e.Item.Value.ToString());
-            VisStatus();
+            try
+            {
+                _alarmStatus = bool.Parse(e.Item.Value.ToString());
+                VisStatus();
+            }
+            catch (Exception)
+            {
+            }
         }
 
         void VisStatus()
@@ -513,7 +547,7 @@ namespace _2048_Rbu.Elements.Mechs
         {
             object btn = e.Source;
 
-            Methods.SetParameter(LblParam, btn, _opcName, "Частота двигателя " + _nameObject + ", Гц", 0, 50, FreqPcay, "Real", PopupObject, 0, 1);
+            Methods.SetParameter(LblParam, btn, _opcName, "Частота двигателя " + _nameObject + ", Гц", 0, 50, FreqPcay, WindowSetParameter.ValueType.Real, PopupObject, 1);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

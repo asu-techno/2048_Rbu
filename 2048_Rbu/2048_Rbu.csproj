@@ -8,7 +8,6 @@
     <ApplicationIcon>АСУ-Техно.ico</ApplicationIcon>
     <Company>АСУ-Техно</Company>
     <AssemblyName>2048_Rbu</AssemblyName>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
   </PropertyGroup>
 
@@ -18,6 +17,13 @@
     <OutputPath>bin\Debug\</OutputPath>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <WarningsAsErrors></WarningsAsErrors>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+    <Version>1.0.*</Version>
+    <AssemblyVersion>1.1.*</AssemblyVersion>
+    <Deterministic>false</Deterministic>
   </PropertyGroup>
 
   <ItemGroup>
@@ -39,6 +45,9 @@
     <None Remove="Images\Indicators\img_Water.png" />
     <None Remove="Images\Logo_ASU.png" />
     <None Remove="Images\Logo_ASU_Gray.png" />
+    <None Remove="Images\Mechs\img_Aeration_Alarm.png" />
+    <None Remove="Images\Mechs\img_Aeration_Close.png" />
+    <None Remove="Images\Mechs\img_Aeration_Open.png" />
     <None Remove="Images\Mechs\img_BigGate_20Per_Open.png" />
     <None Remove="Images\Mechs\img_BigGate_40Per_Open.png" />
     <None Remove="Images\Mechs\img_BigGate_60Per_Open.png" />
@@ -148,6 +157,9 @@
     <Resource Include="Images\Indicators\img_Water.png" />
     <Resource Include="Images\Logo_ASU.png" />
     <Resource Include="Images\Logo_ASU_Gray.png" />
+    <Resource Include="Images\Mechs\img_Aeration_Alarm.png" />
+    <Resource Include="Images\Mechs\img_Aeration_Close.png" />
+    <Resource Include="Images\Mechs\img_Aeration_Open.png" />
     <Resource Include="Images\Mechs\img_BigGate_20Per_Open.png" />
     <Resource Include="Images\Mechs\img_BigGate_40Per_Open.png" />
     <Resource Include="Images\Mechs\img_BigGate_60Per_Open.png" />
@@ -179,6 +191,24 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Elements\Settings\ElCheckLevelSettings.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Elements\Settings\ElContainerSettings.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Elements\Settings\ElDosingSettings.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Windows\WindowCheckLevelSettings.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Windows\WindowContainerSettings.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="Data\ReportAttributes.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -200,6 +230,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Update="Elements\Control\ElStatus.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Elements\Control\ElQueue.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
@@ -209,6 +243,26 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Elements\Mechs\ElMotor.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Elements\Settings\ElCheckLevelSettings.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Elements\Settings\ElContainerSettings.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Elements\Settings\ElDosingSettings.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Windows\WindowCheckLevelSettings.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Windows\WindowContainerSettings.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>

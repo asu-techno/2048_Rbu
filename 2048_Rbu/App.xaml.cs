@@ -34,10 +34,11 @@ namespace _2048_Rbu
             if (!InstanceCheck())
             {
                 MessageBox.Show("Запущено более одной копии программного обеспечения");
-                foreach (Process proc in Process.GetProcessesByName("2048_Rbu"))
-                {
-                    proc.Kill();
-                }
+                Process.GetCurrentProcess().Kill();
+                //foreach (Process proc in Process.GetProcessesByName("2048_Rbu"))
+                //{
+                //    proc.Kill();
+                //}
             }
         }
 

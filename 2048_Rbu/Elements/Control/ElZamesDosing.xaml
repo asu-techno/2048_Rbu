@@ -6,19 +6,17 @@
              xmlns:local="clr-namespace:_2048_Rbu.Elements.Control"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance Type={x:Type local:ViewModelDosing}, IsDesignTimeCreatable=False}"
-             Height="160" Width="330" Background="DarkGray" BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Center">
+             Height="358" Width="384" Background="DarkGray" BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Center">
     <Grid Background="DarkGray">
         <Label Content="Узел дозирования" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" Margin="0" Padding="0" HorizontalContentAlignment="Center"/>
-        <Label Content="Название:" FontSize="16" FontWeight="Normal" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="97,23,97,0" Padding="0" VerticalAlignment="Top" Width="Auto"/>
-        <Label Background="Silver" BorderBrush="Black" BorderThickness="1" Content="{Binding Path=SelTaskName, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Height="22" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,46,0,0" Name="label1" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="270"/>
-        <Label Content="Замес" FontSize="16" FontWeight="Normal" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="27,77,165,0" Padding="0" VerticalAlignment="Top" Width="56"/>
-        <Label Name="lbl_State" Content="{Binding Path=CurrentBatchNum, UpdateSourceTrigger=PropertyChanged}" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="87,76,111,0" BorderBrush="Black" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Width="50" Height="22" Background="Silver"/>
-        <Label Content="из" FontSize="16" FontWeight="Normal" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="141,77,83,0" Padding="0" VerticalAlignment="Top" Width="24"/>
-        <Label Background="Silver" BorderBrush="Black" BorderThickness="1" Content="{Binding Path=BatchesQuantity, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Height="22" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="168,76,30,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="50"/>
-        <Label Content="Дозирование" FontSize="16" FontWeight="Normal" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="12,101,12,0" Padding="0" VerticalAlignment="Top" Width="224"/>
-        <Border BorderThickness="1" BorderBrush="Black" Width="270" Height="23" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,126,0,0">
+        <Label Content="Замес" FontSize="16" FontWeight="Normal" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="94,26,0,0" Padding="0" VerticalAlignment="Top" Width="56"/>
+        <Label Name="lbl_State" Content="{Binding Path=CurrentBatchNum, UpdateSourceTrigger=PropertyChanged}" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="154,25,0,0" BorderBrush="Black" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Width="50" Height="22" Background="Silver"/>
+        <Label Content="из" FontSize="16" FontWeight="Normal" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="208,26,0,0" Padding="0" VerticalAlignment="Top" Width="24"/>
+        <Label Background="Silver" BorderBrush="Black" BorderThickness="1" Content="{Binding Path=BatchesQuantity, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Height="22" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="235,25,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="50"/>
+        <Label Content="Дозирование" FontSize="16" FontWeight="Normal" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,50,0,0" Padding="0" VerticalAlignment="Top" Width="224"/>
+        <Border BorderThickness="1" BorderBrush="Black" Width="300" Height="23" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,75,0,0">
             <Grid>
-                <ProgressBar Name="ProgressDosing" Value="{Binding Path=DosingProcess, UpdateSourceTrigger=PropertyChanged}" Height="23" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="270" Minimum="0" BorderBrush="Black" BorderThickness="0" Foreground="#FF85FC84"/>
+                <ProgressBar Name="ProgressDosing" Value="{Binding Path=DosingProcess, UpdateSourceTrigger=PropertyChanged}" Height="23" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="300" Minimum="0" BorderBrush="Black" BorderThickness="0" Foreground="#FF85FC84"/>
                 <TextBlock Text="{Binding ElementName=ProgressDosing, Path=Value, StringFormat={}{0:0}%}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" FontSize="12">
                     <TextBlock.Style>
                         <Style TargetType="{x:Type TextBlock}">
@@ -33,5 +31,195 @@
                 </TextBlock>
             </Grid>
         </Border>
+        <Label BorderBrush="Black" BorderThickness="0" Content="Состав замеса:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,95,0,0" Name="label" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="306" />
+        <Label Background="Silver" BorderBrush="Black" BorderThickness="1" Content="Материал" FontSize="14" FontWeight="Bold" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="2,123,0,0" Name="label11" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200" />
+        <Label Background="Silver" BorderBrush="Black" BorderThickness="1" Content="Задано, кг" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="201,123,0,0" Name="label17" Padding="0" VerticalAlignment="Top" Width="90" FontWeight="Bold" />
+        <Label Background="Silver" BorderBrush="Black" BorderThickness="1" Content="Сделано, кг" FontSize="14" FontWeight="Bold" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="290,123,0,0" Name="label2" Padding="0" VerticalAlignment="Top" Width="90"/>
+        <Grid VerticalAlignment="Top" HorizontalAlignment="Center" Width="378" Margin="0,145,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="24"/>
+                <RowDefinition Height="23"/>
+                <RowDefinition Height="23"/>
+                <RowDefinition Height="23"/>
+                <RowDefinition Height="23"/>
+                <RowDefinition Height="23"/>
+                <RowDefinition Height="23"/>
+                <RowDefinition Height="23"/>
+                <RowDefinition Height="23"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Grid.RowSpan="9" VerticalAlignment="Top" HorizontalAlignment="Left" Background="Silver" Width="200" Height="208" Margin="0,0,0,0"/>
+            <Label Grid.Row="0" Grid.RowSpan="9" VerticalAlignment="Top" HorizontalAlignment="Left" Background="White" Width="179" Height="208" Margin="199,0,0,0"/>
+            <Grid Grid.Row="0" Margin="0,0,0,0">
+                <Grid.Style>
+                    <Style TargetType="{x:Type Grid}">
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=DosingTask[0].ProgressDone, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                <Setter Property="Background" Value="#FF85FC84"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Path=DosingTask[0].InProgress, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                <Setter Property="Background" Value="Yellow"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+                <Label Background="Transparent" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="0,0,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200" Content="{Binding Path=DosingTask[0].MaterialName, UpdateSourceTrigger=PropertyChanged}"/>
+                <Label Background="Transparent" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="199,0,0,0"  Padding="0" VerticalAlignment="Top" Width="90" Content="{Binding Path=DosingTask[0].SetValue, UpdateSourceTrigger=PropertyChanged}"/>
+                <ProgressBar Name="ProgressBarTest" Value="{Binding Path=DosingTask[0].CurrentProgress, UpdateSourceTrigger=PropertyChanged}" Maximum="{Binding ComponentsWeight, UpdateSourceTrigger=PropertyChanged}" Height="24" HorizontalAlignment="Center" Margin="288,0,0,0" VerticalAlignment="Center" Width="90" Minimum="0" BorderBrush="Black" BorderThickness="0" Background="White" Foreground="#FF85FC84"/>
+                <Label Background="Transparent" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="288,0,0,0"  Padding="0" VerticalAlignment="Top" Width="90" Content="{Binding Path=DosingTask[0].CurrentValue, UpdateSourceTrigger=PropertyChanged}"/>
+            </Grid>
+            <Grid Grid.Row="1" Margin="0,-1,0,0">
+                <Grid.Style>
+                    <Style TargetType="{x:Type Grid}">
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=DosingTask[1].ProgressDone, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                <Setter Property="Background" Value="#FF85FC84"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Path=DosingTask[1].InProgress, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                <Setter Property="Background" Value="Yellow"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+                <Label Background="Transparent" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="0,0,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200" Content="{Binding Path=DosingTask[1].MaterialName, UpdateSourceTrigger=PropertyChanged}"/>
+                <Label Background="Transparent" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="199,0,0,0"  Padding="0" VerticalAlignment="Top" Width="90" Content="{Binding Path=DosingTask[1].SetValue, UpdateSourceTrigger=PropertyChanged}"/>
+                <ProgressBar Value="{Binding Path=DosingTask[1].CurrentProgress, UpdateSourceTrigger=PropertyChanged}" Maximum="{Binding ComponentsWeight, UpdateSourceTrigger=PropertyChanged}" Height="24" HorizontalAlignment="Center" Margin="288,0,0,0" VerticalAlignment="Center" Width="90" Minimum="0" BorderBrush="Black" BorderThickness="0" Background="White" Foreground="#FF85FC84"/>
+                <Label Background="Transparent" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="288,0,0,0"  Padding="0" VerticalAlignment="Top" Width="90" Content="{Binding Path=DosingTask[1].CurrentValue, UpdateSourceTrigger=PropertyChanged}"/>
+            </Grid>
+            <Grid Grid.Row="2" Margin="0,-1,0,0">
+                <Grid.Style>
+                    <Style TargetType="{x:Type Grid}">
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=DosingTask[2].ProgressDone, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                <Setter Property="Background" Value="#FF85FC84"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Path=DosingTask[2].InProgress, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                <Setter Property="Background" Value="Yellow"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+                <Label Background="Transparent" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="0,0,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200" Content="{Binding Path=DosingTask[2].MaterialName, UpdateSourceTrigger=PropertyChanged}"/>
+                <Label Background="Transparent" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="199,0,0,0"  Padding="0" VerticalAlignment="Top" Width="90" Content="{Binding Path=DosingTask[2].SetValue, UpdateSourceTrigger=PropertyChanged}"/>
+                <ProgressBar Value="{Binding Path=DosingTask[2].CurrentProgress, UpdateSourceTrigger=PropertyChanged}" Maximum="{Binding ComponentsWeight, UpdateSourceTrigger=PropertyChanged}" Height="24" HorizontalAlignment="Center" Margin="288,0,0,0" VerticalAlignment="Center" Width="90" Minimum="0" BorderBrush="Black" BorderThickness="0" Background="White" Foreground="#FF85FC84"/>
+                <Label Background="Transparent" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="288,0,0,0"  Padding="0" VerticalAlignment="Top" Width="90" Content="{Binding Path=DosingTask[2].CurrentValue, UpdateSourceTrigger=PropertyChanged}"/>
+            </Grid>
+            <Grid Grid.Row="3" Margin="0,-1,0,0">
+                <Grid.Style>
+                    <Style TargetType="{x:Type Grid}">
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=DosingTask[3].ProgressDone, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                <Setter Property="Background" Value="#FF85FC84"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Path=DosingTask[3].InProgress, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                <Setter Property="Background" Value="Yellow"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+                <Label Background="Transparent" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="0,0,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200" Content="{Binding Path=DosingTask[3].MaterialName, UpdateSourceTrigger=PropertyChanged}"/>
+                <Label Background="Transparent" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="199,0,0,0"  Padding="0" VerticalAlignment="Top" Width="90" Content="{Binding Path=DosingTask[3].SetValue, UpdateSourceTrigger=PropertyChanged}"/>
+                <ProgressBar Value="{Binding Path=DosingTask[3].CurrentProgress, UpdateSourceTrigger=PropertyChanged}" Maximum="{Binding ComponentsWeight, UpdateSourceTrigger=PropertyChanged}" Height="24" HorizontalAlignment="Center" Margin="288,0,0,0" VerticalAlignment="Center" Width="90" Minimum="0" BorderBrush="Black" BorderThickness="0" Background="White" Foreground="#FF85FC84"/>
+                <Label Background="Transparent" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="288,0,0,0"  Padding="0" VerticalAlignment="Top" Width="90" Content="{Binding Path=DosingTask[3].CurrentValue, UpdateSourceTrigger=PropertyChanged}"/>
+            </Grid>
+            <Grid Grid.Row="4" Margin="0,-1,0,0">
+                <Grid.Style>
+                    <Style TargetType="{x:Type Grid}">
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=DosingTask[4].ProgressDone, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                <Setter Property="Background" Value="#FF85FC84"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Path=DosingTask[4].InProgress, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                <Setter Property="Background" Value="Yellow"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+                <Label Background="Transparent" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="0,0,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200" Content="{Binding Path=DosingTask[4].MaterialName, UpdateSourceTrigger=PropertyChanged}"/>
+                <Label Background="Transparent" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="199,0,0,0"  Padding="0" VerticalAlignment="Top" Width="90" Content="{Binding Path=DosingTask[4].SetValue, UpdateSourceTrigger=PropertyChanged}"/>
+                <ProgressBar Value="{Binding Path=DosingTask[4].CurrentProgress, UpdateSourceTrigger=PropertyChanged}" Maximum="{Binding ComponentsWeight, UpdateSourceTrigger=PropertyChanged}" Height="24" HorizontalAlignment="Center" Margin="288,0,0,0" VerticalAlignment="Center" Width="90" Minimum="0" BorderBrush="Black" BorderThickness="0" Background="White" Foreground="#FF85FC84"/>
+                <Label Background="Transparent" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="288,0,0,0"  Padding="0" VerticalAlignment="Top" Width="90" Content="{Binding Path=DosingTask[4].CurrentValue, UpdateSourceTrigger=PropertyChanged}"/>
+            </Grid>
+            <Grid Grid.Row="5" Margin="0,-1,0,0">
+                <Grid.Style>
+                    <Style TargetType="{x:Type Grid}">
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=DosingTask[5].ProgressDone, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                <Setter Property="Background" Value="#FF85FC84"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Path=DosingTask[5].InProgress, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                <Setter Property="Background" Value="Yellow"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+                <Label Background="Transparent" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="0,0,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200" Content="{Binding Path=DosingTask[5].MaterialName, UpdateSourceTrigger=PropertyChanged}"/>
+                <Label Background="Transparent" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="199,0,0,0"  Padding="0" VerticalAlignment="Top" Width="90" Content="{Binding Path=DosingTask[5].SetValue, UpdateSourceTrigger=PropertyChanged}"/>
+                <ProgressBar Value="{Binding Path=DosingTask[5].CurrentProgress, UpdateSourceTrigger=PropertyChanged}" Maximum="{Binding ComponentsWeight, UpdateSourceTrigger=PropertyChanged}" Height="24" HorizontalAlignment="Center" Margin="288,0,0,0" VerticalAlignment="Center" Width="90" Minimum="0" BorderBrush="Black" BorderThickness="0" Background="White" Foreground="#FF85FC84"/>
+                <Label Background="Transparent" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="288,0,0,0"  Padding="0" VerticalAlignment="Top" Width="90" Content="{Binding Path=DosingTask[5].CurrentValue, UpdateSourceTrigger=PropertyChanged}"/>
+            </Grid>
+            <Grid Grid.Row="6" Margin="0,-1,0,0">
+                <Grid.Style>
+                    <Style TargetType="{x:Type Grid}">
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=DosingTask[6].ProgressDone, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                <Setter Property="Background" Value="#FF85FC84"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Path=DosingTask[6].InProgress, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                <Setter Property="Background" Value="Yellow"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+                <Label Background="Transparent" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="0,0,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200" Content="{Binding Path=DosingTask[6].MaterialName, UpdateSourceTrigger=PropertyChanged}"/>
+                <Label Background="Transparent" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="199,0,0,0"  Padding="0" VerticalAlignment="Top" Width="90" Content="{Binding Path=DosingTask[6].SetValue, UpdateSourceTrigger=PropertyChanged}"/>
+                <ProgressBar Value="{Binding Path=DosingTask[6].CurrentProgress, UpdateSourceTrigger=PropertyChanged}" Maximum="{Binding ComponentsWeight, UpdateSourceTrigger=PropertyChanged}" Height="24" HorizontalAlignment="Center" Margin="288,0,0,0" VerticalAlignment="Center" Width="90" Minimum="0" BorderBrush="Black" BorderThickness="0" Background="White" Foreground="#FF85FC84"/>
+                <Label Background="Transparent" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="288,0,0,0"  Padding="0" VerticalAlignment="Top" Width="90" Content="{Binding Path=DosingTask[6].CurrentValue, UpdateSourceTrigger=PropertyChanged}"/>
+            </Grid>
+            <Grid Grid.Row="7" Margin="0,-1,0,0">
+                <Grid.Style>
+                    <Style TargetType="{x:Type Grid}">
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=DosingTask[7].ProgressDone, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                <Setter Property="Background" Value="#FF85FC84"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Path=DosingTask[7].InProgress, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                <Setter Property="Background" Value="Yellow"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+                <Label Background="Transparent" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="0,0,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200" Content="{Binding Path=DosingTask[7].MaterialName, UpdateSourceTrigger=PropertyChanged}"/>
+                <Label Background="Transparent" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="199,0,0,0"  Padding="0" VerticalAlignment="Top" Width="90" Content="{Binding Path=DosingTask[7].SetValue, UpdateSourceTrigger=PropertyChanged}"/>
+                <ProgressBar Value="{Binding Path=DosingTask[7].CurrentProgress, UpdateSourceTrigger=PropertyChanged}" Maximum="{Binding ComponentsWeight, UpdateSourceTrigger=PropertyChanged}" Height="24" HorizontalAlignment="Center" Margin="288,0,0,0" VerticalAlignment="Center" Width="90" Minimum="0" BorderBrush="Black" BorderThickness="0" Background="White" Foreground="#FF85FC84"/>
+                <Label Background="Transparent" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="288,0,0,0"  Padding="0" VerticalAlignment="Top" Width="90" Content="{Binding Path=DosingTask[7].CurrentValue, UpdateSourceTrigger=PropertyChanged}"/>
+            </Grid>
+            <Grid Grid.Row="8" Margin="0,-1,0,0">
+                <Grid.Style>
+                    <Style TargetType="{x:Type Grid}">
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=DosingTask[8].ProgressDone, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                <Setter Property="Background" Value="#FF85FC84"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Path=DosingTask[8].InProgress, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                <Setter Property="Background" Value="Yellow"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+                <Label Background="Transparent" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="0,0,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200" Content="{Binding Path=DosingTask[8].MaterialName, UpdateSourceTrigger=PropertyChanged}"/>
+                <Label Background="Transparent" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="199,0,0,0"  Padding="0" VerticalAlignment="Top" Width="90" Content="{Binding Path=DosingTask[8].SetValue, UpdateSourceTrigger=PropertyChanged}"/>
+                <ProgressBar Value="{Binding Path=DosingTask[8].CurrentProgress, UpdateSourceTrigger=PropertyChanged}" Maximum="{Binding ComponentsWeight, UpdateSourceTrigger=PropertyChanged}" Height="24" HorizontalAlignment="Center" Margin="288,0,0,0" VerticalAlignment="Center" Width="90" Minimum="0" BorderBrush="Black" BorderThickness="0" Background="White" Foreground="#FF85FC84"/>
+                <Label Background="Transparent" BorderBrush="Black" BorderThickness="1" FontSize="14" Height="24" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="288,0,0,0"  Padding="0" VerticalAlignment="Top" Width="90" Content="{Binding Path=DosingTask[8].CurrentValue, UpdateSourceTrigger=PropertyChanged}"/>
+            </Grid>
+        </Grid>
     </Grid>
 </UserControl>

@@ -3,14 +3,16 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" Background="Gray"
-        Title="О программе" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Topmost="True" WindowStyle="None" KeyDown="Win_KeyDown">
+        xmlns:local="clr-namespace:_2048_Rbu.Windows"
+        mc:Ignorable="d" Background="Gray" 
+        d:DataContext="{d:DesignInstance Type={x:Type local:WindowSplash}, IsDesignTimeCreatable = False}"
+        Title="О программе" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Topmost="True" WindowStyle="None" KeyDown="Win_KeyDown" MouseDown="Window_MouseDown" MouseMove="Window_MouseMove" Activated="Window_Activated">
     <Grid>
         <Image VerticalAlignment="Top" HorizontalAlignment="Center" Width="732" Height="475" Margin="0" Source="../Images/Splash.png" />
         <Image VerticalAlignment="Top" HorizontalAlignment="Center" Width="365" Height="67" Margin="0,30,0,0" Source="../Images/Logo_ASU.png" />
         <TextBlock VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,110,0,0" Foreground="White" FontFamily="Arial" FontWeight="Normal" FontSize="18" TextAlignment="Center" Text="Автоматизированные системы управления технологическими процессами"/>
-        <TextBlock VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,160,0,0" Foreground="White" FontFamily="Arial" FontWeight="Normal" FontSize="30" TextAlignment="Center" Text='Программа управления&#xA;растовро-бетонным узлом&#xa;г. Минск'/>
-        <TextBlock Name="Version" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,290,0,0" Foreground="White" FontFamily="Arial" FontWeight="Normal" FontSize="30" TextAlignment="Center" Text="АНКМ.2048.010"/>
+        <TextBlock VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,170,0,0" Width="500" Foreground="White" FontFamily="Arial" FontWeight="Normal" FontSize="30" TextAlignment="Center" TextWrapping="Wrap" Text="{Binding ProjectName}"/>
+        <TextBlock Name="Version" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,290,0,0" Foreground="White" FontFamily="Arial" FontWeight="Normal" FontSize="30" TextAlignment="Center" Text="{Binding ProjectСipher}"/>
         <TextBlock VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,335,0,0" Foreground="White" FontFamily="Arial" FontWeight="Normal" FontSize="18" TextAlignment="Left" Text="e-mail:"/>
         <TextBlock VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,360,0,0" Foreground="White" FontFamily="Arial" FontWeight="Normal" FontSize="18" TextAlignment="Left" Text="тел:"/>
         <TextBlock VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,385,0,0" Foreground="White" FontFamily="Arial" FontWeight="Normal" FontSize="18" TextAlignment="Left" Text="факс:"/>
@@ -21,6 +23,6 @@
         </TextBlock>
         <TextBlock VerticalAlignment="Top" HorizontalAlignment="Left" Margin="80,360,0,0" Foreground="White" FontFamily="Arial" FontWeight="Normal" TextAlignment="Left" FontSize="18" Text="+375 (17) 236-76-74"/>
         <TextBlock VerticalAlignment="Top" HorizontalAlignment="Left" Margin="80,385,0,0" Foreground="White" FontFamily="Arial" FontWeight="Normal" TextAlignment="Left" FontSize="18" Text="+375 (17) 236-76-75"/>
-        <TextBlock VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,440,0,0" Foreground="White" FontFamily="Arial" FontWeight="Normal" TextAlignment="Left" FontSize="18" Text="Copyright © ООО «‎АСУ-Техно»‎, 2020"/>
+        <TextBlock VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,440,0,0" Foreground="White" FontFamily="Arial" FontWeight="Normal" TextAlignment="Left" FontSize="18" Text="{Binding Copyright}"/>
     </Grid>
 </Window>

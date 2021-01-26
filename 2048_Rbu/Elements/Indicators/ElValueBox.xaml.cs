@@ -9,6 +9,7 @@ using _2048_Rbu.Interfaces;
 using AS_Library.Link;
 using AS_Library.Annotations;
 using _2048_Rbu.Classes;
+using _2048_Rbu.Classes.ViewModel;
 using _2048_Rbu.Windows;
 using Opc.UaFx;
 using Opc.UaFx.Client;
@@ -24,8 +25,6 @@ namespace _2048_Rbu.Elements.Indicators
         private OPC_client _opc;
         private OpcServer.OpcList _opcName;
         private string _readVal;
-
-        private WindowWeight _windowWeight;
 
         private Visibility _vis;
         public Visibility Vis
@@ -57,12 +56,13 @@ namespace _2048_Rbu.Elements.Indicators
 
         #region MyRegion
 
-        public int GroupNumber { get; set; }
         public string VisValue { get; set; }
         public bool Logic { get; set; }
         public string Prefix { get; set; }
         public string ValuePcay { get; set; }
         public int Digit { get; set; }
+        public WindowWeight.TypeMaterial TypeMaterial { get; set; }
+        public Static.ContainerItem ContainerItem { get; set; }
 
         private bool _isSmall;
         public bool IsSmall
@@ -180,22 +180,31 @@ namespace _2048_Rbu.Elements.Indicators
 
         private void ElValueBox_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (GroupNumber != 0)
+            if (TypeMaterial != 0)
             {
-                _windowWeight = new WindowWeight(_opcName, (WindowWeight.TypeMaterial)GroupNumber);
-                _windowWeight.ShowDialog();
+                var window = new WindowWeight(_opcName, TypeMaterial);
+                window.ShowDialog();
+            }
+
+            if (ContainerItem != 0)
+            {
+                var window = new WindowContainerSettings(new ContainerSettingsViewModel(_opcName, ContainerItem));
+                window.ShowDialog();
             }
         }
 
         private void Rect_OnMouseEnter(object sender, MouseEventArgs e)
         {
-            if (GroupNumber != 0)
+            if (TypeMaterial != 0 || ContainerItem != 0)
+            {
                 RectObject.Opacity = 1;
+                RectObject.ToolTip = TypeMaterial != 0 ? "Настройки весов" :"Настройки массы емкости";
+            }
         }
 
         private void Rect_OnMouseLeave(object sender, MouseEventArgs e)
         {
-            if (GroupNumber != 0)
+            if (TypeMaterial != 0 || ContainerItem != 0)
                 RectObject.Opacity = 0;
         }
 

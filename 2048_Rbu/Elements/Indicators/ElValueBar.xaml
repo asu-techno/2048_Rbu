@@ -2,11 +2,67 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:_2048_Rbu.Elements.Indicators"
              mc:Ignorable="d" 
-             >
-    <Grid Height="Auto" Width="Auto">
-        <ProgressBar Name="lbl_value" Value="{Binding Value}" Width="15" FontSize="8" BorderThickness="1" BorderBrush="Black" Foreground="DeepSkyBlue" Background="LightGray" Orientation="Vertical">
-        </ProgressBar>
+             d:DataContext="{d:DesignInstance Type={x:Type local:ElValueBar}, IsDesignTimeCreatable=False}"
+             MouseEnter="Rect_OnMouseEnter" MouseLeave="Rect_OnMouseLeave">
+    <Grid Height="Auto" Width="95">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="0" >
+            <Grid.Style>
+                <Style TargetType="{x:Type Grid}">
+                    <Setter Property="Visibility" Value="Hidden"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding VisBox}" Value="True">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+            <local:ElValueBox x:Name="ValueBox" Width="95" Height="25" Margin="0,0,0,5" Count="7" Digit="1" Color="CornflowerBlue" Measure="кг" ContainerItem="Additive1" ValuePcay="Volume[1]"/>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Border Name="ProgressBorder" Height="Auto" Width="15" BorderThickness="1" BorderBrush="Black">
+                <Grid Height="Auto" Width="Auto">
+                    <ProgressBar Name="ProgressValue" Value="{Binding Value}" Width="15" FontSize="8" BorderThickness="0" BorderBrush="Black" Foreground="{Binding Brush}" Background="{Binding BackgroundBrush}" Orientation="Vertical">
+                    </ProgressBar>
+                    <TextBlock Text="{Binding ElementName=ProgressValue, Path=Value, StringFormat={}{0:0.0}%}" Width="{Binding ElementName=ProgressValue, Path=Height}" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" FontSize="12" RenderTransformOrigin="0.5,0.5">
+                        <TextBlock.LayoutTransform>
+                            <RotateTransform Angle="-90"/>
+                        </TextBlock.LayoutTransform>
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Visibility" Value="Visible"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding VisCheck}" Value="True">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                    <TextBlock Text="Контроль уровня цемента" Width="{Binding ElementName=ProgressValue, Path=Height}" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="-1,0,0,0" Padding="0" FontSize="11" RenderTransformOrigin="0.5,0.5">
+                        <TextBlock.LayoutTransform>
+                            <RotateTransform Angle="-90"/>
+                        </TextBlock.LayoutTransform>
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding VisCheck}" Value="True">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                    <Rectangle Name="RectObject" Fill="Transparent" StrokeThickness="0.5" Margin="-3" Stroke="Black" Opacity="0" MouseLeftButtonUp="ElValueBar_OnMouseLeftButtonDown"/>
+                </Grid>
+            </Border>
+        </Grid>
     </Grid>
 </UserControl>

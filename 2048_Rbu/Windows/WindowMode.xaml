@@ -5,34 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" Background="Silver"
         Title="Режим работы механизмов" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Topmost="True">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Resources/Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid Background="Silver" Width="550" Height="150">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Button Name="BtnManual" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Width="500" Height="50" Margin="0,5,0,0" Background="LightBlue" BorderBrush="Black" BorderThickness="1" FontSize="18" Content="Перевести все механизмы в ручной режим" PreviewMouseLeftButtonDown="BtnManual_OnMouseLeftButtonDown" PreviewMouseLeftButtonUp="BtnManual_OnMouseLeftButtonUp">
-            <Button.Style>
-                <Style TargetType="{x:Type Button}">
-                    <Setter Property="FontWeight" Value="Normal"/>
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding ModeManual}" Value="True">
-                            <Setter Property="FontWeight" Value="Bold"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Button.Style>
-        </Button>
-        <Button Name="BtnAutomat" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Width="500" Height="50" Margin="0,0,0,5" Background="LightBlue" BorderBrush="Black" BorderThickness="1" FontSize="18" Content="Перевести все механизмы в автоматический режим" PreviewMouseLeftButtonDown="BtnAutomat_OnMouseLeftButtonDown" PreviewMouseLeftButtonUp="BtnAutomat_OnMouseLeftButtonUp">
-            <Button.Style>
-                <Style TargetType="{x:Type Button}">
-                    <Setter Property="FontWeight" Value="Normal"/>
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding ModeAutomat}" Value="True">
-                            <Setter Property="FontWeight" Value="Bold"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Button.Style>
-        </Button>
+        <Button Name="BtnManual" Grid.Row="0" Style="{StaticResource PressButton}" VerticalAlignment="Center" HorizontalAlignment="Center" Width="500" Height="50" Margin="0,5,0,0" Background="LightBlue" BorderBrush="Black" BorderThickness="1" FontSize="18" Content="Перевести все механизмы в ручной режим" Click="BtnManual_OnClick"/>
+        <Button Name="BtnAutomat" Grid.Row="1" Style="{StaticResource PressButton}" VerticalAlignment="Center" HorizontalAlignment="Center" Width="500" Height="50" Margin="0,0,0,5" Background="LightBlue" BorderBrush="Black" BorderThickness="1" FontSize="18" Content="Перевести все механизмы в автоматический режим" Click="BtnAutomat_OnClick"/>
     </Grid>
 </Window>
