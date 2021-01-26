@@ -107,7 +107,7 @@
       <HintPath>Libs\AsuBetonLibrary.dll</HintPath>
     </Reference>
     <Reference Include="AS_Library_v2">
-      <HintPath>..\..\..\..\..\GlobalProject\AS_Library\AS_Library_v2\bin\Debug\AS_Library_v2.dll</HintPath>
+      <HintPath>Libs\AS_Library_v2.dll</HintPath>
     </Reference>
     <Reference Include="Excel">
       <HintPath>library\Excel.dll</HintPath>
