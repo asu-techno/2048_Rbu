@@ -17,6 +17,7 @@ using AS_Library.Events.Classes;
 using ServiceLib.Classes;
 using ServiceLib.Windows;
 using System.Threading.Tasks;
+using Opc.UaFx;
 
 namespace _2048_Rbu
 {

@@ -87,15 +87,19 @@ namespace _2048_Rbu.Helpers
                     {
                         var taskIdTag = _reportAttributesDict[ReportAttributes.ReportName] + $"[{i}]." +
                                         _reportAttributesDict[ReportAttributes.TaskId];
-                        var finishDtTag = _reportAttributesDict[ReportAttributes.ReportName] + $"[{i}]." +
-                                          _reportAttributesDict[ReportAttributes.FinishDt];
+                        var finishDateTag = _reportAttributesDict[ReportAttributes.ReportName] + $"[{i}]." +
+                                          _reportAttributesDict[ReportAttributes.FinishDate];
+                        var finishTimeTag = _reportAttributesDict[ReportAttributes.ReportName] + $"[{i}]." +
+                                            _reportAttributesDict[ReportAttributes.FinishTime];
                         var taskId = _opc.ReadNode(taskIdTag.ToNode(), OpcAttribute.Value)?.ToString();
-                        var finishDt = _opc.ReadNode(finishDtTag.ToNode(), OpcAttribute.Value)?.ToString();
-                        if (!string.IsNullOrEmpty(taskId) && finishDt != "1/1/1990 12:00:00 AM")
+                        var finishDate = _opc.ReadNode(finishDateTag.ToNode(), OpcAttribute.Value)?.ToString();
+                        var finishTime = _opc.ReadNode(finishTimeTag.ToNode(), OpcAttribute.Value)?.ToString();
+                        if (!string.IsNullOrEmpty(taskId) && finishDate != "1990-01-01")
                         {
                             long.TryParse(taskId, out var id);
                             if (SearchReport(id))
                             {
+                                var finishDt = OpcHelper.StringDateParsing(finishDate, finishTime);
                                 _reports.Add(ReadReport(i, id, finishDt));
                             }
                         }
@@ -119,18 +123,20 @@ namespace _2048_Rbu.Helpers
         #endregion
 
         #region Read
-        private Report ReadReport(int i, long taskId, string finishDt)
+        private Report ReadReport(int i, long taskId, DateTime finishDt)
         {
             var report = new Report
             {
                 Task = new AsuBetonLibrary.Classes.DbContext.Task { Id = taskId },
-                FinishDt = finishDt.StringDtParsing()
+                FinishDt = finishDt
             };
-            if (_reportAttributesDict.ContainsKey(ReportAttributes.StartDt))
+            if (_reportAttributesDict.ContainsKey(ReportAttributes.StartDate) && _reportAttributesDict.ContainsKey(ReportAttributes.StartTime))
             {
-                var startDtTag = _reportAttributesDict[ReportAttributes.ReportName] + $"[{i}]." + _reportAttributesDict[ReportAttributes.StartDt];
-                var startDt = _opc.ReadNode(startDtTag.ToNode(), OpcAttribute.Value)?.ToString();
-                report.StartDt = startDt.StringDtParsing();
+                var startDateTag = _reportAttributesDict[ReportAttributes.ReportName] + $"[{i}]." + _reportAttributesDict[ReportAttributes.StartDate];
+                var starTimeTag = _reportAttributesDict[ReportAttributes.ReportName] + $"[{i}]." + _reportAttributesDict[ReportAttributes.StartDate];
+                var startDate = _opc.ReadNode(startDateTag.ToNode(), OpcAttribute.Value)?.ToString();
+                var startTime = _opc.ReadNode(starTimeTag.ToNode(), OpcAttribute.Value)?.ToString();
+                report.StartDt = OpcHelper.StringDateParsing(startDate, startTime);
             }
 
             var reportString = _reportAttributesDict[ReportAttributes.ReportName] + $"[{i}].";
@@ -143,44 +149,55 @@ namespace _2048_Rbu.Helpers
             var batches = new List<Batch>();
             for (int j = 1; j <= 10; j++)
             {
-                if (_reportAttributesDict.ContainsKey(ReportAttributes.BatchFinishDt))
+                if (_reportAttributesDict.ContainsKey(ReportAttributes.BatchFinishDate) && _reportAttributesDict.ContainsKey(ReportAttributes.BatchFinishTime))
                 {
-                    var batchFinishDtTag = report + _reportAttributesDict[ReportAttributes.BatchName] + $"[{j}]." + _reportAttributesDict[ReportAttributes.BatchFinishDt];
-                    var finishDt = _opc.ReadNode(batchFinishDtTag.ToNode(), OpcAttribute.Value)?.ToString();
-
-                    if (finishDt != "1/1/1990 12:00:00 AM" && finishDt != "null")
+                    var batchFinishDateTag = report + _reportAttributesDict[ReportAttributes.BatchName] + $"[{j}]." + _reportAttributesDict[ReportAttributes.BatchFinishDate];
+                    var batchFinishTimeTag = report + _reportAttributesDict[ReportAttributes.BatchName] + $"[{j}]." + _reportAttributesDict[ReportAttributes.BatchFinishTime];
+                    var finishDate = _opc.ReadNode(batchFinishDateTag.ToNode(), OpcAttribute.Value)?.ToString();
+                    var finishTime = _opc.ReadNode(batchFinishTimeTag.ToNode(), OpcAttribute.Value)?.ToString();
+                    if (finishDate != "1990-01-01" && finishDate != "null")
                     {
-                        var batch = new Batch { FinishDt = finishDt.StringDtParsing() };
+                        var batch = new Batch { FinishDt = OpcHelper.StringDateParsing(finishDate, finishTime) };
 
-                        if (_reportAttributesDict.ContainsKey(ReportAttributes.BatchStartDt))
+                        if (_reportAttributesDict.ContainsKey(ReportAttributes.BatchStartDate) && _reportAttributesDict.ContainsKey(ReportAttributes.BatchStartTime))
                         {
-                            var batchStartDtTag = report + _reportAttributesDict[ReportAttributes.BatchName] + $"[{j}]." + _reportAttributesDict[ReportAttributes.BatchStartDt];
-                            var startDt = _opc.ReadNode(batchStartDtTag.ToNode(), OpcAttribute.Value)?.ToString();
-                            batch.StartDt = startDt.StringDtParsing();
+                            var batchStartDateTag = report + _reportAttributesDict[ReportAttributes.BatchName] + $"[{j}]." + _reportAttributesDict[ReportAttributes.BatchStartDate];
+                            var batchStartTimeTag = report + _reportAttributesDict[ReportAttributes.BatchName] + $"[{j}]." + _reportAttributesDict[ReportAttributes.BatchStartTime];
+                            var startDate = _opc.ReadNode(batchStartDateTag.ToNode(), OpcAttribute.Value)?.ToString();
+                            var startTime = _opc.ReadNode(batchStartTimeTag.ToNode(), OpcAttribute.Value)?.ToString();
+                            batch.StartDt = OpcHelper.StringDateParsing(startDate, startTime);
                         }
-                        if (_reportAttributesDict.ContainsKey(ReportAttributes.StartMixing))
+                        if (_reportAttributesDict.ContainsKey(ReportAttributes.StartMixingDate) && _reportAttributesDict.ContainsKey(ReportAttributes.StartMixingTime))
                         {
-                            var startMixingTag = report + _reportAttributesDict[ReportAttributes.BatchName] + $"[{j}]." + _reportAttributesDict[ReportAttributes.StartMixing];
-                            var startMixingDt = _opc.ReadNode(startMixingTag.ToNode(), OpcAttribute.Value)?.ToString();
-                            batch.StartMixing = startMixingDt.StringDtParsing();
+                            var startMixingDateTag = report + _reportAttributesDict[ReportAttributes.BatchName] + $"[{j}]." + _reportAttributesDict[ReportAttributes.StartMixingDate];
+                            var startMixingTimeTag = report + _reportAttributesDict[ReportAttributes.BatchName] + $"[{j}]." + _reportAttributesDict[ReportAttributes.StartMixingTime];
+                            var startMixingDate = _opc.ReadNode(startMixingDateTag.ToNode(), OpcAttribute.Value)?.ToString();
+                            var startMixingTime = _opc.ReadNode(startMixingTimeTag.ToNode(), OpcAttribute.Value)?.ToString();
+                            batch.StartMixing = OpcHelper.StringDateParsing(startMixingDate, startMixingTime);
                         }
-                        if (_reportAttributesDict.ContainsKey(ReportAttributes.FinishMixing))
+                        if (_reportAttributesDict.ContainsKey(ReportAttributes.FinishMixingDate) && _reportAttributesDict.ContainsKey(ReportAttributes.FinishMixingTime))
                         {
-                            var finishMixingTag = report + _reportAttributesDict[ReportAttributes.BatchName] + $"[{j}]." + _reportAttributesDict[ReportAttributes.FinishMixing];
-                            var finishMixingDt = _opc.ReadNode(finishMixingTag.ToNode(), OpcAttribute.Value)?.ToString();
-                            batch.FinishMixing = finishMixingDt.StringDtParsing();
+                            var finishMixingDateTag = report + _reportAttributesDict[ReportAttributes.BatchName] + $"[{j}]." + _reportAttributesDict[ReportAttributes.FinishMixingDate];
+                            var finishMixingTimeTag = report + _reportAttributesDict[ReportAttributes.BatchName] + $"[{j}]." + _reportAttributesDict[ReportAttributes.FinishMixingTime];
+                            var finishMixingDate = _opc.ReadNode(finishMixingDateTag.ToNode(), OpcAttribute.Value)?.ToString();
+                            var finishMixingTime = _opc.ReadNode(finishMixingTimeTag.ToNode(), OpcAttribute.Value)?.ToString();
+                            batch.FinishMixing = OpcHelper.StringDateParsing(finishMixingDate, finishMixingTime);
                         }
-                        if (_reportAttributesDict.ContainsKey(ReportAttributes.StartUnloading))
+                        if (_reportAttributesDict.ContainsKey(ReportAttributes.StartUnloadingDate) && _reportAttributesDict.ContainsKey(ReportAttributes.StartUnloadingTime))
                         {
-                            var startUnloadingTag = report + _reportAttributesDict[ReportAttributes.BatchName] + $"[{j}]." + _reportAttributesDict[ReportAttributes.StartUnloading];
-                            var startUnloadingDt = _opc.ReadNode(startUnloadingTag.ToNode(), OpcAttribute.Value)?.ToString();
-                            batch.StartUnloading = startUnloadingDt.StringDtParsing();
+                            var startUnloadingDateTag = report + _reportAttributesDict[ReportAttributes.BatchName] + $"[{j}]." + _reportAttributesDict[ReportAttributes.StartUnloadingDate];
+                            var startUnloadingTimeTag = report + _reportAttributesDict[ReportAttributes.BatchName] + $"[{j}]." + _reportAttributesDict[ReportAttributes.StartUnloadingTime];
+                            var startUnloadingDate = _opc.ReadNode(startUnloadingDateTag.ToNode(), OpcAttribute.Value)?.ToString();
+                            var startUnloadingTime = _opc.ReadNode(startUnloadingTimeTag.ToNode(), OpcAttribute.Value)?.ToString();
+                            batch.StartUnloading = OpcHelper.StringDateParsing(startUnloadingDate, startUnloadingTime);
                         }
-                        if (_reportAttributesDict.ContainsKey(ReportAttributes.FinishUnloading))
+                        if (_reportAttributesDict.ContainsKey(ReportAttributes.FinishUnloadingDate) && _reportAttributesDict.ContainsKey(ReportAttributes.FinishUnloadingTime))
                         {
-                            var startUnloadingTag = report + _reportAttributesDict[ReportAttributes.BatchName] + $"[{j}]." + _reportAttributesDict[ReportAttributes.FinishUnloading];
-                            var finishUnloadingDt = _opc.ReadNode(startUnloadingTag.ToNode(), OpcAttribute.Value)?.ToString();
-                            batch.FinishUnloading = finishUnloadingDt.StringDtParsing();
+                            var startUnloadingDateTag = report + _reportAttributesDict[ReportAttributes.BatchName] + $"[{j}]." + _reportAttributesDict[ReportAttributes.FinishUnloadingDate];
+                            var startUnloadingTimeTag = report + _reportAttributesDict[ReportAttributes.BatchName] + $"[{j}]." + _reportAttributesDict[ReportAttributes.FinishUnloadingTime];
+                            var finishUnloadingDate = _opc.ReadNode(startUnloadingDateTag.ToNode(), OpcAttribute.Value)?.ToString();
+                            var finishUnloadingTime = _opc.ReadNode(startUnloadingTimeTag.ToNode(), OpcAttribute.Value)?.ToString();
+                            batch.FinishUnloading = OpcHelper.StringDateParsing(finishUnloadingDate, finishUnloadingTime);
                         }
 
                         var batchString = report + _reportAttributesDict[ReportAttributes.BatchName] + $"[{j}].";
@@ -197,25 +214,32 @@ namespace _2048_Rbu.Helpers
         {
             var batcherMaterials = new List<BatcherMaterial>();
             var batcherNames = BatchersReader.GetBatcherNames();
-            if (_reportAttributesDict.ContainsKey(ReportAttributes.FinishLoading))
+            if (_reportAttributesDict.ContainsKey(ReportAttributes.FinishLoadingDate) && _reportAttributesDict.ContainsKey(ReportAttributes.FinishLoadingTime))
             {
                 foreach (var batcherName in batcherNames)
                 {
-                    var finishLoadingTag = batch + $"{batcherName}." +
-                                           _reportAttributesDict[ReportAttributes.FinishLoading];
-                    var finishLoadingDt = _opc.ReadNode(finishLoadingTag.ToNode(), OpcAttribute.Value)
+                    var finishDateLoadingTag = batch + $"{batcherName}." +
+                                           _reportAttributesDict[ReportAttributes.FinishLoadingDate];
+                    var finishTimeLoadingTag = batch + $"{batcherName}." +
+                                           _reportAttributesDict[ReportAttributes.FinishLoadingTime];
+                    var finishLoadingDate = _opc.ReadNode(finishDateLoadingTag.ToNode(), OpcAttribute.Value)
                         ?.ToString();
-
-                    if (finishLoadingDt != "1/1/1990 12:00:00 AM" && finishLoadingDt != "null")
+                    var finishLoadingTime = _opc.ReadNode(finishTimeLoadingTag.ToNode(), OpcAttribute.Value)
+                        ?.ToString();
+                    if (finishLoadingDate != "1990-01-01" && finishLoadingDate != "null")
                     {
-                        var batcherMaterial = new BatcherMaterial { FinishLoading = finishLoadingDt.StringDtParsing() };
-                        if (_reportAttributesDict.ContainsKey(ReportAttributes.StartLoading))
+                        var batcherMaterial = new BatcherMaterial { FinishLoading = OpcHelper.StringDateParsing(finishLoadingDate, finishLoadingTime) };
+                        if (_reportAttributesDict.ContainsKey(ReportAttributes.StartLoadingDate) && _reportAttributesDict.ContainsKey(ReportAttributes.StartLoadingTime))
                         {
-                            var startLoadingTag = batch + $"{batcherName}." +
-                                                  _reportAttributesDict[ReportAttributes.StartLoading];
-                            var startLoadingDt =
-                                _opc.ReadNode(startLoadingTag.ToNode(), OpcAttribute.Value)?.ToString();
-                            batcherMaterial.StartLoading = startLoadingDt.StringDtParsing();
+                            var startDateLoadingTag = batch + $"{batcherName}." +
+                                                  _reportAttributesDict[ReportAttributes.StartLoadingDate];
+                            var startTimeLoadingTag = batch + $"{batcherName}." +
+                                                  _reportAttributesDict[ReportAttributes.StartLoadingTime];
+                            var startLoadingDate =
+                                _opc.ReadNode(startDateLoadingTag.ToNode(), OpcAttribute.Value)?.ToString();
+                            var startLoadingTime =
+                                _opc.ReadNode(startTimeLoadingTag.ToNode(), OpcAttribute.Value)?.ToString();
+                            batcherMaterial.StartLoading = OpcHelper.StringDateParsing(startLoadingDate, startLoadingTime);
                         }
 
                         if (_reportAttributesDict.ContainsKey(ReportAttributes.StartWeight))
@@ -264,21 +288,28 @@ namespace _2048_Rbu.Helpers
                     if (setVolume != 0)
                     {
                         var dosingSourceMaterial = new DosingSourceMaterial { SetVolume = setVolume };
-                        if (_reportAttributesDict.ContainsKey(ReportAttributes.StartDosage))
+                        if (_reportAttributesDict.ContainsKey(ReportAttributes.StartDosageDate) && _reportAttributesDict.ContainsKey(ReportAttributes.StartDosageTime))
                         {
-                            var startDosageTag = batcher + $"{dosingSourceName}." +
-                                                 _reportAttributesDict[ReportAttributes.StartDosage];
-                            var startDosageDt = _opc.ReadNode(startDosageTag.ToNode(), OpcAttribute.Value)?.ToString();
-                            dosingSourceMaterial.StartDosage = startDosageDt.StringDtParsing();
+                            var startDosageDateTag = batcher + $"{dosingSourceName}." +
+                                                 _reportAttributesDict[ReportAttributes.StartDosageDate];
+                            var startDosageTimeTag = batcher + $"{dosingSourceName}." +
+                                                 _reportAttributesDict[ReportAttributes.StartDosageTime];
+                            var startDosageDate = _opc.ReadNode(startDosageDateTag.ToNode(), OpcAttribute.Value)?.ToString();
+                            var startDosageTime = _opc.ReadNode(startDosageTimeTag.ToNode(), OpcAttribute.Value)?.ToString();
+                            dosingSourceMaterial.StartDosage = OpcHelper.StringDateParsing(startDosageDate, startDosageTime);
                         }
 
-                        if (_reportAttributesDict.ContainsKey(ReportAttributes.FinishDosage))
+                        if (_reportAttributesDict.ContainsKey(ReportAttributes.FinishDosageDate) && _reportAttributesDict.ContainsKey(ReportAttributes.FinishDosageTime))
                         {
-                            var finishDosageTag = batcher + $"{dosingSourceName}." +
-                                                  _reportAttributesDict[ReportAttributes.FinishDosage];
-                            var finishDosageDt =
-                                _opc.ReadNode(finishDosageTag.ToNode(), OpcAttribute.Value)?.ToString();
-                            dosingSourceMaterial.FinishDosage = finishDosageDt.StringDtParsing();
+                            var finishDosageDateTag = batcher + $"{dosingSourceName}." +
+                                                  _reportAttributesDict[ReportAttributes.FinishDosageDate];
+                            var finishDosageTimeTag = batcher + $"{dosingSourceName}." +
+                                                  _reportAttributesDict[ReportAttributes.FinishDosageTime];
+                            var finishDosageDate =
+                                _opc.ReadNode(finishDosageDateTag.ToNode(), OpcAttribute.Value)?.ToString();
+                            var finishDosageTime =
+                                _opc.ReadNode(finishDosageTimeTag.ToNode(), OpcAttribute.Value)?.ToString();
+                            dosingSourceMaterial.FinishDosage = OpcHelper.StringDateParsing(finishDosageDate, finishDosageTime);
                         }
 
                         if (_reportAttributesDict.ContainsKey(ReportAttributes.StartWeightDosage))
@@ -343,21 +374,33 @@ namespace _2048_Rbu.Helpers
     {
         ReportName,
         TaskId,
-        StartDt,
-        FinishDt,
+        StartDate,
+        StartTime,
+        FinishDate,
+        FinishTime,
         BatchName,
-        BatchStartDt,
-        BatchFinishDt,
-        StartMixing,
-        FinishMixing,
-        StartUnloading,
-        FinishUnloading,
-        StartLoading,
-        FinishLoading,
+        BatchStartDate,
+        BatchStartTime,
+        BatchFinishDate,
+        BatchFinishTime,
+        StartMixingDate,
+        StartMixingTime,
+        FinishMixingDate,
+        FinishMixingTime,
+        StartUnloadingDate,
+        StartUnloadingTime,
+        FinishUnloadingDate,
+        FinishUnloadingTime,
+        StartLoadingDate,
+        StartLoadingTime,
+        FinishLoadingDate,
+        FinishLoadingTime,
         StartWeight,
         FinishWeight,
-        StartDosage,
-        FinishDosage,
+        StartDosageDate,
+        StartDosageTime,
+        FinishDosageDate,
+        FinishDosageTime,
         StartWeightDosage,
         FinishWeightDosage,
         MaterialId,

@@ -1,0 +1,45 @@
+﻿<Window x:Class="_2048_Rbu.Windows.WindowSetVolume"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:window="clr-namespace:_2048_Rbu.Windows"
+        mc:Ignorable="d" 
+        d:DataContext="{d:DesignInstance Type={x:Type window:WindowSetVolumeViewModel}, IsDesignTimeCreatable = False}"
+        Title="" SizeToContent="WidthAndHeight" BorderBrush="Black" BorderThickness="1" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Background="Gray" Topmost="True">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="{Binding Name}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" Margin="5"/>
+        <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal" Margin="5">
+            <TextBlock Text="Минимальное значение" Width="160" VerticalAlignment="Center" FontSize="14" />
+            <Label Content="{Binding MinVal}" BorderBrush="Black" BorderThickness="1" Width="40" Height="25" Padding="0" Margin="10,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14" Background="Silver"/>
+        </StackPanel>
+        <StackPanel Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal" Margin="5">
+            <TextBlock Text="Максимальное значение" Width="160" VerticalAlignment="Center" FontSize="14" />
+            <Label Content="{Binding MaxVal}" BorderBrush="Black" BorderThickness="1" Width="40" Height="25" Padding="0" Margin="10,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14" Background="Silver"/>
+        </StackPanel>
+        <StackPanel Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal" Margin="5">
+            <Button Content="0.5" Background="LightBlue" Width="30" Margin="2" VerticalAlignment="Center" FontSize="14" BorderBrush="Black" BorderThickness="1" Command="{Binding SetParameter}" CommandParameter="0.5"/>
+            <Button Content="1.0" Background="LightBlue" Width="30" Margin="2" VerticalAlignment="Center" FontSize="14" BorderBrush="Black" BorderThickness="1" Command="{Binding SetParameter}" CommandParameter="1"/>
+            <Button Content="2.0" Background="LightBlue" Width="30" Margin="2" VerticalAlignment="Center" FontSize="14" BorderBrush="Black" BorderThickness="1" Command="{Binding SetParameter}" CommandParameter="2"/>
+            <Button Content="3.0" Background="LightBlue" Width="30" Margin="2" VerticalAlignment="Center" FontSize="14" BorderBrush="Black" BorderThickness="1" Command="{Binding SetParameter}" CommandParameter="3"/>
+            <Button Content="4.0" Background="LightBlue" Width="30" Margin="2" VerticalAlignment="Center" FontSize="14" BorderBrush="Black" BorderThickness="1" Command="{Binding SetParameter}" CommandParameter="4"/>
+            <Button Content="5.0" Background="LightBlue" Width="30" Margin="2" VerticalAlignment="Center" FontSize="14" BorderBrush="Black" BorderThickness="1" Command="{Binding SetParameter}" CommandParameter="5"/>
+            <Button Content="6.0" Background="LightBlue" Width="30" Margin="2" VerticalAlignment="Center" FontSize="14" BorderBrush="Black" BorderThickness="1" Command="{Binding SetParameter}" CommandParameter="6"/>
+            <Button Content="7.0" Background="LightBlue" Width="30" Margin="2" VerticalAlignment="Center" FontSize="14" BorderBrush="Black" BorderThickness="1" Command="{Binding SetParameter}" CommandParameter="7"/>
+            <Button Content="8.0" Background="LightBlue" Width="30" Margin="2" VerticalAlignment="Center" FontSize="14" BorderBrush="Black" BorderThickness="1" Command="{Binding SetParameter}" CommandParameter="8"/>
+            <Button Content="9.0" Background="LightBlue" Width="30" Margin="2" VerticalAlignment="Center" FontSize="14" BorderBrush="Black" BorderThickness="1" Command="{Binding SetParameter}" CommandParameter="9"/>
+            <Button Content="10" Background="LightBlue" Width="30" Margin="2" VerticalAlignment="Center" FontSize="14" BorderBrush="Black" BorderThickness="1" Command="{Binding SetParameter}" CommandParameter="10"/>
+        </StackPanel>
+        <TextBox Grid.Row="3" Name="TextBox" BorderBrush="Black" BorderThickness="1" Width="60" Height="30" Padding="0" Margin="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="18" FontWeight="Bold" Background="LightBlue" KeyDown="TextBox_OnKeyDown" Loaded="TextBox_OnLoaded"/>
+        <Button Content="Сохранить" Width="100" Height="30" FontSize="14" FontWeight="Bold" Background="LightBlue" VerticalAlignment="Center" Margin="22,10,150,10" BorderBrush="Black" Grid.Row="5" Click="ButtonBase_OnClick"/>
+        <Button Content="Отмена" Width="100" Height="30" FontSize="14" FontWeight="Bold" Background="Silver" VerticalAlignment="Center" Margin="150,10,22,10" BorderBrush="Black" Grid.Row="5" Command="{Binding CloseParameter}"/>
+    </Grid>
+</Window>

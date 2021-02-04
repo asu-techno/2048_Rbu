@@ -135,41 +135,11 @@ namespace _2048_Rbu.Classes
             return $"ns=2;s=Siem_Rbu.Rbu.{tag}";
         }
 
-        public static DateTime StringDtParsing(this string stringDt)
+        public static DateTime StringDateParsing(string stringDate, string stringTime)
         {
-            Regex regex = new Regex(@"\d{1}\:\d{2}\:\d{2}");
-            Regex regex2 = new Regex(@"\d{2}\:\d{2}\:\d{2}");
-            try
-            {
-                var ind = stringDt.IndexOf(" ", StringComparison.Ordinal);
-                var time1 = stringDt.Remove(0, ind);
-                var countTime1 = time1.Length;
-                var timeString = countTime1 == 12 ? regex2.Match(stringDt).ToString() : regex.Match(stringDt).ToString();
-
-                var time = TimeSpan.Parse(timeString);
-                if (stringDt.EndsWith("PM"))
-                {
-                    if (time.Hours != 12)
-                        time = time + new TimeSpan(0, 12, 0, 0);
-                }
-                else
-                {
-                    if (time.Hours == 12)
-                        time = time - new TimeSpan(0, 12, 0, 0);
-                }
-                var index = stringDt.IndexOf(" ", StringComparison.Ordinal);
-                var test3 = stringDt.Remove(index);
-                var subStrings = test3.Split('/');
-                int.TryParse(subStrings[2], out var year);
-                int.TryParse(subStrings[1], out var day);
-                int.TryParse(subStrings[0], out var month);
-                var dateTime = new DateTime(year, month, day, time.Hours, time.Minutes, time.Seconds);
-                return dateTime;
-            }
-            catch (Exception)
-            {
-                return DateTime.Now;
-            }
+            var date = DateTime.Parse(stringDate);
+            var time = TimeSpan.Parse(stringTime);
+            return date.Add(time);
         }
     }
 }

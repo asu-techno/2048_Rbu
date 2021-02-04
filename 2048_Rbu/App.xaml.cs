@@ -31,24 +31,31 @@ namespace _2048_Rbu
         {
             base.OnStartup(args);
 
-            if (!InstanceCheck())
+            var currentProcess = Process.GetCurrentProcess();
+            if (Process.GetProcessesByName(currentProcess.ProcessName).Length > 1)
             {
                 MessageBox.Show("Запущено более одной копии программного обеспечения");
-                Process.GetCurrentProcess().Kill();
-                //foreach (Process proc in Process.GetProcessesByName("2048_Rbu"))
-                //{
-                //    proc.Kill();
-                //}
+                currentProcess.Kill();
             }
+
+            //if (!InstanceCheck())
+            //{
+            //    MessageBox.Show("Запущено более одной копии программного обеспечения");
+            //    Process.GetCurrentProcess().Kill();
+            //    //foreach (Process proc in Process.GetProcessesByName("ServerArchivator"))
+            //    //{
+            //    //    proc.Kill();
+            //    //}
+            //}
         }
 
-        // держим в переменной, чтобы сохранить владение им до конца пробега программы
-        static Mutex _instanceCheckMutex;
-        static bool InstanceCheck()
-        {
-            bool isNew;
-            _instanceCheckMutex = new Mutex(true, "<2048_Rbu>", out isNew);
-            return isNew;
-        }
+        //// держим в переменной, чтобы сохранить владение им до конца пробега программы
+        //static Mutex InstanceCheckMutex;
+        //static bool InstanceCheck()
+        //{
+        //    bool isNew;
+        //    InstanceCheckMutex = new Mutex(true, "<ServerArchivator>", out isNew);
+        //    return isNew;
+        //}
     }
 }

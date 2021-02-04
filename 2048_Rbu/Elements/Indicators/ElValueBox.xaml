@@ -17,5 +17,17 @@
             </Label.Content>
         </Label>
         <Rectangle Name="RectObject" Fill="Transparent" StrokeThickness="0.5" Margin="-3" Stroke="Black" Opacity="0" MouseLeftButtonUp="ElValueBox_OnMouseLeftButtonDown" ToolTip="Контроль уровня"/>
+        <Label Background="Red" BorderThickness="1" BorderBrush="Black" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="Нет связи" Padding="0">
+            <Label.Style>
+                <Style TargetType="{x:Type Label}">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding VisError}" Value="True">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Label.Style>
+        </Label>
     </Grid>
 </UserControl>

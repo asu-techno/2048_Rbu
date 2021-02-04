@@ -5,6 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" MinHeight="12" MinWidth="12">
     <Grid>
-        <Label Name="LblDone" BorderThickness="1" BorderBrush="Black" Background="{Binding Brush}" />
+        <Rectangle Name="RectDone" StrokeThickness="1" Stroke="Black" Fill="{Binding Brush}" RadiusX="0" RadiusY="0"/>
     </Grid>
 </UserControl>

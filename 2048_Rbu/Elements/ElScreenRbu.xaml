@@ -159,8 +159,8 @@
         <!--<indicators:ElAnim VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="16" Height="32" Margin="1757,465,0,0" Substance="Inert" Logic="True" OnPcy="LoadInert_4_1"/>-->
         <!--<indicators:ElAnim VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="16" Height="32" Margin="1780,465,0,0" Substance="Inert" Logic="True" OnPcy="LoadInert_4_2"/>-->
         <indicators:ElAnim VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="16" Height="32" Margin="567,776,0,0" Substance="Solution" Logic="False" OnPcy="V_1.DI_Closed"/>
-        <indicators:ElDone VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="15" Height="15" Margin="825,531,0,0" OnPcy="DI_M9_MaterialSensor"/>
-        <TextBlock VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Margin="845,528,0,0" TextAlignment="Left" FontSize="14" Text="- наличие материала"/>
+        <indicators:ElDone VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="12" Height="12" Margin="829,533,0,0" Radius="10" OnBrush="Yellow" OnPcy="DI_M9_MaterialSensor"/>
+        <TextBlock VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Margin="845,529,0,0" TextAlignment="Left" FontSize="12" Text="- наличие материала"/>
         <mechs:ElGate VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="180" Height="70" Margin="414,320,0,0" IsAeration="True" AerationName="Аэратор силоса цемента 1" NameObject="" NamePos="Left" ModePos="LeftUp" PopupPosition="Down" ValueNumMech="45" Prefix="Air_Cement1"/>
         <mechs:ElGate VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="180" Height="70" Margin="545,320,0,0" IsAeration="True" AerationName="Аэратор силоса цемента 2" NameObject="" NamePos="Left" ModePos="LeftUp" PopupPosition="Down" ValueNumMech="46" Prefix="Air_Cement2"/>
         <mechs:ElGate VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="180" Height="70" Margin="942,306,0,0" NameObject="V-5" NamePos="Left" ModePos="RightDown" PopupPosition="Down" ValueNumMech="24" Prefix="V_5"/>
@@ -203,10 +203,10 @@
         <control:ElManualDosing VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="94" Height="20" Margin="1430,425,0,0" EventText="Бункер 2" LeftManualPcy="V_10_1.gMode_Manual" RightManualPcy="V_10_2.gMode_Manual" RoughtPcy="btn_Bunker2_Rough" PrecisePcy="btn_Bunker2_Precise"/>
         <control:ElManualDosing VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="94" Height="20" Margin="1700,425,0,0" EventText="Бункер 3" LeftManualPcy="V_11_1.gMode_Manual" RightManualPcy="V_11_2.gMode_Manual"  RoughtPcy="btn_Bunker3_Rough" PrecisePcy="btn_Bunker3_Precise"/>
         <!--<control:ElManualDosing VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="94" Height="20" Margin="1730,425,0,0" EventText="Бункер 4" LeftManualPcy="V_12_1.gMode_Manual" RightManualPcy="V_12_2.gMode_Manual"  RoughtPcy="btn_Bunker4_Rough" PrecisePcy="btn_Bunker4_Precise"/>-->
-        <indicators:ElValueBox VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="95" Height="25" Margin="545,443,0,0" Count="7" Digit="1" Color="CornflowerBlue" Measure="кг" TypeMaterial="Cement" ValuePcay="Cement"/>
-        <indicators:ElValueBox VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="95" Height="25" Margin="858,423,0,0" Count="7" Digit="1" Color="CornflowerBlue" Measure="кг" TypeMaterial="Water" ValuePcay="Water"/>
-        <indicators:ElValueBox VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="95" Height="25" Margin="949,267,0,0" Count="7" Digit="1" Color="CornflowerBlue" Measure="кг" TypeMaterial="Additive" ValuePcay="Additive"/>
-        <indicators:ElValueBox VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="95" Height="25" Margin="995,492,0,0" Count="7" Digit="1" Color="CornflowerBlue" Measure="кг" TypeMaterial="Inert" ValuePcay="Inert"/>
+        <indicators:ElValueBox VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="95" Height="25" Margin="545,443,0,0" Count="7" Digit="1" Color="CornflowerBlue" Measure="кг" TypeMaterial="Cement" VisErrorTag="gb_LinkERR_WeightCement" ValuePcay="Cement"/>
+        <indicators:ElValueBox VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="95" Height="25" Margin="858,423,0,0" Count="7" Digit="1" Color="CornflowerBlue" Measure="кг" TypeMaterial="Water" VisErrorTag="gb_LinkERR_WeightWater" ValuePcay="Water"/>
+        <indicators:ElValueBox VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="95" Height="25" Margin="949,267,0,0" Count="7" Digit="1" Color="CornflowerBlue" Measure="кг" TypeMaterial="Additive" VisErrorTag="gb_LinkERR_WeightAdditive" ValuePcay="Additive"/>
+        <indicators:ElValueBox VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="95" Height="25" Margin="995,492,0,0" Count="7" Digit="1" Color="CornflowerBlue" Measure="кг" TypeMaterial="Inert" VisErrorTag="gb_LinkERR_WeightInert" ValuePcay="Inert"/>
         <indicators:ElValueBar VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="95" MyHeight="113" Margin="1195,11,0,0" ForegroundBrush="#FF338099" NormalMin="0" ContainerItem="Additive1" ValueBoxPcay="Volume[1]" ValuePcay="LEC[1]"/>
         <indicators:ElValueBar VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="95" MyHeight="113" Margin="1350,63,0,0" ForegroundBrush="#FF338099" NormalMin="0" ContainerItem="Additive2" ValueBoxPcay="Volume[2]" ValuePcay="LEC[2]"/>
         <indicators:ElValueBar VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="95" MyHeight="163" Margin="483,145,0,0" ForegroundBrush="#FF9F9F9F" NormalMin="0" ContainerItem="Silo1" ValueBoxPcay="Volume[3]" ValuePcay="LEC[3]" CheckLevelNum="1"/>
@@ -232,7 +232,7 @@
                 </TextBlock>
             </Grid>
         </Border>
-        <indicators:ElValueBox VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="48" Height="18" Margin="631,777,0,0" IsSmall="True" Count="3" Digit="0" Color="Beige" Measure="%" ValuePcay="gr_Valve_PercentOpen"/>
+        <indicators:ElValueBox VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="48" Height="18" Margin="504,763,0,0" IsSmall="True" Count="3" Digit="0" Color="Beige" Measure="%" ValuePcay="gr_Valve_PercentOpen"/>
         <indicators:ElDone VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="25" Height="12" Margin="482,326,0,0" OnPcy="DI_Cement1_LSL"/>
         <indicators:ElDone VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="25" Height="12" Margin="481,175,0,0" OnPcy="DI_Cement1_LSH"/>
         <indicators:ElDone VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="25" Height="12" Margin="612,326,0,0" OnPcy="DI_Cement2_LSL"/>
@@ -290,7 +290,7 @@
         <control:ElZamesDosing x:Name="ElControlZamesDosing" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="384" Height="358" Margin="10,288,0,0"/>
         <control:ElZamesMixer x:Name="ElControlZamesMixer" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="384" Height="205" Margin="10,652,0,0"/>
         <control:ElQueue x:Name="ElControlQueue" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="1030" Height="380" Margin="879,599,0,0"/>
-        <control:ElStatus x:Name="ElControlStatus" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="525" Height="117" Margin="10,863,0,0"/>
+        <control:ElStatus x:Name="ElControlStatus" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="350" Height="117" Margin="10,863,0,0"/>
         <Button Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" IsEnabled="{Binding LinkOk}" FontSize="14" BorderThickness="1" BorderBrush="Black" Margin="694,781,0,0" Width="160" Height="26" Name="BtnBlockUnload">
             <Button.InputBindings>
                 <MouseBinding Command="{Binding SetBlockUnload}" MouseAction="LeftClick"/>
@@ -348,14 +348,14 @@
                 </Style>
             </Label.Style>
         </Label>
-        <control:ElEvent Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="1559,114,0,0" Width="350" Height="100" TypeWindow="Warning" VisWindowTag="gb_VisibilityWarningWindow" EventsNumTag="gi_WarningNum" CmdAckTag="cmd_Ack_Warning"/>
-        <control:ElEvent VerticalAlignment="Top" HorizontalAlignment="Left" Margin="1559,40,0,0" Width="350" Height="100" TypeWindow="Alarm" VisWindowTag="gb_VisibilityAlarmWindow" EventsNumTag="gi_ErrorNum" CmdAckTag="cmd_Ack_Alarm" Grid.RowSpan="2"/>
+        <control:ElEvent Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="1559,117,0,0" Width="350" Height="100" TypeWindow="Warning" VisWindowTag="gb_VisibilityWarningWindow" EventsNumTag="gi_WarningNum" CmdAckTag="cmd_Ack_Warning"/>
+        <control:ElEvent Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="1559,10,0,0" Width="350" Height="100" TypeWindow="Alarm" VisWindowTag="gb_VisibilityAlarmWindow" EventsNumTag="gi_ErrorNum" CmdAckTag="cmd_Ack_Alarm"/>
         <indicators:ElWarning VerticalAlignment="Top" HorizontalAlignment="Left" Width="200" MyWidth="200" Height="70" MyHeight="70" Margin="1709,521,0,0" Color="Red" FontSize="14" NameObject="Нажата стоповая кнопка" Logic="True" ValuePcy="cmd_Stop" Grid.Row="1"/>
         <indicators:ElWarning Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="200" MyWidth="200" Height="70" MyHeight="70" Margin="1504,521,0,0" Color="Yellow" FontSize="14" NameObject="Нет связи&#xA;с программой архивации" Logic="True" ValuePcy="gb_ArchiverERROR"/>
         <indicators:ElWarning Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="120" MyWidth="120" Height="25" MyHeight="25" Margin="642,628,0,0" Color="Yellow" FontSize="12" NameObject="Крышка открыта" Logic="False" ValuePcy="DI_Gates_M18_Closed"/>
         <indicators:ElWarning Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="220" MyWidth="220" Height="60" MyHeight="60" Margin="592,707,0,0" Color="Yellow" FontSize="12" NameObject="Нет давления в системе смазки. Бетоносмеситель будет отключен через" Logic="True" ValueTime="gi_Mixer_WillStop_After" ValuePcy="M_18.gb_Warning_Oil"/>
-        <indicators:ElWarning Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="150" MyWidth="150" Height="90" MyHeight="90" Margin="396,675,0,0" Color="Red" FontSize="12" NameObject="Насос гидростанции - не сработал пускатель" Logic="True" ValueBtn="btn_Repeat_OilAlarms" ValuePcy="gb_AL_Hydro_Feedback"/>
-        <indicators:ElWarning Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="150" MyWidth="150" Height="90" MyHeight="90" Margin="396,767,0,0" Color="Yellow" FontSize="12" NameObject="Низкое давление в гидравлической магистрали" Logic="True" ValueBtn="btn_Repeat_OilAlarms" ValuePcy="gb_AL_Hydro_Pressure"/>
+        <indicators:ElWarning Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="150" MyWidth="150" Height="90" MyHeight="90" Margin="396,670,0,0" Color="Red" FontSize="12" NameObject="Насос гидростанции - не сработал пускатель" Logic="True" ValueBtn="btn_Repeat_OilAlarms" ValuePcy="gb_AL_Hydro_Feedback"/>
+        <indicators:ElWarning Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="150" MyWidth="150" Height="90" MyHeight="90" Margin="396,784,0,0" Color="Yellow" FontSize="12" NameObject="Низкое давление в гидравлической магистрали" Logic="True" ValueBtn="btn_Repeat_OilAlarms" ValuePcy="gb_AL_Hydro_Pressure"/>
         <Label VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="1" Width="500" Height="140" Margin="0,0,0,0" BorderBrush="Black" BorderThickness="1" Background="Red" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" FontSize="24" Padding="0" Content="Нет связи со шкафом управления">
             <Label.Style>
                 <Style TargetType="{x:Type Label}">

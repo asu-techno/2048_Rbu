@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Input;
 using AS_Library.Classes;
 using AsuBetonLibrary.Abstract;
 using AsuBetonLibrary.Annotations;
@@ -18,18 +20,24 @@ namespace _2048_Rbu.Windows
 {
     public partial class WindowTask : Window
     {
+        private NewTaskViewModel NewTaskViewModel { get; set; }
         public WindowTask(TaskQueueItemsService taskQueueItemsService, int maxOrder, Logger logger)
         {
             InitializeComponent();
 
-            var newTaskViewModel = new NewTaskViewModel(taskQueueItemsService, maxOrder, logger);
-            newTaskViewModel.Close += NewTaskViewModelOnClose;
-            DataContext = newTaskViewModel;
+            NewTaskViewModel = new NewTaskViewModel(taskQueueItemsService, maxOrder, logger);
+            NewTaskViewModel.Close += NewTaskViewModelOnClose;
+            DataContext = NewTaskViewModel;
         }
 
         private void NewTaskViewModelOnClose()
         {
             Close();
+        }
+
+        private void Control_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            NewTaskViewModel.SetVolume();
         }
     }
 
@@ -177,6 +185,18 @@ namespace _2048_Rbu.Windows
             UpdateCustomers();
         }
 
+        public void SetVolume()
+        {
+            var window = new WindowSetVolume("Oбъем, м³", 0.2, 10, Volume.ToString(CultureInfo.InvariantCulture));
+            window.ValueChanged += WindowOnValueChanged;
+            window.ShowDialog();
+        }
+
+        private void WindowOnValueChanged(string value)
+        {
+            Volume = Convert.ToDecimal(value);
+        }
+
         private decimal GetMixerVolume()
         {
             var mixerVolumeParam = CommonOpcParametersReader.GetCommonOpcParameterByName(OpcHelper.GetTagName(OpcHelper.TagNames.MixerVolume));
@@ -202,11 +222,12 @@ namespace _2048_Rbu.Windows
         private void UpdateRecipes()
         {
             var recipes = RecipesReader.ListRecipes();
-            RecipeGroups = new ObservableCollection<ApiRecipeGroup>(recipes.GroupBy(x => x.Group.Name).Select(x => new ApiRecipeGroup
-            {
-                Name = x.Key,
-                Recipes = x.Select(p => p).ToList()
-            }).ToList());
+            RecipeGroups = new ObservableCollection<ApiRecipeGroup>(recipes.GroupBy(x => x.Group.Name)
+                .Select(x => new ApiRecipeGroup
+                {
+                    Name = x.Key,
+                    Recipes = x.Select(p => p).ToList()
+                }).ToList());
         }
 
         private void UpdateRecipeDetails()
@@ -266,6 +287,8 @@ namespace _2048_Rbu.Windows
             }
         }
         #endregion
+
+
     }
 }
 

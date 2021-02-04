@@ -27,15 +27,11 @@ namespace _2048_Rbu.Elements.Control
             {3, "DI_NotStop_BTN_Cem"},
             {4, "DI_NotStop_BTN_Water"},
             {5, "DI_NotStop_BTN_BS"},
-            {6, "gb_LinkERR_WeightCement"},
-            {7, "gb_LinkERR_WeightWater"},
-            {8, "gb_LinkERR_WeightInert"},
-            {9, "gb_LinkERR_WeightAdditive"},
-            {10, "gb_AL_Hydro_Feedback"},
-            {11, "gb_AL_Hydro_Pressure"},
-            {12, "M_18.gb_Warning_Oil"},
-            {13, "DI_M18_sw_AutomatMode"},
-            {14, "DI_M9_sw_AutomatMode"}
+            {6, "gb_AL_Hydro_Feedback"},
+            {7, "gb_AL_Hydro_Pressure"},
+            {8, "M_18.gb_Warning_Oil"},
+            {9, "DI_M18_sw_AutomatMode"},
+            {10, "DI_M9_sw_AutomatMode"}
         };
 
         private ObservableCollection<StatusArray> _statusArray;

@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 using AS_Library.Link;
 using _2048_Rbu.Classes;
@@ -35,11 +36,25 @@ namespace _2048_Rbu.Elements.Indicators
         #region MyRegion
 
         public string Prefix { get; set; }
-
         public string OnPcy { get; set; }
+        public SolidColorBrush OnBrush { get; set; }
+
+        private int _radius;
+        public int Radius
+        {
+            get
+            {
+                return _radius;
+            }
+            set
+            {
+                RectDone.RadiusX = RectDone.RadiusY = value;
+                _radius = value;
+            }
+        }
 
         #endregion
-        
+
         public ElDone()
         {
             InitializeComponent();
@@ -74,7 +89,7 @@ namespace _2048_Rbu.Elements.Indicators
 
         private void HandleVisChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
-            Brush = bool.Parse(e.Item.Value.ToString()) ? (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF85FC84")) : Brushes.White;
+            Brush = bool.Parse(e.Item.Value.ToString()) ? (OnBrush != null ? OnBrush : (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF85FC84"))) : Brushes.White;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

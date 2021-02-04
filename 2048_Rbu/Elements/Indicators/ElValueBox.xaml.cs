@@ -40,6 +40,20 @@ namespace _2048_Rbu.Elements.Indicators
             }
         }
 
+        private bool _visError;
+        public bool VisError
+        {
+            get
+            {
+                return _visError;
+            }
+            set
+            {
+                _visError = value;
+                OnPropertyChanged(nameof(VisError));
+            }
+        }
+
         private string _value;
         public string Value
         {
@@ -57,6 +71,7 @@ namespace _2048_Rbu.Elements.Indicators
         #region MyRegion
 
         public string VisValue { get; set; }
+        public string VisErrorTag { get; set; }
         public bool Logic { get; set; }
         public string Prefix { get; set; }
         public string ValuePcay { get; set; }
@@ -157,8 +172,13 @@ namespace _2048_Rbu.Elements.Indicators
             {
                 var visItem = new OpcMonitoredItem(_opc.cl.GetNode(Prefix + VisValue), OpcAttribute.Value);
                 visItem.DataChangeReceived += HandleVisChanged;
-                visItem.SamplingInterval = 200;
                 OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(visItem);
+            }
+            if (VisErrorTag != null)
+            {
+                var visErrorItem = new OpcMonitoredItem(_opc.cl.GetNode(Prefix + VisErrorTag), OpcAttribute.Value);
+                visErrorItem.DataChangeReceived += HandleVisErrorChanged;
+                OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(visErrorItem);
             }
         }
 
@@ -176,6 +196,11 @@ namespace _2048_Rbu.Elements.Indicators
         private void HandleVisChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
             Vis = bool.Parse(e.Item.Value.ToString()) == Logic ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private void HandleVisErrorChanged(object sender, OpcDataChangeReceivedEventArgs e)
+        {
+            VisError = bool.Parse(e.Item.Value.ToString());
         }
 
         private void ElValueBox_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)

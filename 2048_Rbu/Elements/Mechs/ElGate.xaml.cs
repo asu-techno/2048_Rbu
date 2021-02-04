@@ -331,7 +331,7 @@ namespace _2048_Rbu.Elements.Mechs
 
                 if (value == Position.Right)
                 {
-                    TbcName.Margin = new Thickness(75, 27, 0, 0);
+                    TbcName.Margin = new Thickness(118, 24, 0, 0);
                     TbcName.HorizontalAlignment = HorizontalAlignment.Left;
                     TbcName.TextAlignment = TextAlignment.Left;
                 }
