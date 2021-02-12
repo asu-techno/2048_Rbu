@@ -14,10 +14,11 @@ using _2048_Rbu.Helpers;
 using NLog;
 using _2048_Rbu.Windows;
 using AS_Library.Events.Classes;
-using ServiceLib.Classes;
-using ServiceLib.Windows;
+using ServiceLibCore.Classes;
+using ServiceLibCore.Windows;
 using System.Threading.Tasks;
 using Opc.UaFx;
+using AsLibraryCore.Events.Classes;
 
 namespace _2048_Rbu
 {
@@ -62,6 +63,7 @@ namespace _2048_Rbu
             _logger = Service.GetInstance().GetLogger();
             LibService.Init(_logger);
             LibService.GetInstance().SetDbConnectionString(Service.GetInstance().GetOpcDict()["DbConnectionString"]);
+            AsLibraryCore.LibService.GetInstance().SetEventsDbConnectionString(Service.GetInstance().GetOpcDict()["EventsDbConnectionString"]);
             NewOpcServer.Init(_logger);
             NewOpcServer.GetInstance().InitOpc(NewOpcServer.OpcList.Rbu);
             NewOpcServer.GetInstance().ConnectOpc(NewOpcServer.OpcList.Rbu);
@@ -71,12 +73,14 @@ namespace _2048_Rbu
 
             OpcServer.Init(@"Data/Service.xlsx");
             OpcServer.GetInstance();
+
+            EventsBase.GetInstance().CreateControlEvents(OpcServer.OpcList.Rbu);
+
             #endregion
 
-            GetVersion();
             Login();
 
-            Title += Static.Version + " " + Static.Copyright;
+            Title += Release.GetInstance().GetVersion() + " " + Release.GetInstance().GetCopyright();
 
             #region Масштаб экрана (comment)
 
@@ -96,33 +100,25 @@ namespace _2048_Rbu
             #endregion
         }
 
-        private void GetVersion()
-        {
-            var myVersion = Assembly.GetExecutingAssembly().GetName().Version;
-            var compileTime = new DateTime(2000, 1, 1).AddDays(myVersion.Build).AddSeconds(myVersion.Revision * 2);
-            Static.Version = " v." + myVersion.Major + "." + myVersion.Minor + "." + compileTime.Day.ToString("D2") + compileTime.Month.ToString("D2") + "." + compileTime.Hour.ToString("D2") + compileTime.Minute.ToString("D2");
-            Static.Copyright = "© ООО «‎АСУ-Техно»‎, " + compileTime.Year;
-        }
-
         private void Login()
         {
-            WindowLogin login = new WindowLogin(ServiceData.GetInstance().GetTitle(), Static.Version);
+            WindowLogin login = new WindowLogin(ServiceData.GetInstance().GetTitle(), Release.GetInstance().GetVersion());
             login.LoginViewModel.PasswordCorrect += LoginPasswordCorrect;
             login.LoginViewModel.CloseMainWindow += CloseMainWindow;
             this.Hide();
+            login.LoginViewModel.CheckVersion(Release.GetInstance().GetBuildDateTime(),Release.GetInstance().GetVersion());
             login.LoginViewModel.Create();
+            EventsBase.GetInstance().GetControlEvents(OpcServer.OpcList.Rbu).AddEvent("Программа управления открыта", SystemEventType.Message);
         }
 
         private void User()
         {
-            WindowUser window = new WindowUser(null);
+            WindowUser window = new WindowUser(EventsBase.GetInstance().GetControlEvents(OpcServer.OpcList.Rbu));
             window.ShowDialog();
         }
 
         private void LoginPasswordCorrect(User user)
         {
-            //EventsBase.GetInstance().CreateControlEvents(OpcList.System);
-
             SelUser.GetInstance().SetSelUser(user);
 
             if (!_isLoad)
@@ -133,7 +129,7 @@ namespace _2048_Rbu
                 _elScreen.LoginClick += Login;
                 _elScreen.UserClick += User;
                 _isLoad = true;
-                //EventsBase.GetInstance().GetControlEvents(OpcServer.OpcList.Rbu).AddEvent("Программа управления открыта", SystemEventType.Message);
+                EventsBase.GetInstance().GetControlEvents(OpcServer.OpcList.Rbu).AddEvent("Пользователь " + user.UserName + " вошел в программу", SystemEventType.Message);
             }
             _elScreen.ViewModelScreenRbu.GetUserPermit();
             this.Show();
@@ -153,7 +149,7 @@ namespace _2048_Rbu
 
         void Program_Closing(object sender, CancelEventArgs e)
         {
-            //EventsBase.GetInstance().GetControlEvents(OpcServer.OpcList.Rbu)?.AddEvent("Программа управления закрыта", SystemEventType.Message);
+            EventsBase.GetInstance().GetControlEvents(OpcServer.OpcList.Rbu).AddEvent("Программа управления закрыта", SystemEventType.Message);
         }
     }
 }

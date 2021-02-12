@@ -26,7 +26,7 @@ namespace _2048_Rbu.Classes.ViewModel
 
         public static Dictionary<Static.ContainerItem, int> _contNumDictionary = new Dictionary<Static.ContainerItem, int>
             {
-                {Static.ContainerItem.Additive1, (int)Static.ContainerItem.Additive1},
+                {Static.ContainerItem.Additive1, (int)Static.ContainerItem.Additive1}, //В ПЛК такая последовательность в массиве
                 {Static.ContainerItem.Additive2, (int)Static.ContainerItem.Additive2},
                 {Static.ContainerItem.Silo1, (int)Static.ContainerItem.Silo1},
                 {Static.ContainerItem.Silo2, (int)Static.ContainerItem.Silo2},

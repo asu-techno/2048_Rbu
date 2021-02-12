@@ -30,7 +30,6 @@ namespace _2048_Rbu.Classes
         }
 
         public static Dictionary<TagNames, string> TagNamesDictionary = GetTagNamesDictionary();
-
         private static Dictionary<TagNames, string> GetTagNamesDictionary()
         {
             try

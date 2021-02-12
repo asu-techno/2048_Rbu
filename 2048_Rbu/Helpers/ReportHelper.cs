@@ -63,7 +63,14 @@ namespace _2048_Rbu.Helpers
 
         private async void Timer_Tick(object sender, EventArgs e)
         {
-            await ReportHandler();
+            try
+            {
+                await ReportHandler();
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex);
+            }
         }
         public void SubscribeReportSaving()
         {
@@ -133,7 +140,7 @@ namespace _2048_Rbu.Helpers
             if (_reportAttributesDict.ContainsKey(ReportAttributes.StartDate) && _reportAttributesDict.ContainsKey(ReportAttributes.StartTime))
             {
                 var startDateTag = _reportAttributesDict[ReportAttributes.ReportName] + $"[{i}]." + _reportAttributesDict[ReportAttributes.StartDate];
-                var starTimeTag = _reportAttributesDict[ReportAttributes.ReportName] + $"[{i}]." + _reportAttributesDict[ReportAttributes.StartDate];
+                var starTimeTag = _reportAttributesDict[ReportAttributes.ReportName] + $"[{i}]." + _reportAttributesDict[ReportAttributes.StartTime];
                 var startDate = _opc.ReadNode(startDateTag.ToNode(), OpcAttribute.Value)?.ToString();
                 var startTime = _opc.ReadNode(starTimeTag.ToNode(), OpcAttribute.Value)?.ToString();
                 report.StartDt = OpcHelper.StringDateParsing(startDate, startTime);

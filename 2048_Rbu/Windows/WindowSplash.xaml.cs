@@ -8,7 +8,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using _2048_Rbu.Classes;
 using AS_Library.Annotations;
-using ServiceLib.Classes;
+using ServiceLibCore.Classes;
 using Unme.Common;
 
 namespace _2048_Rbu.Windows
@@ -59,8 +59,8 @@ namespace _2048_Rbu.Windows
 
             string cipher = ServiceData.GetInstance().GetContractNubmer();
             ProjectName = ServiceData.GetInstance().GetTitle();
-            ProjectСipher = (cipher.IsNullOrEmpty() ? "" : "АНКМ." + cipher + ".030") + Static.Version;
-            Copyright = Static.Copyright;
+            ProjectСipher = (cipher.IsNullOrEmpty() ? "" : "АНКМ." + cipher + ".030 ") + Release.GetInstance().GetVersion();
+            Copyright = Release.GetInstance().GetCopyright();
 
             DataContext = this;
         }

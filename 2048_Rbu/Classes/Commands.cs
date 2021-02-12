@@ -7,10 +7,14 @@ using System.Windows;
 using AS_Library.Events;
 using AS_Library.Graphics;
 using AS_Library.Link;
+using AS_Library;
 using AS_Library.Readers;
+using AsLibraryCore.Events.Classes;
 using _2048_Rbu.Classes;
 using Npgsql;
-using ServiceLib.Classes;
+using ServiceLibCore.Classes;
+using AS_Library.Classes;
+using AS_Library.Events.Classes;
 using Tag = AS_Library.Classes.Tag;
 
 namespace _2048_Rbu.Classes
@@ -36,7 +40,7 @@ namespace _2048_Rbu.Classes
             try
             {
                 bool postgresql = ServiceData.GetInstance().GetSqlName() == "PostgreSQL";
-                WindowArchive window = new WindowArchive(OpcServer.GetInstance().GetConnectionStringData(opcName), OpcServer.GetInstance().GetObjectData(opcName).TableName,
+                WindowArchive window = new WindowArchive(OpcServer.GetInstance().GetConnectionStringData(opcName), null,
                     0, true, OpcServer.GetInstance().GetOpc(opcName).AnalogTags, OpcServer.GetInstance().GetOpc(opcName).DiscreteTags,
                     postgresql, OpcServer.GetInstance().GetObjectData(opcName).SqlTableName, nameStation, new DataNewArchiverReader());
                 window.SaveGraphLeg += OnSaveGraphLeg;
@@ -79,8 +83,8 @@ namespace _2048_Rbu.Classes
                         dataRow.BeginEdit();
                         dataRow["Legend"] = tag.NameTag;
                         dataRow["Color"] = tag.Color;
-                        dataRow["Koef"] = tag.Koef;
-                        dataRow["ChangeVal"] = tag.ChangeVal;
+                        dataRow["Koef"] = Convert.ToDouble(tag.Koef);
+                        dataRow["ChangeVal"] = Convert.ToDouble(tag.ChangeVal);
                         dataRow["SaveByTime"] = tag.SaveByTime;
                         dataRow["RarelyChanging"] = tag.RarelyChanging;
                         dataRow.EndEdit();
@@ -126,11 +130,10 @@ namespace _2048_Rbu.Classes
                         dataRow.BeginEdit();
                         dataRow["Legend"] = tag.NameTag;
                         dataRow["Color"] = tag.Color;
-                        dataRow["Koef"] = tag.Koef;
-                        dataRow["ChangeVal"] = tag.ChangeVal;
+                        dataRow["Koef"] = Convert.ToDouble(tag.Koef);
+                        dataRow["ChangeVal"] = Convert.ToDouble(tag.ChangeVal);
                         dataRow["SaveByTime"] = tag.SaveByTime;
                         dataRow["RarelyChanging"] = tag.RarelyChanging;
-                        ;
                         dataRow.EndEdit();
 
                         NpgsqlCommandBuilder objCommandBuilder = new NpgsqlCommandBuilder(adapter);
@@ -182,10 +185,10 @@ namespace _2048_Rbu.Classes
 
         public static void EventsArchive_OnClick(OpcServer.OpcList opcName)
         {
-            bool postgresql = ServiceData.GetInstance().GetSqlName() == "PostgreSQL";
             try
             {
-                WindowEventsEntity window = new WindowEventsEntity(EventsBase.GetInstance().GetControlEvents(opcName), EventsBase.GetInstance().GetConnectionStringEvents(opcName), 0, postgresql);
+                bool postgresql = ServiceData.GetInstance().GetSqlName() == "PostgreSQL";
+                WindowEventsEntity window = new WindowEventsEntity(EventsBase.GetInstance().GetControlEvents(opcName), AsLibraryCore.LibService.GetInstance().GetEventsDbConnectionString(), 0, postgresql);
                 window.ShowDialog();
             }
             catch (Exception ex)

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -21,10 +20,14 @@ using AsuBetonLibrary.Services;
 using AsuBetonLibrary.Windows;
 using NLog;
 using _2048_Rbu.Windows.Reports;
-using AsuBetonLibrary.Abstract;
-using AsuBetonLibrary.Readers;
 using System.Threading.Tasks;
-using ServiceLib.Classes;
+using ServiceLibCore.Classes;
+using AS_Library.Classes;
+using AS_Library.Events;
+using AS_Library.Events.Classes;
+using AS_Library.Graphics;
+using AS_Library.Readers;
+using AsLibraryCore.Events.Classes;
 using RelayCommand = AS_Library.Classes.RelayCommand;
 
 namespace _2048_Rbu.Elements
@@ -39,7 +42,7 @@ namespace _2048_Rbu.Elements
         public delegate void EventHandlerLogin();
         public event EventHandlerLogin LoginClick;
         public delegate void EventHandlerUser();
-        public event EventHandlerUser UserClick;
+        public event EventHandlerUser UserClick; 
 
         private int _cycle;
 
@@ -57,7 +60,7 @@ namespace _2048_Rbu.Elements
             
             ViewModelScreenRbu.IsUpdating = true;
 
-            OpcServer.GetInstance().InitOpc(_opcName, "opc.tcp://192.168.100.70:49320");
+            OpcServer.GetInstance().InitOpc(_opcName, Service.GetInstance().GetOpcDict()["OpcServerAddress"]);
             OpcServer.GetInstance().ConnectOpc(_opcName);
 
             #region Init
@@ -376,6 +379,7 @@ namespace _2048_Rbu.Elements
         {
             Commands.EventsArchive_OnClick(_opcName);
         }
+
         private void RecipeReport_Click(object sender, RoutedEventArgs e)
         {
             RecipeReportWindow window = new RecipeReportWindow();

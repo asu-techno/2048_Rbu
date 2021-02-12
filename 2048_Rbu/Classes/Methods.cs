@@ -28,15 +28,15 @@ namespace _2048_Rbu.Classes
                     {
                         bool err;
                         OpcServer.GetInstance().GetOpc(OpcServer.OpcList.Rbu).cl.WriteBool(tag, logic, out err);
-                        //if (eventText != null)
-                        //    EventsBase.GetInstance().GetControlEvents(OpcServer.OpcList.Rbu).AddEvent(eventText, SystemEventType.UserDoing);
+                        if (eventText != null)
+                            EventsBase.GetInstance().GetControlEvents(OpcServer.OpcList.Rbu).AddEvent(eventText, SystemEventType.UserDoing);
                         if (err)
-                            MessageBox.Show("Возможно запись не прошла.\nПроверьте OPC-сервер или соответствующий тег",
-                                "Предупреждение");
+                                MessageBox.Show("Возможно запись не прошла.\nПроверьте OPC-сервер или соответствующий тег",
+                                    "Предупреждение");
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
-                        MessageBox.Show("Запись не прошла. Повторите ввод", "Ошибка");
+                        MessageBox.Show("Запись не прошла. Повторите ввод\n" + ex.Message, "Ошибка");
                     }
                 }
                 else
@@ -58,8 +58,8 @@ namespace _2048_Rbu.Classes
                 {
                     bool err;
                     OpcServer.GetInstance().GetOpc(OpcServer.OpcList.Rbu).cl.WriteBool(tag, logic, out err);
-                    //if (eventText != null)
-                    //    EventsBase.GetInstance().GetControlEvents(OpcServer.OpcList.Rbu).AddEvent(eventText, SystemEventType.UserDoing);
+                    if (eventText != null)
+                        EventsBase.GetInstance().GetControlEvents(OpcServer.OpcList.Rbu).AddEvent(eventText, SystemEventType.UserDoing);
                     if (err)
                         MessageBox.Show("Возможно запись не прошла.\nПроверьте OPC-сервер или соответствующий тег",
                             "Предупреждение");

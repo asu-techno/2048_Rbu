@@ -117,8 +117,7 @@ namespace _2048_Rbu.Windows
         {
             var recipeMaterials = new List<ContainerMaterialsViewModel>();
             var containers = ContainersReader.ListContainers();
-            var container = containers.FirstOrDefault(x =>
-                x.Id == Static.IdСontainerDictionary.FirstOrDefault(m => m.Value == containerItem).Key);
+            var container = containers.FirstOrDefault(x => x.Id == Static.IdСontainerDictionary[containerItem]);
 
             if (container.ContainerType?.MaterialType != null)
             {

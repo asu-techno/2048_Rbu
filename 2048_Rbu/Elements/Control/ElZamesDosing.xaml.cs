@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Threading;
 using AS_Library.Link;
 using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -153,11 +154,13 @@ namespace _2048_Rbu.Elements.Control
             try
             {
                 ComponentsWeight = double.Parse(e.Item.Value.ToString());
+                ProgressBrush = ComponentsWeight == 0 ? System.Windows.Media.Brushes.White : (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF85FC84"));
             }
             catch (Exception exception)
             {
             }
         }
+
 
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -205,6 +208,17 @@ namespace _2048_Rbu.Elements.Control
             {
                 _componentsWeight = value;
                 OnPropertyChanged(nameof(ComponentsWeight));
+            }
+        }
+
+        private SolidColorBrush _progressBrush;
+        public SolidColorBrush ProgressBrush
+        {
+            get { return _progressBrush; }
+            set
+            {
+                _progressBrush = value;
+                OnPropertyChanged(nameof(ProgressBrush));
             }
         }
 
@@ -290,88 +304,86 @@ namespace _2048_Rbu.Elements.Control
                 for (int i = 0; i < _materials.Count; i++)
                 {
                     var selContainer = _containers.FirstOrDefault(x => x.CurrentMaterial?.Id == _materials[i].Material.Id);
+                    _materialTags[i, 0] = "";
+                    _materialTags[i, 1] = "";
+                    _materialTags[i, 2] = "";
+                    _materialTags[i, 3] = "";
                     if (selContainer != null)
                     {
-                        switch (selContainer.Id)
+
+                        if (selContainer.Id == Static.IdСontainerDictionary[Static.ContainerItem.Bunker1])
                         {
-                            case 1:
-                                _materialTags[i, 0] = "PAR_Inert_Bunker_1_set";
-                                _materialTags[i, 1] = "Reports[1].Batches[" + _tempCurrentBatchNum +
-                                                      "].Batcher_inert.Bunker1.Dozing_DozedValue";
-                                _materialTags[i, 2] = "Progress_Components[6]";
-                                _materialTags[i, 3] = "InertDozing.Tank_1_ON";
-                                break;
-                            case 2:
-                                _materialTags[i, 0] = "PAR_Inert_Bunker_2_set";
-                                _materialTags[i, 1] = "Reports[1].Batches[" + _tempCurrentBatchNum +
-                                                      "].Batcher_inert.Bunker2.Dozing_DozedValue";
-                                _materialTags[i, 2] = "Progress_Components[7]";
-                                _materialTags[i, 3] = "InertDozing.Tank_2_ON";
-                                break;
-                            case 3:
-                                _materialTags[i, 0] = "PAR_Inert_Bunker_3_set";
-                                _materialTags[i, 1] = "Reports[1].Batches[" + _tempCurrentBatchNum +
-                                                      "].Batcher_inert.Bunker3.Dozing_DozedValue";
-                                _materialTags[i, 2] = "Progress_Components[8]";
-                                _materialTags[i, 3] = "InertDozing.Tank_3_ON";
-                                break;
-                            case 4:
-                                _materialTags[i, 0] = "PAR_Inert_Bunker_4_set";
-                                _materialTags[i, 1] = "Reports[1].Batches[" + _tempCurrentBatchNum +
-                                                      "].Batcher_inert.Bunker4.Dozing_DozedValue";
-                                _materialTags[i, 2] = "Progress_Components[9]";
-                                _materialTags[i, 3] = "InertDozing.Tank_4_ON";
-                                break;
-                            case 5:
-                                _materialTags[i, 0] = "PAR_Cement_Silos_1_set";
-                                _materialTags[i, 1] = "Reports[1].Batches[" + _tempCurrentBatchNum +
-                                                      "].Batcher_cement.Silos1.Dozing_DozedValue";
-                                _materialTags[i, 2] = "Progress_Components[3]";
-                                _materialTags[i, 3] = "CementDozing.Silo_1_ON";
-                                break;
-                            case 6:
-                                _materialTags[i, 0] = "PAR_Cement_Silos_2_set";
-                                _materialTags[i, 1] = "Reports[1].Batches[" + _tempCurrentBatchNum +
-                                                      "].Batcher_cement.Silos2.Dozing_DozedValue";
-                                _materialTags[i, 2] = "Progress_Components[4]";
-                                _materialTags[i, 3] = "CementDozing.Silo_2_ON";
-                                break;
-                            case 7:
-                                _materialTags[i, 0] = "Reports[1].Batches[" + _tempCurrentBatchNum +
-                                                      "].Batcher_water.Water.Dozing_SetValue";
-                                _materialTags[i, 1] = "Reports[1].Batches[" + _tempCurrentBatchNum +
-                                                      "].Batcher_water.Water.Dozing_DozedValue";
-                                _materialTags[i, 2] = "Progress_Components[5]";
-                                _materialTags[i, 3] = "DozingWater_ON";
-                                break;
-                            case 8:
-                                _materialTags[i, 0] = "PAR_Additive_Tank_1_set";
-                                _materialTags[i, 1] = "Reports[1].Batches[" + _tempCurrentBatchNum +
-                                                      "].Batcher_add.Tank1.Dozing_DozedValue";
-                                _materialTags[i, 2] = "Progress_Components[1]";
-                                _materialTags[i, 3] = "AdditiveDozing.Tank_1_ON";
-                                break;
-                            case 9:
-                                _materialTags[i, 0] = "PAR_Additive_Tank_2_set";
-                                _materialTags[i, 1] = "Reports[1].Batches[" + _tempCurrentBatchNum +
-                                                      "].Batcher_add.Tank2.Dozing_DozedValue";
-                                _materialTags[i, 2] = "Progress_Components[2]";
-                                _materialTags[i, 3] = "AdditiveDozing.Tank_2_ON";
-                                break;
-                            default:
-                                _materialTags[i, 0] = "";
-                                _materialTags[i, 1] = "";
-                                _materialTags[i, 2] = "";
-                                _materialTags[i, 3] = "";
-                                break;
+                            _materialTags[i, 0] = "PAR_Inert_Bunker_1_set";
+                            _materialTags[i, 1] = "Reports[1].Batches[" + _tempCurrentBatchNum +
+                                                  "].Batcher_inert.Bunker1.Dozing_DozedValue";
+                            _materialTags[i, 2] = "Progress_Components[6]";
+                            _materialTags[i, 3] = "InertDozing.Tank_1_ON";
                         }
-                    }
-                    else
-                    {
-                        _materialTags[i, 0] = "";
-                        _materialTags[i, 1] = "";
-                        _materialTags[i, 2] = "";
-                        _materialTags[i, 3] = "";
+                        if (selContainer.Id == Static.IdСontainerDictionary[Static.ContainerItem.Bunker2])
+                        {
+                            _materialTags[i, 0] = "PAR_Inert_Bunker_2_set";
+                            _materialTags[i, 1] = "Reports[1].Batches[" + _tempCurrentBatchNum +
+                                                  "].Batcher_inert.Bunker2.Dozing_DozedValue";
+                            _materialTags[i, 2] = "Progress_Components[7]";
+                            _materialTags[i, 3] = "InertDozing.Tank_2_ON";
+                        }
+                        if (selContainer.Id == Static.IdСontainerDictionary[Static.ContainerItem.Bunker3])
+                        {
+                            _materialTags[i, 0] = "PAR_Inert_Bunker_3_set";
+                            _materialTags[i, 1] = "Reports[1].Batches[" + _tempCurrentBatchNum +
+                                                  "].Batcher_inert.Bunker3.Dozing_DozedValue";
+                            _materialTags[i, 2] = "Progress_Components[8]";
+                            _materialTags[i, 3] = "InertDozing.Tank_3_ON";
+                        }
+                        if (selContainer.Id == Static.IdСontainerDictionary[Static.ContainerItem.Bunker4])
+                        {
+                            _materialTags[i, 0] = "PAR_Inert_Bunker_4_set";
+                            _materialTags[i, 1] = "Reports[1].Batches[" + _tempCurrentBatchNum +
+                                                  "].Batcher_inert.Bunker4.Dozing_DozedValue";
+                            _materialTags[i, 2] = "Progress_Components[9]";
+                            _materialTags[i, 3] = "InertDozing.Tank_4_ON";
+                        }
+                        if (selContainer.Id == Static.IdСontainerDictionary[Static.ContainerItem.Silo1])
+                        {
+                            _materialTags[i, 0] = "PAR_Cement_Silos_1_set";
+                            _materialTags[i, 1] = "Reports[1].Batches[" + _tempCurrentBatchNum +
+                                                  "].Batcher_cement.Silos1.Dozing_DozedValue";
+                            _materialTags[i, 2] = "Progress_Components[3]";
+                            _materialTags[i, 3] = "CementDozing.Silo_1_ON";
+                        }
+                        if (selContainer.Id == Static.IdСontainerDictionary[Static.ContainerItem.Silo2])
+                        {
+                            _materialTags[i, 0] = "PAR_Cement_Silos_2_set";
+                            _materialTags[i, 1] = "Reports[1].Batches[" + _tempCurrentBatchNum +
+                                                  "].Batcher_cement.Silos2.Dozing_DozedValue";
+                            _materialTags[i, 2] = "Progress_Components[4]";
+                            _materialTags[i, 3] = "CementDozing.Silo_2_ON";
+                        }
+                        if (selContainer.Id == Static.IdСontainerDictionary[Static.ContainerItem.Water])
+                        {
+                            _materialTags[i, 0] = "Reports[1].Batches[" + _tempCurrentBatchNum +
+                                                  "].Batcher_water.Water.Dozing_SetValue";
+                            _materialTags[i, 1] = "Reports[1].Batches[" + _tempCurrentBatchNum +
+                                                  "].Batcher_water.Water.Dozing_DozedValue";
+                            _materialTags[i, 2] = "Progress_Components[5]";
+                            _materialTags[i, 3] = "DozingWater_ON";
+                        }
+                        if (selContainer.Id == Static.IdСontainerDictionary[Static.ContainerItem.Additive1])
+                        {
+                            _materialTags[i, 0] = "PAR_Additive_Tank_1_set";
+                            _materialTags[i, 1] = "Reports[1].Batches[" + _tempCurrentBatchNum +
+                                                  "].Batcher_add.Tank1.Dozing_DozedValue";
+                            _materialTags[i, 2] = "Progress_Components[1]";
+                            _materialTags[i, 3] = "AdditiveDozing.Tank_1_ON";
+                        }
+                        if (selContainer.Id == Static.IdСontainerDictionary[Static.ContainerItem.Additive2])
+                        {
+                            _materialTags[i, 0] = "PAR_Additive_Tank_2_set";
+                            _materialTags[i, 1] = "Reports[1].Batches[" + _tempCurrentBatchNum +
+                                                  "].Batcher_add.Tank2.Dozing_DozedValue";
+                            _materialTags[i, 2] = "Progress_Components[2]";
+                            _materialTags[i, 3] = "AdditiveDozing.Tank_2_ON";
+                        }
                     }
                 }
             }
@@ -386,7 +398,7 @@ namespace _2048_Rbu.Elements.Control
                     DosingTask[i].SetValue = Math.Round(_opc.cl.ReadReal(_materialTags[i, 0], out var errSet), 1).ToString("F1");
                     DosingTask[i].CurrentValue = Math.Round(_opc.cl.ReadReal(_materialTags[i, 1], out var errCurrent), 1).ToString("F1");
                     DosingTask[i].CurrentProgress = _opc.cl.ReadReal(_materialTags[i, 2], out var errProgress);
-                    DosingTask[i].InProgress = _opc.cl.ReadBool(_materialTags[i, 3], out var errInProgress);
+                    DosingTask[i].InProgress = DosingProcess != 100 ? _opc.cl.ReadBool(_materialTags[i, 3], out var errInProgress) : false;
                     if (errSet)
                         DosingTask[i].SetValue = "";
                     if (errCurrent)
@@ -394,7 +406,7 @@ namespace _2048_Rbu.Elements.Control
                     if (errProgress)
                         DosingTask[i].CurrentProgress = 0;
 
-                    DosingTask[i].ProgressDone = DosingTask[i].CurrentProgress == ComponentsWeight || DosingProcess == 100.0;
+                    DosingTask[i].ProgressDone = (DosingTask[i].CurrentProgress == ComponentsWeight) || DosingProcess == 100;
                 }
             }
         }

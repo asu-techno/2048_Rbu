@@ -32,13 +32,13 @@ namespace _2048_Rbu.Classes.ViewModel
         private OpcServer.OpcList _opcName;
         private string _tagWeight;
         private Static.ContainerItem _containerItem;
-        private long _containerId;
+        private DosingSettingType _typeMaterial;
 
         public DosingSettingsViewModel(OpcServer.OpcList opcName, DosingSettingType typeMaterial, Static.ContainerItem containerItem)
         {
             _opcName = opcName;
             _containerItem = containerItem;
-            _containerId = Static.IdСontainerDictionary.FirstOrDefault(x => x.Value == _containerItem).Key;
+            _typeMaterial = typeMaterial;
 
             switch (typeMaterial)
             {
@@ -59,7 +59,7 @@ namespace _2048_Rbu.Classes.ViewModel
 
             NameWindow += Static.СontainerNameDictionary[_containerItem] + " (" + Static.СontainerMaterialDictionary[_containerItem] + ")";
 
-            if (_containerId > 0 && _containerId < 5)
+            if (_typeMaterial == DosingSettingType.Inert)
             {
                 WorkMode = new WorkMode[3];
                 WorkMode[0] = new WorkMode(opcName);
@@ -67,9 +67,9 @@ namespace _2048_Rbu.Classes.ViewModel
                 WorkMode[2] = new WorkMode(opcName);
             }
 
-            switch (_containerId)
+            switch (_containerItem)
             {
-                case 1:
+                case Static.ContainerItem.Bunker1:
                     WorkMode[0].NameGate = "V-9-1";
                     WorkMode[1].NameGate = "V-9-2";
                     WorkMode[2].NameGate = "Обе";
@@ -78,7 +78,7 @@ namespace _2048_Rbu.Classes.ViewModel
                     WorkMode[2].TagGate = "V_9_Both";
                     _tagWeight = "Inert_Bunker1";
                     break;
-                case 2:
+                case Static.ContainerItem.Bunker2:
                     WorkMode[0].NameGate = "V-10-1";
                     WorkMode[1].NameGate = "V-10-2";
                     WorkMode[2].NameGate = "Обе";
@@ -87,7 +87,7 @@ namespace _2048_Rbu.Classes.ViewModel
                     WorkMode[2].TagGate = "V_10_Both";
                     _tagWeight = "Inert_Bunker2";
                     break;
-                case 3:
+                case Static.ContainerItem.Bunker3:
                     WorkMode[0].NameGate = "V-11-1";
                     WorkMode[1].NameGate = "V-11-2";
                     WorkMode[2].NameGate = "Обе";
@@ -96,7 +96,7 @@ namespace _2048_Rbu.Classes.ViewModel
                     WorkMode[2].TagGate = "V_11_Both";
                     _tagWeight = "Inert_Bunker3";
                     break;
-                case 4:
+                case Static.ContainerItem.Bunker4:
                     WorkMode[0].NameGate = "V-12-1";
                     WorkMode[1].NameGate = "V-12-2";
                     WorkMode[2].NameGate = "Обе";
@@ -105,24 +105,24 @@ namespace _2048_Rbu.Classes.ViewModel
                     WorkMode[2].TagGate = "V_12_Both";
                     _tagWeight = "Inert_Bunker4";
                     break;
-                case 5:
+                case Static.ContainerItem.Silo1:
                     _tagWeight = "Cement_Silo1";
                     break;
-                case 6:
+                case Static.ContainerItem.Silo2:
                     _tagWeight = "Cement_Silo2";
                     break;
-                case 7:
+                case Static.ContainerItem.Water:
                     _tagWeight = "Water";
                     break;
-                case 8:
+                case Static.ContainerItem.Additive1:
                     _tagWeight = "Additive_Tank1";
                     break;
-                case 9:
+                case Static.ContainerItem.Additive2:
                     _tagWeight = "Additive_Tank2";
                     break;
             }
 
-            if (_containerId > 0 && _containerId < 5)
+            if (_typeMaterial == DosingSettingType.Inert)
             {
                 WorkMode[0].HeaderGate = "Работа задвижкой " + WorkMode[0].NameGate;
                 WorkMode[1].HeaderGate = "Работа задвижкой " + WorkMode[1].NameGate;
@@ -153,7 +153,7 @@ namespace _2048_Rbu.Classes.ViewModel
             weightItem.DataChangeReceived += HandleWeightChanged;
             OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(weightItem);
 
-            if (_containerId > 0 && _containerId < 5)
+            if (_typeMaterial == DosingSettingType.Inert)
                 for (int i = 0; i < 3; i++)
                     WorkMode[i].Subscribe();
 

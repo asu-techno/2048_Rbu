@@ -21,7 +21,7 @@
 
   <PropertyGroup>
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
-    <Version>1.0.*</Version>
+    <Version>1.0</Version>
     <AssemblyVersion>1.1.*</AssemblyVersion>
     <Deterministic>false</Deterministic>
   </PropertyGroup>
@@ -82,16 +82,16 @@
     <PackageReference Include="DevExpressMvvm" Version="20.2.3" />
     <PackageReference Include="EntityFramework" Version="6.4.4" />
     <PackageReference Include="EntityFramework6.Npgsql" Version="6.4.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.19" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.31" />
     <PackageReference Include="NETStandard.Library" Version="2.0.3" />
     <PackageReference Include="NLog.Config" Version="4.7.6" />
     <PackageReference Include="NLog.Web.AspNetCore" Version="4.9.3" />
-    <PackageReference Include="Npgsql" Version="5.0.1.1" />
+    <PackageReference Include="Npgsql" Version="5.0.3" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.1" />
     <PackageReference Include="Opc.UaFx.Client" Version="2.11.3.1" />
     <PackageReference Include="Stimulsoft.Reports.Wpf" Version="2020.5.2" />
@@ -103,6 +103,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="AsLibraryCore">
+      <HintPath>Libs\AsLibraryCore.dll</HintPath>
+    </Reference>
     <Reference Include="AsuBetonLibrary">
       <HintPath>Libs\AsuBetonLibrary.dll</HintPath>
     </Reference>
@@ -130,8 +133,8 @@
     <Reference Include="OPC_NET">
       <HintPath>library\OPC_NET.dll</HintPath>
     </Reference>
-    <Reference Include="ServiceLib">
-      <HintPath>Libs\ServiceLib.dll</HintPath>
+    <Reference Include="ServiceLibCore">
+      <HintPath>Libs\ServiceLibCore.dll</HintPath>
     </Reference>
     <Reference Include="Unme.Common">
       <HintPath>library\Unme.Common.dll</HintPath>
@@ -209,6 +212,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Data\ContainerDictionary\СontainerMaterial.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\ContainerDictionary\СontainerName.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Data\ReportAttributes.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -216,6 +225,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Data\Service.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\ContainerDictionary\IdСontainer.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Data\TagNames.json">

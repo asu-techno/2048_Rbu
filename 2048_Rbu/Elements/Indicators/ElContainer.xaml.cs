@@ -58,8 +58,8 @@ namespace _2048_Rbu.Elements.Indicators
 
                 foreach (var item in containers)
                 {
-                    if (Static.IdСontainerDictionary.ContainsKey(item.Id))
-                        Static.СontainerMaterialDictionary[Static.IdСontainerDictionary[item.Id]] = item.CurrentMaterial != null ? (item.CurrentMaterial.Name != null ? item.CurrentMaterial.Name : "") : "";
+                    if (Static.IdСontainerDictionary.ContainsValue(item.Id))
+                        Static.СontainerMaterialDictionary[Static.IdСontainerDictionary.FirstOrDefault(x=>x.Value== item.Id).Key] = item.CurrentMaterial != null ? (item.CurrentMaterial.Name != null ? item.CurrentMaterial.Name : "") : "";
                 }
             }
             catch (Exception e)

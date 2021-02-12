@@ -34,7 +34,7 @@ namespace _2048_Rbu.Windows
         private OpcServer.OpcList _opcName;
         private OPC_client _opc;
         private Popup _popup;
-        private string _opcTag;
+        private string _opcTag, _startValue;
         private ValueType _valueType;
         private double _finishValue;
         private bool _err;
@@ -247,6 +247,8 @@ namespace _2048_Rbu.Windows
                     break;
             }
 
+            _startValue = ParameterValue;
+
             if (firstPrompt != null && secondPrompt != null && thirdPrompt != null && fourthPrompt != null)
             {
                 FirstPrompt = Convert.ToDouble(firstPrompt);
@@ -299,7 +301,7 @@ namespace _2048_Rbu.Windows
                                 _opc.cl.WriteUInt32(_opcTag, Convert.ToUInt32(_finishValue) * 1000, out _err);
                                 break;
                         }
-                        //EventsBase.GetInstance().GetControlEvents(OpcServer.OpcList.Rbu).AddEvent("Параметр \"" + _name + "\" изменен с " + _startValue + " на " + txt, SystemEventType.UserDoing);
+                        EventsBase.GetInstance().GetControlEvents(OpcServer.OpcList.Rbu).AddEvent("Параметр \"" + Name + "\" изменен с " + _startValue+" на " + _finishValue.ToString($"F{_digit}"), SystemEventType.UserDoing);
                         if (_err)
                             MessageBox.Show("Возможно запись не прошла.\nПроверьте OPC-сервер или соответствующий тег", "Предупреждение");
                         Close();
@@ -314,9 +316,9 @@ namespace _2048_Rbu.Windows
                     MessageBox.Show("В строке не содержится число", "Ошибка!");
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("Запись не прошла. Повторите ввод", "Ошибка");
+                MessageBox.Show("Запись не прошла. Повторите ввод\n"+ ex.Message, "Ошибка");
             }
         }
 

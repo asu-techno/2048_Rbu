@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using AS_Library.Events.Classes;
-using ServiceLib.Classes;
+using AsLibraryCore.Events.Classes;
+using ServiceLibCore.Classes;
 
 namespace _2048_Rbu.Classes
 {
@@ -10,28 +11,27 @@ namespace _2048_Rbu.Classes
 
         readonly Dictionary<OpcServer.OpcList, ControlEventsEntity> _eventsDict = new Dictionary<OpcServer.OpcList, ControlEventsEntity>();
 
-        public string GetConnectionStringEvents(OpcServer.OpcList opcName)
-        {
-            if (ServiceData.GetInstance().GetSqlName() == "PostgreSQL")
-            {
-                return "server=" + ServiceData.GetInstance().GetSqlAddress() + ";user id=AS_Library;password=asuasu123;database=" +
-                       OpcServer.GetInstance().GetObjectData(opcName).EventBaseName;
+        //public string GetConnectionStringEvents(OpcServer.OpcList opcName)
+        //{
+        //    if (ServiceData.GetInstance().GetSqlName() == "PostgreSQL")
+        //    {
+        //        return "server=" + ServiceData.GetInstance().GetSqlAddress() + ";user id=AS_Library;password=asuasu123;database=" +
+        //               OpcServer.GetInstance().GetObjectData(opcName).EventBaseName;
 
-            }
+        //    }
 
-            return "Data Source=" + ServiceData.GetInstance().GetSqlAddress() +
-                   "\\" + ServiceData.GetInstance().GetSqlName() + ";Initial Catalog=" +
-                   OpcServer.GetInstance().GetObjectData(opcName).EventBaseName +
-                   "; User ID=AS_Library;Password=asuasu123;";
-        }
+        //    return "Data Source=" + ServiceData.GetInstance().GetSqlAddress() +
+        //           "\\" + ServiceData.GetInstance().GetSqlName() + ";Initial Catalog=" +
+        //           OpcServer.GetInstance().GetObjectData(opcName).EventBaseName +
+        //           "; User ID=AS_Library;Password=asuasu123;";
+        //}
 
         public void CreateControlEvents(OpcServer.OpcList objectName)
         {
             if (!_eventsDict.ContainsKey(objectName))
             {
-                var postgresql = ServiceData.GetInstance().GetSqlName() == "PostgreSQL";
                 _eventsDict.Add(objectName,
-               new ControlEventsEntity(OpcServer.GetInstance().GetOpc(objectName), GetConnectionStringEvents(objectName), postgresql, true, true, false, false));
+               new ControlEventsEntity(OpcServer.GetInstance().GetOpc(OpcServer.OpcList.Rbu), new EventsEntityCoreService(), false, false, false, false));
             }
         }
 
