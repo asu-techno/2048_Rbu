@@ -30,10 +30,14 @@ namespace _2048_Rbu
         private readonly ElScreenRbu _elScreen = new ElScreenRbu();
         private Logger _logger;
         private bool _isLoad;
+        private WindowSplash _windowSplash;
 
         public MainWindow()
         {
             ServiceData.Init(@"Data/Service.xlsx");
+
+            _windowSplash = new WindowSplash();
+            _windowSplash.Show();
 
             Opc.UaFx.Client.Licenser.LicenseKey =
                 "AALOERR5OO7EKFNQCABINGCH6TYOVHPLFC2QCUYAV3IYL7FGRNBJ4TYJX2GM6HKSCKZLBJWGHUWWXQ5HKWI7OFVYYMERDPQDC7ZW7ZTLPTM" +
@@ -75,12 +79,12 @@ namespace _2048_Rbu
             OpcServer.GetInstance();
 
             EventsBase.GetInstance().CreateControlEvents(OpcServer.OpcList.Rbu);
-
             #endregion
 
-            Login();
-
+            EventsBase.GetInstance().GetControlEvents(OpcServer.OpcList.Rbu).AddEvent("Программа управления открыта", SystemEventType.Message);
             Title += Release.GetInstance().GetVersion() + " " + Release.GetInstance().GetCopyright();
+
+            Login();
 
             #region Масштаб экрана (comment)
 
@@ -88,14 +92,6 @@ namespace _2048_Rbu
             //if (rect.Width != 1920)
             //    MainGrid.LayoutTransform =
             //        new ScaleTransform(Math.Min(rect.Width, 1920) / 1920, Math.Min(rect.Height, 1080) / 1080);
-
-            #endregion
-
-            #region AutoEvent
-
-            //var events = EventsBase.GetInstance().GetControlEvents(OpcServer.OpcList.Rbu);
-
-            //events.AddAutoEvent("6_1_1.ServiceMode", SystemEventType.Warning, "Задвижка 6.1.1 - включен сервисный режим", ResponseType.Rising);
 
             #endregion
         }
@@ -106,15 +102,15 @@ namespace _2048_Rbu
             login.LoginViewModel.PasswordCorrect += LoginPasswordCorrect;
             login.LoginViewModel.CloseMainWindow += CloseMainWindow;
             this.Hide();
-            login.LoginViewModel.CheckVersion(Release.GetInstance().GetBuildDateTime(),Release.GetInstance().GetVersion());
+            _windowSplash?.Close();
+            login.LoginViewModel.CheckVersion(Release.GetInstance().GetBuildDateTime(), Release.GetInstance().GetVersion());
             login.LoginViewModel.Create();
-            EventsBase.GetInstance().GetControlEvents(OpcServer.OpcList.Rbu).AddEvent("Программа управления открыта", SystemEventType.Message);
         }
 
         private void User()
         {
             WindowUser window = new WindowUser(EventsBase.GetInstance().GetControlEvents(OpcServer.OpcList.Rbu));
-            window.ShowDialog();
+            window.Show();
         }
 
         private void LoginPasswordCorrect(User user)
@@ -126,6 +122,7 @@ namespace _2048_Rbu
                 _elScreen.Initialize(_logger);
                 ScreenGrid.Children.Add(_elScreen);
                 _elScreen.Visibility = Visibility.Visible;
+                CreateAutoEventAsync();
                 _elScreen.LoginClick += Login;
                 _elScreen.UserClick += User;
                 _isLoad = true;
@@ -133,6 +130,129 @@ namespace _2048_Rbu
             }
             _elScreen.ViewModelScreenRbu.GetUserPermit();
             this.Show();
+        }
+
+        private async void CreateAutoEventAsync()
+        {
+            await Task.Run(() =>
+            {
+                var events = EventsBase.GetInstance().GetControlEvents(OpcServer.OpcList.Rbu);
+                #region Alarms
+                events.AddAutoEvent("M_15.gb_AL_Feedback", SystemEventType.Alarm, "Насос M-15 - авария ОС", ResponseType.Rising);
+                events.AddAutoEvent("M_15.gb_AL_External", SystemEventType.Alarm, "Насос M-15 - внешняя авария", ResponseType.Rising);
+                events.AddAutoEvent("M_15.gb_AL_DKS", SystemEventType.Alarm, "Насос M-15 - авария ДКС", ResponseType.Rising);
+                events.AddAutoEvent("M_16.gb_AL_Feedback", SystemEventType.Alarm, "Насос M-16 - авария ОС", ResponseType.Rising);
+                events.AddAutoEvent("M_16.gb_AL_External", SystemEventType.Alarm, "Насос M-16 - внешняя авария", ResponseType.Rising);
+                events.AddAutoEvent("M_16.gb_AL_DKS", SystemEventType.Alarm, "Насос M-16 - авария ДКС", ResponseType.Rising);
+                events.AddAutoEvent("M_17.gb_AL_Feedback", SystemEventType.Alarm, "Насос M-17 - авария ОС", ResponseType.Rising);
+                events.AddAutoEvent("M_17.gb_AL_External", SystemEventType.Alarm, "Насос M-17 - внешняя авария", ResponseType.Rising);
+                events.AddAutoEvent("M_17.gb_AL_DKS", SystemEventType.Alarm, "Насос M-17 - авария ДКС", ResponseType.Rising);
+                events.AddAutoEvent("M_18.gb_AL_Feedback", SystemEventType.Alarm, "Бетоносмеситель M-18 - авария ОС", ResponseType.Rising);
+                events.AddAutoEvent("M_18.gb_AL_External", SystemEventType.Alarm, "Бетоносмеситель M-18 - внешняя авария", ResponseType.Rising);
+                events.AddAutoEvent("M_18.gb_AL_Oil", SystemEventType.Alarm, "Бетоносмеситель M-18 - авария системы смазки", ResponseType.Rising);
+                events.AddAutoEvent("M_9.gb_AL_Feedback", SystemEventType.Alarm, "Конвейер M-9 - авария ОС", ResponseType.Rising);
+                events.AddAutoEvent("M_9.gb_AL_External", SystemEventType.Alarm, "Конвейер M-9 - внешняя авария", ResponseType.Rising);
+                events.AddAutoEvent("M_9.gb_AL_DKS", SystemEventType.Alarm, "Конвейер M-9 - авария ДКС", ResponseType.Rising);
+                events.AddAutoEvent("M_1.gb_AL_Feedback", SystemEventType.Alarm, "Конвейер M-1 - авария ОС", ResponseType.Rising);
+                events.AddAutoEvent("M_1.gb_AL_External", SystemEventType.Alarm, "Конвейер M-1 - внешняя авария", ResponseType.Rising);
+                events.AddAutoEvent("M_1.gb_AL_DKS", SystemEventType.Alarm, "Конвейер M-1 - авария ДКС", ResponseType.Rising);
+                events.AddAutoEvent("M_11.gb_AL_Feedback", SystemEventType.Alarm, "Шнек M-11 - авария ОС", ResponseType.Rising);
+                events.AddAutoEvent("M_11.gb_AL_External", SystemEventType.Alarm, "Шнек M-11 - внешняя авария", ResponseType.Rising);
+                events.AddAutoEvent("M_11.gb_AL_DKS", SystemEventType.Alarm, "Шнек M-11 - авария ДКС", ResponseType.Rising);
+                events.AddAutoEvent("М_12.gb_AL_Feedback", SystemEventType.Alarm, "Шнек M-12 - авария ОС", ResponseType.Rising);
+                events.AddAutoEvent("М_12.gb_AL_External", SystemEventType.Alarm, "Шнек M-12 - внешняя авария", ResponseType.Rising);
+                events.AddAutoEvent("М_12.gb_AL_DKS", SystemEventType.Alarm, "Шнек M-12 - авария ДКС", ResponseType.Rising);
+                events.AddAutoEvent("M_13.gb_AL_Feedback", SystemEventType.Alarm, "Вибратор M-13 - авария ОС", ResponseType.Rising);
+                events.AddAutoEvent("M_13.gb_AL_External", SystemEventType.Alarm, "Вибратор M-13 - внешняя авария", ResponseType.Rising);
+                events.AddAutoEvent("M_13.gb_AL_DKS", SystemEventType.Alarm, "Вибратор M-13 - авария ДКС", ResponseType.Rising);
+                events.AddAutoEvent("M_14.gb_AL_Feedback", SystemEventType.Alarm, "Вибратор M-14 - авария ОС", ResponseType.Rising);
+                events.AddAutoEvent("M_14.gb_AL_External", SystemEventType.Alarm, "Вибратор M-14 - внешняя авария", ResponseType.Rising);
+                events.AddAutoEvent("M_14.gb_AL_DKS", SystemEventType.Alarm, "Вибратор M-14 - авария ДКС", ResponseType.Rising);
+                events.AddAutoEvent("M_10.gb_AL_Feedback", SystemEventType.Alarm, "Вибратор M-10 - авария ОС", ResponseType.Rising);
+                events.AddAutoEvent("M_10.gb_AL_External", SystemEventType.Alarm, "Вибратор M-10 - внешняя авария", ResponseType.Rising);
+                events.AddAutoEvent("M_10.gb_AL_DKS", SystemEventType.Alarm, "Вибратор M-10 - авария ДКС", ResponseType.Rising);
+                events.AddAutoEvent("M_2.gb_AL_Feedback", SystemEventType.Alarm, "Вибратор M-2 - авария ОС", ResponseType.Rising);
+                events.AddAutoEvent("M_2.gb_AL_External", SystemEventType.Alarm, "Вибратор M-2 - внешняя авария", ResponseType.Rising);
+                events.AddAutoEvent("M_2.gb_AL_DKS", SystemEventType.Alarm, "Вибратор M-2 - авария ДКС", ResponseType.Rising);
+                events.AddAutoEvent("M_3.gb_AL_Feedback", SystemEventType.Alarm, "Вибратор M-3 - авария ОС", ResponseType.Rising);
+                events.AddAutoEvent("M_3.gb_AL_External", SystemEventType.Alarm, "Вибратор M-3 - внешняя авария", ResponseType.Rising);
+                events.AddAutoEvent("M_3.gb_AL_DKS", SystemEventType.Alarm, "Вибратор M-3 - авария ДКС", ResponseType.Rising);
+                events.AddAutoEvent("M_4.gb_AL_Feedback", SystemEventType.Alarm, "Вибратор M-4 - авария ОС", ResponseType.Rising);
+                events.AddAutoEvent("M_4.gb_AL_External", SystemEventType.Alarm, "Вибратор M-4 - внешняя авария", ResponseType.Rising);
+                events.AddAutoEvent("M_4.gb_AL_DKS", SystemEventType.Alarm, "Вибратор M-4 - авария ДКС", ResponseType.Rising);
+                events.AddAutoEvent("M_5.gb_AL_Feedback", SystemEventType.Alarm, "Вибратор M-5 - авария ОС", ResponseType.Rising);
+                events.AddAutoEvent("M_5.gb_AL_External", SystemEventType.Alarm, "Вибратор M-5 - внешняя авария", ResponseType.Rising);
+                events.AddAutoEvent("M_5.gb_AL_DKS", SystemEventType.Alarm, "Вибратор M-5 - авария ДКС", ResponseType.Rising);
+                events.AddAutoEvent("M_6.gb_AL_Feedback", SystemEventType.Alarm, "Вибратор M-6 - авария ОС", ResponseType.Rising);
+                events.AddAutoEvent("M_6.gb_AL_External", SystemEventType.Alarm, "Вибратор M-6 - внешняя авария", ResponseType.Rising);
+                events.AddAutoEvent("M_6.gb_AL_DKS", SystemEventType.Alarm, "Вибратор M-6 - авария ДКС", ResponseType.Rising);
+                events.AddAutoEvent("M_7.gb_AL_Feedback", SystemEventType.Alarm, "Вибратор M-7 - авария ОС", ResponseType.Rising);
+                events.AddAutoEvent("M_7.gb_AL_External", SystemEventType.Alarm, "Вибратор M-7 - внешняя авария", ResponseType.Rising);
+                events.AddAutoEvent("M_7.gb_AL_DKS", SystemEventType.Alarm, "Вибратор M-7 - авария ДКС", ResponseType.Rising);
+                events.AddAutoEvent("V_1.gb_AL_Feedback_Open", SystemEventType.Alarm, "Задвижка V-1 - авария ОС-Open", ResponseType.Rising);
+                events.AddAutoEvent("V_1.gb_AL_Feedback_Close", SystemEventType.Alarm, "Задвижка V-1 - авария ОС-Close", ResponseType.Rising);
+                events.AddAutoEvent("V_1.gb_AL_BothSensor", SystemEventType.Alarm, "Задвижка V-1 - авария датчиков", ResponseType.Rising);
+                events.AddAutoEvent("V_1.gb_AL_External", SystemEventType.Alarm, "Задвижка V-1 - внешняя авария", ResponseType.Rising);
+                events.AddAutoEvent("V_2.gb_AL_Open", SystemEventType.Alarm, "Задвижка V-2 - авария открытия", ResponseType.Rising);
+                events.AddAutoEvent("V_2.gb_AL_Close", SystemEventType.Alarm, "Задвижка V-2 - авария закрытия", ResponseType.Rising);
+                events.AddAutoEvent("V_3.gb_AL_Open", SystemEventType.Alarm, "Задвижка V-3 - авария открытия", ResponseType.Rising);
+                events.AddAutoEvent("V_3.gb_AL_Close", SystemEventType.Alarm, "Задвижка V-3 - авария закрытия", ResponseType.Rising);
+                events.AddAutoEvent("V_4.gb_AL_Open", SystemEventType.Alarm, "Задвижка V-4 - авария открытия", ResponseType.Rising);
+                events.AddAutoEvent("V_4.gb_AL_Close", SystemEventType.Alarm, "Задвижка V-4 - авария закрытия", ResponseType.Rising);
+                events.AddAutoEvent("V_5.gb_AL_Open", SystemEventType.Alarm, "Задвижка V-5 - авария открытия", ResponseType.Rising);
+                events.AddAutoEvent("V_5.gb_AL_Close", SystemEventType.Alarm, "Задвижка V-5 - авария закрытия", ResponseType.Rising);
+                events.AddAutoEvent("V_6.gb_AL_Open", SystemEventType.Alarm, "Задвижка V-6 - авария открытия", ResponseType.Rising);
+                events.AddAutoEvent("V_6.gb_AL_Close", SystemEventType.Alarm, "Задвижка V-6 - авария закрытия", ResponseType.Rising);
+                events.AddAutoEvent("V_7.gb_AL_Open", SystemEventType.Alarm, "Задвижка V-7 - авария открытия", ResponseType.Rising);
+                events.AddAutoEvent("V_7.gb_AL_Close", SystemEventType.Alarm, "Задвижка V-7 - авария закрытия", ResponseType.Rising);
+                events.AddAutoEvent("V_9_1.gb_AL_Open", SystemEventType.Alarm, "Задвижка V-9-1 - авария открытия", ResponseType.Rising);
+                events.AddAutoEvent("V_9_1.gb_AL_Close", SystemEventType.Alarm, "Задвижка V-9-1 - авария закрытия", ResponseType.Rising);
+                events.AddAutoEvent("V_9_2.gb_AL_Open", SystemEventType.Alarm, "Задвижка V-9-2 - авария открытия", ResponseType.Rising);
+                events.AddAutoEvent("V_9_2.gb_AL_Close", SystemEventType.Alarm, "Задвижка V-9-2 - авария закрытия", ResponseType.Rising);
+                events.AddAutoEvent("V_10_1.gb_AL_Open", SystemEventType.Alarm, "Задвижка V-10-1 - авария открытия", ResponseType.Rising);
+                events.AddAutoEvent("V_10_1.gb_AL_Close", SystemEventType.Alarm, "Задвижка V-10-1 - авария закрытия", ResponseType.Rising);
+                events.AddAutoEvent("V_10_2.gb_AL_Open", SystemEventType.Alarm, "Задвижка V-10-2 - авария открытия", ResponseType.Rising);
+                events.AddAutoEvent("V_10_2.gb_AL_Close", SystemEventType.Alarm, "Задвижка V-10-2 - авария закрытия", ResponseType.Rising);
+                events.AddAutoEvent("V_11_1.gb_AL_Open", SystemEventType.Alarm, "Задвижка V-11-1 - авария открытия", ResponseType.Rising);
+                events.AddAutoEvent("V_11_1.gb_AL_Close", SystemEventType.Alarm, "Задвижка V-11-1 - авария закрытия", ResponseType.Rising);
+                events.AddAutoEvent("V_11_2.gb_AL_Open", SystemEventType.Alarm, "Задвижка V-11-2 - авария открытия", ResponseType.Rising);
+                events.AddAutoEvent("V_11_2.gb_AL_Close", SystemEventType.Alarm, "Задвижка V-11-2 - авария закрытия", ResponseType.Rising);
+                events.AddAutoEvent("V_12_1.gb_AL_Open", SystemEventType.Alarm, "Задвижка V-12-1 - авария открытия", ResponseType.Rising);
+                events.AddAutoEvent("V_12_1.gb_AL_Close", SystemEventType.Alarm, "Задвижка V-12-1 - авария закрытия", ResponseType.Rising);
+                events.AddAutoEvent("V_12_2.gb_AL_Open", SystemEventType.Alarm, "Задвижка V-12-2 - авария открытия", ResponseType.Rising);
+                events.AddAutoEvent("V_12_2.gb_AL_Close", SystemEventType.Alarm, "Задвижка V-12-2 - авария закрытия", ResponseType.Rising);
+                events.AddAutoEvent("M_19.gb_AL_Feedback", SystemEventType.Alarm, "Насос M-19 - Вода - авария ОС", ResponseType.Rising);
+                events.AddAutoEvent("M_19.gb_AL_External", SystemEventType.Alarm, "Насос M-19 - Вода - внешняя авария", ResponseType.Rising);
+                events.AddAutoEvent("M_19.gb_AL_DKS", SystemEventType.Alarm, "Насос M-19 - Вода - авария ДКС", ResponseType.Rising);
+                events.AddAutoEvent("Air_Cement1.gb_AL_Open", SystemEventType.Alarm, "Аэратор силоса цемента 1 - авария открытия", ResponseType.Rising);
+                events.AddAutoEvent("Air_Cement1.gb_AL_Close", SystemEventType.Alarm, "Аэратор силоса цемента 1 - авария закрытия", ResponseType.Rising);
+                events.AddAutoEvent("Air_Cement2.gb_AL_Open", SystemEventType.Alarm, "Аэратор силоса цемента 2 - авария открытия", ResponseType.Rising);
+                events.AddAutoEvent("Air_Cement2.gb_AL_Close", SystemEventType.Alarm, "Аэратор силоса цемента 2 - авария закрытия", ResponseType.Rising);
+                events.AddAutoEvent("gb_AL_Hydro_Feedback", SystemEventType.Alarm, "Насос гидростанции -не сработал пускатель", ResponseType.Rising);
+                events.AddAutoEvent("DI_NotStop_BTN_PLC", SystemEventType.Alarm, "Нажата стоповая кнопка в шкафу управления контроллера", ResponseType.Faling);
+                events.AddAutoEvent("DI_NotStop_BTN_Inert", SystemEventType.Alarm, "Нажата стоповая кнопка в шкафу управления инертными фракциями", ResponseType.Faling);
+                events.AddAutoEvent("DI_NotStop_BTN_Doz", SystemEventType.Alarm, "Нажата стоповая кнопка в шкафу управления дозированием", ResponseType.Faling);
+                events.AddAutoEvent("DI_NotStop_BTN_Cem", SystemEventType.Alarm, "Нажата стоповая кнопка в шкафу управления цементом", ResponseType.Faling);
+                events.AddAutoEvent("DI_NotStop_BTN_Water", SystemEventType.Alarm, "Нажата стоповая кнопка в шкафу управления жидкими компонентами", ResponseType.Faling);
+                events.AddAutoEvent("DI_NotStop_BTN_BS", SystemEventType.Alarm, "Нажата стоповая кнопка в шкафу управления бетоносмесителем", ResponseType.Faling);
+                events.AddAutoEvent("cmd_Stop", SystemEventType.Alarm, "Общий стоп", ResponseType.Rising);
+                events.AddAutoEvent("gb_LinkERR_WeightCement", SystemEventType.Alarm, "Нет связи с весовым индикатором цемента", ResponseType.Rising);
+                events.AddAutoEvent("gb_LinkERR_WeightWater", SystemEventType.Alarm, "Нет связи с весовым индикатором воды", ResponseType.Rising);
+                events.AddAutoEvent("gb_LinkERR_WeightInert", SystemEventType.Alarm, "Нет связи с весовым индикатором инертных фракций", ResponseType.Rising);
+                events.AddAutoEvent("gb_LinkERR_WeightAdditive", SystemEventType.Alarm, "Нет связи с весовым индикатором химических добавок", ResponseType.Rising);
+                #endregion
+
+                #region Warnings
+                events.AddAutoEvent("M_18.gb_Warning_Oil", SystemEventType.Warning, "Бетоносмеситель M-18 - нет давления в системе смазки", ResponseType.Rising);
+                events.AddAutoEvent("DI_Gates_M18_Closed", SystemEventType.Warning, "Крышка открыта", ResponseType.Faling);
+                events.AddAutoEvent("DI_M9_sw_AutomatMode", SystemEventType.Warning, "Бетоносмеситель M-18 - автоматический режим", ResponseType.Rising);
+                events.AddAutoEvent("DI_M18_sw_AutomatMode", SystemEventType.Warning, "Конвейер M-9 - автоматический", ResponseType.Rising);
+                events.AddAutoEvent("DI_M9_sw_AutomatMode", SystemEventType.Warning, "Бетоносмеситель M-18 - ручной режим", ResponseType.Faling);
+                events.AddAutoEvent("DI_M18_sw_AutomatMode", SystemEventType.Warning, "Конвейер M-9 - ручной режим", ResponseType.Faling);
+                events.AddAutoEvent("gb_AL_Hydro_Pressure", SystemEventType.Warning, "Низкое давление в гидравлической магистрали", ResponseType.Rising);
+                events.AddAutoEvent("gb_ArchiverERROR", SystemEventType.Warning, "Нет связи с программой архивации", ResponseType.Rising);
+                #endregion
+            });
         }
 
         private void CloseMainWindow()

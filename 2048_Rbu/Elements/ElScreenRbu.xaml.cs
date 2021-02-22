@@ -51,7 +51,7 @@ namespace _2048_Rbu.Elements
             InitializeComponent();
         }
 
-        public void Initialize(Logger logger)
+        public async void Initialize(Logger logger)
         {
             _opcName = OpcServer.OpcList.Rbu;
 
@@ -59,10 +59,11 @@ namespace _2048_Rbu.Elements
             DataContext = ViewModelScreenRbu;
             
             ViewModelScreenRbu.IsUpdating = true;
-
-            OpcServer.GetInstance().InitOpc(_opcName, Service.GetInstance().GetOpcDict()["OpcServerAddress"]);
+            await Task.Run(() =>
+            {
+                OpcServer.GetInstance().InitOpc(_opcName, Service.GetInstance().GetOpcDict()["OpcServerAddress"]);
             OpcServer.GetInstance().ConnectOpc(_opcName);
-
+            });
             #region Init
 
             foreach (var item in ElGrid.Children)
@@ -301,7 +302,7 @@ namespace _2048_Rbu.Elements
         private void Mode_OnClick(object sender, RoutedEventArgs e)
         {
             WindowMode window = new WindowMode();
-            window.ShowDialog();
+            window.Show();
         }
 
         private void Materials_OnClick(object sender, RoutedEventArgs e)
@@ -812,9 +813,9 @@ namespace _2048_Rbu.Elements
                 return _setBlockUnload ??= new RelayCommand((o) =>
                 {
                     if (BlockUnload)
-                        Methods.ButtonClick("gb_BlockUnload", false, "Разрешить выгрузку из бетоносмесителя");
+                        Methods.ButtonClick("gb_BlockUnload", false, "Разрешение выгрузки из бетоносмесителя");
                     else
-                        Methods.ButtonClick("gb_BlockUnload", true, "Запретить выгрузку из бетоносмесителя");
+                        Methods.ButtonClick("gb_BlockUnload", true, "Запрет выгрузки из бетоносмесителя");
                 });
             }
         }

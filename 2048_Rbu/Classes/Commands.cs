@@ -189,7 +189,7 @@ namespace _2048_Rbu.Classes
             {
                 bool postgresql = ServiceData.GetInstance().GetSqlName() == "PostgreSQL";
                 WindowEventsEntity window = new WindowEventsEntity(EventsBase.GetInstance().GetControlEvents(opcName), AsLibraryCore.LibService.GetInstance().GetEventsDbConnectionString(), 0, postgresql);
-                window.ShowDialog();
+                window.Show();
             }
             catch (Exception ex)
             {

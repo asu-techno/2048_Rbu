@@ -189,7 +189,7 @@ namespace _2048_Rbu.Windows
         {
             var window = new WindowSetVolume("Oбъем, м³", 0.2, 10, Volume.ToString(CultureInfo.InvariantCulture));
             window.ValueChanged += WindowOnValueChanged;
-            window.ShowDialog();
+            window.Show();
         }
 
         private void WindowOnValueChanged(string value)

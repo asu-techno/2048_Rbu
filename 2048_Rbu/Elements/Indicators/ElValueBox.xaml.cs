@@ -208,13 +208,13 @@ namespace _2048_Rbu.Elements.Indicators
             if (TypeMaterial != 0)
             {
                 var window = new WindowWeight(_opcName, TypeMaterial);
-                window.ShowDialog();
+                window.Show();
             }
 
             if (ContainerItem != 0)
             {
                 var window = new WindowContainerSettings(new ContainerSettingsViewModel(_opcName, ContainerItem));
-                window.ShowDialog();
+                window.Show();
             }
         }
 

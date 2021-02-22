@@ -261,7 +261,7 @@ namespace _2048_Rbu.Elements.Indicators
             if (CheckLevelNum != 0)
             {
                 var window = new WindowCheckLevelSettings(new CheckLevelSettingsViewModel(_opcName, CheckLevelNum));
-                window.ShowDialog();
+                window.Show();
             }
         }
 

@@ -14,6 +14,7 @@ using AsuBetonLibrary.Services;
 using AsuBetonLibrary.Windows;
 using _2048_Rbu.Handlers;
 using _2048_Rbu.Windows;
+using AS_Library.Events.Classes;
 using NLog;
 using Opc.UaFx;
 using Opc.UaFx.Client;
@@ -243,6 +244,7 @@ namespace _2048_Rbu.Elements.Control
             {
                 return _deleteCommand ??= new RelayCommand((o) =>
                 {
+                    EventsBase.GetInstance().GetControlEvents(OpcServer.OpcList.Rbu).AddEvent("Удаление из очереди рецепта"+ SelTaskQueueItem.Name, SystemEventType.UserDoing);
                     Service.Delete(SelTaskQueueItem.Id);
                 });
             }
@@ -256,6 +258,7 @@ namespace _2048_Rbu.Elements.Control
                 return _stopLoadTaskCommand ??= new RelayCommand((o) =>
                 {
                     StopLoadTasks = !StopLoadTasks;
+                    EventsBase.GetInstance().GetControlEvents(OpcServer.OpcList.Rbu).AddEvent(StopLoadTasks ? "Запрет загрузки рецептов" : "Разрешение загрузки рецептов", SystemEventType.UserDoing);
                     CheckAndLoadTask?.Invoke(StopLoadTasks);
                 });
             }
@@ -271,6 +274,7 @@ namespace _2048_Rbu.Elements.Control
                     try
                     {
                         _opc.cl.WriteBool("btn_UnloadRecipe", true, out var err);
+                        EventsBase.GetInstance().GetControlEvents(OpcServer.OpcList.Rbu).AddEvent("Выгрузка текущего рецепта из ПЛК", SystemEventType.UserDoing);
                         if (err)
                             MessageBox.Show("Ошибка записи", "Ошибка");
                     }
