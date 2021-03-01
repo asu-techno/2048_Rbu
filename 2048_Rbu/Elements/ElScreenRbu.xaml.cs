@@ -376,6 +376,11 @@ namespace _2048_Rbu.Elements
             Commands.Archive_OnClick(_opcName);
         }
 
+        private void ArchiveNew_OnClick(object sender, RoutedEventArgs e)
+        {
+            Commands.Archive_OnClick();
+        }
+
         private void EventsArchive_OnClick(object sender, RoutedEventArgs e)
         {
             Commands.EventsArchive_OnClick(_opcName);
