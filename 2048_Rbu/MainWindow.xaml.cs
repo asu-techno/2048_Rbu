@@ -109,8 +109,15 @@ namespace _2048_Rbu
 
         private void User()
         {
-            WindowUser window = new WindowUser(EventsBase.GetInstance().GetControlEvents(OpcServer.OpcList.Rbu));
-            window.Show();
+            try
+            {
+                WindowUser window = new WindowUser(EventsBase.GetInstance().GetControlEvents(OpcServer.OpcList.Rbu));
+                window.Show();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Нет связи с базой данных", "Предупреждение");
+            }
         }
 
         private void LoginPasswordCorrect(User user)

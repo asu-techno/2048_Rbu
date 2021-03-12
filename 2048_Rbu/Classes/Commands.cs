@@ -37,27 +37,12 @@ namespace _2048_Rbu.Classes
 
         public static void Archive_OnClick(OpcServer.OpcList opcName, string nameStation = "")
         {
-            //try
-            //{
-            //    bool postgresql = ServiceData.GetInstance().GetSqlName() == "PostgreSQL";
-            //    WindowArchive window = new WindowArchive(OpcServer.GetInstance().GetConnectionStringData(opcName), null,
-            //        0, true, OpcServer.GetInstance().GetOpc(opcName).AnalogTags, OpcServer.GetInstance().GetOpc(opcName).DiscreteTags,
-            //        postgresql, OpcServer.GetInstance().GetObjectData(opcName).SqlTableName, nameStation, new DataNewArchiverReader());
-            //    window.SaveGraphLeg += OnSaveGraphLeg;
-            //    window.Show();
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show("Ошибка:" + ex.Message);
-            //}
             try
             {
-                var connectionString = "server=localhost; user id=AS_Library;password=asuasu123;database=DbRbuDatabase";
-                var opc = new OPC_client("opc.tcp://localhost:49320", "server=localhost;user id=AS_Library;password=asuasu123;database=DbOpcTables", "Rbu");
-                opc.cl.Connect("localhost", "", 100);
-                WindowArchive window = new WindowArchive(connectionString, null,
-                    0, true, opc.AnalogTags, opc.DiscreteTags,
-                    true, "Rbu", "Старый архиватор", new DataNewArchiverReader());
+                bool postgresql = ServiceData.GetInstance().GetSqlName() == "PostgreSQL";
+                WindowArchive window = new WindowArchive(OpcServer.GetInstance().GetConnectionStringData(opcName), null,
+                    0, true, OpcServer.GetInstance().GetOpc(opcName).AnalogTags, OpcServer.GetInstance().GetOpc(opcName).DiscreteTags,
+                    postgresql, OpcServer.GetInstance().GetObjectData(opcName).SqlTableName, nameStation, new DataNewArchiverReader());
                 window.SaveGraphLeg += OnSaveGraphLeg;
                 window.Show();
             }
@@ -71,12 +56,12 @@ namespace _2048_Rbu.Classes
         {
             try
             {
-                var connectionString = "server=localhost; user id=AS_Library;password=asuasu123;database=DbRbuDatabaseNew";
-                var opc = new OPC_client("opc.tcp://localhost:49320", "server=localhost;user id=AS_Library;password=asuasu123;database=DbOpcTables", "Rbu");
-                opc.cl.Connect("localhost", "", 100);
-                WindowArchive window = new WindowArchive(connectionString, null,
-                    0, true, opc.AnalogTags, opc.DiscreteTags,
-                    true, "Rbu", "Новый архиватор", new DataNewArchiverReader());
+                //var connectionString = "server=localhost; user id=AS_Library;password=asuasu123;database=DbRbuDatabaseNew";
+                //var opc = new OPC_client("opc.tcp://localhost:49320", "server=localhost;user id=AS_Library;password=asuasu123;database=DbOpcTables", "Rbu");
+                //opc.cl.Connect("localhost", "", 100);0
+                WindowArchive window = new WindowArchive(OpcServer.GetInstance().GetConnectionStringData(OpcServer.OpcList.Rbu), null,
+                    0, true, OpcServer.GetInstance().GetOpc(OpcServer.OpcList.Rbu).AnalogTags, OpcServer.GetInstance().GetOpc(OpcServer.OpcList.Rbu).DiscreteTags,
+                    true, OpcServer.GetInstance().GetObjectData(OpcServer.OpcList.Rbu).SqlTableName, "Новый архиватор", new DataNewArchiverReader());
                 window.SaveGraphLeg += OnSaveGraphLeg;
                 window.Show();
             }

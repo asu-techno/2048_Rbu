@@ -301,7 +301,7 @@ namespace _2048_Rbu.Windows
                                 _opc.cl.WriteUInt32(_opcTag, Convert.ToUInt32(_finishValue) * 1000, out _err);
                                 break;
                         }
-                        EventsBase.GetInstance().GetControlEvents(OpcServer.OpcList.Rbu).AddEvent("Параметр \"" + Name + "\" изменен с " + _startValue+" на " + _finishValue.ToString($"F{_digit}"), SystemEventType.UserDoing);
+                        EventsBase.GetInstance().GetControlEvents(OpcServer.OpcList.Rbu).AddEvent("Параметр \"" + ParameterName + "\" изменен с " + _startValue+" на " + _finishValue.ToString($"F{_digit}"), SystemEventType.UserDoing);
                         if (_err)
                             MessageBox.Show("Возможно запись не прошла.\nПроверьте OPC-сервер или соответствующий тег", "Предупреждение");
                         Close();

@@ -23,7 +23,10 @@ namespace _2048_Rbu
         private void OnUnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             System.IO.File.AppendAllText("log.txt", DateTime.Now + " - " + e.ExceptionObject);
-            MessageBox.Show("Что-то пошло не так");
+            Exception exception = (Exception)e.ExceptionObject;
+            var message = exception.Message;
+            System.IO.File.AppendAllText("logCut.txt", DateTime.Now + " - " + message + "\n");
+            MessageBox.Show("Что-то пошло не так\n" + message);
             MainWindow?.Close();
         }
 

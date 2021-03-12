@@ -94,10 +94,17 @@ namespace _2048_Rbu.Elements.Indicators
 
         private void Double_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ClickCount == 2)
+            try
             {
-                Windows.WindowMatchingMaterials window = new Windows.WindowMatchingMaterials(ContainerItem);
-                window.Show();
+                if (e.ClickCount == 2)
+                {
+                    Windows.WindowMatchingMaterials window = new Windows.WindowMatchingMaterials(ContainerItem);
+                    window.Show();
+                }
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "Ошибка");
             }
         }
     }

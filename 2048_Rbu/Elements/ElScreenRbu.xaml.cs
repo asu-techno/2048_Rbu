@@ -42,7 +42,7 @@ namespace _2048_Rbu.Elements
         public delegate void EventHandlerLogin();
         public event EventHandlerLogin LoginClick;
         public delegate void EventHandlerUser();
-        public event EventHandlerUser UserClick; 
+        public event EventHandlerUser UserClick;
 
         private int _cycle;
 
@@ -57,12 +57,12 @@ namespace _2048_Rbu.Elements
 
             ViewModelScreenRbu = new ViewModelScreenRbu(_opcName);
             DataContext = ViewModelScreenRbu;
-            
+
             ViewModelScreenRbu.IsUpdating = true;
             await Task.Run(() =>
             {
                 OpcServer.GetInstance().InitOpc(_opcName, Service.GetInstance().GetOpcDict()["OpcServerAddress"]);
-            OpcServer.GetInstance().ConnectOpc(_opcName);
+                OpcServer.GetInstance().ConnectOpc(_opcName);
             });
             #region Init
 
@@ -172,7 +172,7 @@ namespace _2048_Rbu.Elements
 
             ElControlControl.Initialize(_opcName);
             _elementList.Add(ElControlControl);
-            
+
             ElControlZamesDosing.Initialize(_opcName);
             _elementList.Add(ElControlZamesDosing);
 
@@ -191,7 +191,7 @@ namespace _2048_Rbu.Elements
             #region Timer
 
             LinkTimer = new DispatcherTimer();
-            LinkTimer.Interval = new TimeSpan(0, 0, 0, 0,500);
+            LinkTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
             LinkTimer.Tick += new EventHandler(TimerTick500Ms);
 
             #endregion
@@ -199,7 +199,7 @@ namespace _2048_Rbu.Elements
             ViewModelScreenRbu.IsUpdating = false;
 
             Subscribe();
-            
+
         }
 
         public void Subscribe()
@@ -274,6 +274,12 @@ namespace _2048_Rbu.Elements
             Methods.ButtonClick(btn, BtnAck, "cmd_Ack_Alarm", true, "Сброс звонка");
         }
 
+        private void BtnArray_OnClick(object sender, RoutedEventArgs e)
+        {
+            object btn = e.Source;
+            Methods.ButtonClick(btn, BtnArray, "", new float[9] { 100, 100, 100, 100, 100, 100, 100, 100, 200 });
+        }
+
         private void BtnStop_OnClick(object sender, RoutedEventArgs e)
         {
             object btn = e.Source;
@@ -286,7 +292,9 @@ namespace _2048_Rbu.Elements
         {
             ElScreenRbu.LinkTimer?.Stop();
             foreach (Window w in App.Current.Windows)
+            {
                 w.Close();
+            }
         }
 
         private void Login_OnClick(object sender, RoutedEventArgs e)
@@ -307,7 +315,7 @@ namespace _2048_Rbu.Elements
 
         private void Materials_OnClick(object sender, RoutedEventArgs e)
         {
-            WindowCommonList window = new WindowCommonList(new MaterialsService());
+            WindowCommonListWithGroups window = new WindowCommonListWithGroups(new MaterialsService());
             window.Show();
         }
 
@@ -343,7 +351,7 @@ namespace _2048_Rbu.Elements
 
         private void Recipes_OnClick(object sender, RoutedEventArgs e)
         {
-            WindowCommonList window = new WindowCommonList(new RecipesService());
+            WindowCommonListWithGroups window = new WindowCommonListWithGroups(new RecipesService());
             window.Show();
         }
 
@@ -466,7 +474,7 @@ namespace _2048_Rbu.Elements
 
         private void AerationSettings_OnClick(object sender, RoutedEventArgs e)
         {
-            WindowVibratorSettings window = new WindowVibratorSettings(_opcName,true);
+            WindowVibratorSettings window = new WindowVibratorSettings(_opcName, true);
             window.Show();
         }
 
