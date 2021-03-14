@@ -125,6 +125,8 @@
                 </MenuItem>
             </MenuItem>
             <MenuItem Name="Archive" Header="Архивы" Foreground="Black" BorderBrush="Black" BorderThickness="1,0" FontWeight="Bold" Height="30">
+                <MenuItem Name="Archiver" Header="Архиватор" Click="Archiver_OnClick"/>
+                <Separator/>
                 <MenuItem Name="Graphics" Header="Архив работы" Click="Archive_OnClick"/>
                 <Separator/>
                 <MenuItem Name="GraphicsNew" Header="Архив работы (Новый архиватор)" Click="ArchiveNew_OnClick"/>

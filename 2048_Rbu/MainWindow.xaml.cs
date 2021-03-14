@@ -1,15 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Reflection;
 using System.Windows;
-using System.Windows.Media;
 using AsuBetonLibrary;
-using AsuBetonLibrary.Elements;
-using AsuBetonLibrary.Services;
-using AsuBetonLibrary.Windows;
 using _2048_Rbu.Classes;
 using _2048_Rbu.Elements;
-using _2048_Rbu.Handlers;
 using _2048_Rbu.Helpers;
 using NLog;
 using _2048_Rbu.Windows;
@@ -17,8 +11,7 @@ using AS_Library.Events.Classes;
 using ServiceLibCore.Classes;
 using ServiceLibCore.Windows;
 using System.Threading.Tasks;
-using Opc.UaFx;
-using AsLibraryCore.Events.Classes;
+using ArchiverLibCore.Elements;
 
 namespace _2048_Rbu
 {
@@ -126,6 +119,7 @@ namespace _2048_Rbu
 
             if (!_isLoad)
             {
+                Closed += _elScreen.OnClose;
                 _elScreen.Initialize(_logger);
                 ScreenGrid.Children.Add(_elScreen);
                 _elScreen.Visibility = Visibility.Visible;
