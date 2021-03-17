@@ -103,6 +103,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="ArchiverLibCore">
+      <HintPath>Libs\ArchiverLibCore.dll</HintPath>
+    </Reference>
     <Reference Include="AsLibraryCore">
       <HintPath>Libs\AsLibraryCore.dll</HintPath>
     </Reference>
@@ -212,6 +215,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Data\ArchiverService.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Data\ContainerDictionary\СontainerMaterial.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -231,6 +237,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Data\TagNames.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Libs\ArchiverLibCore.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Libs\AsuBetonLibrary.dll">

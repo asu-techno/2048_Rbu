@@ -21,13 +21,8 @@ using AsuBetonLibrary.Windows;
 using NLog;
 using _2048_Rbu.Windows.Reports;
 using System.Threading.Tasks;
+using ArchiverLibCore.Elements;
 using ServiceLibCore.Classes;
-using AS_Library.Classes;
-using AS_Library.Events;
-using AS_Library.Events.Classes;
-using AS_Library.Graphics;
-using AS_Library.Readers;
-using AsLibraryCore.Events.Classes;
 using RelayCommand = AS_Library.Classes.RelayCommand;
 
 namespace _2048_Rbu.Elements
@@ -43,8 +38,9 @@ namespace _2048_Rbu.Elements
         public event EventHandlerLogin LoginClick;
         public delegate void EventHandlerUser();
         public event EventHandlerUser UserClick;
-
         private int _cycle;
+        public ElArchiversViewModel ElArchiversViewModel { get; private set; }
+        private event EventHandler<EventArgs> Closed;
 
         public ElScreenRbu()
         {
@@ -57,6 +53,9 @@ namespace _2048_Rbu.Elements
 
             ViewModelScreenRbu = new ViewModelScreenRbu(_opcName);
             DataContext = ViewModelScreenRbu;
+
+            ElArchiversViewModel = new ElArchiversViewModel();
+            Closed += ElArchiversViewModel.OnClosed;
 
             ViewModelScreenRbu.IsUpdating = true;
             await Task.Run(() =>
@@ -201,6 +200,7 @@ namespace _2048_Rbu.Elements
             Subscribe();
 
         }
+
 
         public void Subscribe()
         {
@@ -378,7 +378,11 @@ namespace _2048_Rbu.Elements
             WindowCommonList window = new WindowCommonList(new DosingSourcesService());
             window.Show();
         }
-
+        private void Archiver_OnClick(object sender, RoutedEventArgs e)
+        {
+            WindowArchiver window = new WindowArchiver(ElArchiversViewModel);
+            window.ShowDialog();
+        }
         private void Archive_OnClick(object sender, RoutedEventArgs e)
         {
             Commands.Archive_OnClick(_opcName);
@@ -500,6 +504,11 @@ namespace _2048_Rbu.Elements
         private void UIElement_OnMouseLeave(object sender, MouseEventArgs e)
         {
             ViewModelScreenRbu.Cherry = false;
+        }
+
+        public void OnClose(object sender, EventArgs e)
+        {
+            Closed?.Invoke(sender, e);
         }
     }
 
