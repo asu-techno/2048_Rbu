@@ -262,10 +262,10 @@ namespace _2048_Rbu.Elements.Control
                     {
                         case 1: Value = "Бетоносмеситель M-18 - нет давления в системе смазки"; break;
                         case 2: Value = "Крышка открыта"; break;
-                        case 3: Value = "Бетоносмеситель M-18 - автоматический режим"; break;
-                        case 4: Value = "Конвейер M-9 - автоматический"; break;
-                        case 5: Value = "Бетоносмеситель M-18 - ручной режим"; break;
-                        case 6: Value = "Конвейер M-9 - ручной режим"; break;
+                        case 3: Value = "Конвейер M-9 - автоматический режим"; break;
+                        case 4: Value = "Бетоносмеситель M-18 - автоматический"; break;
+                        case 5: Value = "Конвейер M-9 - ручной режим"; break;
+                        case 6: Value = "Бетоносмеситель M-18 - ручной режим"; break;
                         case 7: Value = "Низкое давление в гидравлической магистрали"; break;
                         case 8: Value = "Нет связи с программой архивации"; break;
                         default:
