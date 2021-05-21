@@ -1183,6 +1183,7 @@
                   <Parent isRef="54" />
                   <Text>{Batches_MaterialsUnloadReports.Batcher}</Text>
                   <TextBrush>Black</TextBrush>
+                  <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
                   <Type>DataColumn</Type>
                   <VertAlignment>Center</VertAlignment>
                 </Text38>
@@ -1387,7 +1388,8 @@
   <ReportAlias>Report</ReportAlias>
   <ReportChanged>1/19/2021 12:15:08 PM</ReportChanged>
   <ReportCreated>12/22/2020 7:22:15 AM</ReportCreated>
-  <ReportGuid>f27a54075903404299a872d26e73698c</ReportGuid>
+  <ReportFile>Data\ReportTemplates\TaskReport.mrt</ReportFile>
+  <ReportGuid>e69ba3931ab94f43ad77dd375cc425c1</ReportGuid>
   <ReportName>Report</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2020.5.2.0</ReportVersion>

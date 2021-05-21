@@ -201,7 +201,7 @@ namespace _2048_Rbu.Windows.Reports
             }
 
             using DbRbuContext db = new DbRbuContext();
-            foreach (var report in db.Reports.Where(x => x.StartDt >= DateTimeFrom && x.FinishDt <= DateTimeTo).Include(t => t.Task).Include(r => r.Task.Recipe).Include(c => c.Task.Customer))
+            foreach (var report in db.Reports.Where(x => x.StartDt >= DateTimeFrom && x.FinishDt <= DateTimeTo).Include(t => t.Task).Include(r => r.Task.Recipe).Include(c => c.Task.Customer).Include(rg => rg.Task.Recipe.Group))
             {
                 BatchTask batchTask = new BatchTask()
                 {
@@ -209,6 +209,7 @@ namespace _2048_Rbu.Windows.Reports
 
                     RecipeId = report.Task.RecipeId.Value,
                     RecipeName = report.Task.Recipe.Name,
+                    RecipeGroup = (report.Task != null && report.Task.Recipe != null && report.Task.Recipe.Group != null) ? report.Task.Recipe.Group.Name : "не указана",
 
                     CustomerId = report.Task.CustomerId,
                     Customer = report.Task.CustomerId != null ? report.Task.Customer.Name : "не указан",
@@ -310,7 +311,7 @@ namespace _2048_Rbu.Windows.Reports
                 Report.Load(@"Data\ReportTemplates\TaskReport.mrt");
 
                 Report["TaskId"] = _selectedTask.TaskId;
-                Report["RecipeGroup"] = "TBD";
+                Report["RecipeGroup"] = _selectedTask.RecipeGroup;
                 Report["RecipeName"] = _selectedTask.RecipeName;
                 Report["Volume"] = _selectedTask.Volume;
                 Report["BatchVolume"] = _selectedTask.BatchVolume;
@@ -397,14 +398,14 @@ namespace _2048_Rbu.Windows.Reports
             var materials = db.Materials.ToList();
             var containers = db.Containers.ToList();
 
-            foreach (var report in db.Reports.Where(x => x.StartDt >= DateTimeFrom && x.FinishDt <= DateTimeTo).Include(c => c.Task.Customer).Include(t=>t.Task).ThenInclude(r=>r.Recipe).ThenInclude(rg=>rg.RecipeGroup))
+            foreach (var report in db.Reports.Where(x => x.StartDt >= DateTimeFrom && x.FinishDt <= DateTimeTo).Include(t => t.Task).Include(c => c.Task.Customer).Include(r => r.Task.Recipe).Include(rg => rg.Task.Recipe.Group))
             {
                 TaskReport taskReport = new TaskReport
                 {
                     TaskId = Convert.ToInt32(report.TaskId.Value),
                     Customer = (report.Task != null && report.Task.Customer != null) ? report.Task.Customer.Name : "не указан",
                     Recipe = (report.Task != null && report.Task.Recipe != null) ? report.Task.Recipe.Name : "не указан",
-                    RecipeGroup = (report.Task != null && report.Task.Recipe != null && report.Task.Recipe.RecipeGroup != null) ? report.Task.Recipe.RecipeGroup.Name : "не указана",
+                    RecipeGroup = (report.Task != null && report.Task.Recipe != null && report.Task.Recipe.Group != null) ? report.Task.Recipe.Group.Name : "не указана",
                     StartTime = report.StartDt,
                     FinishTime = report.FinishDt,
                     Volume = report.Task != null ? report.Task.Volume : 0,
@@ -520,6 +521,7 @@ namespace _2048_Rbu.Windows.Reports
 
         public long RecipeId { get; set; }
         public string RecipeName { get; set; }
+        public string RecipeGroup { get; set; }
 
         public long? CustomerId { get; set; }
         public string Customer { get; set; }
