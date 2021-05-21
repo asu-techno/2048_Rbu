@@ -27,6 +27,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="C:\Users\vanya\.nuget\packages\nlog.config\4.7.6\contentFiles\any\any\NLog.config" />
     <None Remove="Images\Copy.png" />
     <None Remove="Images\img_AddAct_Color.png" />
     <None Remove="Images\img_BackTTN.png" />
@@ -248,6 +249,12 @@
     <None Update="Libs\AS_Library_v2.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="NLog.xsd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -279,11 +286,19 @@
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Elements\Settings\ElMaterialSpeed.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Windows\WindowCheckLevelSettings.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Windows\WindowContainerSettings.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Windows\WindowMaterialSpeed.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>

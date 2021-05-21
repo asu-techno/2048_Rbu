@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using AsuBetonLibrary.Abstract;
 using AsuBetonLibrary.Readers;
 using AsuBetonLibrary.Services;
@@ -149,6 +150,7 @@ namespace _2048_Rbu.Handlers
                 else
                 {
                     Logger.Error("Отсутствуют некоторые материалы в контейнерах.");
+                    MessageBox.Show("Отсутствуют некоторые материалы в контейнерах");
                 }
             }
             else
@@ -285,6 +287,7 @@ namespace _2048_Rbu.Handlers
                 else
                 {
                     Logger.Error($"В контейнерах отсутствует материал - {recipeMaterial.Material.Name}");
+                    MessageBox.Show($"В контейнерах отсутствует материал - {recipeMaterial.Material.Name}");
                 }
             }
 

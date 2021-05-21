@@ -76,35 +76,35 @@ namespace _2048_Rbu.Classes
             }
         }
 
-        public static void ButtonClick(object obj, object obj1, string tag, float[] val)
-        {
-            if (Static.Link)
-            {
-                if (Equals(obj, obj1))
-                {
-                    try
-                    {
-                        bool err;
-                        OpcServer.GetInstance().GetOpc(OpcServer.OpcList.Rbu).cl.WriteArray(tag, val, out err);
-                        if (err)
-                            MessageBox.Show("Возможно запись не прошла.\nПроверьте OPC-сервер или соответствующий тег",
-                                "Предупреждение");
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Запись не прошла. Повторите ввод\n" + ex.Message, "Ошибка");
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Ошибка проверки элемента", "Ошибка");
-                }
-            }
-            else
-            {
-                MessageBox.Show("Нет связи с ПЛК", "Ошибка");
-            }
-        }
+        //public static void ButtonClick(object obj, object obj1, string tag, float[] val)
+        //{
+        //    if (Static.Link)
+        //    {
+        //        if (Equals(obj, obj1))
+        //        {
+        //            try
+        //            {
+        //                bool err;
+        //                OpcServer.GetInstance().GetOpc(OpcServer.OpcList.Rbu).cl.WriteArray(tag, val, out err);
+        //                if (err)
+        //                    MessageBox.Show("Возможно запись не прошла.\nПроверьте OPC-сервер или соответствующий тег",
+        //                        "Предупреждение");
+        //            }
+        //            catch (Exception ex)
+        //            {
+        //                MessageBox.Show("Запись не прошла. Повторите ввод\n" + ex.Message, "Ошибка");
+        //            }
+        //        }
+        //        else
+        //        {
+        //            MessageBox.Show("Ошибка проверки элемента", "Ошибка");
+        //        }
+        //    }
+        //    else
+        //    {
+        //        MessageBox.Show("Нет связи с ПЛК", "Ошибка");
+        //    }
+        //}
 
         public static void SetParameter(object lbl, object lbl1, OpcServer.OpcList opcName, string parameterName, double minValue, double maxValue, string opcTag, WindowSetParameter.ValueType valueType, Popup popup = null, int digit = 0, double? firstPrompt = null, double? secondPrompt = null, double? thirdPrompt = null, double? fourthPrompt = null, double? stepFeed = null)
         {
@@ -112,10 +112,9 @@ namespace _2048_Rbu.Classes
             {
                 if (Equals(lbl, lbl1))
                 {
-                    if (maxValue < minValue)
-                        maxValue = minValue;
                     WindowSetParameter window = new WindowSetParameter(opcName, parameterName, minValue, maxValue, opcTag, valueType, popup, digit, firstPrompt, secondPrompt, thirdPrompt, fourthPrompt, stepFeed);
-                    window.ShowDialog();
+                    window.Show();
+                    window.SelText();
                 }
                 else
                 {
@@ -132,10 +131,9 @@ namespace _2048_Rbu.Classes
         {
             if (Static.Link)
             {
-                if (maxValue < minValue)
-                    maxValue = minValue;
                 WindowSetParameter window = new WindowSetParameter(opcName, parameterName, minValue, maxValue, opcTag, valueType, popup, digit, firstPrompt, secondPrompt, thirdPrompt, fourthPrompt, stepFeed);
-                window.ShowDialog();
+                window.Show();
+                window.SelText();
             }
             else
             {

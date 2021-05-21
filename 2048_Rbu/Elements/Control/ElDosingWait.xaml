@@ -27,8 +27,8 @@
     <StackPanel Background="DarkGray">
         <TextBlock Name="LblName" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,2,0,0" Width="194" FontSize="14" TextAlignment="Center" TextWrapping="WrapWithOverflow" Text="{Binding DosingName}"/>
         <Label VerticalAlignment="Top" HorizontalAlignment="Center" Width="175" Height="30" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="0,3,0,0" BorderThickness="1" BorderBrush="Black" Background="Yellow" FontSize="16">
-            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="ожидание..."/>
+            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="Нет изменения веса"/>
         </Label>
-        <Button Name="BtnContinue" Style="{StaticResource PressButton}" VerticalAlignment="Top" HorizontalAlignment="Center" Width="150" Height="28" Margin="0,5,0,3" BorderThickness="1" BorderBrush="Black" Background="LightBlue" FontSize="14" Content="Продолжить" Click="BtnContinue_OnClick"/>
+        <Button Name="BtnContinue" Style="{StaticResource PressButton}" VerticalAlignment="Top" HorizontalAlignment="Center" Width="150" Height="28" Margin="0,5,0,3" BorderThickness="1" BorderBrush="Black" Background="LightBlue" FontSize="14" Content="Повторить" Click="BtnContinue_OnClick"/>
     </StackPanel>
 </UserControl>

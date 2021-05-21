@@ -24,16 +24,16 @@ namespace _2048_Rbu.Elements.Settings
 
         readonly List<ElOpt> _settings = new List<ElOpt>();
 
-        private bool _bySensor;
-        public bool BySensor
-        {
-            get { return _bySensor; }
-            set
-            {
-                _bySensor = value;
-                OnPropertyChanged(nameof(BySensor));
-            }
-        }
+        //private bool _bySensor;
+        //public bool BySensor
+        //{
+        //    get { return _bySensor; }
+        //    set
+        //    {
+        //        _bySensor = value;
+        //        OnPropertyChanged(nameof(BySensor));
+        //    }
+        //}
 
         public ElParam()
         {
@@ -57,7 +57,7 @@ namespace _2048_Rbu.Elements.Settings
             _settings[1].Initialize(_opcName, "Время движения инертных материалов по конвейеру, с", 0, 100, "UnloadInert_TimeAfterEmptyWeights", WindowSetParameter.ValueType.Int16, 0, 5, 10, 20, 50, 5);
             _settings[2].Initialize(_opcName, "Задержка выгрузки воды и хим. добавок, с", 0, 100, "UnloadWater_Delay", WindowSetParameter.ValueType.Int16, 0, 5, 10, 20, 50, 5);
             _settings[3].Initialize(_opcName, "Задержка выгрузки цемента, с", 0, 100, "UnloadCement_Delay", WindowSetParameter.ValueType.Int16, 0, 5, 10, 20, 50, 5);
-            _settings[4].Initialize(_opcName, "Время полного открытия выгрузной задвижки, с", 0, 100, "FullOpenTime_V_1", WindowSetParameter.ValueType.Int16, 0, 5, 10, 20, 50, 5);
+            _settings[4].Initialize(_opcName, "Время полного открытия выгрузной задвижки, с", 0, 5.0, "FullOpenTime_V_1", WindowSetParameter.ValueType.Real, 1, 2, 2.5, 3, 3.5, 0.1);
             _settings[5].Initialize(_opcName, "Минимальное значение индикатора тока, А", 0, 500.0, "Current_Min", WindowSetParameter.ValueType.Real, 1, 20, 50, 100, 200, 5);
             _settings[6].Initialize(_opcName, "Максимальное значение индикатора тока, А", 0, 500.0, "Current_Max", WindowSetParameter.ValueType.Real, 1, 20, 50, 100, 200, 5);
             _settings[7].Initialize(_opcName, "Минимальное допустимое значение тока, А", 0, 500.0, "Current_NormalMin", WindowSetParameter.ValueType.Real, 1, 20, 50, 100, 200, 5);
@@ -71,34 +71,34 @@ namespace _2048_Rbu.Elements.Settings
                 item.Subscribe();
             }
 
-            Subscribe();
+            //Subscribe();
 
             OpcServer.GetInstance().GetSubscription(_opcName).ApplyChanges();
             #endregion
         }
 
-        public void Subscribe()
-        {
-            CreateSubscription();
-        }
+        //public void Subscribe()
+        //{
+        //    CreateSubscription();
+        //}
 
-        public void Unsubscribe()
-        {
+        //public void Unsubscribe()
+        //{
 
-        }
+        //}
 
-        private void CreateSubscription()
-        {
-            _opc = OpcServer.GetInstance().GetOpc(_opcName);
-            var bySensorItem = new OpcMonitoredItem(_opc.cl.GetNode("WorkByMaterialSensor"), OpcAttribute.Value);
-            bySensorItem.DataChangeReceived += HandleBySensorChanged;
-            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(bySensorItem);
-        }
+        //private void CreateSubscription()
+        //{
+        //    _opc = OpcServer.GetInstance().GetOpc(_opcName);
+        //    var bySensorItem = new OpcMonitoredItem(_opc.cl.GetNode("WorkByMaterialSensor"), OpcAttribute.Value);
+        //    bySensorItem.DataChangeReceived += HandleBySensorChanged;
+        //    OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(bySensorItem);
+        //}
 
-        private void HandleBySensorChanged(object sender, OpcDataChangeReceivedEventArgs e)
-        {
-            BySensor = bool.Parse(e.Item.Value.ToString());
-        }
+        //private void HandleBySensorChanged(object sender, OpcDataChangeReceivedEventArgs e)
+        //{
+        //    BySensor = bool.Parse(e.Item.Value.ToString());
+        //}
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -108,14 +108,14 @@ namespace _2048_Rbu.Elements.Settings
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private void BtnTimer_OnClick(object sender, RoutedEventArgs e)
-        {
-            Methods.ButtonClick("WorkByMaterialSensor", false, "Режим выгрузки компонентов - по времени");
-        }
+        //private void BtnTimer_OnClick(object sender, RoutedEventArgs e)
+        //{
+        //    Methods.ButtonClick("WorkByMaterialSensor", false, "Режим выгрузки компонентов - по времени");
+        //}
 
-        private void BtnSensor_OnClick(object sender, RoutedEventArgs e)
-        {
-            Methods.ButtonClick("WorkByMaterialSensor", true, "Режим выгрузки компонентов - по датчику");
-        }
+        //private void BtnSensor_OnClick(object sender, RoutedEventArgs e)
+        //{
+        //    Methods.ButtonClick("WorkByMaterialSensor", true, "Режим выгрузки компонентов - по датчику");
+        //}
     }
 }

@@ -83,7 +83,7 @@
                 <TextBlock FontSize="10" TextAlignment="Center" Width="14" Height="14" Text="РД" Margin="-5"/>
             </Label.Content>
         </Label>
-        <Rectangle Name="RectObject" VerticalAlignment="Center" HorizontalAlignment="Left" Width="40" Height="26" Margin="39,0,0,0" Fill="Transparent" StrokeThickness="0.5" Stroke="Black" Opacity="0" MouseLeftButtonUp="ValveGrid_OnMouseRightButtonDown"/>
+        <Rectangle Name="RectObject" VerticalAlignment="Center" HorizontalAlignment="Left" Width="40" Height="26" Margin="39,0,0,0" Fill="Transparent" StrokeThickness="0.5" Stroke="Black" Opacity="0" MouseLeftButtonUp="ValveGrid_OnMouseRightButtonDown" PreviewMouseRightButtonDown="ValveGrid_OnPreviewMouseRightButtonDown" PreviewMouseRightButtonUp="ValveGrid_OnPreviewMouseRightButtonUp"/>
         <Popup Name="PopupObject" Placement="Bottom" StaysOpen="False">
             <Border BorderBrush="Black" BorderThickness="1">
                 <Grid Background="Beige" Width="180">
@@ -176,6 +176,24 @@
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding IsDosing}" Value="True">
                                         <Setter Property="ToolTip" Value='Управление доступно только в режиме работы "Наладка"' />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <Button Name="BtnOpenUnloadGate" Grid.Row="4" Grid.Column="0" Width="75" Height="25" Margin="0,0,0,5" Background="#85fc84" BorderBrush="Black" BorderThickness="1" Content="Открыть" PreviewMouseLeftButtonDown="BtnOpen_OnPreviewMouseLeftButtonDown" PreviewMouseLeftButtonUp="BtnOpen_OnPreviewMouseLeftButtonUp" ToolTip='Управление доступно только в режиме работы "Ручной"' ToolTipService.ShowOnDisabled="True">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Setter Property="IsEnabled" Value="False"/>
+                                <Setter Property="ToolTipService.IsEnabled" Value="True"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ModeManual}" Value="True">
+                                        <Setter Property="IsEnabled" Value="True"/>
+                                        <Setter Property="ToolTipService.IsEnabled" Value="False"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding IsUnload}" Value="True">
+                                        <Setter Property="Visibility" Value="Visible"/>
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>

@@ -61,7 +61,7 @@ namespace _2048_Rbu.Classes
                 //opc.cl.Connect("localhost", "", 100);0
                 WindowArchive window = new WindowArchive(OpcServer.GetInstance().GetConnectionStringData(OpcServer.OpcList.Rbu), null,
                     0, true, OpcServer.GetInstance().GetOpc(OpcServer.OpcList.Rbu).AnalogTags, OpcServer.GetInstance().GetOpc(OpcServer.OpcList.Rbu).DiscreteTags,
-                    true, OpcServer.GetInstance().GetObjectData(OpcServer.OpcList.Rbu).SqlTableName, "Новый архиватор", new DataNewArchiverReader());
+                    true, OpcServer.GetInstance().GetObjectData(OpcServer.OpcList.Rbu).SqlTableName, "", new DataNewArchiverReader());
                 window.SaveGraphLeg += OnSaveGraphLeg;
                 window.Show();
             }

@@ -10,8 +10,15 @@
     <StackPanel Background="LightGray" Orientation="Vertical" Width="450" Margin="0" HorizontalAlignment="Center">
         <TextBlock VerticalAlignment="Top" HorizontalAlignment="Center" Width="440" Margin="5" TextAlignment="Center" TextWrapping="WrapWithOverflow" FontSize="16" FontWeight="Bold" Text="{Binding NameWindow}"/>
         <Grid VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0" Width="450">
-            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0" TextAlignment="Center" TextWrapping="NoWrap" FontSize="14" FontWeight="Normal" Text="Недосып, кг:"/>
-            <Label Name="LblWeightDiff" VerticalAlignment="Center" HorizontalAlignment="Right" Width="100" Height="32" Margin="10,0,10,5" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" FontSize="14">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0" TextAlignment="Center" TextWrapping="NoWrap" FontSize="14" FontWeight="Normal" Text="Недосып, кг"/>
+            <Label Grid.Row="0" Name="LblWeightDiff" VerticalAlignment="Center" HorizontalAlignment="Right" Width="100" Height="32" Margin="10,0,10,5" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" FontSize="14">
                 <Label.InputBindings>
                     <MouseBinding Command="{Binding SetWeightDiff}" MouseAction="LeftClick"/>
                 </Label.InputBindings>
@@ -45,6 +52,110 @@
                     </Style>
                 </Label.Style>
             </Label>
+            <TextBlock Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0" TextAlignment="Center" TextWrapping="NoWrap" FontSize="14" FontWeight="Normal" Text="Процент грубого дозирования, %"/>
+            <Label Grid.Row="1" Name="LblPercentRought" VerticalAlignment="Center" HorizontalAlignment="Right" Width="100" Height="32" Margin="10,0,10,5" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" FontSize="14">
+                <Label.InputBindings>
+                    <MouseBinding Command="{Binding SetPercentRought}" MouseAction="LeftClick"/>
+                </Label.InputBindings>
+                <Label.Style>
+                    <Style TargetType="{x:Type Label}">
+                        <Setter Property="OverridesDefaultStyle" Value="True"/>
+                        <Setter Property="SnapsToDevicePixels" Value="True"/>
+                        <Setter Property="IsEnabled" Value="True"/>
+                        <Setter Property="FontSize" Value="14"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Label}">
+                                    <Border Name="Border" BorderThickness="1" Opacity="1">
+                                        <TextBlock Text="{Binding PercentRought}" TextAlignment="Center" VerticalAlignment="Center" Height="20"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="False">
+                                            <Setter TargetName="Border" Property="Background" Value="#FFADD8E6"/>
+                                            <Setter TargetName="Border" Property="BorderBrush" Value="#FF000000"/>
+                                            <Setter Property="Foreground" Value="#FF000000"/>
+                                        </Trigger>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="Border" Property="Background" Value="#FFC9DEF5"/>
+                                            <Setter TargetName="Border" Property="BorderBrush" Value="#FF3399FF"/>
+                                            <Setter Property="Foreground" Value="#FF000000"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Label.Style>
+            </Label>
+            <TextBlock Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0" TextAlignment="Center" TextWrapping="NoWrap" FontSize="14" FontWeight="Normal" Text="Масса точного дозирования, кг"/>
+            <Label Grid.Row="2" Name="LblWeightPrecise" VerticalAlignment="Center" HorizontalAlignment="Right" Width="100" Height="32" Margin="10,0,10,5" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" FontSize="14">
+                <Label.InputBindings>
+                    <MouseBinding Command="{Binding SetWeightPrecise}" MouseAction="LeftClick"/>
+                </Label.InputBindings>
+                <Label.Style>
+                    <Style TargetType="{x:Type Label}">
+                        <Setter Property="OverridesDefaultStyle" Value="True"/>
+                        <Setter Property="SnapsToDevicePixels" Value="True"/>
+                        <Setter Property="IsEnabled" Value="True"/>
+                        <Setter Property="FontSize" Value="14"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Label}">
+                                    <Border Name="Border" BorderThickness="1" Opacity="1">
+                                        <TextBlock Text="{Binding WeightPrecise}" TextAlignment="Center" VerticalAlignment="Center" Height="20"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="False">
+                                            <Setter TargetName="Border" Property="Background" Value="#FFADD8E6"/>
+                                            <Setter TargetName="Border" Property="BorderBrush" Value="#FF000000"/>
+                                            <Setter Property="Foreground" Value="#FF000000"/>
+                                        </Trigger>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="Border" Property="Background" Value="#FFC9DEF5"/>
+                                            <Setter TargetName="Border" Property="BorderBrush" Value="#FF3399FF"/>
+                                            <Setter Property="Foreground" Value="#FF000000"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Label.Style>
+            </Label>
+            <TextBlock Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Margin="0" TextAlignment="Center" TextWrapping="NoWrap" FontSize="14" FontWeight="Bold" Text="Признак точного дозирования:"/>
+            <Button Name="BtnPercent" Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Left" Height="30" Width="180" Margin="30,0,0,0" BorderThickness="1" BorderBrush="Black" FontSize="14" Content="По процентам">
+                <Button.InputBindings>
+                    <MouseBinding Command="{Binding SetByPercent}" MouseAction="LeftClick"/>
+                </Button.InputBindings>
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Background" Value="LightBlue"/>
+                        <Setter Property="FontWeight" Value="Normal"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ByPercent}" Value="True">
+                                <Setter Property="Background" Value="#FF85FC84"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button Name="BtnWeight" Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Right" Height="30" Width="180" Margin="0,0,30,0" BorderThickness="1" BorderBrush="Black" FontSize="14" Content="По массе">
+                <Button.InputBindings>
+                    <MouseBinding Command="{Binding SetByWeight}" MouseAction="LeftClick"/>
+                </Button.InputBindings><Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Background" Value="#FF85FC84"/>
+                        <Setter Property="FontWeight" Value="Bold"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ByPercent}" Value="True">
+                                <Setter Property="Background" Value="LightBlue"/>
+                                <Setter Property="FontWeight" Value="Normal"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
         </Grid>
         <StackPanel Margin="0,0,0,5" Orientation="Vertical" Width="450">
             <StackPanel.Style>
@@ -605,6 +716,492 @@
                                     <ControlTemplate TargetType="{x:Type Label}">
                                         <Border Name="Border" BorderThickness="1" Opacity="1">
                                             <TextBlock Text="{Binding WorkMode[2].RoughtPauseParam}" TextAlignment="Center" VerticalAlignment="Center" Height="20"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="False">
+                                                <Setter TargetName="Border" Property="Background" Value="#FFADD8E6"/>
+                                                <Setter TargetName="Border" Property="BorderBrush" Value="#FF000000"/>
+                                                <Setter Property="Foreground" Value="#FF000000"/>
+                                            </Trigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="Border" Property="Background" Value="#FFC9DEF5"/>
+                                                <Setter TargetName="Border" Property="BorderBrush" Value="#FF3399FF"/>
+                                                <Setter Property="Foreground" Value="#FF000000"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Label.Style>
+                </Label>
+            </Grid>
+        </StackPanel>
+        <StackPanel Orientation="Vertical">
+            <StackPanel.Style>
+                <Style TargetType="{x:Type StackPanel}">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsWaterOrAdditive}" Value="True">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </StackPanel.Style>
+            <Grid Background="LightGray" Width="450">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="340"/>
+                    <ColumnDefinition Width="110"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,2.5" TextAlignment="Center" TextWrapping="WrapWithOverflow" FontSize="14" FontWeight="Bold" Text="{Binding WorkMode[0].HeaderGate}"/>
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="0" Margin="10,2.5" TextAlignment="Center" TextWrapping="WrapWithOverflow" FontSize="14" FontWeight="Normal" Text='Время работы в режиме работы "Точно", с'/>
+                <Label VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Row="1" Grid.Column="1" Width="100" Height="32" Margin="0,2.5,10,2.5" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" FontSize="14">
+                    <Label.InputBindings>
+                        <MouseBinding Command="{Binding WorkMode[0].SetPreciseWorkParam}" MouseAction="LeftClick"/>
+                    </Label.InputBindings>
+                    <Label.Style>
+                        <Style TargetType="{x:Type Label}">
+                            <Setter Property="OverridesDefaultStyle" Value="True"/>
+                            <Setter Property="SnapsToDevicePixels" Value="True"/>
+                            <Setter Property="IsEnabled" Value="True"/>
+                            <Setter Property="FontSize" Value="14"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Label}">
+                                        <Border Name="Border" BorderThickness="1" Opacity="1">
+                                            <TextBlock Text="{Binding WorkMode[0].PreciseWorkParam}" TextAlignment="Center" VerticalAlignment="Center" Height="20"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="False">
+                                                <Setter TargetName="Border" Property="Background" Value="#FFADD8E6"/>
+                                                <Setter TargetName="Border" Property="BorderBrush" Value="#FF000000"/>
+                                                <Setter Property="Foreground" Value="#FF000000"/>
+                                            </Trigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="Border" Property="Background" Value="#FFC9DEF5"/>
+                                                <Setter TargetName="Border" Property="BorderBrush" Value="#FF3399FF"/>
+                                                <Setter Property="Foreground" Value="#FF000000"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Label.Style>
+                </Label>
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="0" Margin="10,2.5" TextAlignment="Center" TextWrapping="WrapWithOverflow" FontSize="14" FontWeight="Normal" Text='Время паузы в режиме работы "Точно", с'/>
+                <Label VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Row="2" Grid.Column="1" Width="100" Height="32" Margin="0,2.5,10,2.5" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" FontSize="14">
+                    <Label.InputBindings>
+                        <MouseBinding Command="{Binding WorkMode[0].SetPrecisePauseParam}" MouseAction="LeftClick"/>
+                    </Label.InputBindings>
+                    <Label.Style>
+                        <Style TargetType="{x:Type Label}">
+                            <Setter Property="OverridesDefaultStyle" Value="True"/>
+                            <Setter Property="SnapsToDevicePixels" Value="True"/>
+                            <Setter Property="IsEnabled" Value="True"/>
+                            <Setter Property="FontSize" Value="14"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Label}">
+                                        <Border Name="Border" BorderThickness="1" Opacity="1">
+                                            <TextBlock Text="{Binding WorkMode[0].PrecisePauseParam}" TextAlignment="Center" VerticalAlignment="Center" Height="20"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="False">
+                                                <Setter TargetName="Border" Property="Background" Value="#FFADD8E6"/>
+                                                <Setter TargetName="Border" Property="BorderBrush" Value="#FF000000"/>
+                                                <Setter Property="Foreground" Value="#FF000000"/>
+                                            </Trigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="Border" Property="Background" Value="#FFC9DEF5"/>
+                                                <Setter TargetName="Border" Property="BorderBrush" Value="#FF3399FF"/>
+                                                <Setter Property="Foreground" Value="#FF000000"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Label.Style>
+                </Label>
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="3" Grid.Column="0" Margin="10,2.5" TextAlignment="Center" TextWrapping="WrapWithOverflow" FontSize="14" FontWeight="Normal" Text='Время работы в режиме работы "Грубо", с'/>
+                <Label VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Row="3" Grid.Column="1" Width="100" Height="32" Margin="0,2.5,10,2.5" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" FontSize="14">
+                    <Label.InputBindings>
+                        <MouseBinding Command="{Binding WorkMode[0].SetRoughtWorkParam}" MouseAction="LeftClick"/>
+                    </Label.InputBindings>
+                    <Label.Style>
+                        <Style TargetType="{x:Type Label}">
+                            <Setter Property="OverridesDefaultStyle" Value="True"/>
+                            <Setter Property="SnapsToDevicePixels" Value="True"/>
+                            <Setter Property="IsEnabled" Value="True"/>
+                            <Setter Property="FontSize" Value="14"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Label}">
+                                        <Border Name="Border" BorderThickness="1" Opacity="1">
+                                            <TextBlock Text="{Binding WorkMode[0].RoughtWorkParam}" TextAlignment="Center" VerticalAlignment="Center" Height="20"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="False">
+                                                <Setter TargetName="Border" Property="Background" Value="#FFADD8E6"/>
+                                                <Setter TargetName="Border" Property="BorderBrush" Value="#FF000000"/>
+                                                <Setter Property="Foreground" Value="#FF000000"/>
+                                            </Trigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="Border" Property="Background" Value="#FFC9DEF5"/>
+                                                <Setter TargetName="Border" Property="BorderBrush" Value="#FF3399FF"/>
+                                                <Setter Property="Foreground" Value="#FF000000"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Label.Style>
+                </Label>
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="4" Grid.Column="0" Margin="10,2.5" TextAlignment="Center" TextWrapping="WrapWithOverflow" FontSize="14" FontWeight="Normal" Text='Время паузы в режиме работы "Грубо", с'/>
+                <Label VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Row="4" Grid.Column="1" Width="100" Height="32" Margin="0,2.5,10,2.5" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" FontSize="14">
+                    <Label.InputBindings>
+                        <MouseBinding Command="{Binding WorkMode[0].SetRoughtPauseParam}" MouseAction="LeftClick"/>
+                    </Label.InputBindings>
+                    <Label.Style>
+                        <Style TargetType="{x:Type Label}">
+                            <Setter Property="OverridesDefaultStyle" Value="True"/>
+                            <Setter Property="SnapsToDevicePixels" Value="True"/>
+                            <Setter Property="IsEnabled" Value="True"/>
+                            <Setter Property="FontSize" Value="14"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Label}">
+                                        <Border Name="Border" BorderThickness="1" Opacity="1">
+                                            <TextBlock Text="{Binding WorkMode[0].RoughtPauseParam}" TextAlignment="Center" VerticalAlignment="Center" Height="20"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="False">
+                                                <Setter TargetName="Border" Property="Background" Value="#FFADD8E6"/>
+                                                <Setter TargetName="Border" Property="BorderBrush" Value="#FF000000"/>
+                                                <Setter Property="Foreground" Value="#FF000000"/>
+                                            </Trigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="Border" Property="Background" Value="#FFC9DEF5"/>
+                                                <Setter TargetName="Border" Property="BorderBrush" Value="#FF3399FF"/>
+                                                <Setter Property="Foreground" Value="#FF000000"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Label.Style>
+                </Label>
+            </Grid>
+            <Grid Background="LightGray" Width="450">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="340"/>
+                    <ColumnDefinition Width="110"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,2.5" TextAlignment="Center" TextWrapping="WrapWithOverflow" FontSize="14" FontWeight="Bold" Text="{Binding WorkMode[1].HeaderGate}"/>
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="0" Margin="10,2.5" TextAlignment="Center" TextWrapping="WrapWithOverflow" FontSize="14" FontWeight="Normal" Text='Время работы в режиме работы "Точно", с'/>
+                <Label VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Row="1" Grid.Column="1" Width="100" Height="32" Margin="0,2.5,10,2.5" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" FontSize="14">
+                    <Label.InputBindings>
+                        <MouseBinding Command="{Binding WorkMode[1].SetPreciseWorkParam}" MouseAction="LeftClick"/>
+                    </Label.InputBindings>
+                    <Label.Style>
+                        <Style TargetType="{x:Type Label}">
+                            <Setter Property="OverridesDefaultStyle" Value="True"/>
+                            <Setter Property="SnapsToDevicePixels" Value="True"/>
+                            <Setter Property="IsEnabled" Value="True"/>
+                            <Setter Property="FontSize" Value="14"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Label}">
+                                        <Border Name="Border" BorderThickness="1" Opacity="1">
+                                            <TextBlock Text="{Binding WorkMode[1].PreciseWorkParam}" TextAlignment="Center" VerticalAlignment="Center" Height="20"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="False">
+                                                <Setter TargetName="Border" Property="Background" Value="#FFADD8E6"/>
+                                                <Setter TargetName="Border" Property="BorderBrush" Value="#FF000000"/>
+                                                <Setter Property="Foreground" Value="#FF000000"/>
+                                            </Trigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="Border" Property="Background" Value="#FFC9DEF5"/>
+                                                <Setter TargetName="Border" Property="BorderBrush" Value="#FF3399FF"/>
+                                                <Setter Property="Foreground" Value="#FF000000"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Label.Style>
+                </Label>
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="0" Margin="10,2.5" TextAlignment="Center" TextWrapping="WrapWithOverflow" FontSize="14" FontWeight="Normal" Text='Время паузы в режиме работы "Точно", с'/>
+                <Label VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Row="2" Grid.Column="1" Width="100" Height="32" Margin="0,2.5,10,2.5" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" FontSize="14">
+                    <Label.InputBindings>
+                        <MouseBinding Command="{Binding WorkMode[1].SetPrecisePauseParam}" MouseAction="LeftClick"/>
+                    </Label.InputBindings>
+                    <Label.Style>
+                        <Style TargetType="{x:Type Label}">
+                            <Setter Property="OverridesDefaultStyle" Value="True"/>
+                            <Setter Property="SnapsToDevicePixels" Value="True"/>
+                            <Setter Property="IsEnabled" Value="True"/>
+                            <Setter Property="FontSize" Value="14"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Label}">
+                                        <Border Name="Border" BorderThickness="1" Opacity="1">
+                                            <TextBlock Text="{Binding WorkMode[1].PrecisePauseParam}" TextAlignment="Center" VerticalAlignment="Center" Height="20"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="False">
+                                                <Setter TargetName="Border" Property="Background" Value="#FFADD8E6"/>
+                                                <Setter TargetName="Border" Property="BorderBrush" Value="#FF000000"/>
+                                                <Setter Property="Foreground" Value="#FF000000"/>
+                                            </Trigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="Border" Property="Background" Value="#FFC9DEF5"/>
+                                                <Setter TargetName="Border" Property="BorderBrush" Value="#FF3399FF"/>
+                                                <Setter Property="Foreground" Value="#FF000000"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Label.Style>
+                </Label>
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="3" Grid.Column="0" Margin="10,2.5" TextAlignment="Center" TextWrapping="WrapWithOverflow" FontSize="14" FontWeight="Normal" Text='Время работы в режиме работы "Грубо", с'/>
+                <Label VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Row="3" Grid.Column="1" Width="100" Height="32" Margin="0,2.5,10,2.5" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" FontSize="14">
+                    <Label.InputBindings>
+                        <MouseBinding Command="{Binding WorkMode[1].SetRoughtWorkParam}" MouseAction="LeftClick"/>
+                    </Label.InputBindings>
+                    <Label.Style>
+                        <Style TargetType="{x:Type Label}">
+                            <Setter Property="OverridesDefaultStyle" Value="True"/>
+                            <Setter Property="SnapsToDevicePixels" Value="True"/>
+                            <Setter Property="IsEnabled" Value="True"/>
+                            <Setter Property="FontSize" Value="14"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Label}">
+                                        <Border Name="Border" BorderThickness="1" Opacity="1">
+                                            <TextBlock Text="{Binding WorkMode[1].RoughtWorkParam}" TextAlignment="Center" VerticalAlignment="Center" Height="20"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="False">
+                                                <Setter TargetName="Border" Property="Background" Value="#FFADD8E6"/>
+                                                <Setter TargetName="Border" Property="BorderBrush" Value="#FF000000"/>
+                                                <Setter Property="Foreground" Value="#FF000000"/>
+                                            </Trigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="Border" Property="Background" Value="#FFC9DEF5"/>
+                                                <Setter TargetName="Border" Property="BorderBrush" Value="#FF3399FF"/>
+                                                <Setter Property="Foreground" Value="#FF000000"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Label.Style>
+                </Label>
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="4" Grid.Column="0" Margin="10,2.5" TextAlignment="Center" TextWrapping="WrapWithOverflow" FontSize="14" FontWeight="Normal" Text='Время паузы в режиме работы "Грубо", с'/>
+                <Label VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Row="4" Grid.Column="1" Width="100" Height="32" Margin="0,2.5,10,2.5" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" FontSize="14">
+                    <Label.InputBindings>
+                        <MouseBinding Command="{Binding WorkMode[1].SetRoughtPauseParam}" MouseAction="LeftClick"/>
+                    </Label.InputBindings>
+                    <Label.Style>
+                        <Style TargetType="{x:Type Label}">
+                            <Setter Property="OverridesDefaultStyle" Value="True"/>
+                            <Setter Property="SnapsToDevicePixels" Value="True"/>
+                            <Setter Property="IsEnabled" Value="True"/>
+                            <Setter Property="FontSize" Value="14"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Label}">
+                                        <Border Name="Border" BorderThickness="1" Opacity="1">
+                                            <TextBlock Text="{Binding WorkMode[1].RoughtPauseParam}" TextAlignment="Center" VerticalAlignment="Center" Height="20"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="False">
+                                                <Setter TargetName="Border" Property="Background" Value="#FFADD8E6"/>
+                                                <Setter TargetName="Border" Property="BorderBrush" Value="#FF000000"/>
+                                                <Setter Property="Foreground" Value="#FF000000"/>
+                                            </Trigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="Border" Property="Background" Value="#FFC9DEF5"/>
+                                                <Setter TargetName="Border" Property="BorderBrush" Value="#FF3399FF"/>
+                                                <Setter Property="Foreground" Value="#FF000000"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Label.Style>
+                </Label>
+            </Grid>
+        </StackPanel>
+        <StackPanel Orientation="Vertical">
+            <StackPanel.Style>
+                <Style TargetType="{x:Type StackPanel}">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsCement}" Value="True">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </StackPanel.Style>
+            <Grid Background="LightGray" Width="450">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="340"/>
+                    <ColumnDefinition Width="110"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,2.5" TextAlignment="Center" TextWrapping="WrapWithOverflow" FontSize="14" FontWeight="Bold" Text="{Binding WorkMode[0].HeaderGate}"/>
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="0" Margin="10,2.5" TextAlignment="Center" TextWrapping="WrapWithOverflow" FontSize="14" FontWeight="Normal" Text='Время работы в режиме работы "Точно", с'/>
+                <Label VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Row="1" Grid.Column="1" Width="100" Height="32" Margin="0,2.5,10,2.5" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" FontSize="14">
+                    <Label.InputBindings>
+                        <MouseBinding Command="{Binding WorkMode[0].SetPreciseWorkParam}" MouseAction="LeftClick"/>
+                    </Label.InputBindings>
+                    <Label.Style>
+                        <Style TargetType="{x:Type Label}">
+                            <Setter Property="OverridesDefaultStyle" Value="True"/>
+                            <Setter Property="SnapsToDevicePixels" Value="True"/>
+                            <Setter Property="IsEnabled" Value="True"/>
+                            <Setter Property="FontSize" Value="14"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Label}">
+                                        <Border Name="Border" BorderThickness="1" Opacity="1">
+                                            <TextBlock Text="{Binding WorkMode[0].PreciseWorkParam}" TextAlignment="Center" VerticalAlignment="Center" Height="20"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="False">
+                                                <Setter TargetName="Border" Property="Background" Value="#FFADD8E6"/>
+                                                <Setter TargetName="Border" Property="BorderBrush" Value="#FF000000"/>
+                                                <Setter Property="Foreground" Value="#FF000000"/>
+                                            </Trigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="Border" Property="Background" Value="#FFC9DEF5"/>
+                                                <Setter TargetName="Border" Property="BorderBrush" Value="#FF3399FF"/>
+                                                <Setter Property="Foreground" Value="#FF000000"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Label.Style>
+                </Label>
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="0" Margin="10,2.5" TextAlignment="Center" TextWrapping="WrapWithOverflow" FontSize="14" FontWeight="Normal" Text='Время паузы в режиме работы "Точно", с'/>
+                <Label VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Row="2" Grid.Column="1" Width="100" Height="32" Margin="0,2.5,10,2.5" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" FontSize="14">
+                    <Label.InputBindings>
+                        <MouseBinding Command="{Binding WorkMode[0].SetPrecisePauseParam}" MouseAction="LeftClick"/>
+                    </Label.InputBindings>
+                    <Label.Style>
+                        <Style TargetType="{x:Type Label}">
+                            <Setter Property="OverridesDefaultStyle" Value="True"/>
+                            <Setter Property="SnapsToDevicePixels" Value="True"/>
+                            <Setter Property="IsEnabled" Value="True"/>
+                            <Setter Property="FontSize" Value="14"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Label}">
+                                        <Border Name="Border" BorderThickness="1" Opacity="1">
+                                            <TextBlock Text="{Binding WorkMode[0].PrecisePauseParam}" TextAlignment="Center" VerticalAlignment="Center" Height="20"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="False">
+                                                <Setter TargetName="Border" Property="Background" Value="#FFADD8E6"/>
+                                                <Setter TargetName="Border" Property="BorderBrush" Value="#FF000000"/>
+                                                <Setter Property="Foreground" Value="#FF000000"/>
+                                            </Trigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="Border" Property="Background" Value="#FFC9DEF5"/>
+                                                <Setter TargetName="Border" Property="BorderBrush" Value="#FF3399FF"/>
+                                                <Setter Property="Foreground" Value="#FF000000"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Label.Style>
+                </Label>
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="3" Grid.Column="0" Margin="10,2.5" TextAlignment="Center" TextWrapping="WrapWithOverflow" FontSize="14" FontWeight="Normal" Text='Время работы в режиме работы "Грубо", с'/>
+                <Label VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Row="3" Grid.Column="1" Width="100" Height="32" Margin="0,2.5,10,2.5" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" FontSize="14">
+                    <Label.InputBindings>
+                        <MouseBinding Command="{Binding WorkMode[0].SetRoughtWorkParam}" MouseAction="LeftClick"/>
+                    </Label.InputBindings>
+                    <Label.Style>
+                        <Style TargetType="{x:Type Label}">
+                            <Setter Property="OverridesDefaultStyle" Value="True"/>
+                            <Setter Property="SnapsToDevicePixels" Value="True"/>
+                            <Setter Property="IsEnabled" Value="True"/>
+                            <Setter Property="FontSize" Value="14"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Label}">
+                                        <Border Name="Border" BorderThickness="1" Opacity="1">
+                                            <TextBlock Text="{Binding WorkMode[0].RoughtWorkParam}" TextAlignment="Center" VerticalAlignment="Center" Height="20"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="False">
+                                                <Setter TargetName="Border" Property="Background" Value="#FFADD8E6"/>
+                                                <Setter TargetName="Border" Property="BorderBrush" Value="#FF000000"/>
+                                                <Setter Property="Foreground" Value="#FF000000"/>
+                                            </Trigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="Border" Property="Background" Value="#FFC9DEF5"/>
+                                                <Setter TargetName="Border" Property="BorderBrush" Value="#FF3399FF"/>
+                                                <Setter Property="Foreground" Value="#FF000000"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Label.Style>
+                </Label>
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="4" Grid.Column="0" Margin="10,2.5" TextAlignment="Center" TextWrapping="WrapWithOverflow" FontSize="14" FontWeight="Normal" Text='Время паузы в режиме работы "Грубо", с'/>
+                <Label VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Row="4" Grid.Column="1" Width="100" Height="32" Margin="0,2.5,10,2.5" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" FontSize="14">
+                    <Label.InputBindings>
+                        <MouseBinding Command="{Binding WorkMode[0].SetRoughtPauseParam}" MouseAction="LeftClick"/>
+                    </Label.InputBindings>
+                    <Label.Style>
+                        <Style TargetType="{x:Type Label}">
+                            <Setter Property="OverridesDefaultStyle" Value="True"/>
+                            <Setter Property="SnapsToDevicePixels" Value="True"/>
+                            <Setter Property="IsEnabled" Value="True"/>
+                            <Setter Property="FontSize" Value="14"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Label}">
+                                        <Border Name="Border" BorderThickness="1" Opacity="1">
+                                            <TextBlock Text="{Binding WorkMode[0].RoughtPauseParam}" TextAlignment="Center" VerticalAlignment="Center" Height="20"/>
                                         </Border>
                                         <ControlTemplate.Triggers>
                                             <Trigger Property="IsMouseOver" Value="False">

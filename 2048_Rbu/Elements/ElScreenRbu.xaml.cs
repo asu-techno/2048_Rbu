@@ -22,6 +22,7 @@ using NLog;
 using _2048_Rbu.Windows.Reports;
 using System.Threading.Tasks;
 using ArchiverLibCore.Elements;
+using AS_Library.Events.Classes;
 using ServiceLibCore.Classes;
 using RelayCommand = AS_Library.Classes.RelayCommand;
 
@@ -47,7 +48,7 @@ namespace _2048_Rbu.Elements
             InitializeComponent();
         }
 
-        public async void Initialize(Logger logger)
+        public void Initialize(Logger logger)
         {
             _opcName = OpcServer.OpcList.Rbu;
 
@@ -58,11 +59,7 @@ namespace _2048_Rbu.Elements
             Closed += ElArchiversViewModel.OnClosed;
 
             ViewModelScreenRbu.IsUpdating = true;
-            await Task.Run(() =>
-            {
-                OpcServer.GetInstance().InitOpc(_opcName, Service.GetInstance().GetOpcDict()["OpcServerAddress"]);
-                OpcServer.GetInstance().ConnectOpc(_opcName);
-            });
+
             #region Init
 
             foreach (var item in ElGrid.Children)
@@ -162,6 +159,7 @@ namespace _2048_Rbu.Elements
                 {
                     var container = (Indicators.ElContainer)item;
                     container.Initialize(_opcName);
+                    _elementList.Add(container);
                     _containerList.Add(container);
                 }
             }
@@ -274,16 +272,10 @@ namespace _2048_Rbu.Elements
             Methods.ButtonClick(btn, BtnAck, "cmd_Ack_Alarm", true, "Сброс звонка");
         }
 
-        private void BtnArray_OnClick(object sender, RoutedEventArgs e)
-        {
-            object btn = e.Source;
-            Methods.ButtonClick(btn, BtnArray, "", new float[9] { 100, 100, 100, 100, 100, 100, 100, 100, 200 });
-        }
-
         private void BtnStop_OnClick(object sender, RoutedEventArgs e)
         {
             object btn = e.Source;
-            Methods.ButtonClick(btn, BtnStop, "cmd_Stop", true, "Общий СТОП");
+            Methods.ButtonClick(btn, BtnStop, "btn_StopALL", true, "Общий СТОП");
         }
 
         #region Menu
@@ -464,6 +456,12 @@ namespace _2048_Rbu.Elements
 
         #endregion
 
+        private void MaterialSpeed_OnClick(object sender, RoutedEventArgs e)
+        {
+            WindowMaterialSpeed window = new WindowMaterialSpeed(_opcName);
+            window.Show();
+        }
+
         private void Spalsh_OnClick(object sender, RoutedEventArgs e)
         {
             WindowSplash window = new WindowSplash();
@@ -518,7 +516,7 @@ namespace _2048_Rbu.Elements
         private OPC_client _opc;
         private OpcServer.OpcList _opcName;
         private int _linkValue, _currentLinkValue, _cycle;
-        private bool _link;
+        private bool _link, _firstLink, _firstCheckLink;
 
         public bool Cherry { get; set; }
 
@@ -798,6 +796,15 @@ namespace _2048_Rbu.Elements
 
             if (_link)
             {
+                if (!Static.Link)
+                {
+                    EventsBase.GetInstance().GetControlEvents(_opcName).AddEvent("Связь со шкафом управления установлена", SystemEventType.Message);
+                }
+                if (!_firstLink)
+                {
+                    CreateAutoEvent();
+                    _firstLink = true;
+                }
                 _cycle = 0;
                 LinkOk = Static.Link = true;
             }
@@ -808,11 +815,139 @@ namespace _2048_Rbu.Elements
 
             if (_cycle > 5)
             {
+                if (Static.Link || !_firstCheckLink)
+                {
+                    EventsBase.GetInstance().GetControlEvents(_opcName).AddEvent("Нет связи со шкафом управления", SystemEventType.Alarm);
+                    _firstCheckLink = true;
+                }
                 LinkOk = Static.Link = false;
                 _cycle = 11;
             }
 
             IsUpdating = false;
+        }
+
+        private void CreateAutoEvent()
+        {
+            #region AutoEvent
+
+            var autoEvent = new AutoEvent[150];
+            autoEvent[0] = new AutoEvent(_opcName, "M_15.gb_AL_Feedback", SystemEventType.Alarm, "Насос M-15 - авария ОС", true);
+            autoEvent[1] = new AutoEvent(_opcName, "M_15.gb_AL_External", SystemEventType.Alarm, "Насос M-15 - внешняя авария", true);
+            autoEvent[2] = new AutoEvent(_opcName, "M_15.gb_AL_DKS", SystemEventType.Alarm, "Насос M-15 - авария ДКС", true);
+            autoEvent[3] = new AutoEvent(_opcName, "M_16.gb_AL_Feedback", SystemEventType.Alarm, "Насос M-16 - авария ОС", true);
+            autoEvent[4] = new AutoEvent(_opcName, "M_16.gb_AL_External", SystemEventType.Alarm, "Насос M-16 - внешняя авария", true);
+            autoEvent[5] = new AutoEvent(_opcName, "M_16.gb_AL_DKS", SystemEventType.Alarm, "Насос M-16 - авария ДКС", true);
+            autoEvent[6] = new AutoEvent(_opcName, "M_17.gb_AL_Feedback", SystemEventType.Alarm, "Насос M-17 - авария ОС", true);
+            autoEvent[7] = new AutoEvent(_opcName, "M_17.gb_AL_External", SystemEventType.Alarm, "Насос M-17 - внешняя авария", true);
+            autoEvent[8] = new AutoEvent(_opcName, "M_17.gb_AL_DKS", SystemEventType.Alarm, "Насос M-17 - авария ДКС", true);
+            autoEvent[9] = new AutoEvent(_opcName, "M_18.gb_AL_Feedback", SystemEventType.Alarm, "Бетоносмеситель M-18 - авария ОС", true);
+            autoEvent[10] = new AutoEvent(_opcName, "M_18.gb_AL_External", SystemEventType.Alarm, "Бетоносмеситель M-18 - внешняя авария", true);
+            autoEvent[11] = new AutoEvent(_opcName, "M_18.gb_AL_Oil", SystemEventType.Alarm, "Бетоносмеситель M-18 - авария системы смазки", true);
+            autoEvent[12] = new AutoEvent(_opcName, "M_9.gb_AL_Feedback", SystemEventType.Alarm, "Конвейер M-9 - авария ОС", true);
+            autoEvent[13] = new AutoEvent(_opcName, "M_9.gb_AL_External", SystemEventType.Alarm, "Конвейер M-9 - внешняя авария", true);
+            autoEvent[14] = new AutoEvent(_opcName, "M_9.gb_AL_DKS", SystemEventType.Alarm, "Конвейер M-9 - авария ДКС", true);
+            autoEvent[15] = new AutoEvent(_opcName, "M_1.gb_AL_Feedback", SystemEventType.Alarm, "Конвейер M-1 - авария ОС", true);
+            autoEvent[16] = new AutoEvent(_opcName, "M_1.gb_AL_External", SystemEventType.Alarm, "Конвейер M-1 - внешняя авария", true);
+            autoEvent[17] = new AutoEvent(_opcName, "M_1.gb_AL_DKS", SystemEventType.Alarm, "Конвейер M-1 - авария ДКС", true);
+            autoEvent[18] = new AutoEvent(_opcName, "M_11.gb_AL_Feedback", SystemEventType.Alarm, "Шнек M-11 - авария ОС", true);
+            autoEvent[19] = new AutoEvent(_opcName, "M_11.gb_AL_External", SystemEventType.Alarm, "Шнек M-11 - внешняя авария", true);
+            autoEvent[20] = new AutoEvent(_opcName, "M_11.gb_AL_DKS", SystemEventType.Alarm, "Шнек M-11 - авария ДКС", true);
+            autoEvent[21] = new AutoEvent(_opcName, "М_12.gb_AL_Feedback", SystemEventType.Alarm, "Шнек M-12 - авария ОС", true);
+            autoEvent[22] = new AutoEvent(_opcName, "М_12.gb_AL_External", SystemEventType.Alarm, "Шнек M-12 - внешняя авария", true);
+            autoEvent[23] = new AutoEvent(_opcName, "М_12.gb_AL_DKS", SystemEventType.Alarm, "Шнек M-12 - авария ДКС", true);
+            autoEvent[24] = new AutoEvent(_opcName, "M_13.gb_AL_Feedback", SystemEventType.Alarm, "Вибратор M-13 - авария ОС", true);
+            autoEvent[25] = new AutoEvent(_opcName, "M_13.gb_AL_External", SystemEventType.Alarm, "Вибратор M-13 - внешняя авария", true);
+            autoEvent[26] = new AutoEvent(_opcName, "M_13.gb_AL_DKS", SystemEventType.Alarm, "Вибратор M-13 - авария ДКС", true);
+            autoEvent[27] = new AutoEvent(_opcName, "M_14.gb_AL_Feedback", SystemEventType.Alarm, "Вибратор M-14 - авария ОС", true);
+            autoEvent[28] = new AutoEvent(_opcName, "M_14.gb_AL_External", SystemEventType.Alarm, "Вибратор M-14 - внешняя авария", true);
+            autoEvent[29] = new AutoEvent(_opcName, "M_14.gb_AL_DKS", SystemEventType.Alarm, "Вибратор M-14 - авария ДКС", true);
+            autoEvent[30] = new AutoEvent(_opcName, "M_10.gb_AL_Feedback", SystemEventType.Alarm, "Вибратор M-10 - авария ОС", true);
+            autoEvent[31] = new AutoEvent(_opcName, "M_10.gb_AL_External", SystemEventType.Alarm, "Вибратор M-10 - внешняя авария", true);
+            autoEvent[32] = new AutoEvent(_opcName, "M_10.gb_AL_DKS", SystemEventType.Alarm, "Вибратор M-10 - авария ДКС", true);
+            autoEvent[33] = new AutoEvent(_opcName, "M_2.gb_AL_Feedback", SystemEventType.Alarm, "Вибратор M-2 - авария ОС", true);
+            autoEvent[34] = new AutoEvent(_opcName, "M_2.gb_AL_External", SystemEventType.Alarm, "Вибратор M-2 - внешняя авария", true);
+            autoEvent[35] = new AutoEvent(_opcName, "M_2.gb_AL_DKS", SystemEventType.Alarm, "Вибратор M-2 - авария ДКС", true);
+            autoEvent[36] = new AutoEvent(_opcName, "M_3.gb_AL_Feedback", SystemEventType.Alarm, "Вибратор M-3 - авария ОС", true);
+            autoEvent[37] = new AutoEvent(_opcName, "M_3.gb_AL_External", SystemEventType.Alarm, "Вибратор M-3 - внешняя авария", true);
+            autoEvent[38] = new AutoEvent(_opcName, "M_3.gb_AL_DKS", SystemEventType.Alarm, "Вибратор M-3 - авария ДКС", true);
+            autoEvent[39] = new AutoEvent(_opcName, "M_4.gb_AL_Feedback", SystemEventType.Alarm, "Вибратор M-4 - авария ОС", true);
+            autoEvent[40] = new AutoEvent(_opcName, "M_4.gb_AL_External", SystemEventType.Alarm, "Вибратор M-4 - внешняя авария", true);
+            autoEvent[41] = new AutoEvent(_opcName, "M_4.gb_AL_DKS", SystemEventType.Alarm, "Вибратор M-4 - авария ДКС", true);
+            autoEvent[42] = new AutoEvent(_opcName, "M_5.gb_AL_Feedback", SystemEventType.Alarm, "Вибратор M-5 - авария ОС", true);
+            autoEvent[43] = new AutoEvent(_opcName, "M_5.gb_AL_External", SystemEventType.Alarm, "Вибратор M-5 - внешняя авария", true);
+            autoEvent[44] = new AutoEvent(_opcName, "M_5.gb_AL_DKS", SystemEventType.Alarm, "Вибратор M-5 - авария ДКС", true);
+            autoEvent[45] = new AutoEvent(_opcName, "M_6.gb_AL_Feedback", SystemEventType.Alarm, "Вибратор M-6 - авария ОС", true);
+            autoEvent[46] = new AutoEvent(_opcName, "M_6.gb_AL_External", SystemEventType.Alarm, "Вибратор M-6 - внешняя авария", true);
+            autoEvent[47] = new AutoEvent(_opcName, "M_6.gb_AL_DKS", SystemEventType.Alarm, "Вибратор M-6 - авария ДКС", true);
+            autoEvent[48] = new AutoEvent(_opcName, "M_7.gb_AL_Feedback", SystemEventType.Alarm, "Вибратор M-7 - авария ОС", true);
+            autoEvent[49] = new AutoEvent(_opcName, "M_7.gb_AL_External", SystemEventType.Alarm, "Вибратор M-7 - внешняя авария", true);
+            autoEvent[50] = new AutoEvent(_opcName, "M_7.gb_AL_DKS", SystemEventType.Alarm, "Вибратор M-7 - авария ДКС", true);
+            autoEvent[51] = new AutoEvent(_opcName, "V_1.gb_AL_Feedback_Open", SystemEventType.Alarm, "Задвижка V-1 - авария ОС-Open", true);
+            autoEvent[52] = new AutoEvent(_opcName, "V_1.gb_AL_Feedback_Close", SystemEventType.Alarm, "Задвижка V-1 - авария ОС-Close", true);
+            autoEvent[53] = new AutoEvent(_opcName, "V_1.gb_AL_BothSensor", SystemEventType.Alarm, "Задвижка V-1 - авария датчиков", true);
+            autoEvent[54] = new AutoEvent(_opcName, "V_1.gb_AL_External", SystemEventType.Alarm, "Задвижка V-1 - внешняя авария", true);
+            autoEvent[55] = new AutoEvent(_opcName, "V_2.gb_AL_Open", SystemEventType.Alarm, "Задвижка V-2 - авария открытия", true);
+            autoEvent[56] = new AutoEvent(_opcName, "V_2.gb_AL_Close", SystemEventType.Alarm, "Задвижка V-2 - авария закрытия", true);
+            autoEvent[57] = new AutoEvent(_opcName, "V_3.gb_AL_Open", SystemEventType.Alarm, "Задвижка V-3 - авария открытия", true);
+            autoEvent[58] = new AutoEvent(_opcName, "V_3.gb_AL_Close", SystemEventType.Alarm, "Задвижка V-3 - авария закрытия", true);
+            autoEvent[59] = new AutoEvent(_opcName, "V_4.gb_AL_Open", SystemEventType.Alarm, "Задвижка V-4 - авария открытия", true);
+            autoEvent[60] = new AutoEvent(_opcName, "V_4.gb_AL_Close", SystemEventType.Alarm, "Задвижка V-4 - авария закрытия", true);
+            autoEvent[61] = new AutoEvent(_opcName, "V_5.gb_AL_Open", SystemEventType.Alarm, "Задвижка V-5 - авария открытия", true);
+            autoEvent[62] = new AutoEvent(_opcName, "V_5.gb_AL_Close", SystemEventType.Alarm, "Задвижка V-5 - авария закрытия", true);
+            autoEvent[63] = new AutoEvent(_opcName, "V_6.gb_AL_Open", SystemEventType.Alarm, "Задвижка V-6 - авария открытия", true);
+            autoEvent[64] = new AutoEvent(_opcName, "V_6.gb_AL_Close", SystemEventType.Alarm, "Задвижка V-6 - авария закрытия", true);
+            autoEvent[65] = new AutoEvent(_opcName, "V_7.gb_AL_Open", SystemEventType.Alarm, "Задвижка V-7 - авария открытия", true);
+            autoEvent[66] = new AutoEvent(_opcName, "V_7.gb_AL_Close", SystemEventType.Alarm, "Задвижка V-7 - авария закрытия", true);
+            autoEvent[67] = new AutoEvent(_opcName, "V_9_1.gb_AL_Open", SystemEventType.Alarm, "Задвижка V-9-1 - авария открытия", true);
+            autoEvent[68] = new AutoEvent(_opcName, "V_9_1.gb_AL_Close", SystemEventType.Alarm, "Задвижка V-9-1 - авария закрытия", true);
+            autoEvent[69] = new AutoEvent(_opcName, "V_9_2.gb_AL_Open", SystemEventType.Alarm, "Задвижка V-9-2 - авария открытия", true);
+            autoEvent[70] = new AutoEvent(_opcName, "V_9_2.gb_AL_Close", SystemEventType.Alarm, "Задвижка V-9-2 - авария закрытия", true);
+            autoEvent[71] = new AutoEvent(_opcName, "V_10_1.gb_AL_Open", SystemEventType.Alarm, "Задвижка V-10-1 - авария открытия", true);
+            autoEvent[72] = new AutoEvent(_opcName, "V_10_1.gb_AL_Close", SystemEventType.Alarm, "Задвижка V-10-1 - авария закрытия", true);
+            autoEvent[73] = new AutoEvent(_opcName, "V_10_2.gb_AL_Open", SystemEventType.Alarm, "Задвижка V-10-2 - авария открытия", true);
+            autoEvent[74] = new AutoEvent(_opcName, "V_10_2.gb_AL_Close", SystemEventType.Alarm, "Задвижка V-10-2 - авария закрытия", true);
+            autoEvent[75] = new AutoEvent(_opcName, "V_11_1.gb_AL_Open", SystemEventType.Alarm, "Задвижка V-11-1 - авария открытия", true);
+            autoEvent[76] = new AutoEvent(_opcName, "V_11_1.gb_AL_Close", SystemEventType.Alarm, "Задвижка V-11-1 - авария закрытия", true);
+            autoEvent[77] = new AutoEvent(_opcName, "V_11_2.gb_AL_Open", SystemEventType.Alarm, "Задвижка V-11-2 - авария открытия", true);
+            autoEvent[78] = new AutoEvent(_opcName, "V_11_2.gb_AL_Close", SystemEventType.Alarm, "Задвижка V-11-2 - авария закрытия", true);
+            autoEvent[79] = new AutoEvent(_opcName, "V_12_1.gb_AL_Open", SystemEventType.Alarm, "Задвижка V-12-1 - авария открытия", true);
+            autoEvent[80] = new AutoEvent(_opcName, "V_12_1.gb_AL_Close", SystemEventType.Alarm, "Задвижка V-12-1 - авария закрытия", true);
+            autoEvent[81] = new AutoEvent(_opcName, "V_12_2.gb_AL_Open", SystemEventType.Alarm, "Задвижка V-12-2 - авария открытия", true);
+            autoEvent[82] = new AutoEvent(_opcName, "V_12_2.gb_AL_Close", SystemEventType.Alarm, "Задвижка V-12-2 - авария закрытия", true);
+            autoEvent[83] = new AutoEvent(_opcName, "M_19.gb_AL_Feedback", SystemEventType.Alarm, "Насос M-19 - Вода - авария ОС", true);
+            autoEvent[84] = new AutoEvent(_opcName, "M_19.gb_AL_External", SystemEventType.Alarm, "Насос M-19 - Вода - внешняя авария", true);
+            autoEvent[85] = new AutoEvent(_opcName, "M_19.gb_AL_DKS", SystemEventType.Alarm, "Насос M-19 - Вода - авария ДКС", true);
+            autoEvent[86] = new AutoEvent(_opcName, "Air_Cement1.gb_AL_Open", SystemEventType.Alarm, "Аэратор силоса цемента 1 - авария открытия", true);
+            autoEvent[87] = new AutoEvent(_opcName, "Air_Cement1.gb_AL_Close", SystemEventType.Alarm, "Аэратор силоса цемента 1 - авария закрытия", true);
+            autoEvent[88] = new AutoEvent(_opcName, "Air_Cement2.gb_AL_Open", SystemEventType.Alarm, "Аэратор силоса цемента 2 - авария открытия", true);
+            autoEvent[89] = new AutoEvent(_opcName, "Air_Cement2.gb_AL_Close", SystemEventType.Alarm, "Аэратор силоса цемента 2 - авария закрытия", true);
+            autoEvent[90] = new AutoEvent(_opcName, "gb_AL_Hydro_Feedback", SystemEventType.Alarm, "Насос гидростанции -не сработал пускатель", true);
+            autoEvent[91] = new AutoEvent(_opcName, "DI_NotStop_BTN_PLC", SystemEventType.Alarm, "Нажата стоповая кнопка в шкафу управления контроллера", false);
+            autoEvent[92] = new AutoEvent(_opcName, "DI_NotStop_BTN_Inert", SystemEventType.Alarm, "Нажата стоповая кнопка в шкафу управления инертными фракциями", false);
+            autoEvent[93] = new AutoEvent(_opcName, "DI_NotStop_BTN_Doz", SystemEventType.Alarm, "Нажата стоповая кнопка в шкафу управления дозированием", false);
+            autoEvent[94] = new AutoEvent(_opcName, "DI_NotStop_BTN_Cem", SystemEventType.Alarm, "Нажата стоповая кнопка в шкафу управления цементом", false);
+            autoEvent[95] = new AutoEvent(_opcName, "DI_NotStop_BTN_Water", SystemEventType.Alarm, "Нажата стоповая кнопка в шкафу управления жидкими компонентами", false);
+            autoEvent[96] = new AutoEvent(_opcName, "DI_NotStop_BTN_BS", SystemEventType.Alarm, "Нажата стоповая кнопка в шкафу управления бетоносмесителем", false);
+            autoEvent[97] = new AutoEvent(_opcName, "cmd_Stop", SystemEventType.Alarm, "Общий стоп", true);
+            autoEvent[98] = new AutoEvent(_opcName, "gb_LinkERR_WeightCement", SystemEventType.Alarm, "Нет связи с весовым индикатором цемента", true);
+            autoEvent[99] = new AutoEvent(_opcName, "gb_LinkERR_WeightWater", SystemEventType.Alarm, "Нет связи с весовым индикатором воды", true);
+            autoEvent[100] = new AutoEvent(_opcName, "gb_LinkERR_WeightInert", SystemEventType.Alarm, "Нет связи с весовым индикатором инертных фракций", true);
+            autoEvent[101] = new AutoEvent(_opcName, "gb_LinkERR_WeightAdditive", SystemEventType.Alarm, "Нет связи с весовым индикатором химических добавок", true);
+           
+            autoEvent[102] = new AutoEvent(_opcName,"M_18.gb_Warning_Oil", SystemEventType.Warning, "Бетоносмеситель M-18 - нет давления в системе смазки", true);
+            autoEvent[103] = new AutoEvent(_opcName,"DI_Gates_M18_Closed", SystemEventType.Warning, "Крышка открыта", false);
+            autoEvent[104] = new AutoEvent(_opcName,"DI_M9_sw_AutomatMode", SystemEventType.Warning, "Конвейер M-9 - автоматический режим", true);
+            autoEvent[105] = new AutoEvent(_opcName,"DI_M9_sw_AutomatMode", SystemEventType.Warning, "Конвейер M-9 - ручной режим", false);
+            autoEvent[106] = new AutoEvent(_opcName,"DI_M18_sw_AutomatMode", SystemEventType.Warning, "Бетоносмеситель M-18 - автоматический режим", true);
+            autoEvent[107] = new AutoEvent(_opcName,"DI_M18_sw_AutomatMode", SystemEventType.Warning, "Бетоносмеситель M-18 - ручной режим", false);
+            autoEvent[108] = new AutoEvent(_opcName,"gb_AL_Hydro_Pressure", SystemEventType.Warning, "Низкое давление в гидравлической магистрали", true);
+            autoEvent[109] = new AutoEvent(_opcName, "gb_ArchiverERROR", SystemEventType.Warning, "Нет связи с программой архивации", true);
+            autoEvent[110] = new AutoEvent(_opcName, "DI_Cement1_LSH", SystemEventType.Warning, "Сработал датчик верхнего уровня цемента в силосе №1", true);
+            autoEvent[111] = new AutoEvent(_opcName, "DI_Cement2_LSH", SystemEventType.Warning, "Сработал датчик верхнего уровня цемента в силосе №2", true);
+
+            OpcServer.GetInstance().GetSubscription(_opcName).ApplyChanges();
+            #endregion
         }
 
         private RelayCommand _setWaterCorrect;

@@ -82,6 +82,7 @@
                     <MenuItem Name="WaterDosing" Header="Вода">
                         <MenuItem Name="Water" Header="Вода" Click="DosingWater_Click"/>
                     </MenuItem>
+                    <MenuItem Name="LimitValues" Header="Предельные значения дозирования" Click="MaterialSpeed_OnClick"/>
                 </MenuItem>
                 <Separator/>
                 <MenuItem Name="VibratorSettings" Header="Настройки вибраторов" Click="VibratorSettings_OnClick"/>
@@ -98,8 +99,8 @@
                     <MenuItem Header="Типы емкостей" Click="ContainerTypes_OnClick"></MenuItem>
                     <Separator/>
                     <MenuItem Header="Емкости" Height="30" Click="Containers_OnClick"></MenuItem>
-                    <Separator/>
-                    <MenuItem Header="Физическая модель">
+                    <Separator Visibility="Collapsed"/>
+                    <MenuItem Header="Физическая модель" Visibility="Collapsed">
                         <MenuItem Header="Общие настройки" Click="CommonSettings_OnClick"/>
                         <Separator/>
                         <MenuItem Header="Источники дозирования" Click="DosingSources_OnClick"/>
@@ -126,10 +127,10 @@
             </MenuItem>
             <MenuItem Name="Archive" Header="Архивы" Foreground="Black" BorderBrush="Black" BorderThickness="1,0" FontWeight="Bold" Height="30">
                 <MenuItem Name="Archiver" Header="Архиватор" Click="Archiver_OnClick"/>
+                <!--<Separator/>
+                <MenuItem Name="Graphics" Header="Архив работы" Click="Archive_OnClick"/>-->
                 <Separator/>
-                <MenuItem Name="Graphics" Header="Архив работы" Click="Archive_OnClick"/>
-                <Separator/>
-                <MenuItem Name="GraphicsNew" Header="Архив работы (Новый архиватор)" Click="ArchiveNew_OnClick"/>
+                <MenuItem Name="GraphicsNew" Header="Архив работы" Click="ArchiveNew_OnClick"/>
                 <Separator/>
                 <MenuItem Name="EventsArchive" Header="Журнал событий" Click="EventsArchive_OnClick"/>
             </MenuItem>
@@ -143,15 +144,14 @@
         <Button Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right" Style="{StaticResource PressButton}" IsEnabled="{Binding LinkOk}" Content="Общий СТОП" FontSize="14" BorderThickness="1" BorderBrush="Black" Background="Salmon" Margin="0,0,175,0" Width="160" Height="26" Name="BtnStop" Click="BtnStop_OnClick"/>
         <Button Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right" Style="{StaticResource PressButton}" IsEnabled="{Binding LinkOk}" Content="Сброс звонка" FontSize="14" BorderThickness="1" BorderBrush="Black" Background="LightBlue" Margin="0,0,340,0" Width="160" Height="26" Name="BtnAck" Click="BtnAck_OnClick"/>
         <Button Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right" Style="{StaticResource PressButton}" IsEnabled="{Binding LinkOk}" Content="Сброс аварий" FontSize="14" BorderThickness="1" BorderBrush="Black" Background="LightBlue" Margin="0,0,505,0" Width="160" Height="26" Name="BtnReset" PreviewMouseLeftButtonDown="BtnReset_OnPreviewMouseLeftButtonDown" PreviewMouseLeftButtonUp="BtnReset_OnPreviewMouseLeftButtonUp"/>
-        <Button Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right" Style="{StaticResource PressButton}" IsEnabled="{Binding LinkOk}" Content="Array" FontSize="14" BorderThickness="1" BorderBrush="Black" Background="LightBlue" Margin="0,0,670,0" Width="60" Height="26" Name="BtnArray" Click="BtnArray_OnClick"/>
         <Image VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="1920" Height="990" Margin="0,0,0,0" Source="/2048_Rbu;component/Images/Mnemo_Rbu.png"/>
         <indicators:ElAnim VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="16" Height="32" Margin="517,402,0,0" Substance="Cement" Logic="True" OnPcy="LoadCement_1"/>
         <indicators:ElAnim VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="16" Height="32" Margin="648,402,0,0" Substance="Cement" Logic="True" OnPcy="LoadCement_2"/>
         <indicators:ElAnim VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="16" Height="32" Margin="583,569,0,0" Substance="Cement" Logic="True" OnPcy="UnloadCement"/>
-        <indicators:ElAnim VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="16" Height="32" Margin="861,382,0,0" Substance="Water" Logic="True" OnPcy="LoadWater"/>
-        <indicators:ElAnim VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="16" Height="32" Margin="927,382,0,0" Substance="Water" Logic="True" OnPcy="UnloadAdditive"/>
-        <indicators:ElAnim VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="16" Height="32" Margin="954,226,0,0" Substance="Water" Logic="True" OnPcy="LoadAdditive_1"/>
-        <indicators:ElAnim VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="16" Height="32" Margin="1020,226,0,0" Substance="Water" Logic="True" OnPcy="LoadAdditive_2"/>
+        <indicators:ElAnim VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="16" Height="32" Margin="854,382,0,0" Substance="Water" Logic="True" OnPcy="LoadWater"/>
+        <indicators:ElAnim VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="16" Height="32" Margin="896,382,0,0" Substance="Water" Logic="True" OnPcy="UnloadAdditive"/>
+        <indicators:ElAnim VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="16" Height="32" Margin="896,226,0,0" Substance="Water" Logic="True" OnPcy="LoadAdditive_1"/>
+        <indicators:ElAnim VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="16" Height="32" Margin="938,382,0,0" Substance="Water" Logic="True" OnPcy="LoadAdditive_2"/>
         <indicators:ElAnim VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="16" Height="32" Margin="774,569,0,0" Substance="Water" Logic="True" OnPcy="UnloadWater"/>
         <indicators:ElAnim VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="16" Height="32" Margin="821,569,0,0" Substance="Inert" Logic="True" OnPcy="M_9.DI_ON" OnSecondPcy="DI_M9_MaterialSensor"/>
         <indicators:ElAnim VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="16" Height="32" Margin="1099,517,0,0" Substance="Inert" Logic="True" OnPcy="UnloadInert"/>
@@ -166,14 +166,14 @@
         <indicators:ElAnim VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="16" Height="32" Margin="567,776,0,0" Substance="Solution" Logic="False" OnPcy="V_1.DI_Closed"/>
         <indicators:ElDone VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="12" Height="12" Margin="829,533,0,0" Radius="10" OnBrush="Yellow" OnPcy="DI_M9_MaterialSensor"/>
         <TextBlock VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Margin="845,529,0,0" TextAlignment="Left" FontSize="12" Text="- наличие материала"/>
-        <mechs:ElGate VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="180" Height="70" Margin="414,320,0,0" IsAeration="True" AerationName="Аэратор силоса цемента 1" NameObject="" NamePos="Left" ModePos="LeftUp" PopupPosition="Down" ValueNumMech="45" Prefix="Air_Cement1"/>
-        <mechs:ElGate VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="180" Height="70" Margin="545,320,0,0" IsAeration="True" AerationName="Аэратор силоса цемента 2" NameObject="" NamePos="Left" ModePos="LeftUp" PopupPosition="Down" ValueNumMech="46" Prefix="Air_Cement2"/>
-        <mechs:ElGate VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="180" Height="70" Margin="942,306,0,0" NameObject="V-5" NamePos="Left" ModePos="RightDown" PopupPosition="Down" ValueNumMech="24" Prefix="V_5"/>
-        <mechs:ElGate VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="180" Height="70" Margin="975,181,0,0" NameObject="V-7" NamePos="Left" ModePos="RightDown" PopupPosition="Down" ValueNumMech="26" Prefix="V_7"/>
-        <mechs:ElGate VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="180" Height="70" Margin="909,181,0,0" NameObject="V-6" NamePos="Left" ModePos="RightDown" PopupPosition="Down" ValueNumMech="25" Prefix="V_6"/>
-        <mechs:ElGate VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="180" Height="70" Margin="816,338,0,0" NameObject="V-4" NamePos="Left" ModePos="RightDown" PopupPosition="Down" ValueNumMech="23" Prefix="V_4"/>
-        <mechs:ElGate VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="180" Height="70" Margin="538,477,0,0" NameObject="V-2" NamePos="Left" ModePos="RightDown" PopupPosition="Down" ValueNumMech="21" Prefix="V_2"/>
-        <mechs:ElGate VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="180" Height="70" Margin="851,457,0,0" NameObject="V-3" NamePos="Left" ModePos="RightDown" PopupPosition="Down" ValueNumMech="22" Prefix="V_3"/>
+        <mechs:ElGate VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="180" Height="70" Margin="414,320,0,0" IsAeration="True" AerationName="Аэратор силоса цемента 1" NameObject="" NamePos="Left" ModePos="LeftUp" PopupPosition="Up" ValueNumMech="45" Prefix="Air_Cement1"/>
+        <mechs:ElGate VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="180" Height="70" Margin="545,320,0,0" IsAeration="True" AerationName="Аэратор силоса цемента 2" NameObject="" NamePos="Left" ModePos="LeftUp" PopupPosition="Up" ValueNumMech="46" Prefix="Air_Cement2"/>
+        <mechs:ElGate VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="180" Height="70" Margin="851,306,0,0" NameObject="V-5" NamePos="Left" ModePos="RightDown" ModeDosingPos="RightDown" PopupPosition="Right" IsDosing="True" ValueNumMech="24" Prefix="V_5"/>
+        <mechs:ElGate VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="180" Height="70" Margin="893,338,0,0" NameObject="V-7" NamePos="Left" ModePos="RightDown" ModeDosingPos="RightDown" PopupPosition="Right" IsDosing="True" ValueNumMech="26" Prefix="V_7"/>
+        <mechs:ElGate VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="180" Height="70" Margin="851,181,0,0" NameObject="V-6" NamePos="Left" ModePos="RightDown" ModeDosingPos="RightDown" PopupPosition="Left" IsDosing="True" ValueNumMech="25" Prefix="V_6"/>
+        <mechs:ElGate VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="180" Height="70" Margin="809,338,0,0" NameObject="V-4" NamePos="Left" ModePos="RightDown" ModeDosingPos="RightDown" PopupPosition="Left" IsDosing="True" ValueNumMech="23" Prefix="V_4"/>
+        <mechs:ElGate VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="180" Height="70" Margin="538,477,0,0" NameObject="V-2" NamePos="Left" ModePos="RightDown" ModeDosingPos="RightDown" PopupPosition="Down" IsDosing="True" ValueNumMech="21" Prefix="V_2"/>
+        <mechs:ElGate VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="180" Height="70" Margin="851,457,0,0" NameObject="V-3" NamePos="Left" ModePos="RightDown" ModeDosingPos="RightDown" PopupPosition="Down" IsDosing="True" ValueNumMech="22" Prefix="V_3"/>
         <mechs:ElGate VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="180" Height="70" Margin="1068,425,0,0" Rotate="True" NameObject="V-9-1" NamePos="LeftDown" ModePos="LeftUp" ModeDosingPos="LeftUp" PopupPosition="Down" IsDosing="True" ValueNumMech="35" Prefix="V_9_1"/>
         <mechs:ElGate VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="180" Height="70" Margin="1165,425,0,0" NameObject="V-9-2" NamePos="RightDown" ModePos="RightUp" ModeDosingPos="RightUp" PopupPosition="Down" IsDosing="True" ValueNumMech="36" Prefix="V_9_2"/>
         <mechs:ElGate VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="180" Height="70" Margin="1338,425,0,0" Rotate="True" NameObject="V-10-1" NamePos="LeftDown" ModePos="LeftUp" ModeDosingPos="LeftUp" PopupPosition="Down" IsDosing="True" ValueNumMech="37" Prefix="V_10_1"/>
@@ -185,8 +185,8 @@
         <mechs:ElMixer VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="183" Height="219" Margin="610,540,0,0" NameObject="M-18" NamePos="Up" ModePos="RightUp" PopupPosition="Down" ValueNumMech="4" Prefix="M_18"/>
         <mechs:ElConveyor VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Margin="817,539,0,0" TypeMech="Skip" NameObject="M-9" NamePos="Down" ModePos="Down" PopupPosition="Up" ValueNumMech="5" Prefix="M_9"/>
         <mechs:ElConveyor VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Margin="1095,487,0,0" TypeMech="Conveyor" NameObject="M-1" NamePos="Left" ModePos="LeftDown" PopupPosition="Up" ValueNumMech="6" Prefix="M_1"/>
-        <mechs:ElMotor VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="66" Height="46" Margin="401,306,0,0" NameObject="M-13" NamePos="LeftUp" ModePos="Down" PopupPosition="Up" ValueNumMech="9" Prefix="M_13"/>
-        <mechs:ElMotor VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="66" Height="46" Margin="532,306,0,0" NameObject="M-14" NamePos="LeftUp" ModePos="Down" PopupPosition="Up" ValueNumMech="10" Prefix="M_14"/>
+        <mechs:ElMotor VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="66" Height="46" Margin="401,177,0,0" NameObject="M-13" NamePos="LeftUp" ModePos="Down" PopupPosition="Up" ValueNumMech="9" Prefix="M_13"/>
+        <mechs:ElMotor VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="66" Height="46" Margin="532,177,0,0" NameObject="M-14" NamePos="LeftUp" ModePos="Down" PopupPosition="Up" ValueNumMech="10" Prefix="M_14"/>
         <mechs:ElMotor VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="66" Height="46" Margin="464,433,0,0" NameObject="M-10" NamePos="LeftUp" ModePos="Down" PopupPosition="Up" ValueNumMech="11" Prefix="M_10"/>
         <mechs:ElMotor VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="66" Height="46" Margin="1106,391,0,0" NameObject="M-2" NamePos="LeftUp" ModePos="Down" PopupPosition="Up" ValueNumMech="12" Prefix="M_2"/>
         <mechs:ElMotor VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="66" Height="46" Margin="1240,391,0,0" Rotate="True" NameObject="M-3" NamePos="RightUp" ModePos="Down" PopupPosition="Up" ValueNumMech="13" Prefix="M_3"/>
@@ -198,20 +198,26 @@
         <!--<mechs:ElMotor VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="66" Height="46" Margin="1810,391,0,0" Rotate="True" NameObject="M-12-2" NamePos="RightUp" ModePos="Down" PopupPosition="Up" ValueNumMech="19" Prefix="M_12_2"/>-->
         <mechs:ElConveyor VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Margin="445,351,0,0" TypeMech="Shnek" NameObject="M-11" NamePos="LeftUp" ModePos="Left" PopupPosition="Up" ValueNumMech="7" Prefix="M_11"/>
         <mechs:ElConveyor VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Margin="576,351,0,0" TypeMech="Shnek" NameObject="M-12" NamePos="LeftUp" ModePos="Left" PopupPosition="Up" ValueNumMech="8" Prefix="M_12"/>
-        <mechs:ElPump VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="90" Height="90" Margin="780,309,0,0" NameObject="М-15" NamePos="Up" ModePos="Right" ValueNumMech="1" Prefix="M_15"/>
-        <Rectangle VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="100" Height="60" Margin="419,607,0,0" Stroke="Black" StrokeThickness="1"/>
-        <mechs:ElPump VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="90" Height="90" Margin="423,601,0,0" NameObject="M-19 - Вода" NamePos="Up" ModePos="Right" ValueNumMech="44" Prefix="M_19"/>
-        <mechs:ElPump VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="90" Height="90" Margin="996,104,0,0" Rotate="True" NameObject="М-16" NamePos="Up" ModePos="Left" ValueNumMech="2" Prefix="M_16"/>
-        <mechs:ElPump VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="90" Height="90" Margin="1076,156,0,0" Rotate="True" NameObject="М-17" NamePos="Up" ModePos="Left" ValueNumMech="3" Prefix="M_17"/>
+        <mechs:ElPump VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="90" Height="90" Margin="780,309,0,0" NameObject="М-15" NamePos="Up" ModePos="Right" ModeDosingPos="Right" PopupPosition="Up" IsDosing="True" ValueNumMech="1" Prefix="M_15"/>
+        <!--<Rectangle VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="100" Height="60" Margin="419,607,0,0" Stroke="Black" StrokeThickness="1"/>-->
+        <!--<mechs:ElPump VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="90" Height="90" Margin="423,601,0,0" NameObject="M-19 - Вода" NamePos="Up" ModePos="Right" ValueNumMech="44" Prefix="M_19"/>-->
+        <mechs:ElPump VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="90" Height="90" Margin="996,104,0,0" Rotate="True" NameObject="М-16" NamePos="Up" ModePos="Left" ModeDosingPos="Left" IsDosing="True" ValueNumMech="2" Prefix="M_16"/>
+        <mechs:ElPump VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="90" Height="90" Margin="1076,156,0,0" Rotate="True" NameObject="М-17" NamePos="Up" ModePos="Left" ModeDosingPos="Left" IsDosing="True" ValueNumMech="3" Prefix="M_17"/>
         <mechs:ElGate VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="180" Height="70" Margin="514,736,0,0" IsUnload="True" NameObject="V-1" NamePos="Right" ModePos="Left" PopupPosition="Down" ValueNumMech="20" Prefix="V_1"/>
         <control:ElManualDosing VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="94" Height="20" Margin="1160,425,0,0" EventText="Бункер 1" LeftManualPcy="V_9_1.gMode_Manual" RightManualPcy="V_9_2.gMode_Manual" RoughtPcy="btn_Bunker1_Rough" PrecisePcy="btn_Bunker1_Precise"/>
         <control:ElManualDosing VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="94" Height="20" Margin="1430,425,0,0" EventText="Бункер 2" LeftManualPcy="V_10_1.gMode_Manual" RightManualPcy="V_10_2.gMode_Manual" RoughtPcy="btn_Bunker2_Rough" PrecisePcy="btn_Bunker2_Precise"/>
         <control:ElManualDosing VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="94" Height="20" Margin="1700,425,0,0" EventText="Бункер 3" LeftManualPcy="V_11_1.gMode_Manual" RightManualPcy="V_11_2.gMode_Manual"  RoughtPcy="btn_Bunker3_Rough" PrecisePcy="btn_Bunker3_Precise"/>
         <!--<control:ElManualDosing VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="94" Height="20" Margin="1730,425,0,0" EventText="Бункер 4" LeftManualPcy="V_12_1.gMode_Manual" RightManualPcy="V_12_2.gMode_Manual"  RoughtPcy="btn_Bunker4_Rough" PrecisePcy="btn_Bunker4_Precise"/>-->
-        <indicators:ElValueBox VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="95" Height="25" Margin="545,443,0,0" Count="7" Digit="1" Color="CornflowerBlue" Measure="кг" TypeMaterial="Cement" VisErrorTag="gb_LinkERR_WeightCement" ValuePcay="Cement"/>
-        <indicators:ElValueBox VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="95" Height="25" Margin="858,423,0,0" Count="7" Digit="1" Color="CornflowerBlue" Measure="кг" TypeMaterial="Water" VisErrorTag="gb_LinkERR_WeightWater" ValuePcay="Water"/>
-        <indicators:ElValueBox VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="95" Height="25" Margin="949,267,0,0" Count="7" Digit="1" Color="CornflowerBlue" Measure="кг" TypeMaterial="Additive" VisErrorTag="gb_LinkERR_WeightAdditive" ValuePcay="Additive"/>
-        <indicators:ElValueBox VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="95" Height="25" Margin="995,492,0,0" Count="7" Digit="1" Color="CornflowerBlue" Measure="кг" TypeMaterial="Inert" VisErrorTag="gb_LinkERR_WeightInert" ValuePcay="Inert"/>
+        <control:ElManualDosing VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="94" Height="20" Margin="545,476,0,0" EventText="Выгрузка цемента" LeftManualPcy="V_2.gMode_Manual" RightManualPcy="V_2.gMode_Manual" RoughtPcy="btn_CementScale_Rough" PrecisePcy="btn_CementScale_Precise"/>
+        <control:ElManualDosing VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="94" Height="20" Margin="858,456,0,0" EventText="Выгрузка воды" LeftManualPcy="V_3.gMode_Manual" RightManualPcy="V_3.gMode_Manual" RoughtPcy="btn_WaterScale_Rough" PrecisePcy="btn_WaterScale_Precise"/>
+        <control:ElManualDosing VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="94" Height="20" Margin="858,300,0,0" EventText="Выгрузка хим. добавки" LeftManualPcy="V_5.gMode_Manual" RightManualPcy="V_5.gMode_Manual" RoughtPcy="btn_AdditiveScale_Rough" PrecisePcy="btn_AdditiveScale_Precise"/>
+        <control:ElManualDosing VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="94" Height="20" Margin="858,180,0,0" EventText="Хим. добавка №1" LeftManualPcy="M_16.gMode_Manual" RightManualPcy="V_6.gMode_Manual" RoughtPcy="btn_Additive1_Rough" PrecisePcy="btn_Additive1_Precise"/>
+        <control:ElManualDosing VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="94" Height="20" Margin="962,385,0,0" EventText="Хим. добавка №2" LeftManualPcy="M_17.gMode_Manual" RightManualPcy="V_7.gMode_Manual" RoughtPcy="btn_Additive2_Rough" PrecisePcy="btn_Additive2_Precise"/>
+        <control:ElManualDosing VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="94" Height="20" Margin="767,385,0,0" EventText="Вода" LeftManualPcy="M_15.gMode_Manual" RightManualPcy="V_4.gMode_Manual" RoughtPcy="btn_Water_Rough" PrecisePcy="btn_Water_Precise"/>
+        <indicators:ElValueBox VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="95" Height="25" Margin="545,443,0,0" Count="7" Digit="1" Color="CornflowerBlue" Measure="кг" TypeMaterial="Cement" VisErrorTag="gb_LinkERR_WeightCement" ValuePcay="Cement" EventPermit="Весы цемента" PermitTag="DB_UnloadPermission.Cement[1]"/>
+        <indicators:ElValueBox VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="95" Height="25" Margin="858,423,0,0" Count="7" Digit="1" Color="CornflowerBlue" Measure="кг" TypeMaterial="Water" VisErrorTag="gb_LinkERR_WeightWater" ValuePcay="Water" EventPermit="Весы воды" PermitTag="DB_UnloadPermission.Water[1]"/>
+        <indicators:ElValueBox VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="95" Height="25" Margin="857,267,0,0" Count="7" Digit="1" Color="CornflowerBlue" Measure="кг" TypeMaterial="Additive" VisErrorTag="gb_LinkERR_WeightAdditive" ValuePcay="Additive" EventPermit="Весы хим. добавки" PermitTag="DB_UnloadPermission.Additive[1]"/>
+        <indicators:ElValueBox VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="95" Height="25" Margin="995,492,0,0" Count="7" Digit="1" Color="CornflowerBlue" Measure="кг" TypeMaterial="Inert" VisErrorTag="gb_LinkERR_WeightInert" ValuePcay="Inert" EventPermit="Весы инертных материалов" PermitTag="DB_UnloadPermission.Inert[1]"/>
         <indicators:ElValueBar VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="95" MyHeight="113" Margin="1195,11,0,0" ForegroundBrush="#FF338099" NormalMin="0" ContainerItem="Additive1" ValueBoxPcay="Volume[1]" ValuePcay="LEC[1]"/>
         <indicators:ElValueBar VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="95" MyHeight="113" Margin="1350,63,0,0" ForegroundBrush="#FF338099" NormalMin="0" ContainerItem="Additive2" ValueBoxPcay="Volume[2]" ValuePcay="LEC[2]"/>
         <indicators:ElValueBar VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="95" MyHeight="163" Margin="483,145,0,0" ForegroundBrush="#FF9F9F9F" NormalMin="0" ContainerItem="Silo1" ValueBoxPcay="Volume[3]" ValuePcay="LEC[3]" CheckLevelNum="1"/>
@@ -269,14 +275,14 @@
         <Label VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="112" Height="26" Margin="1275,112,0,0" Background="DarkGray" BorderThickness="1" BorderBrush="Black" FontSize="15" FontWeight="Bold" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0">
             <TextBlock TextAlignment="Center" Text="Емкость Х/Д 2"/>
         </Label>
-        <indicators:ElContainer VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="70" Margin="450,237,0,0" ContainerItem="Silo1"/>
-        <indicators:ElContainer VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="70" Margin="581,237,0,0" ContainerItem="Silo2"/>
-        <indicators:ElContainer VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="80" Margin="688,334,0,0" ContainerItem="Water"/>
-        <indicators:ElContainer VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="110" Margin="1121,88,0,0" ContainerItem="Additive1"/>
-        <indicators:ElContainer VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="110" Margin="1276,140,0,0" ContainerItem="Additive2"/>
-        <indicators:ElContainer VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="80" Margin="1159,361,0,0" ContainerItem="Bunker1"/>
-        <indicators:ElContainer VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="80" Margin="1429,361,0,0" ContainerItem="Bunker2"/>
-        <indicators:ElContainer VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="80" Margin="1699,361,0,0" ContainerItem="Bunker3"/>
+        <indicators:ElContainer VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="70" Margin="450,237,0,0" ContainerItem="Silo1" PermitTag="DB_DosingPermission.Cement[1]"/>
+        <indicators:ElContainer VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="70" Margin="581,237,0,0" ContainerItem="Silo2" PermitTag="DB_DosingPermission.Cement[2]"/>
+        <indicators:ElContainer VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="80" Margin="688,334,0,0" ContainerItem="Water" PermitTag="DB_DosingPermission.Water[1]"/>
+        <indicators:ElContainer VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="110" Margin="1121,88,0,0" ContainerItem="Additive1" PermitTag="DB_DosingPermission.Additive[1]"/>
+        <indicators:ElContainer VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="110" Margin="1276,140,0,0" ContainerItem="Additive2" PermitTag="DB_DosingPermission.Additive_InWater[1]"/>
+        <indicators:ElContainer VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="80" Margin="1159,361,0,0" ContainerItem="Bunker1" PermitTag="DB_DosingPermission.Inert[1]"/>
+        <indicators:ElContainer VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="80" Margin="1429,361,0,0" ContainerItem="Bunker2" PermitTag="DB_DosingPermission.Inert[2]"/>
+        <indicators:ElContainer VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="80" Margin="1699,361,0,0" ContainerItem="Bunker3" PermitTag="DB_DosingPermission.Inert[3]"/>
         <!--<indicators:ElContainer VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="80" Margin="1729,361,0,0" ContainerItem="Bunker4"/>-->
         <control:ElDosingWait VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="200" Margin="399,520,0,0" NameContainer="Разгрузка цемента" TagContainer="CementUnload"/>
         <control:ElDosingWait VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="200" Margin="944,388,0,0" NameContainer="Разгрузка воды и хим. добавки" TagContainer="WaterUnload"/>
@@ -353,6 +359,10 @@
                 </Style>
             </Label.Style>
         </Label>
+        <indicators:ElValueBox VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="56" Height="18" Margin="877,456,0,0" IsSmall="True" Count="3" Digit="0" Color="Transparent" Measure="кг/с " ValuePcay="Water.Current"/>
+        <indicators:ElValueBox VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="56" Height="18" Margin="1015,517,0,0" IsSmall="True" Count="3" Digit="0" Color="Transparent" Measure="кг/с " ValuePcay="Inert.Current"/>
+        <indicators:ElValueBox VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="56" Height="18" Margin="877,300,0,0" IsSmall="True" Count="3" Digit="0" Color="Transparent" Measure="кг/с " ValuePcay="Additive.Current"/>
+        <indicators:ElValueBox VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Width="56" Height="18" Margin="564,476,0,0" IsSmall="True" Count="3" Digit="0" Color="Transparent" Measure="кг/с " ValuePcay="Cement.Current"/>
         <control:ElEvent Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="1559,117,0,0" Width="350" Height="100" TypeWindow="Warning" VisWindowTag="gb_VisibilityWarningWindow" EventsNumTag="gi_WarningNum" CmdAckTag="cmd_Ack_Warning"/>
         <control:ElEvent Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="1559,10,0,0" Width="350" Height="100" TypeWindow="Alarm" VisWindowTag="gb_VisibilityAlarmWindow" EventsNumTag="gi_ErrorNum" CmdAckTag="cmd_Ack_Alarm"/>
         <indicators:ElWarning VerticalAlignment="Top" HorizontalAlignment="Left" Width="200" MyWidth="200" Height="70" MyHeight="70" Margin="1709,521,0,0" Color="Red" FontSize="14" NameObject="Нажата стоповая кнопка" Logic="True" ValuePcy="cmd_Stop" Grid.Row="1"/>
@@ -361,6 +371,8 @@
         <indicators:ElWarning Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="220" MyWidth="220" Height="60" MyHeight="60" Margin="592,707,0,0" Color="Yellow" FontSize="12" NameObject="Нет давления в системе смазки. Бетоносмеситель будет отключен через" Logic="True" ValueTime="gi_Mixer_WillStop_After" ValuePcy="M_18.gb_Warning_Oil"/>
         <indicators:ElWarning Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="150" MyWidth="150" Height="90" MyHeight="90" Margin="396,670,0,0" Color="Red" FontSize="12" NameObject="Насос гидростанции - не сработал пускатель" Logic="True" ValueBtn="btn_Repeat_OilAlarms" ValuePcy="gb_AL_Hydro_Feedback"/>
         <indicators:ElWarning Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="150" MyWidth="150" Height="90" MyHeight="90" Margin="396,784,0,0" Color="Yellow" FontSize="12" NameObject="Низкое давление в гидравлической магистрали" Logic="True" ValueBtn="btn_Repeat_OilAlarms" ValuePcy="gb_AL_Hydro_Pressure"/>
+        <indicators:ElWarning Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="70" MyWidth="70" Height="45" MyHeight="45" Margin="450,275,0,0" Color="#85FC84" FontSize="12" NameObject="Загрузка&#xA;цемента" Logic="True" ValuePcy="LoadCement_Silos1"/>
+        <indicators:ElWarning Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" Width="70" MyWidth="70" Height="45" MyHeight="45" Margin="581,275,0,0" Color="#85FC84" FontSize="12" NameObject="Загрузка&#xA;цемента" Logic="True" ValuePcy="LoadCement_Silos2"/>
         <Label VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="1" Width="500" Height="140" Margin="0,0,0,0" BorderBrush="Black" BorderThickness="1" Background="Red" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" FontSize="24" Padding="0" Content="Нет связи со шкафом управления">
             <Label.Style>
                 <Style TargetType="{x:Type Label}">

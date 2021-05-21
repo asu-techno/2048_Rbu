@@ -14,13 +14,49 @@
                 <RowDefinition Height="35"/>
                 <RowDefinition Height="35"/>
                 <RowDefinition Height="35"/>
+                <RowDefinition Height="35"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="235"/>
                 <ColumnDefinition Width="104"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,0,0" TextAlignment="Center" TextWrapping="NoWrap" FontSize="14" FontWeight="Normal" Text="Время паузы, с"/>
+            <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,0,0" TextAlignment="Center" TextWrapping="NoWrap" FontSize="14" FontWeight="Normal" Text="Время контроля уровня, с"/>
             <Label Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Width="100" Height="30" Margin="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" FontSize="14">
+                <Label.InputBindings>
+                    <MouseBinding Command="{Binding SetCheckTime}" MouseAction="LeftClick"/>
+                </Label.InputBindings>
+                <Label.Style>
+                    <Style TargetType="{x:Type Label}">
+                        <Setter Property="OverridesDefaultStyle" Value="True"/>
+                        <Setter Property="SnapsToDevicePixels" Value="True"/>
+                        <Setter Property="IsEnabled" Value="True"/>
+                        <Setter Property="FontSize" Value="14"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Label}">
+                                    <Border Name="Border" BorderThickness="1" Opacity="1">
+                                        <TextBlock Text="{Binding CheckTime}" TextAlignment="Center" VerticalAlignment="Center" Height="20"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="False">
+                                            <Setter TargetName="Border" Property="Background" Value="#FFADD8E6"/>
+                                            <Setter TargetName="Border" Property="BorderBrush" Value="#FF000000"/>
+                                            <Setter Property="Foreground" Value="#FF000000"/>
+                                        </Trigger>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="Border" Property="Background" Value="#FFC9DEF5"/>
+                                            <Setter TargetName="Border" Property="BorderBrush" Value="#FF3399FF"/>
+                                            <Setter Property="Foreground" Value="#FF000000"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Label.Style>
+            </Label>
+            <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,0,0" TextAlignment="Center" TextWrapping="NoWrap" FontSize="14" FontWeight="Normal" Text="Время паузы, с"/>
+            <Label Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Width="100" Height="30" Margin="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" FontSize="14">
                 <Label.InputBindings>
                     <MouseBinding Command="{Binding SetPauseTime}" MouseAction="LeftClick"/>
                 </Label.InputBindings>
@@ -54,10 +90,10 @@
                     </Style>
                 </Label.Style>
             </Label>
-            <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,0,0" TextAlignment="Center" TextWrapping="NoWrap" FontSize="14" FontWeight="Normal" Text="Задержка применения уровня, с"/>
-            <Label Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Width="100" Height="30" Margin="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" FontSize="14">
+            <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,0,0" TextAlignment="Center" TextWrapping="NoWrap" FontSize="14" FontWeight="Normal" Text="Задержка применения уровня, с"/>
+            <Label Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Width="100" Height="30" Margin="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" FontSize="14">
                 <Label.InputBindings>
-                    <MouseBinding Command="{Binding SetDelyaTime}" MouseAction="LeftClick"/>
+                    <MouseBinding Command="{Binding SetDelayTime}" MouseAction="LeftClick"/>
                 </Label.InputBindings>
                 <Label.Style>
                     <Style TargetType="{x:Type Label}">
@@ -89,7 +125,7 @@
                     </Style>
                 </Label.Style>
             </Label>
-            <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Height="30" Width="200" Margin="0,5,0,0" BorderThickness="1" BorderBrush="Black" Background="LightBlue" FontSize="14" Content="Проверить уровень">
+            <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Height="30" Width="200" Margin="0,5,0,0" BorderThickness="1" BorderBrush="Black" Background="LightBlue" FontSize="14" Content="Проверить уровень">
                 <Button.InputBindings>
                     <MouseBinding Command="{Binding SetCheckLevel}" MouseAction="LeftClick"/>
                 </Button.InputBindings>

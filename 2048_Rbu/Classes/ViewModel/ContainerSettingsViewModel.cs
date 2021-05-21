@@ -22,80 +22,7 @@ namespace _2048_Rbu.Classes.ViewModel
 
         private OPC_client _opc;
         private OpcServer.OpcList _opcName;
-
-
-        public static Dictionary<Static.ContainerItem, int> _contNumDictionary = new Dictionary<Static.ContainerItem, int>
-            {
-                {Static.ContainerItem.Additive1, (int)Static.ContainerItem.Additive1}, //В ПЛК такая последовательность в массиве
-                {Static.ContainerItem.Additive2, (int)Static.ContainerItem.Additive2},
-                {Static.ContainerItem.Silo1, (int)Static.ContainerItem.Silo1},
-                {Static.ContainerItem.Silo2, (int)Static.ContainerItem.Silo2},
-                {Static.ContainerItem.Water, (int)Static.ContainerItem.Water},
-                {Static.ContainerItem.Bunker1, (int)Static.ContainerItem.Bunker1},
-                {Static.ContainerItem.Bunker2, (int)Static.ContainerItem.Bunker2},
-                {Static.ContainerItem.Bunker3, (int)Static.ContainerItem.Bunker3},
-                {Static.ContainerItem.Bunker4, (int)Static.ContainerItem.Bunker4}
-            };
-
-        private Static.ContainerItem _containerItem;
-
-        public ContainerSettingsViewModel(OpcServer.OpcList opcName, Static.ContainerItem containerSettingsItem)
-        {
-            _opcName = opcName;
-            _containerItem = containerSettingsItem;
-
-            NameContainer = "Настройки массы емкости. "+Static.СontainerNameDictionary[_containerItem]+" (" + Static.СontainerMaterialDictionary[_containerItem]+")";
-
-            Subscribe();
-        }
-
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        public void Subscribe()
-        {
-            CreateSubscription();
-        }
-
-        public void Unsubscribe()
-        {
-
-        }
-
-        private void CreateSubscription()
-        {
-            _opc = OpcServer.GetInstance().GetOpc(_opcName);
-            var addVolumeItem = new OpcMonitoredItem(_opc.cl.GetNode("Add_Volume[" + _contNumDictionary[_containerItem] + "]"), OpcAttribute.Value);
-            addVolumeItem.DataChangeReceived += HandleAddVolumeChanged;
-            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(addVolumeItem);
-
-            var parVolumeItem = new OpcMonitoredItem(_opc.cl.GetNode("PAR_Volume[" + _contNumDictionary[_containerItem] + "]"), OpcAttribute.Value);
-            parVolumeItem.DataChangeReceived += HandleParVolumeChanged;
-            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(parVolumeItem);
-
-            var currentVolumeItem = new OpcMonitoredItem(_opc.cl.GetNode("Volume[" + _contNumDictionary[_containerItem] + "]"), OpcAttribute.Value);
-            currentVolumeItem.DataChangeReceived += HandleCurrentVolumeChanged;
-            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(currentVolumeItem);
-
-            OpcServer.GetInstance().GetSubscription(_opcName).ApplyChanges();
-        }
-
-        private void HandleAddVolumeChanged(object sender, OpcDataChangeReceivedEventArgs e)
-        {
-            AddVolume = double.Parse(e.Item.Value.ToString());
-        }
-
-        private void HandleParVolumeChanged(object sender, OpcDataChangeReceivedEventArgs e)
-        {
-            ParVolume = double.Parse(e.Item.Value.ToString());
-        }
-
-        private void HandleCurrentVolumeChanged(object sender, OpcDataChangeReceivedEventArgs e)
-        {
-            CurrentVolume = double.Parse(e.Item.Value.ToString());
-        }
+        private readonly int _numSilo;
 
         private string _nameContainer;
         public string NameContainer
@@ -141,6 +68,113 @@ namespace _2048_Rbu.Classes.ViewModel
             }
         }
 
+        private bool _isCementBunker;
+        public bool IsCementBunker
+        {
+            get { return _isCementBunker; }
+            set
+            {
+                _isCementBunker = value;
+                OnPropertyChanged(nameof(IsCementBunker));
+            }
+        }
+
+        private bool _loadCement;
+        public bool LoadCement
+        {
+            get { return _loadCement; }
+            set
+            {
+                _loadCement = value;
+                OnPropertyChanged(nameof(LoadCement));
+            }
+        }
+
+        public static Dictionary<Static.ContainerItem, int> _contNumDictionary = new Dictionary<Static.ContainerItem, int>
+            {
+                {Static.ContainerItem.Additive1, (int)Static.ContainerItem.Additive1}, //В ПЛК такая последовательность в массиве
+                {Static.ContainerItem.Additive2, (int)Static.ContainerItem.Additive2},
+                {Static.ContainerItem.Silo1, (int)Static.ContainerItem.Silo1},
+                {Static.ContainerItem.Silo2, (int)Static.ContainerItem.Silo2},
+                {Static.ContainerItem.Water, (int)Static.ContainerItem.Water},
+                {Static.ContainerItem.Bunker1, (int)Static.ContainerItem.Bunker1},
+                {Static.ContainerItem.Bunker2, (int)Static.ContainerItem.Bunker2},
+                {Static.ContainerItem.Bunker3, (int)Static.ContainerItem.Bunker3},
+                {Static.ContainerItem.Bunker4, (int)Static.ContainerItem.Bunker4}
+            };
+
+        private Static.ContainerItem _containerItem;
+
+        public ContainerSettingsViewModel(OpcServer.OpcList opcName, Static.ContainerItem containerSettingsItem)
+        {
+            _opcName = opcName;
+            _containerItem = containerSettingsItem;
+
+            IsCementBunker = _containerItem == Static.ContainerItem.Silo1 || _containerItem == Static.ContainerItem.Silo2;
+            _numSilo = _containerItem == Static.ContainerItem.Silo1 ? 1 : 2;
+
+            NameContainer = "Настройки массы емкости. " + Static.СontainerNameDictionary[_containerItem] + " (" + Static.СontainerMaterialDictionary[_containerItem] + ")";
+
+            Subscribe();
+        }
+
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public void Subscribe()
+        {
+            CreateSubscription();
+        }
+
+        public void Unsubscribe()
+        {
+
+        }
+
+        private void CreateSubscription()
+        {
+            _opc = OpcServer.GetInstance().GetOpc(_opcName);
+            var addVolumeItem = new OpcMonitoredItem(_opc.cl.GetNode("Add_Volume[" + _contNumDictionary[_containerItem] + "]"), OpcAttribute.Value);
+            addVolumeItem.DataChangeReceived += HandleAddVolumeChanged;
+            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(addVolumeItem);
+
+            var parVolumeItem = new OpcMonitoredItem(_opc.cl.GetNode("PAR_Volume[" + _contNumDictionary[_containerItem] + "]"), OpcAttribute.Value);
+            parVolumeItem.DataChangeReceived += HandleParVolumeChanged;
+            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(parVolumeItem);
+
+            var currentVolumeItem = new OpcMonitoredItem(_opc.cl.GetNode("Volume[" + _contNumDictionary[_containerItem] + "]"), OpcAttribute.Value);
+            currentVolumeItem.DataChangeReceived += HandleCurrentVolumeChanged;
+            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(currentVolumeItem);
+
+            var loadCement = new OpcMonitoredItem(_opc.cl.GetNode("LoadCement_Silos" + _numSilo), OpcAttribute.Value);
+            loadCement.DataChangeReceived += HandleLoadCementChanged;
+            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(loadCement);
+
+            OpcServer.GetInstance().GetSubscription(_opcName).ApplyChanges();
+        }
+
+        private void HandleAddVolumeChanged(object sender, OpcDataChangeReceivedEventArgs e)
+        {
+            AddVolume = double.Parse(e.Item.Value.ToString());
+        }
+
+        private void HandleParVolumeChanged(object sender, OpcDataChangeReceivedEventArgs e)
+        {
+            ParVolume = double.Parse(e.Item.Value.ToString());
+        }
+
+        private void HandleCurrentVolumeChanged(object sender, OpcDataChangeReceivedEventArgs e)
+        {
+            CurrentVolume = double.Parse(e.Item.Value.ToString());
+        }
+
+        private void HandleLoadCementChanged(object sender, OpcDataChangeReceivedEventArgs e)
+        {
+            LoadCement = bool.Parse(e.Item.Value.ToString());
+        }
+
         private RelayCommand _setAddVolume;
         public RelayCommand SetAddVolume
         {
@@ -148,8 +182,8 @@ namespace _2048_Rbu.Classes.ViewModel
             {
                 return _setAddVolume ??= new RelayCommand((o) =>
                 {
-                    Methods.SetParameter(_opcName, NameContainer + ". Масса загружаемого материала", 0, 10000,
-                        "Add_Volume[" + _contNumDictionary[_containerItem] + "]", WindowSetParameter.ValueType.Real, null, 1, 100, 200, 500, 1000, 100);
+                    Methods.SetParameter(_opcName, NameContainer + ". Масса загружаемого материала", 0, 70000,
+                        "Add_Volume[" + _contNumDictionary[_containerItem] + "]", WindowSetParameter.ValueType.Real, null, 1, 100, 1000, 5000, 50000, 500);
                 });
             }
         }
@@ -161,8 +195,8 @@ namespace _2048_Rbu.Classes.ViewModel
             {
                 return _setParVolume ??= new RelayCommand((o) =>
                 {
-                    Methods.SetParameter(_opcName, NameContainer + ". Вместимость емкости", 0, 10000,
-                        "PAR_Volume[" + _contNumDictionary[_containerItem] + "]", WindowSetParameter.ValueType.Real, null, 1, 100, 200, 500, 1000, 100);
+                    Methods.SetParameter(_opcName, NameContainer + ". Вместимость емкости", 0, 70000,
+                        "PAR_Volume[" + _contNumDictionary[_containerItem] + "]", WindowSetParameter.ValueType.Real, null, 1, 100, 1000, 5000, 50000, 500);
                 });
             }
         }
@@ -174,8 +208,27 @@ namespace _2048_Rbu.Classes.ViewModel
             {
                 return _setVolume ??= new RelayCommand((o) =>
                 {
-                    Methods.SetParameter(_opcName, NameContainer + ". Текущая масса, кг", 0, 10000,
-                        "Volume[" + _contNumDictionary[_containerItem] + "]", WindowSetParameter.ValueType.Real, null, 1, 100, 200, 500, 1000, 100);
+                    Methods.SetParameter(_opcName, NameContainer + ". Текущая масса, кг", 0, 70000,
+                        "Volume[" + _contNumDictionary[_containerItem] + "]", WindowSetParameter.ValueType.Real, null, 1, 100, 1000, 5000, 50000, 500);
+                });
+            }
+        }
+
+        private RelayCommand _invertLoadCement;
+        public RelayCommand InvertLoadCement
+        {
+            get
+            {
+                return _invertLoadCement ??= new RelayCommand((o) =>
+                {
+                    if (!LoadCement)
+                    {
+                        Methods.ButtonClick("LoadCement_Silos" + _numSilo, true, NameContainer + ". Включен режим загрузки цемента");
+                    }
+                    else
+                    {
+                        Methods.ButtonClick("LoadCement_Silos" + _numSilo, false, NameContainer + ". Выключен режим загрузки цемента");
+                    }
                 });
             }
         }
@@ -187,7 +240,7 @@ namespace _2048_Rbu.Classes.ViewModel
             {
                 return _setAdd ??= new RelayCommand((o) =>
                 {
-                    Methods.ButtonClick("btn_Add[" + _contNumDictionary[_containerItem] + "]", true, NameContainer + ". Загрузка заданной массы материала");
+                    Methods.ButtonClick("btn_Add[" + _contNumDictionary[_containerItem] + "]", true, NameContainer + ". Заданное количество материала загружено");
                 });
             }
         }

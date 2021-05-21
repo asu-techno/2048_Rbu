@@ -15,16 +15,44 @@
         <Label Name="lbl_mode" Width="12" Height="12" BorderThickness="1" BorderBrush="Black" Background="Yellow" Margin="40,-40,0,0">
             <Label.Style>
                 <Style TargetType="{x:Type Label}">
-                    <Setter Property="Visibility" Value="Visible" />
+                    <Setter Property="Visibility" Value="Collapsed"/>
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding ModeAutomat}" Value="True">
-                            <Setter Property="Visibility" Value="Collapsed" />
+                        <DataTrigger Binding="{Binding ModeManual}" Value="True">
+                            <Setter Property="Visibility" Value="Visible"/>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
             </Label.Style>
             <Label.Content>
-                <TextBlock Text="Р" FontSize="10" Margin="-3,-7"></TextBlock>
+                <TextBlock FontSize="10">
+                    <TextBlock.Style>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="Text" Value="Р"/>
+                            <Setter Property="Margin" Value="-3,-7"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsDosing}" Value="True">
+                                    <Setter Property="Text" Value="Н"/>
+                                    <Setter Property="Margin" Value="-3.5,-7"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+            </Label.Content>
+        </Label>
+        <Label Name="LblModeDosing" Width="16" Height="16" BorderThickness="1" BorderBrush="Black" Background="Yellow" Margin="40,-40,0,0">
+            <Label.Style>
+                <Style TargetType="{x:Type Label}">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ModeManualDosing}" Value="True">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Label.Style>
+            <Label.Content>
+                <TextBlock FontSize="10" TextAlignment="Center" Width="14" Height="14" Text="РД" Margin="-5"/>
             </Label.Content>
         </Label>
         <Rectangle Name="rect_object" Fill="Transparent" Height="25" Width="40" StrokeThickness="0.5" Stroke="Black" Opacity="0" Margin="0,-1,0,0" MouseLeftButtonUp="ValveGrid_OnMouseRightButtonDown"></Rectangle>
@@ -60,9 +88,13 @@
                             <Style TargetType="{x:Type Button}">
                                 <Setter Property="Background" Value="LightBlue"/>
                                 <Setter Property="FontWeight" Value="Normal"/>
+                                <Setter Property="Content" Value="Ручной"/>
                                 <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsDosing}" Value="True">
+                                        <Setter Property="Content" Value="Наладка"/>
+                                    </DataTrigger>
                                     <DataTrigger Binding="{Binding ModeManual}" Value="True">
-                                        <Setter Property="Background" Value="#85FC84"/>
+                                        <Setter Property="Background" Value="#85fc84"/>
                                         <Setter Property="FontWeight" Value="Bold"/>
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -83,31 +115,57 @@
                             </Style>
                         </Button.Style>
                     </Button>
-                    <TextBlock Name="TxtFreq" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="3" Grid.Column="0" Visibility="{Binding VisFreq}" Foreground="Black" Text="Частота, Гц" />
-                    <Label Name="LblParam" VerticalAlignment="Center" HorizontalAlignment="Center" Width="50" Height="25" Grid.Row="3" Grid.Column="1" Background="LightBlue" Padding="0" Margin="5" BorderBrush="Black" BorderThickness="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="14" Visibility="{Binding VisFreq}" Content="{Binding Freq}" MouseLeftButtonDown="Lbl_param_OnMouseLeftButtonDown" />
-                    <Button Name="BtnStart" Grid.Row="3" Grid.Column="0" Width="75" Height="25" Margin="0,0,0,5" Background="#85fc84" BorderBrush="Black" BorderThickness="1" Content="Пуск" Click="BtnStart_Click" ToolTip='Управление доступно только в режиме работы "Ручной"' ToolTipService.ShowOnDisabled="True">
+                    <Button Name="BtnManualDosing" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Width="165" Height="25" Margin="5,0,5,5" BorderBrush="Black" Content="Ручное дозирование" BorderThickness="1" Click="BtnManualDosing_Click">
                         <Button.Style>
                             <Style TargetType="{x:Type Button}">
-                                <Setter Property="IsEnabled" Value="False"/>
-                                <Setter Property="ToolTipService.IsEnabled" Value="True"/>
+                                <Setter Property="Background" Value="LightBlue"/>
+                                <Setter Property="FontWeight" Value="Normal"/>
+                                <Setter Property="Visibility" Value="Collapsed"/>
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding ModeManual}" Value="True">
-                                        <Setter Property="IsEnabled" Value="True"/>
-                                        <Setter Property="ToolTipService.IsEnabled" Value="False"/>
+                                    <DataTrigger Binding="{Binding IsDosing}" Value="True">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding ModeManualDosing}" Value="True">
+                                        <Setter Property="Background" Value="#85fc84"/>
+                                        <Setter Property="FontWeight" Value="Bold"/>
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
                         </Button.Style>
                     </Button>
-                    <Button Name="BtnStop" Grid.Row="3" Grid.Column="1" Width="75" Height="25" Margin="0,0,0,5" Background="Salmon" BorderBrush="Black" BorderThickness="1" Content="Стоп" Click="BtnStop_Click" ToolTip='Управление доступно только в режиме работы "Ручной"' ToolTipService.ShowOnDisabled="True">
+                    <TextBlock Name="TxtFreq" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="4" Grid.Column="0" Visibility="{Binding VisFreq}" Foreground="Black" Text="Частота, Гц" />
+                    <Label Name="LblParam" VerticalAlignment="Center" HorizontalAlignment="Center" Width="50" Height="25" Grid.Row="4" Grid.Column="1" Background="LightBlue" Padding="0" Margin="5" BorderBrush="Black" BorderThickness="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="14" Visibility="{Binding VisFreq}" Content="{Binding Freq}" MouseLeftButtonDown="Lbl_param_OnMouseLeftButtonDown" />
+                    <Button Name="BtnStart" Grid.Row="4" Grid.Column="0" Width="75" Height="25" Margin="0,0,0,5" Background="#85fc84" BorderBrush="Black" BorderThickness="1" Content="Пуск" Click="BtnStart_Click" ToolTipService.ShowOnDisabled="True">
                         <Button.Style>
                             <Style TargetType="{x:Type Button}">
                                 <Setter Property="IsEnabled" Value="False"/>
                                 <Setter Property="ToolTipService.IsEnabled" Value="True"/>
+                                <Setter Property="ToolTip" Value='Управление доступно только в режиме работы "Ручной"'/>
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding ModeManual}" Value="True">
                                         <Setter Property="IsEnabled" Value="True"/>
                                         <Setter Property="ToolTipService.IsEnabled" Value="False"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding IsDosing}" Value="True">
+                                        <Setter Property="ToolTip" Value='Управление доступно только в режиме работы "Наладка"' />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <Button Name="BtnStop" Grid.Row="4" Grid.Column="1" Width="75" Height="25" Margin="0,0,0,5" Background="Salmon" BorderBrush="Black" BorderThickness="1" Content="Стоп" Click="BtnStop_Click" ToolTip='Управление доступно только в режиме работы "Ручной"' ToolTipService.ShowOnDisabled="True">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="IsEnabled" Value="False"/>
+                                <Setter Property="ToolTipService.IsEnabled" Value="True"/>
+                                <Setter Property="ToolTip" Value='Управление доступно только в режиме работы "Ручной"'/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ModeManual}" Value="True">
+                                        <Setter Property="IsEnabled" Value="True"/>
+                                        <Setter Property="ToolTipService.IsEnabled" Value="False"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding IsDosing}" Value="True">
+                                        <Setter Property="ToolTip" Value='Управление доступно только в режиме работы "Наладка"' />
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>

@@ -68,6 +68,16 @@ namespace _2048_Rbu.Elements.Indicators
             }
         }
 
+        private bool _permitDos;
+        public bool PermitDos
+        {
+            get { return _permitDos; }
+            set
+            {
+                _permitDos = value;
+                OnPropertyChanged(nameof(PermitDos));
+            }
+        }
         #region MyRegion
 
         public string VisValue { get; set; }
@@ -78,6 +88,8 @@ namespace _2048_Rbu.Elements.Indicators
         public int Digit { get; set; }
         public WindowWeight.TypeMaterial TypeMaterial { get; set; }
         public Static.ContainerItem ContainerItem { get; set; }
+        public string PermitTag { get; set; }
+        public string EventPermit { get; set; }
 
         private bool _isSmall;
         public bool IsSmall
@@ -130,6 +142,10 @@ namespace _2048_Rbu.Elements.Indicators
             {
                 LblText.Background = value;
                 LblValue.Background = value;
+                if (value == Brushes.Transparent)
+                {
+                    LblText.BorderBrush = LblValue.BorderBrush = value;
+                }
                 _color = value;
             }
             get
@@ -180,6 +196,13 @@ namespace _2048_Rbu.Elements.Indicators
                 visErrorItem.DataChangeReceived += HandleVisErrorChanged;
                 OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(visErrorItem);
             }
+            if (!string.IsNullOrEmpty(PermitTag))
+            {
+                _opc = OpcServer.GetInstance().GetOpc(_opcName);
+                var permitDos = new OpcMonitoredItem(_opc.cl.GetNode(PermitTag), OpcAttribute.Value);
+                permitDos.DataChangeReceived += HandlePermitDosChanged;
+                OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(permitDos);
+            }
         }
 
         private void HandleValueChanged(object sender, OpcDataChangeReceivedEventArgs e)
@@ -195,12 +218,38 @@ namespace _2048_Rbu.Elements.Indicators
 
         private void HandleVisChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
-            Vis = bool.Parse(e.Item.Value.ToString()) == Logic ? Visibility.Visible : Visibility.Collapsed;
+            try
+            {
+                Vis = bool.Parse(e.Item.Value.ToString()) == Logic ? Visibility.Visible : Visibility.Collapsed;
+            }
+            catch (Exception exception)
+            {
+            }
         }
 
         private void HandleVisErrorChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
-            VisError = bool.Parse(e.Item.Value.ToString());
+            try
+            {
+                VisError = bool.Parse(e.Item.Value.ToString());
+            }
+            catch (Exception exception)
+            {
+            }
+        }
+
+        private void HandlePermitDosChanged(object sender, OpcDataChangeReceivedEventArgs e)
+        {
+            try
+            {
+                PermitDos = bool.Parse(e.Item.Value.ToString());
+                LblText.Background = LblValue.Background =
+                    PermitDos ? (SolidColorBrush) (new BrushConverter().ConvertFrom("#FF84B584")) : Color;
+
+            }
+            catch (Exception exception)
+            {
+            }
         }
 
         private void ElValueBox_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -223,7 +272,7 @@ namespace _2048_Rbu.Elements.Indicators
             if (TypeMaterial != 0 || ContainerItem != 0)
             {
                 RectObject.Opacity = 1;
-                RectObject.ToolTip = TypeMaterial != 0 ? "Настройки весов" :"Настройки массы емкости";
+                RectObject.ToolTip = TypeMaterial != 0 ? "Настройки весов\nПКМ для разрешения(запрета) сброса" : "Настройки массы емкости";
             }
         }
 
@@ -231,6 +280,14 @@ namespace _2048_Rbu.Elements.Indicators
         {
             if (TypeMaterial != 0 || ContainerItem != 0)
                 RectObject.Opacity = 0;
+        }
+
+        private void RectObject_OnMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (PermitDos)
+                Methods.ButtonClick(PermitTag, false, !string.IsNullOrEmpty(EventPermit)? EventPermit + ". Запрет дозирования":null);
+            else
+                Methods.ButtonClick(PermitTag, true, !string.IsNullOrEmpty(EventPermit) ? EventPermit + ". Разрешение дозирования" : null);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

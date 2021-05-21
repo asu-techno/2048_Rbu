@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Reflection;
 using System.Windows;
 using AsuBetonLibrary;
 using _2048_Rbu.Classes;
@@ -28,6 +29,7 @@ namespace _2048_Rbu
         public MainWindow()
         {
             ServiceData.Init(@"Data/Service.xlsx");
+            Release.Init(Assembly.GetExecutingAssembly().GetName().Version);
 
             _windowSplash = new WindowSplash();
             _windowSplash.Show();
@@ -57,6 +59,7 @@ namespace _2048_Rbu
             InitializeComponent();
 
             #region Init
+
             _logger = Service.GetInstance().GetLogger();
             LibService.Init(_logger);
             LibService.GetInstance().SetDbConnectionString(Service.GetInstance().GetOpcDict()["DbConnectionString"]);
@@ -71,13 +74,17 @@ namespace _2048_Rbu
             OpcServer.Init(@"Data/Service.xlsx");
             OpcServer.GetInstance();
 
+            OpcServer.GetInstance().InitOpc(OpcServer.OpcList.Rbu, Service.GetInstance().GetOpcDict()["OpcServerAddress"]);
+            OpcServer.GetInstance().ConnectOpc(OpcServer.OpcList.Rbu);
+
             EventsBase.GetInstance().CreateControlEvents(OpcServer.OpcList.Rbu);
+
             #endregion
 
-            EventsBase.GetInstance().GetControlEvents(OpcServer.OpcList.Rbu).AddEvent("Программа управления открыта", SystemEventType.Message);
-            Title += Release.GetInstance().GetVersion() + " " + Release.GetInstance().GetCopyright();
-
+            Title = ServiceData.GetInstance().GetTitle() + " " + Release.GetInstance().GetReleaseTitle();
             Login();
+
+            EventsBase.GetInstance().GetControlEvents(OpcServer.OpcList.Rbu).AddEvent("Программа управления открыта", SystemEventType.Message);
 
             #region Масштаб экрана (comment)
 
@@ -123,137 +130,13 @@ namespace _2048_Rbu
                 _elScreen.Initialize(_logger);
                 ScreenGrid.Children.Add(_elScreen);
                 _elScreen.Visibility = Visibility.Visible;
-                CreateAutoEventAsync();
                 _elScreen.LoginClick += Login;
                 _elScreen.UserClick += User;
                 _isLoad = true;
-                EventsBase.GetInstance().GetControlEvents(OpcServer.OpcList.Rbu).AddEvent("Пользователь " + user.UserName + " вошел в программу", SystemEventType.Message);
             }
+            EventsBase.GetInstance().GetControlEvents(OpcServer.OpcList.Rbu).AddEvent("Пользователь " + user.UserName + " вошел в программу", SystemEventType.Message);
             _elScreen.ViewModelScreenRbu.GetUserPermit();
             this.Show();
-        }
-
-        private async void CreateAutoEventAsync()
-        {
-            await Task.Run(() =>
-            {
-                var events = EventsBase.GetInstance().GetControlEvents(OpcServer.OpcList.Rbu);
-                #region Alarms
-                events.AddAutoEvent("DB_Mechs.M_15.gb_AL_Feedback".ToNode(), SystemEventType.Alarm, "Насос M-15 - авария ОС", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.M_15.gb_AL_External".ToNode(), SystemEventType.Alarm, "Насос M-15 - внешняя авария", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.M_15.gb_AL_DKS".ToNode(), SystemEventType.Alarm, "Насос M-15 - авария ДКС", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.M_16.gb_AL_Feedback".ToNode(), SystemEventType.Alarm, "Насос M-16 - авария ОС", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.M_16.gb_AL_External".ToNode(), SystemEventType.Alarm, "Насос M-16 - внешняя авария", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.M_16.gb_AL_DKS".ToNode(), SystemEventType.Alarm, "Насос M-16 - авария ДКС", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.M_17.gb_AL_Feedback".ToNode(), SystemEventType.Alarm, "Насос M-17 - авария ОС", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.M_17.gb_AL_External".ToNode(), SystemEventType.Alarm, "Насос M-17 - внешняя авария", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.M_17.gb_AL_DKS".ToNode(), SystemEventType.Alarm, "Насос M-17 - авария ДКС", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.M_18.gb_AL_Feedback".ToNode(), SystemEventType.Alarm, "Бетоносмеситель M-18 - авария ОС", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.M_18.gb_AL_External".ToNode(), SystemEventType.Alarm, "Бетоносмеситель M-18 - внешняя авария", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.M_18.gb_AL_Oil".ToNode(), SystemEventType.Alarm, "Бетоносмеситель M-18 - авария системы смазки", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.M_9.gb_AL_Feedback".ToNode(), SystemEventType.Alarm, "Конвейер M-9 - авария ОС", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.M_9.gb_AL_External".ToNode(), SystemEventType.Alarm, "Конвейер M-9 - внешняя авария", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.M_9.gb_AL_DKS".ToNode(), SystemEventType.Alarm, "Конвейер M-9 - авария ДКС", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.M_1.gb_AL_Feedback".ToNode(), SystemEventType.Alarm, "Конвейер M-1 - авария ОС", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.M_1.gb_AL_External".ToNode(), SystemEventType.Alarm, "Конвейер M-1 - внешняя авария", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.M_1.gb_AL_DKS".ToNode(), SystemEventType.Alarm, "Конвейер M-1 - авария ДКС", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.M_11.gb_AL_Feedback".ToNode(), SystemEventType.Alarm, "Шнек M-11 - авария ОС", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.M_11.gb_AL_External".ToNode(), SystemEventType.Alarm, "Шнек M-11 - внешняя авария", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.M_11.gb_AL_DKS".ToNode(), SystemEventType.Alarm, "Шнек M-11 - авария ДКС", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.М_12.gb_AL_Feedback".ToNode(), SystemEventType.Alarm, "Шнек M-12 - авария ОС", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.М_12.gb_AL_External".ToNode(), SystemEventType.Alarm, "Шнек M-12 - внешняя авария", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.М_12.gb_AL_DKS".ToNode(), SystemEventType.Alarm, "Шнек M-12 - авария ДКС", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.M_13.gb_AL_Feedback".ToNode(), SystemEventType.Alarm, "Вибратор M-13 - авария ОС", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.M_13.gb_AL_External".ToNode(), SystemEventType.Alarm, "Вибратор M-13 - внешняя авария", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.M_13.gb_AL_DKS".ToNode(), SystemEventType.Alarm, "Вибратор M-13 - авария ДКС", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.M_14.gb_AL_Feedback".ToNode(), SystemEventType.Alarm, "Вибратор M-14 - авария ОС", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.M_14.gb_AL_External".ToNode(), SystemEventType.Alarm, "Вибратор M-14 - внешняя авария", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.M_14.gb_AL_DKS".ToNode(), SystemEventType.Alarm, "Вибратор M-14 - авария ДКС", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.M_10.gb_AL_Feedback".ToNode(), SystemEventType.Alarm, "Вибратор M-10 - авария ОС", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.M_10.gb_AL_External".ToNode(), SystemEventType.Alarm, "Вибратор M-10 - внешняя авария", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.M_10.gb_AL_DKS".ToNode(), SystemEventType.Alarm, "Вибратор M-10 - авария ДКС", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.M_2.gb_AL_Feedback".ToNode(), SystemEventType.Alarm, "Вибратор M-2 - авария ОС", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.M_2.gb_AL_External".ToNode(), SystemEventType.Alarm, "Вибратор M-2 - внешняя авария", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.M_2.gb_AL_DKS".ToNode(), SystemEventType.Alarm, "Вибратор M-2 - авария ДКС", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.M_3.gb_AL_Feedback".ToNode(), SystemEventType.Alarm, "Вибратор M-3 - авария ОС", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.M_3.gb_AL_External".ToNode(), SystemEventType.Alarm, "Вибратор M-3 - внешняя авария", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.M_3.gb_AL_DKS".ToNode(), SystemEventType.Alarm, "Вибратор M-3 - авария ДКС", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.M_4.gb_AL_Feedback".ToNode(), SystemEventType.Alarm, "Вибратор M-4 - авария ОС", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.M_4.gb_AL_External".ToNode(), SystemEventType.Alarm, "Вибратор M-4 - внешняя авария", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.M_4.gb_AL_DKS".ToNode(), SystemEventType.Alarm, "Вибратор M-4 - авария ДКС", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.M_5.gb_AL_Feedback".ToNode(), SystemEventType.Alarm, "Вибратор M-5 - авария ОС", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.M_5.gb_AL_External".ToNode(), SystemEventType.Alarm, "Вибратор M-5 - внешняя авария", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.M_5.gb_AL_DKS".ToNode(), SystemEventType.Alarm, "Вибратор M-5 - авария ДКС", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.M_6.gb_AL_Feedback".ToNode(), SystemEventType.Alarm, "Вибратор M-6 - авария ОС", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.M_6.gb_AL_External".ToNode(), SystemEventType.Alarm, "Вибратор M-6 - внешняя авария", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.M_6.gb_AL_DKS".ToNode(), SystemEventType.Alarm, "Вибратор M-6 - авария ДКС", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.M_7.gb_AL_Feedback".ToNode(), SystemEventType.Alarm, "Вибратор M-7 - авария ОС", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.M_7.gb_AL_External".ToNode(), SystemEventType.Alarm, "Вибратор M-7 - внешняя авария", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.M_7.gb_AL_DKS".ToNode(), SystemEventType.Alarm, "Вибратор M-7 - авария ДКС", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.V_1.gb_AL_Feedback_Open".ToNode(), SystemEventType.Alarm, "Задвижка V-1 - авария ОС-Open", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.V_1.gb_AL_Feedback_Close".ToNode(), SystemEventType.Alarm, "Задвижка V-1 - авария ОС-Close", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.V_1.gb_AL_BothSensor".ToNode(), SystemEventType.Alarm, "Задвижка V-1 - авария датчиков", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.V_1.gb_AL_External".ToNode(), SystemEventType.Alarm, "Задвижка V-1 - внешняя авария", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.V_2.gb_AL_Open".ToNode(), SystemEventType.Alarm, "Задвижка V-2 - авария открытия", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.V_2.gb_AL_Close".ToNode(), SystemEventType.Alarm, "Задвижка V-2 - авария закрытия", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.V_3.gb_AL_Open".ToNode(), SystemEventType.Alarm, "Задвижка V-3 - авария открытия", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.V_3.gb_AL_Close".ToNode(), SystemEventType.Alarm, "Задвижка V-3 - авария закрытия", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.V_4.gb_AL_Open".ToNode(), SystemEventType.Alarm, "Задвижка V-4 - авария открытия", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.V_4.gb_AL_Close".ToNode(), SystemEventType.Alarm, "Задвижка V-4 - авария закрытия", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.V_5.gb_AL_Open".ToNode(), SystemEventType.Alarm, "Задвижка V-5 - авария открытия", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.V_5.gb_AL_Close".ToNode(), SystemEventType.Alarm, "Задвижка V-5 - авария закрытия", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.V_6.gb_AL_Open".ToNode(), SystemEventType.Alarm, "Задвижка V-6 - авария открытия", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.V_6.gb_AL_Close".ToNode(), SystemEventType.Alarm, "Задвижка V-6 - авария закрытия", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.V_7.gb_AL_Open".ToNode(), SystemEventType.Alarm, "Задвижка V-7 - авария открытия", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.V_7.gb_AL_Close".ToNode(), SystemEventType.Alarm, "Задвижка V-7 - авария закрытия", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.V_9_1.gb_AL_Open".ToNode(), SystemEventType.Alarm, "Задвижка V-9-1 - авария открытия", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.V_9_1.gb_AL_Close".ToNode(), SystemEventType.Alarm, "Задвижка V-9-1 - авария закрытия", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.V_9_2.gb_AL_Open".ToNode(), SystemEventType.Alarm, "Задвижка V-9-2 - авария открытия", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.V_9_2.gb_AL_Close".ToNode(), SystemEventType.Alarm, "Задвижка V-9-2 - авария закрытия", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.V_10_1.gb_AL_Open".ToNode(), SystemEventType.Alarm, "Задвижка V-10-1 - авария открытия", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.V_10_1.gb_AL_Close".ToNode(), SystemEventType.Alarm, "Задвижка V-10-1 - авария закрытия", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.V_10_2.gb_AL_Open".ToNode(), SystemEventType.Alarm, "Задвижка V-10-2 - авария открытия", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.V_10_2.gb_AL_Close".ToNode(), SystemEventType.Alarm, "Задвижка V-10-2 - авария закрытия", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.V_11_1.gb_AL_Open".ToNode(), SystemEventType.Alarm, "Задвижка V-11-1 - авария открытия", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.V_11_1.gb_AL_Close".ToNode(), SystemEventType.Alarm, "Задвижка V-11-1 - авария закрытия", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.V_11_2.gb_AL_Open".ToNode(), SystemEventType.Alarm, "Задвижка V-11-2 - авария открытия", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.V_11_2.gb_AL_Close".ToNode(), SystemEventType.Alarm, "Задвижка V-11-2 - авария закрытия", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.V_12_1.gb_AL_Open".ToNode(), SystemEventType.Alarm, "Задвижка V-12-1 - авария открытия", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.V_12_1.gb_AL_Close".ToNode(), SystemEventType.Alarm, "Задвижка V-12-1 - авария закрытия", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.V_12_2.gb_AL_Open".ToNode(), SystemEventType.Alarm, "Задвижка V-12-2 - авария открытия", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.V_12_2.gb_AL_Close".ToNode(), SystemEventType.Alarm, "Задвижка V-12-2 - авария закрытия", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.M_19.gb_AL_Feedback".ToNode(), SystemEventType.Alarm, "Насос M-19 - Вода - авария ОС", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.M_19.gb_AL_External".ToNode(), SystemEventType.Alarm, "Насос M-19 - Вода - внешняя авария", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.M_19.gb_AL_DKS".ToNode(), SystemEventType.Alarm, "Насос M-19 - Вода - авария ДКС", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.Air_Cement1.gb_AL_Open".ToNode(), SystemEventType.Alarm, "Аэратор силоса цемента 1 - авария открытия", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.Air_Cement1.gb_AL_Close".ToNode(), SystemEventType.Alarm, "Аэратор силоса цемента 1 - авария закрытия", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.Air_Cement2.gb_AL_Open".ToNode(), SystemEventType.Alarm, "Аэратор силоса цемента 2 - авария открытия", ResponseType.Rising);
-                events.AddAutoEvent("DB_Mechs.Air_Cement2.gb_AL_Close".ToNode(), SystemEventType.Alarm, "Аэратор силоса цемента 2 - авария закрытия", ResponseType.Rising);
-                events.AddAutoEvent("Common_Bools.gb_AL_Hydro_Feedback".ToNode(), SystemEventType.Alarm, "Насос гидростанции -не сработал пускатель", ResponseType.Rising);
-                events.AddAutoEvent("Sensors_And_Outputs.DI_NotStop_BTN_PLC".ToNode(), SystemEventType.Alarm, "Нажата стоповая кнопка в шкафу управления контроллера", ResponseType.Faling);
-                events.AddAutoEvent("Sensors_And_Outputs.DI_NotStop_BTN_Inert".ToNode(), SystemEventType.Alarm, "Нажата стоповая кнопка в шкафу управления инертными фракциями", ResponseType.Faling);
-                events.AddAutoEvent("Sensors_And_Outputs.DI_NotStop_BTN_Doz".ToNode(), SystemEventType.Alarm, "Нажата стоповая кнопка в шкафу управления дозированием", ResponseType.Faling);
-                events.AddAutoEvent("Sensors_And_Outputs.DI_NotStop_BTN_Cem".ToNode(), SystemEventType.Alarm, "Нажата стоповая кнопка в шкафу управления цементом", ResponseType.Faling);
-                events.AddAutoEvent("Sensors_And_Outputs.DI_NotStop_BTN_Water".ToNode(), SystemEventType.Alarm, "Нажата стоповая кнопка в шкафу управления жидкими компонентами", ResponseType.Faling);
-                events.AddAutoEvent("Sensors_And_Outputs.DI_NotStop_BTN_BS".ToNode(), SystemEventType.Alarm, "Нажата стоповая кнопка в шкафу управления бетоносмесителем", ResponseType.Faling);
-                events.AddAutoEvent("Default.cmd_Stop".ToNode(), SystemEventType.Alarm, "Общий стоп", ResponseType.Rising);
-                events.AddAutoEvent("Default.gb_LinkERR_WeightCement".ToNode(), SystemEventType.Alarm, "Нет связи с весовым индикатором цемента", ResponseType.Rising);
-                events.AddAutoEvent("Default.gb_LinkERR_WeightWater".ToNode(), SystemEventType.Alarm, "Нет связи с весовым индикатором воды", ResponseType.Rising);
-                events.AddAutoEvent("Default.gb_LinkERR_WeightInert".ToNode(), SystemEventType.Alarm, "Нет связи с весовым индикатором инертных фракций", ResponseType.Rising);
-                events.AddAutoEvent("Default.gb_LinkERR_WeightAdditive".ToNode(), SystemEventType.Alarm, "Нет связи с весовым индикатором химических добавок", ResponseType.Rising);
-                #endregion
-
-                #region Warnings
-                events.AddAutoEvent("DB_Mechs.M_18.gb_Warning_Oil".ToNode(), SystemEventType.Warning, "Бетоносмеситель M-18 - нет давления в системе смазки", ResponseType.Rising);
-                events.AddAutoEvent("Sensors_And_Outputs.DI_Gates_M18_Closed".ToNode(), SystemEventType.Warning, "Крышка открыта", ResponseType.Faling);
-                events.AddAutoEvent("Sensors_And_Outputs.DI_M9_sw_AutomatMode".ToNode(), SystemEventType.Warning, "Конвейер M-9 - автоматический режим", ResponseType.Rising);
-                events.AddAutoEvent("Sensors_And_Outputs.DI_M18_sw_AutomatMode".ToNode(), SystemEventType.Warning, "Бетоносмеситель M-18 - автоматический режим", ResponseType.Rising);
-                events.AddAutoEvent("Sensors_And_Outputs.DI_M9_sw_AutomatMode".ToNode(), SystemEventType.Warning, "Конвейер M-9 - ручной режим", ResponseType.Faling);
-                events.AddAutoEvent("Sensors_And_Outputs.DI_M18_sw_AutomatMode".ToNode(), SystemEventType.Warning, "Бетоносмеситель M-18 - ручной режим", ResponseType.Faling);
-                events.AddAutoEvent("Common_Bools.gb_AL_Hydro_Pressure".ToNode(), SystemEventType.Warning, "Низкое давление в гидравлической магистрали", ResponseType.Rising);
-                events.AddAutoEvent("Default.gb_ArchiverERROR".ToNode(), SystemEventType.Warning, "Нет связи с программой архивации", ResponseType.Rising);
-                #endregion
-            });
         }
 
         private void CloseMainWindow()

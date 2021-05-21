@@ -52,6 +52,11 @@ namespace _2048_Rbu.Classes.ViewModel
         private void CreateSubscription()
         {
             _opc = OpcServer.GetInstance().GetOpc(_opcName);
+
+            var checkTimeItem = new OpcMonitoredItem(_opc.cl.GetNode("CheckLevel_Control_Cement" + _checkLevelNum), OpcAttribute.Value);
+            checkTimeItem.DataChangeReceived += HandleCheckTimeChanged;
+            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(checkTimeItem);
+
             var pauseTimeItem = new OpcMonitoredItem(_opc.cl.GetNode("CheckLevel_Pause_Cement" + _checkLevelNum), OpcAttribute.Value);
             pauseTimeItem.DataChangeReceived += HandlePauseTimeChanged;
             OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(pauseTimeItem);
@@ -61,6 +66,11 @@ namespace _2048_Rbu.Classes.ViewModel
             OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(delayTimeItem);
 
             OpcServer.GetInstance().GetSubscription(_opcName).ApplyChanges();
+        }
+
+        private void HandleCheckTimeChanged(object sender, OpcDataChangeReceivedEventArgs e)
+        {
+            CheckTime = int.Parse(e.Item.Value.ToString());
         }
 
         private void HandlePauseTimeChanged(object sender, OpcDataChangeReceivedEventArgs e)
@@ -81,6 +91,17 @@ namespace _2048_Rbu.Classes.ViewModel
             {
                 _nameLevel = value;
                 OnPropertyChanged(nameof(NameLevel));
+            }
+        }
+
+        private int _checkTime;
+        public int CheckTime
+        {
+            get { return _checkTime; }
+            set
+            {
+                _checkTime = value;
+                OnPropertyChanged(nameof(CheckTime));
             }
         }
 
@@ -118,6 +139,18 @@ namespace _2048_Rbu.Classes.ViewModel
             }
         }
 
+        private RelayCommand _setCheckTime;
+        public RelayCommand SetCheckTime
+        {
+            get
+            {
+                return _setCheckTime ??= new RelayCommand((o) =>
+                {
+                    Methods.SetParameter(_opcName, NameLevel + ". Длительность контроля, с", 0, 1000, "CheckLevel_Control_Cement" + _checkLevelNum, WindowSetParameter.ValueType.Int16, null, 0);
+                });
+            }
+        }
+
         private RelayCommand _setPauseTime;
         public RelayCommand SetPauseTime
         {
@@ -130,12 +163,12 @@ namespace _2048_Rbu.Classes.ViewModel
             }
         }
 
-        private RelayCommand _setDelyaTime;
-        public RelayCommand SetDelyaTime
+        private RelayCommand _setDelayTime;
+        public RelayCommand SetDelayTime
         {
             get
             {
-                return _setDelyaTime ??= new RelayCommand((o) =>
+                return _setDelayTime ??= new RelayCommand((o) =>
                 {
                     Methods.SetParameter(_opcName, NameLevel + ". Задержка применения уровня, с", 0, 1000, "CheckLevel_Delay_Cement" + _checkLevelNum, WindowSetParameter.ValueType.Int16, null, 0);
                 });

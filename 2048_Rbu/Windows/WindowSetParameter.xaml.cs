@@ -208,7 +208,7 @@ namespace _2048_Rbu.Windows
             }
         }
 
-        public WindowSetParameter(OpcServer.OpcList opcName, string parameterName, double minValue, double maxValue, string opcTag, ValueType valueType, Popup popup = null, int digit = 0, double? firstPrompt = null, double? secondPrompt = null, double? thirdPrompt = null, double? fourthPrompt = null, double? stepFeed = null)
+        public WindowSetParameter(OpcServer.OpcList opcName, string parameterName, double minValue, double maxValue, string opcTag, ValueType valueType, Popup popup = null, int digit = 1, double? firstPrompt = null, double? secondPrompt = null, double? thirdPrompt = null, double? fourthPrompt = null, double? stepFeed = null)
         {
             InitializeComponent();
             KeyDown += OnKeyDown;
@@ -217,6 +217,10 @@ namespace _2048_Rbu.Windows
 
             _opcName = opcName;
             _popup = popup;
+            if (maxValue < minValue)
+            {
+                maxValue = minValue;
+            }
             MinValue = minValue;
             MaxValue = maxValue;
             _opcTag = opcTag;
@@ -267,10 +271,10 @@ namespace _2048_Rbu.Windows
 
             ValueStringFormat = $"F{_digit}";
 
-            TxtValue.Focus();
+            SelText();
         }
 
-        void Save()
+        private void Save()
         {
             try
             {
@@ -301,7 +305,7 @@ namespace _2048_Rbu.Windows
                                 _opc.cl.WriteUInt32(_opcTag, Convert.ToUInt32(_finishValue) * 1000, out _err);
                                 break;
                         }
-                        EventsBase.GetInstance().GetControlEvents(OpcServer.OpcList.Rbu).AddEvent("Параметр \"" + ParameterName + "\" изменен с " + _startValue+" на " + _finishValue.ToString($"F{_digit}"), SystemEventType.UserDoing);
+                        EventsBase.GetInstance().GetControlEvents(OpcServer.OpcList.Rbu).AddEvent("Параметр \"" + ParameterName + "\" изменен с " + _startValue + " на " + _finishValue.ToString($"F{_digit}"), SystemEventType.UserDoing);
                         if (_err)
                             MessageBox.Show("Возможно запись не прошла.\nПроверьте OPC-сервер или соответствующий тег", "Предупреждение");
                         Close();
@@ -318,13 +322,20 @@ namespace _2048_Rbu.Windows
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Запись не прошла. Повторите ввод\n"+ ex.Message, "Ошибка");
+                MessageBox.Show("Запись не прошла. Повторите ввод\n" + ex.Message, "Ошибка");
             }
         }
 
         private string GetPrompt(double value)
         {
-            return value >= MinValue && value <= MaxValue ? value.ToString($"F{_digit}") : value < MinValue ? MinValue.ToString($"F{_digit}") : MaxValue.ToString($"F{_digit}");
+            StepFeed = value >= MinValue && value <= MaxValue ? value : value < MinValue ? MinValue : MaxValue;
+            return StepFeed.ToString($"F{_digit}");
+        }
+
+        public void SelText()
+        {
+            TxtValue.Focus();
+            TxtValue.SelectAll();
         }
 
         private void BtnSub_OnClick(object sender, RoutedEventArgs e)
@@ -338,7 +349,7 @@ namespace _2048_Rbu.Windows
             else
                 MessageBox.Show("В строке не содержится число", "Ошибка!");
 
-            TxtValue.Focus();
+            SelText();
         }
 
         private void BtnAdd_OnClick(object sender, RoutedEventArgs e)
@@ -350,32 +361,31 @@ namespace _2048_Rbu.Windows
             else
                 MessageBox.Show("В строке не содержится число", "Ошибка!");
 
-            TxtValue.Focus();
+            SelText();
         }
 
         private void BtnFirst_OnClick(object sender, RoutedEventArgs e)
         {
             ParameterValue = GetPrompt(FirstPrompt);
-            TxtValue.SelectAll();
-            TxtValue.Focus();
+            SelText();
         }
 
         private void BtnSecond_OnClick(object sender, RoutedEventArgs e)
         {
             ParameterValue = GetPrompt(SecondPrompt);
-            TxtValue.Focus();
+            SelText();
         }
 
         private void BtnThird_OnClick(object sender, RoutedEventArgs e)
         {
-            ParameterValue = GetPrompt(ThirdPrompt); 
-            TxtValue.Focus();
+            ParameterValue = GetPrompt(ThirdPrompt);
+            SelText();
         }
 
         private void BtnFourth_OnClick(object sender, RoutedEventArgs e)
         {
-            ParameterValue = GetPrompt(FourthPrompt); 
-            TxtValue.Focus();
+            ParameterValue = GetPrompt(FourthPrompt);
+            SelText();
         }
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)

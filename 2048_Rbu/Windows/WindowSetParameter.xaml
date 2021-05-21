@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         xml:lang="ru-RU"
         d:DataContext="{d:DesignInstance Type={x:Type local:WindowSetParameter}, IsDesignTimeCreatable=False}"
-        Title="WindowSetParameter" SizeToContent="WidthAndHeight" MinWidth="300" MaxWidth="400" WindowStyle="None" WindowStartupLocation="CenterScreen" Background="Gray" Topmost="True" ResizeMode="NoResize" >
+        Title="WindowSetParameter" SizeToContent="WidthAndHeight" MinWidth="300" MaxWidth="400" WindowStyle="None" WindowStartupLocation="CenterScreen" Background="Gray" Topmost="True" ResizeMode="NoResize">
     <Border BorderThickness="3" BorderBrush="Black">
         <StackPanel Orientation="Vertical">
             <TextBlock Name="TxtName" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="10,5" FontSize="16" TextAlignment="Center" TextWrapping="Wrap" Text="{Binding ParameterName}"/>

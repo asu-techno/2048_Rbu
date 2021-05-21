@@ -16,7 +16,6 @@
                 <TextBlock Name="TxtText" FontSize="16" Margin="-4,-4"></TextBlock>
             </Label.Content>
         </Label>
-        <Rectangle Name="RectObject" Fill="Transparent" StrokeThickness="0.5" Margin="-3" Stroke="Black" Opacity="0" MouseLeftButtonUp="ElValueBox_OnMouseLeftButtonDown" ToolTip="Контроль уровня"/>
         <Label Background="Red" BorderThickness="1" BorderBrush="Black" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="Нет связи" Padding="0">
             <Label.Style>
                 <Style TargetType="{x:Type Label}">
@@ -29,5 +28,6 @@
                 </Style>
             </Label.Style>
         </Label>
+        <Rectangle Name="RectObject" Fill="Transparent" StrokeThickness="0.5" Margin="-3" Stroke="Black" Opacity="0" MouseLeftButtonUp="ElValueBox_OnMouseLeftButtonDown" MouseRightButtonDown="RectObject_OnMouseRightButtonDown" />
     </Grid>
 </UserControl>

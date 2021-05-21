@@ -549,6 +549,18 @@ namespace _2048_Rbu.Elements.Mechs
             Methods.SetParameter(LblParam, btn, _opcName, "Частота двигателя " + _nameObject + ", Гц", 0, 50, FreqPcay, WindowSetParameter.ValueType.Real, PopupObject, 1);
         }
 
+        private void ValveGrid_OnPreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            object btn = e.Source;
+            Methods.ButtonClick($"{Prefix}.Start_ByOperator", true, TxtPopupName.Text + ". Старт");
+        }
+
+        private void ValveGrid_OnPreviewMouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            object btn = e.Source;
+            Methods.ButtonClick($"{Prefix}.Start_ByOperator", false, TxtPopupName.Text + ". Стоп");
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]

@@ -4,7 +4,7 @@
   <Dictionary Ref="1" type="Dictionary" isKey="true">
     <BusinessObjects isList="true" count="0" />
     <Databases isList="true" count="0" />
-    <DataSources isList="true" count="3">
+    <DataSources isList="true" count="5">
       <Batches Ref="2" type="Stimulsoft.Report.Dictionary.StiBusinessObjectSource" isKey="true">
         <Alias>Batches</Alias>
         <Columns isList="true" count="6">
@@ -59,9 +59,45 @@
         <Name>Batches_MaterialsUnloadReports_MaterialsDosingReports</Name>
         <NameInSource>Batches_MaterialsUnloadReports_MaterialsDosingReports</NameInSource>
       </Batches_MaterialsUnloadReports_MaterialsDosingReports>
+      <MaterialReports Ref="5" type="DataTableSource" isKey="true">
+        <Alias>MaterialReports</Alias>
+        <Columns isList="true" count="7">
+          <value>MaterialName,System.String</value>
+          <value>Storage,System.String</value>
+          <value>StorageId,System.Int32</value>
+          <value>SetVolume,System.Decimal</value>
+          <value>Volume,System.Decimal</value>
+          <value>_ID,System.Int32</value>
+          <value>_Current,System.Object</value>
+        </Columns>
+        <Dictionary isRef="1" />
+        <Key>6717a1413ef34a3d909acc3094a70900</Key>
+        <Name>MaterialReports</Name>
+        <NameInSource>MaterialReports</NameInSource>
+      </MaterialReports>
+      <TaskReports Ref="6" type="Stimulsoft.Report.Dictionary.StiBusinessObjectSource" isKey="true">
+        <Alias>TaskReports</Alias>
+        <Columns isList="true" count="11">
+          <value>TaskId,System.Int32</value>
+          <value>Customer,System.String</value>
+          <value>Recipe,System.String</value>
+          <value>RecipeGroup,System.String</value>
+          <value>StartTime,System.DateTime</value>
+          <value>FinishTime,System.DateTime</value>
+          <value>Volume,System.Decimal</value>
+          <value>BatchCount,System.Decimal</value>
+          <value>BatchVolume,System.Decimal</value>
+          <value>_ID,System.Int32</value>
+          <value>_Current,System.Object</value>
+        </Columns>
+        <Dictionary isRef="1" />
+        <Key>e4928cad094041bb8d3c7400d46a3e04</Key>
+        <Name>TaskReports</Name>
+        <NameInSource>TaskReports</NameInSource>
+      </TaskReports>
     </DataSources>
     <Relations isList="true" count="2">
-      <Batches Ref="5" type="DataRelation" isKey="true">
+      <Batches Ref="7" type="DataRelation" isKey="true">
         <Alias>Batches</Alias>
         <ChildColumns isList="true" count="1">
           <value>_parentID</value>
@@ -75,7 +111,7 @@
         </ParentColumns>
         <ParentSource isRef="2" />
       </Batches>
-      <Batches_MaterialsUnloadReports Ref="6" type="DataRelation" isKey="true">
+      <Batches_MaterialsUnloadReports Ref="8" type="DataRelation" isKey="true">
         <Alias>Batches_MaterialsUnloadReports</Alias>
         <ChildColumns isList="true" count="1">
           <value>_parentID</value>
@@ -109,15 +145,15 @@
   <Key>781d4160daaa4ed2aa3c2d839fc152c3</Key>
   <MetaTags isList="true" count="0" />
   <Pages isList="true" count="1">
-    <Page1 Ref="7" type="Page" isKey="true">
+    <Page1 Ref="9" type="Page" isKey="true">
       <Border>None;Black;2;Solid;False;4;Black</Border>
       <Brush>Transparent</Brush>
       <Components isList="true" count="6">
-        <ReportTitleBand1 Ref="8" type="ReportTitleBand" isKey="true">
+        <ReportTitleBand1 Ref="10" type="ReportTitleBand" isKey="true">
           <Brush>Transparent</Brush>
           <ClientRectangle>0,0.4,19,6.4</ClientRectangle>
           <Components isList="true" count="16">
-            <Text1 Ref="9" type="Text" isKey="true">
+            <Text1 Ref="11" type="Text" isKey="true">
               <Brush>[255:192:0]</Brush>
               <ClientRectangle>0,0,10.6,2</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -127,14 +163,14 @@
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text1</Name>
-              <Page isRef="7" />
-              <Parent isRef="8" />
+              <Page isRef="9" />
+              <Parent isRef="10" />
               <Text>Отчет по заданию №{TaskId}</Text>
               <TextBrush>[31:73:125]</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text1>
-            <Text8 Ref="10" type="Text" isKey="true">
+            <Text8 Ref="12" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>0,4,3.6,0.8</ClientRectangle>
               <ComponentStyle>Text</ComponentStyle>
@@ -144,14 +180,14 @@
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text8</Name>
-              <Page isRef="7" />
-              <Parent isRef="8" />
+              <Page isRef="9" />
+              <Parent isRef="10" />
               <Text>Кол-во замесов:</Text>
               <TextBrush>[31:73:125]</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text8>
-            <Text10 Ref="11" type="Text" isKey="true">
+            <Text10 Ref="13" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>0,4.8,3.6,0.8</ClientRectangle>
               <ComponentStyle>Text</ComponentStyle>
@@ -161,14 +197,14 @@
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text10</Name>
-              <Page isRef="7" />
-              <Parent isRef="8" />
+              <Page isRef="9" />
+              <Parent isRef="10" />
               <Text>Объем замеса, м3:</Text>
               <TextBrush>[31:73:125]</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text10>
-            <Text12 Ref="12" type="Text" isKey="true">
+            <Text12 Ref="14" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>14.2,4.8,4.8,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -177,14 +213,14 @@
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text12</Name>
-              <Page isRef="7" />
-              <Parent isRef="8" />
+              <Page isRef="9" />
+              <Parent isRef="10" />
               <Text>{string.Format("{0:D2}:{1:D2}:{2:D2}", DateDiff(FinishTime, StartTime).Hours, DateDiff(FinishTime, StartTime).Minutes, DateDiff(FinishTime, StartTime).Seconds)}</Text>
               <TextBrush>[31:73:125]</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text12>
-            <Text6 Ref="13" type="Text" isKey="true">
+            <Text6 Ref="15" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>1,2.4,2.6,0.8</ClientRectangle>
               <ComponentStyle>Text</ComponentStyle>
@@ -194,14 +230,14 @@
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text6</Name>
-              <Page isRef="7" />
-              <Parent isRef="8" />
+              <Page isRef="9" />
+              <Parent isRef="10" />
               <Text>Заказчик:</Text>
               <TextBrush>[31:73:125]</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text6>
-            <Text44 Ref="14" type="Text" isKey="true">
+            <Text44 Ref="16" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>9.4,4.8,4.8,0.8</ClientRectangle>
               <ComponentStyle>Text</ComponentStyle>
@@ -212,14 +248,14 @@
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text44</Name>
-              <Page isRef="7" />
-              <Parent isRef="8" />
+              <Page isRef="9" />
+              <Parent isRef="10" />
               <Text>Длительность:</Text>
               <TextBrush>[31:73:125]</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text44>
-            <Text45 Ref="15" type="Text" isKey="true">
+            <Text45 Ref="17" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>14.2,3.2,4.8,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -229,14 +265,14 @@
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text45</Name>
-              <Page isRef="7" />
-              <Parent isRef="8" />
+              <Page isRef="9" />
+              <Parent isRef="10" />
               <Text>{StartTime}</Text>
               <TextBrush>[31:73:125]</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text45>
-            <Text46 Ref="16" type="Text" isKey="true">
+            <Text46 Ref="18" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>10,3.2,4.2,0.8</ClientRectangle>
               <ComponentStyle>Text</ComponentStyle>
@@ -247,14 +283,14 @@
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text46</Name>
-              <Page isRef="7" />
-              <Parent isRef="8" />
+              <Page isRef="9" />
+              <Parent isRef="10" />
               <Text>Начало выполнения:</Text>
               <TextBrush>[31:73:125]</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text46>
-            <Text47 Ref="17" type="Text" isKey="true">
+            <Text47 Ref="19" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>9.4,4,4.8,0.8</ClientRectangle>
               <ComponentStyle>Text</ComponentStyle>
@@ -265,14 +301,14 @@
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text47</Name>
-              <Page isRef="7" />
-              <Parent isRef="8" />
+              <Page isRef="9" />
+              <Parent isRef="10" />
               <Text>Окончание выполнения:</Text>
               <TextBrush>[31:73:125]</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text47>
-            <Text48 Ref="18" type="Text" isKey="true">
+            <Text48 Ref="20" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>14.2,4,4.8,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -282,14 +318,14 @@
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text48</Name>
-              <Page isRef="7" />
-              <Parent isRef="8" />
+              <Page isRef="9" />
+              <Parent isRef="10" />
               <Text>{FinishTime}</Text>
               <TextBrush>[31:73:125]</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text48>
-            <Text3 Ref="19" type="Text" isKey="true">
+            <Text3 Ref="21" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>3.6,2.4,4.8,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -299,14 +335,14 @@
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text3</Name>
-              <Page isRef="7" />
-              <Parent isRef="8" />
+              <Page isRef="9" />
+              <Parent isRef="10" />
               <Text>{Customer}</Text>
               <TextBrush>[31:73:125]</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text3>
-            <Text4 Ref="20" type="Text" isKey="true">
+            <Text4 Ref="22" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>3.6,3.2,4.8,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -316,14 +352,14 @@
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text4</Name>
-              <Page isRef="7" />
-              <Parent isRef="8" />
+              <Page isRef="9" />
+              <Parent isRef="10" />
               <Text>{BatchVolume}</Text>
               <TextBrush>[31:73:125]</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text4>
-            <Text9 Ref="21" type="Text" isKey="true">
+            <Text9 Ref="23" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>0,3.2,3.6,0.8</ClientRectangle>
               <ComponentStyle>Text</ComponentStyle>
@@ -334,14 +370,14 @@
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text9</Name>
-              <Page isRef="7" />
-              <Parent isRef="8" />
+              <Page isRef="9" />
+              <Parent isRef="10" />
               <Text>Объем заказа, м3:</Text>
               <TextBrush>[31:73:125]</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text9>
-            <Text52 Ref="22" type="Text" isKey="true">
+            <Text52 Ref="24" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>3.6,4.8,4.8,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -351,14 +387,14 @@
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text52</Name>
-              <Page isRef="7" />
-              <Parent isRef="8" />
+              <Page isRef="9" />
+              <Parent isRef="10" />
               <Text>{Volume}</Text>
               <TextBrush>[31:73:125]</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text52>
-            <Text53 Ref="23" type="Text" isKey="true">
+            <Text53 Ref="25" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>3.6,4,4.8,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -368,18 +404,18 @@
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text53</Name>
-              <Page isRef="7" />
-              <Parent isRef="8" />
+              <Page isRef="9" />
+              <Parent isRef="10" />
               <Text>{BatchesCount}</Text>
               <TextBrush>[31:73:125]</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text53>
-            <Panel3 Ref="24" type="Panel" isKey="true">
+            <Panel3 Ref="26" type="Panel" isKey="true">
               <Brush>[242:242:242]</Brush>
               <ClientRectangle>10.6,0,8.4,2</ClientRectangle>
               <Components isList="true" count="4">
-                <Text43 Ref="25" type="Text" isKey="true">
+                <Text43 Ref="27" type="Text" isKey="true">
                   <Brush>Transparent</Brush>
                   <ClientRectangle>3.6,1,4.8,0.8</ClientRectangle>
                   <Conditions isList="true" count="0" />
@@ -389,14 +425,14 @@
                   <HorAlignment>Center</HorAlignment>
                   <Margins>0,0,0,0</Margins>
                   <Name>Text43</Name>
-                  <Page isRef="7" />
-                  <Parent isRef="24" />
+                  <Page isRef="9" />
+                  <Parent isRef="26" />
                   <Text>{RecipeName}</Text>
                   <TextBrush>[31:73:125]</TextBrush>
                   <Type>Expression</Type>
                   <VertAlignment>Center</VertAlignment>
                 </Text43>
-                <Text54 Ref="26" type="Text" isKey="true">
+                <Text54 Ref="28" type="Text" isKey="true">
                   <Brush>Transparent</Brush>
                   <ClientRectangle>3.6,0.2,4.8,0.8</ClientRectangle>
                   <Conditions isList="true" count="0" />
@@ -406,14 +442,14 @@
                   <HorAlignment>Center</HorAlignment>
                   <Margins>0,0,0,0</Margins>
                   <Name>Text54</Name>
-                  <Page isRef="7" />
-                  <Parent isRef="24" />
+                  <Page isRef="9" />
+                  <Parent isRef="26" />
                   <Text>{RecipeGroup}</Text>
                   <TextBrush>[31:73:125]</TextBrush>
                   <Type>Expression</Type>
                   <VertAlignment>Center</VertAlignment>
                 </Text54>
-                <Text2 Ref="27" type="Text" isKey="true">
+                <Text2 Ref="29" type="Text" isKey="true">
                   <Brush>Transparent</Brush>
                   <ClientRectangle>0,1,3.6,0.8</ClientRectangle>
                   <ComponentStyle>Text</ComponentStyle>
@@ -423,14 +459,14 @@
                   <HorAlignment>Right</HorAlignment>
                   <Margins>0,0,0,0</Margins>
                   <Name>Text2</Name>
-                  <Page isRef="7" />
-                  <Parent isRef="24" />
+                  <Page isRef="9" />
+                  <Parent isRef="26" />
                   <Text>Название рецепта:</Text>
                   <TextBrush>[31:73:125]</TextBrush>
                   <Type>Expression</Type>
                   <VertAlignment>Center</VertAlignment>
                 </Text2>
-                <Text5 Ref="28" type="Text" isKey="true">
+                <Text5 Ref="30" type="Text" isKey="true">
                   <Brush>Transparent</Brush>
                   <ClientRectangle>0,0.2,3.6,0.8</ClientRectangle>
                   <ComponentStyle>Text</ComponentStyle>
@@ -440,8 +476,8 @@
                   <HorAlignment>Right</HorAlignment>
                   <Margins>0,0,0,0</Margins>
                   <Name>Text5</Name>
-                  <Page isRef="7" />
-                  <Parent isRef="24" />
+                  <Page isRef="9" />
+                  <Parent isRef="26" />
                   <Text>Группа рецептов:</Text>
                   <TextBrush>[31:73:125]</TextBrush>
                   <Type>Expression</Type>
@@ -451,23 +487,23 @@
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Name>Panel3</Name>
-              <Page isRef="7" />
-              <Parent isRef="8" />
+              <Page isRef="9" />
+              <Parent isRef="10" />
             </Panel3>
           </Components>
           <Conditions isList="true" count="0" />
           <Expressions isList="true" count="0" />
           <Name>ReportTitleBand1</Name>
-          <Page isRef="7" />
-          <Parent isRef="7" />
+          <Page isRef="9" />
+          <Parent isRef="9" />
         </ReportTitleBand1>
-        <DataBand1 Ref="29" type="DataBand" isKey="true">
+        <DataBand1 Ref="31" type="DataBand" isKey="true">
           <Border>All;[79:129:189];2;Solid;False;4;Black;True</Border>
           <Brush>Transparent</Brush>
           <BusinessObjectGuid isNull="true" />
           <ClientRectangle>0,7.6,19,2.4</ClientRectangle>
           <Components isList="true" count="7">
-            <Text13 Ref="30" type="Text" isKey="true">
+            <Text13 Ref="32" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>7.8,1.6,6.4,0.8</ClientRectangle>
               <ComponentStyle>Text</ComponentStyle>
@@ -478,14 +514,14 @@
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text13</Name>
-              <Page isRef="7" />
-              <Parent isRef="29" />
+              <Page isRef="9" />
+              <Parent isRef="31" />
               <Text>Длительность:</Text>
               <TextBrush>[31:73:125]</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text13>
-            <Text15 Ref="31" type="Text" isKey="true">
+            <Text15 Ref="33" type="Text" isKey="true">
               <Border>Right;[79:129:189];2;Solid;False;4;[79:129:189]</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>0,0,6.2,2.4</ClientRectangle>
@@ -496,14 +532,14 @@
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text15</Name>
-              <Page isRef="7" />
-              <Parent isRef="29" />
+              <Page isRef="9" />
+              <Parent isRef="31" />
               <Text>Замес №{Line}</Text>
               <TextBrush>[31:73:125]</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text15>
-            <Text49 Ref="32" type="Text" isKey="true">
+            <Text49 Ref="34" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>14.2,0.8,4.8,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -513,14 +549,14 @@
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text49</Name>
-              <Page isRef="7" />
-              <Parent isRef="29" />
+              <Page isRef="9" />
+              <Parent isRef="31" />
               <Text>{Batches.FinishTime}</Text>
               <TextBrush>[31:73:125]</TextBrush>
               <Type>DataColumn</Type>
               <VertAlignment>Center</VertAlignment>
             </Text49>
-            <Text11 Ref="33" type="Text" isKey="true">
+            <Text11 Ref="35" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>14.2,0,4.8,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -529,14 +565,14 @@
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text11</Name>
-              <Page isRef="7" />
-              <Parent isRef="29" />
+              <Page isRef="9" />
+              <Parent isRef="31" />
               <Text>{Batches.StartTime}</Text>
               <TextBrush>[31:73:125]</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text11>
-            <Text50 Ref="34" type="Text" isKey="true">
+            <Text50 Ref="36" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>7.8,0,6.4,0.8</ClientRectangle>
               <ComponentStyle>Text</ComponentStyle>
@@ -547,14 +583,14 @@
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text50</Name>
-              <Page isRef="7" />
-              <Parent isRef="29" />
+              <Page isRef="9" />
+              <Parent isRef="31" />
               <Text>Начало выполнения:</Text>
               <TextBrush>[31:73:125]</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text50>
-            <Text51 Ref="35" type="Text" isKey="true">
+            <Text51 Ref="37" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>7.8,0.8,6.4,0.8</ClientRectangle>
               <ComponentStyle>Text</ComponentStyle>
@@ -565,14 +601,14 @@
               <HorAlignment>Right</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text51</Name>
-              <Page isRef="7" />
-              <Parent isRef="29" />
+              <Page isRef="9" />
+              <Parent isRef="31" />
               <Text>Окончание выполнения:</Text>
               <TextBrush>[31:73:125]</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text51>
-            <Text14 Ref="36" type="Text" isKey="true">
+            <Text14 Ref="38" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>14.2,1.6,4.8,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -582,8 +618,8 @@
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text14</Name>
-              <Page isRef="7" />
-              <Parent isRef="29" />
+              <Page isRef="9" />
+              <Parent isRef="31" />
               <Text>{string.Format("{0:D2}:{1:D2}:{2:D2}", DateDiff(Batches.FinishTime, Batches.StartTime).Hours, DateDiff(Batches.FinishTime, Batches.StartTime).Minutes, DateDiff(Batches.FinishTime, Batches.StartTime).Seconds)}</Text>
               <TextBrush>[31:73:125]</TextBrush>
               <Type>Expression</Type>
@@ -598,17 +634,17 @@
           <KeepChildTogether>True</KeepChildTogether>
           <KeepDetails>KeepDetailsTogether</KeepDetails>
           <Name>DataBand1</Name>
-          <Page isRef="7" />
-          <Parent isRef="7" />
+          <Page isRef="9" />
+          <Parent isRef="9" />
           <PrintIfDetailEmpty>True</PrintIfDetailEmpty>
           <Sort isList="true" count="0" />
         </DataBand1>
-        <HeaderBand1 Ref="37" type="HeaderBand" isKey="true">
+        <HeaderBand1 Ref="39" type="HeaderBand" isKey="true">
           <Border>Left, Right;[79:129:189];2;Solid;False;4;Black;True</Border>
           <Brush>Transparent</Brush>
           <ClientRectangle>0,10.8,19,1.6</ClientRectangle>
           <Components isList="true" count="15">
-            <Text16 Ref="38" type="Text" isKey="true">
+            <Text16 Ref="40" type="Text" isKey="true">
               <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
               <Brush>[141:179:226]</Brush>
               <ClientRectangle>13.4,0.8,1.4,0.8</ClientRectangle>
@@ -619,14 +655,14 @@
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text16</Name>
-              <Page isRef="7" />
-              <Parent isRef="37" />
+              <Page isRef="9" />
+              <Parent isRef="39" />
               <Text>Нач. вес</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text16>
-            <Text17 Ref="39" type="Text" isKey="true">
+            <Text17 Ref="41" type="Text" isKey="true">
               <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
               <Brush>[141:179:226]</Brush>
               <ClientRectangle>14.8,0.8,1.4,0.8</ClientRectangle>
@@ -638,14 +674,14 @@
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text17</Name>
-              <Page isRef="7" />
-              <Parent isRef="37" />
+              <Page isRef="9" />
+              <Parent isRef="39" />
               <Text>Кон. вес</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text17>
-            <Text18 Ref="40" type="Text" isKey="true">
+            <Text18 Ref="42" type="Text" isKey="true">
               <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
               <Brush>[141:179:226]</Brush>
               <ClientRectangle>13.4,0,5.6,0.8</ClientRectangle>
@@ -657,14 +693,14 @@
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text18</Name>
-              <Page isRef="7" />
-              <Parent isRef="37" />
+              <Page isRef="9" />
+              <Parent isRef="39" />
               <Text>Выгрузка</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text18>
-            <Text19 Ref="41" type="Text" isKey="true">
+            <Text19 Ref="43" type="Text" isKey="true">
               <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
               <Brush>[141:179:226]</Brush>
               <ClientRectangle>16.2,0.8,1.4,0.8</ClientRectangle>
@@ -676,14 +712,14 @@
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text19</Name>
-              <Page isRef="7" />
-              <Parent isRef="37" />
+              <Page isRef="9" />
+              <Parent isRef="39" />
               <Text>Выгружено</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text19>
-            <Text20 Ref="42" type="Text" isKey="true">
+            <Text20 Ref="44" type="Text" isKey="true">
               <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
               <Brush>[141:179:226]</Brush>
               <ClientRectangle>17.6,0.8,1.4,0.8</ClientRectangle>
@@ -695,15 +731,15 @@
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text20</Name>
-              <Page isRef="7" />
-              <Parent isRef="37" />
+              <Page isRef="9" />
+              <Parent isRef="39" />
               <Text>Длит.
 выгрузки</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text20>
-            <Text31 Ref="43" type="Text" isKey="true">
+            <Text31 Ref="45" type="Text" isKey="true">
               <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
               <Brush>[141:179:226]</Brush>
               <ClientRectangle>2.6,0,10.8,0.8</ClientRectangle>
@@ -715,14 +751,14 @@
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text31</Name>
-              <Page isRef="7" />
-              <Parent isRef="37" />
+              <Page isRef="9" />
+              <Parent isRef="39" />
               <Text>Дозирование</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text31>
-            <Text30 Ref="44" type="Text" isKey="true">
+            <Text30 Ref="46" type="Text" isKey="true">
               <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
               <Brush>[141:179:226]</Brush>
               <ClientRectangle>12,0.8,1.4,0.8</ClientRectangle>
@@ -734,15 +770,15 @@
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text30</Name>
-              <Page isRef="7" />
-              <Parent isRef="37" />
+              <Page isRef="9" />
+              <Parent isRef="39" />
               <Text>Длит.
 дозир.</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text30>
-            <Text27 Ref="45" type="Text" isKey="true">
+            <Text27 Ref="47" type="Text" isKey="true">
               <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
               <Brush>[141:179:226]</Brush>
               <ClientRectangle>10.6,0.8,1.4,0.8</ClientRectangle>
@@ -754,15 +790,15 @@
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text27</Name>
-              <Page isRef="7" />
-              <Parent isRef="37" />
+              <Page isRef="9" />
+              <Parent isRef="39" />
               <Text>Погреш-
 ность</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text27>
-            <Text29 Ref="46" type="Text" isKey="true">
+            <Text29 Ref="48" type="Text" isKey="true">
               <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
               <Brush>[141:179:226]</Brush>
               <ClientRectangle>9.2,0.8,1.4,0.8</ClientRectangle>
@@ -774,15 +810,15 @@
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text29</Name>
-              <Page isRef="7" />
-              <Parent isRef="37" />
+              <Page isRef="9" />
+              <Parent isRef="39" />
               <Text>Сдози-
 ровано</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text29>
-            <Text26 Ref="47" type="Text" isKey="true">
+            <Text26 Ref="49" type="Text" isKey="true">
               <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
               <Brush>[141:179:226]</Brush>
               <ClientRectangle>7.8,0.8,1.4,0.8</ClientRectangle>
@@ -794,14 +830,14 @@
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text26</Name>
-              <Page isRef="7" />
-              <Parent isRef="37" />
+              <Page isRef="9" />
+              <Parent isRef="39" />
               <Text>Кон. вес</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text26>
-            <Text34 Ref="48" type="Text" isKey="true">
+            <Text34 Ref="50" type="Text" isKey="true">
               <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
               <Brush>[141:179:226]</Brush>
               <ClientRectangle>6.4,0.8,1.4,0.8</ClientRectangle>
@@ -813,14 +849,14 @@
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text34</Name>
-              <Page isRef="7" />
-              <Parent isRef="37" />
+              <Page isRef="9" />
+              <Parent isRef="39" />
               <Text>Нач. вес</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text34>
-            <Text35 Ref="49" type="Text" isKey="true">
+            <Text35 Ref="51" type="Text" isKey="true">
               <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
               <Brush>[141:179:226]</Brush>
               <ClientRectangle>5,0.8,1.4,0.8</ClientRectangle>
@@ -832,14 +868,14 @@
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text35</Name>
-              <Page isRef="7" />
-              <Parent isRef="37" />
+              <Page isRef="9" />
+              <Parent isRef="39" />
               <Text>Задано</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text35>
-            <Text39 Ref="50" type="Text" isKey="true">
+            <Text39 Ref="52" type="Text" isKey="true">
               <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
               <Brush>[141:179:226]</Brush>
               <ClientRectangle>0,0.8,2.6,0.8</ClientRectangle>
@@ -851,14 +887,14 @@
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text39</Name>
-              <Page isRef="7" />
-              <Parent isRef="37" />
+              <Page isRef="9" />
+              <Parent isRef="39" />
               <Text>Дозатор</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text39>
-            <Text40 Ref="51" type="Text" isKey="true">
+            <Text40 Ref="53" type="Text" isKey="true">
               <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
               <Brush>[141:179:226]</Brush>
               <ClientRectangle>2.6,0.8,2.4,0.8</ClientRectangle>
@@ -870,14 +906,14 @@
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text40</Name>
-              <Page isRef="7" />
-              <Parent isRef="37" />
+              <Page isRef="9" />
+              <Parent isRef="39" />
               <Text>Компонент</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text40>
-            <Text41 Ref="52" type="Text" isKey="true">
+            <Text41 Ref="54" type="Text" isKey="true">
               <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
               <Brush>[141:179:226]</Brush>
               <ClientRectangle>0,0,2.6,0.8</ClientRectangle>
@@ -889,8 +925,8 @@
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text41</Name>
-              <Page isRef="7" />
-              <Parent isRef="37" />
+              <Page isRef="9" />
+              <Parent isRef="39" />
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
@@ -899,23 +935,23 @@
           <Conditions isList="true" count="0" />
           <Expressions isList="true" count="0" />
           <Name>HeaderBand1</Name>
-          <Page isRef="7" />
-          <Parent isRef="7" />
+          <Page isRef="9" />
+          <Parent isRef="9" />
           <PrintIfEmpty>True</PrintIfEmpty>
         </HeaderBand1>
-        <DataBand2 Ref="53" type="DataBand" isKey="true">
+        <DataBand2 Ref="55" type="DataBand" isKey="true">
           <Border>Left, Right;[79:129:189];2;Solid;False;4;Black;True</Border>
           <Brush>Transparent</Brush>
           <BusinessObjectGuid isNull="true" />
           <ClientRectangle>0,13.2,19,0.8</ClientRectangle>
           <Components isList="true" count="1">
-            <Panel2 Ref="54" type="Panel" isKey="true">
+            <Panel2 Ref="56" type="Panel" isKey="true">
               <Brush>Transparent</Brush>
               <CanGrow>True</CanGrow>
               <CanShrink>True</CanShrink>
               <ClientRectangle>0,0,19,2.4</ClientRectangle>
               <Components isList="true" count="6">
-                <Text22 Ref="55" type="Text" isKey="true">
+                <Text22 Ref="57" type="Text" isKey="true">
                   <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
                   <Brush>[198:217:240]</Brush>
                   <CanGrow>True</CanGrow>
@@ -929,14 +965,14 @@
                   <HorAlignment>Center</HorAlignment>
                   <Margins>0,0,0,0</Margins>
                   <Name>Text22</Name>
-                  <Page isRef="7" />
-                  <Parent isRef="54" />
+                  <Page isRef="9" />
+                  <Parent isRef="56" />
                   <Text>{Batches_MaterialsUnloadReports.FinishWeight}</Text>
                   <TextBrush>Black</TextBrush>
                   <Type>DataColumn</Type>
                   <VertAlignment>Center</VertAlignment>
                 </Text22>
-                <Text21 Ref="56" type="Text" isKey="true">
+                <Text21 Ref="58" type="Text" isKey="true">
                   <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
                   <Brush>[198:217:240]</Brush>
                   <CanGrow>True</CanGrow>
@@ -950,25 +986,25 @@
                   <HorAlignment>Center</HorAlignment>
                   <Margins>0,0,0,0</Margins>
                   <Name>Text21</Name>
-                  <Page isRef="7" />
-                  <Parent isRef="54" />
+                  <Page isRef="9" />
+                  <Parent isRef="56" />
                   <Text>{Batches_MaterialsUnloadReports.StartWeight}</Text>
                   <TextBrush>Black</TextBrush>
                   <Type>Expression</Type>
                   <VertAlignment>Center</VertAlignment>
                 </Text21>
-                <Panel1 Ref="57" type="Panel" isKey="true">
+                <Panel1 Ref="59" type="Panel" isKey="true">
                   <Brush>Transparent</Brush>
                   <CanGrow>True</CanGrow>
                   <CanShrink>True</CanShrink>
                   <ClientRectangle>2.6,0,10.8,2.4</ClientRectangle>
                   <Components isList="true" count="1">
-                    <DataBand3 Ref="58" type="DataBand" isKey="true">
+                    <DataBand3 Ref="60" type="DataBand" isKey="true">
                       <Brush>Transparent</Brush>
                       <BusinessObjectGuid isNull="true" />
                       <ClientRectangle>0,0.4,10.8,0.8</ClientRectangle>
                       <Components isList="true" count="7">
-                        <Text25 Ref="59" type="Text" isKey="true">
+                        <Text25 Ref="61" type="Text" isKey="true">
                           <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
                           <Brush>[198:217:240]</Brush>
                           <ClientRectangle>3.8,0,1.4,0.8</ClientRectangle>
@@ -980,14 +1016,14 @@
                           <HorAlignment>Center</HorAlignment>
                           <Margins>0,0,0,0</Margins>
                           <Name>Text25</Name>
-                          <Page isRef="7" />
-                          <Parent isRef="58" />
+                          <Page isRef="9" />
+                          <Parent isRef="60" />
                           <Text>{Batches_MaterialsUnloadReports_MaterialsDosingReports.StartWeight}</Text>
                           <TextBrush>Black</TextBrush>
                           <Type>DataColumn</Type>
                           <VertAlignment>Center</VertAlignment>
                         </Text25>
-                        <Text28 Ref="60" type="Text" isKey="true">
+                        <Text28 Ref="62" type="Text" isKey="true">
                           <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
                           <Brush>[198:217:240]</Brush>
                           <ClientRectangle>5.2,0,1.4,0.8</ClientRectangle>
@@ -999,14 +1035,14 @@
                           <HorAlignment>Center</HorAlignment>
                           <Margins>0,0,0,0</Margins>
                           <Name>Text28</Name>
-                          <Page isRef="7" />
-                          <Parent isRef="58" />
+                          <Page isRef="9" />
+                          <Parent isRef="60" />
                           <Text>{Batches_MaterialsUnloadReports_MaterialsDosingReports.FinishWeight}</Text>
                           <TextBrush>Black</TextBrush>
                           <Type>DataColumn</Type>
                           <VertAlignment>Center</VertAlignment>
                         </Text28>
-                        <Text32 Ref="61" type="Text" isKey="true">
+                        <Text32 Ref="63" type="Text" isKey="true">
                           <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
                           <Brush>[198:217:240]</Brush>
                           <ClientRectangle>6.6,0,1.4,0.8</ClientRectangle>
@@ -1018,14 +1054,14 @@
                           <HorAlignment>Center</HorAlignment>
                           <Margins>0,0,0,0</Margins>
                           <Name>Text32</Name>
-                          <Page isRef="7" />
-                          <Parent isRef="58" />
+                          <Page isRef="9" />
+                          <Parent isRef="60" />
                           <Text>{Batches_MaterialsUnloadReports_MaterialsDosingReports.FinishWeight-Batches_MaterialsUnloadReports_MaterialsDosingReports.StartWeight}</Text>
                           <TextBrush>Black</TextBrush>
                           <Type>Expression</Type>
                           <VertAlignment>Center</VertAlignment>
                         </Text32>
-                        <Text33 Ref="62" type="Text" isKey="true">
+                        <Text33 Ref="64" type="Text" isKey="true">
                           <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
                           <Brush>[198:217:240]</Brush>
                           <ClientRectangle>9.4,0,1.4,0.8</ClientRectangle>
@@ -1037,14 +1073,14 @@
                           <HorAlignment>Center</HorAlignment>
                           <Margins>0,0,0,0</Margins>
                           <Name>Text33</Name>
-                          <Page isRef="7" />
-                          <Parent isRef="58" />
+                          <Page isRef="9" />
+                          <Parent isRef="60" />
                           <Text>{string.Format("{0:D2}:{1:D2}:{2:D2}", DateDiff(Batches_MaterialsUnloadReports_MaterialsDosingReports.FinishTime,Batches_MaterialsUnloadReports_MaterialsDosingReports.StartTime).Hours, DateDiff(Batches_MaterialsUnloadReports_MaterialsDosingReports.FinishTime,Batches_MaterialsUnloadReports_MaterialsDosingReports.StartTime).Minutes, DateDiff(Batches_MaterialsUnloadReports_MaterialsDosingReports.FinishTime,Batches_MaterialsUnloadReports_MaterialsDosingReports.StartTime).Seconds)}</Text>
                           <TextBrush>Black</TextBrush>
                           <Type>Expression</Type>
                           <VertAlignment>Center</VertAlignment>
                         </Text33>
-                        <Text36 Ref="63" type="Text" isKey="true">
+                        <Text36 Ref="65" type="Text" isKey="true">
                           <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
                           <Brush>[198:217:240]</Brush>
                           <ClientRectangle>2.4,0,1.4,0.8</ClientRectangle>
@@ -1056,14 +1092,14 @@
                           <HorAlignment>Center</HorAlignment>
                           <Margins>0,0,0,0</Margins>
                           <Name>Text36</Name>
-                          <Page isRef="7" />
-                          <Parent isRef="58" />
+                          <Page isRef="9" />
+                          <Parent isRef="60" />
                           <Text>{Batches_MaterialsUnloadReports_MaterialsDosingReports.SetVolume}</Text>
                           <TextBrush>Black</TextBrush>
                           <Type>DataColumn</Type>
                           <VertAlignment>Center</VertAlignment>
                         </Text36>
-                        <Text37 Ref="64" type="Text" isKey="true">
+                        <Text37 Ref="66" type="Text" isKey="true">
                           <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
                           <Brush>[198:217:240]</Brush>
                           <ClientRectangle>8,0,1.4,0.8</ClientRectangle>
@@ -1075,14 +1111,14 @@
                           <HorAlignment>Center</HorAlignment>
                           <Margins>0,0,0,0</Margins>
                           <Name>Text37</Name>
-                          <Page isRef="7" />
-                          <Parent isRef="58" />
+                          <Page isRef="9" />
+                          <Parent isRef="60" />
                           <Text>{Batches_MaterialsUnloadReports_MaterialsDosingReports.FinishWeight-Batches_MaterialsUnloadReports_MaterialsDosingReports.StartWeight-Batches_MaterialsUnloadReports_MaterialsDosingReports.SetVolume}</Text>
                           <TextBrush>Black</TextBrush>
                           <Type>Expression</Type>
                           <VertAlignment>Center</VertAlignment>
                         </Text37>
-                        <Text42 Ref="65" type="Text" isKey="true">
+                        <Text42 Ref="67" type="Text" isKey="true">
                           <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
                           <Brush>[198:217:240]</Brush>
                           <CanGrow>True</CanGrow>
@@ -1096,8 +1132,8 @@
                           <HorAlignment>Center</HorAlignment>
                           <Margins>0,0,0,0</Margins>
                           <Name>Text42</Name>
-                          <Page isRef="7" />
-                          <Parent isRef="58" />
+                          <Page isRef="9" />
+                          <Parent isRef="60" />
                           <Text>{Batches_MaterialsUnloadReports_MaterialsDosingReports.Material}</Text>
                           <TextBrush>Black</TextBrush>
                           <Type>DataColumn</Type>
@@ -1110,20 +1146,20 @@
                       <Expressions isList="true" count="0" />
                       <Filters isList="true" count="0" />
                       <Guid>ca74008003f34717b4b91b5730735029</Guid>
-                      <MasterComponent isRef="53" />
+                      <MasterComponent isRef="55" />
                       <Name>DataBand3</Name>
-                      <Page isRef="7" />
-                      <Parent isRef="57" />
+                      <Page isRef="9" />
+                      <Parent isRef="59" />
                       <Sort isList="true" count="0" />
                     </DataBand3>
                   </Components>
                   <Conditions isList="true" count="0" />
                   <Expressions isList="true" count="0" />
                   <Name>Panel1</Name>
-                  <Page isRef="7" />
-                  <Parent isRef="54" />
+                  <Page isRef="9" />
+                  <Parent isRef="56" />
                 </Panel1>
-                <Text24 Ref="66" type="Text" isKey="true">
+                <Text24 Ref="68" type="Text" isKey="true">
                   <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
                   <Brush>[198:217:240]</Brush>
                   <CanGrow>True</CanGrow>
@@ -1137,14 +1173,14 @@
                   <HorAlignment>Center</HorAlignment>
                   <Margins>0,0,0,0</Margins>
                   <Name>Text24</Name>
-                  <Page isRef="7" />
-                  <Parent isRef="54" />
+                  <Page isRef="9" />
+                  <Parent isRef="56" />
                   <Text>{string.Format("{0:D2}:{1:D2}:{2:D2}", DateDiff(Batches_MaterialsUnloadReports.FinishTime, Batches_MaterialsUnloadReports.StartTime).Hours, DateDiff(Batches_MaterialsUnloadReports.FinishTime, Batches_MaterialsUnloadReports.StartTime).Minutes, DateDiff(Batches_MaterialsUnloadReports.FinishTime, Batches_MaterialsUnloadReports.StartTime).Seconds)}</Text>
                   <TextBrush>Black</TextBrush>
                   <Type>Expression</Type>
                   <VertAlignment>Center</VertAlignment>
                 </Text24>
-                <Text23 Ref="67" type="Text" isKey="true">
+                <Text23 Ref="69" type="Text" isKey="true">
                   <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
                   <Brush>[198:217:240]</Brush>
                   <CanGrow>True</CanGrow>
@@ -1158,14 +1194,14 @@
                   <HorAlignment>Center</HorAlignment>
                   <Margins>0,0,0,0</Margins>
                   <Name>Text23</Name>
-                  <Page isRef="7" />
-                  <Parent isRef="54" />
+                  <Page isRef="9" />
+                  <Parent isRef="56" />
                   <Text>{Batches_MaterialsUnloadReports.StartWeight-Batches_MaterialsUnloadReports.FinishWeight}</Text>
                   <TextBrush>Black</TextBrush>
                   <Type>Expression</Type>
                   <VertAlignment>Center</VertAlignment>
                 </Text23>
-                <Text38 Ref="68" type="Text" isKey="true">
+                <Text38 Ref="70" type="Text" isKey="true">
                   <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
                   <Brush>[198:217:240]</Brush>
                   <CanGrow>True</CanGrow>
@@ -1179,10 +1215,11 @@
                   <HorAlignment>Center</HorAlignment>
                   <Margins>0,0,0,0</Margins>
                   <Name>Text38</Name>
-                  <Page isRef="7" />
-                  <Parent isRef="54" />
+                  <Page isRef="9" />
+                  <Parent isRef="56" />
                   <Text>{Batches_MaterialsUnloadReports.Batcher}</Text>
                   <TextBrush>Black</TextBrush>
+                  <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
                   <Type>DataColumn</Type>
                   <VertAlignment>Center</VertAlignment>
                 </Text38>
@@ -1191,8 +1228,8 @@
               <Expressions isList="true" count="0" />
               <GrowToHeight>True</GrowToHeight>
               <Name>Panel2</Name>
-              <Page isRef="7" />
-              <Parent isRef="53" />
+              <Page isRef="9" />
+              <Parent isRef="55" />
             </Panel2>
           </Components>
           <Conditions isList="true" count="0" />
@@ -1201,18 +1238,18 @@
           <Expressions isList="true" count="0" />
           <Filters isList="true" count="0" />
           <Linked>True</Linked>
-          <MasterComponent isRef="29" />
+          <MasterComponent isRef="31" />
           <Name>DataBand2</Name>
-          <Page isRef="7" />
-          <Parent isRef="7" />
+          <Page isRef="9" />
+          <Parent isRef="9" />
           <Sort isList="true" count="0" />
         </DataBand2>
-        <FooterBand1 Ref="69" type="FooterBand" isKey="true">
+        <FooterBand1 Ref="71" type="FooterBand" isKey="true">
           <Border>Left, Right, Bottom;[79:129:189];2;Solid;False;4;Black;True</Border>
           <Brush>Transparent</Brush>
           <ClientRectangle>0,14.8,19,0.8</ClientRectangle>
           <Components isList="true" count="7">
-            <Text7 Ref="70" type="Text" isKey="true">
+            <Text7 Ref="72" type="Text" isKey="true">
               <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
               <Brush>[141:179:226]</Brush>
               <CanGrow>True</CanGrow>
@@ -1225,14 +1262,14 @@
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text7</Name>
-              <Page isRef="7" />
-              <Parent isRef="69" />
+              <Page isRef="9" />
+              <Parent isRef="71" />
               <Text>{Sum(Batches_MaterialsUnloadReports.StartWeight-Batches_MaterialsUnloadReports.FinishWeight)}</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text7>
-            <Text55 Ref="71" type="Text" isKey="true">
+            <Text55 Ref="73" type="Text" isKey="true">
               <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
               <Brush>[141:179:226]</Brush>
               <CanGrow>True</CanGrow>
@@ -1245,14 +1282,14 @@
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text55</Name>
-              <Page isRef="7" />
-              <Parent isRef="69" />
+              <Page isRef="9" />
+              <Parent isRef="71" />
               <Text>{Sum(Batches_MaterialsUnloadReports.DosingWeightTotal)}</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text55>
-            <Text56 Ref="72" type="Text" isKey="true">
+            <Text56 Ref="74" type="Text" isKey="true">
               <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
               <Brush>[141:179:226]</Brush>
               <CanGrow>True</CanGrow>
@@ -1265,14 +1302,14 @@
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text56</Name>
-              <Page isRef="7" />
-              <Parent isRef="69" />
+              <Page isRef="9" />
+              <Parent isRef="71" />
               <Text>{Sum(Batches_MaterialsUnloadReports.SetVolumeTotal)}</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text56>
-            <Text57 Ref="73" type="Text" isKey="true">
+            <Text57 Ref="75" type="Text" isKey="true">
               <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
               <Brush>[141:179:226]</Brush>
               <ClientRectangle>6.4,0,2.8,0.8</ClientRectangle>
@@ -1284,13 +1321,13 @@
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text57</Name>
-              <Page isRef="7" />
-              <Parent isRef="69" />
+              <Page isRef="9" />
+              <Parent isRef="71" />
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text57>
-            <Text58 Ref="74" type="Text" isKey="true">
+            <Text58 Ref="76" type="Text" isKey="true">
               <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
               <Brush>[141:179:226]</Brush>
               <ClientRectangle>10.6,0,5.6,0.8</ClientRectangle>
@@ -1302,13 +1339,13 @@
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text58</Name>
-              <Page isRef="7" />
-              <Parent isRef="69" />
+              <Page isRef="9" />
+              <Parent isRef="71" />
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text58>
-            <Text59 Ref="75" type="Text" isKey="true">
+            <Text59 Ref="77" type="Text" isKey="true">
               <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
               <Brush>[141:179:226]</Brush>
               <ClientRectangle>17.6,0,1.4,0.8</ClientRectangle>
@@ -1320,13 +1357,13 @@
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text59</Name>
-              <Page isRef="7" />
-              <Parent isRef="69" />
+              <Page isRef="9" />
+              <Parent isRef="71" />
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text59>
-            <Text60 Ref="76" type="Text" isKey="true">
+            <Text60 Ref="78" type="Text" isKey="true">
               <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
               <Brush>[141:179:226]</Brush>
               <ClientRectangle>-0,0,5,0.8</ClientRectangle>
@@ -1338,8 +1375,8 @@
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text60</Name>
-              <Page isRef="7" />
-              <Parent isRef="69" />
+              <Page isRef="9" />
+              <Parent isRef="71" />
               <Text>ИТОГО:</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
@@ -1349,19 +1386,19 @@
           <Conditions isList="true" count="0" />
           <Expressions isList="true" count="0" />
           <Name>FooterBand1</Name>
-          <Page isRef="7" />
-          <Parent isRef="7" />
+          <Page isRef="9" />
+          <Parent isRef="9" />
           <PrintIfEmpty>True</PrintIfEmpty>
         </FooterBand1>
-        <FooterBand2 Ref="77" type="FooterBand" isKey="true">
+        <FooterBand2 Ref="79" type="FooterBand" isKey="true">
           <Brush>Transparent</Brush>
           <ClientRectangle>0,16.4,19,0.8</ClientRectangle>
           <Components isList="true" count="0" />
           <Conditions isList="true" count="0" />
           <Expressions isList="true" count="0" />
           <Name>FooterBand2</Name>
-          <Page isRef="7" />
-          <Parent isRef="7" />
+          <Page isRef="9" />
+          <Parent isRef="9" />
         </FooterBand2>
       </Components>
       <Conditions isList="true" count="0" />
@@ -1387,7 +1424,8 @@
   <ReportAlias>Report</ReportAlias>
   <ReportChanged>1/19/2021 12:15:08 PM</ReportChanged>
   <ReportCreated>12/22/2020 7:22:15 AM</ReportCreated>
-  <ReportGuid>f27a54075903404299a872d26e73698c</ReportGuid>
+  <ReportFile>Data\ReportTemplates\TaskReport.mrt</ReportFile>
+  <ReportGuid>8d9147f882e74663b670add511b0404c</ReportGuid>
   <ReportName>Report</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2020.5.2.0</ReportVersion>
@@ -1416,7 +1454,7 @@ namespace Reports
 </Script>
   <ScriptLanguage>CSharp</ScriptLanguage>
   <Styles isList="true" count="3">
-    <Text Ref="78" type="Stimulsoft.Report.StiStyle" isKey="true">
+    <Text Ref="80" type="Stimulsoft.Report.StiStyle" isKey="true">
       <AllowUseVertAlignment>True</AllowUseVertAlignment>
       <Brush>Transparent</Brush>
       <Conditions isList="true" count="0" />
@@ -1427,7 +1465,7 @@ namespace Reports
       <TextBrush>[31:73:125]</TextBrush>
       <VertAlignment>Center</VertAlignment>
     </Text>
-    <Header Ref="79" type="Stimulsoft.Report.StiStyle" isKey="true">
+    <Header Ref="81" type="Stimulsoft.Report.StiStyle" isKey="true">
       <AllowUseFont>False</AllowUseFont>
       <AllowUseHorAlignment>True</AllowUseHorAlignment>
       <AllowUseVertAlignment>True</AllowUseVertAlignment>
@@ -1441,7 +1479,7 @@ namespace Reports
       <TextBrush>Black</TextBrush>
       <VertAlignment>Center</VertAlignment>
     </Header>
-    <Data Ref="80" type="Stimulsoft.Report.StiStyle" isKey="true">
+    <Data Ref="82" type="Stimulsoft.Report.StiStyle" isKey="true">
       <AllowUseHorAlignment>True</AllowUseHorAlignment>
       <AllowUseVertAlignment>True</AllowUseVertAlignment>
       <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>

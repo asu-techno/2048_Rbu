@@ -26,7 +26,7 @@
                 <TextBlock Text="Р" FontSize="10" Margin="-3,-7"></TextBlock>
             </Label.Content>
         </Label>
-        <Rectangle Name="rect_object" VerticalAlignment="Center" HorizontalAlignment="Center" Width="30" Height="20" Margin="1" StrokeThickness="0.5" Fill="Transparent" Stroke="Black" Opacity="0" MouseLeftButtonUp="ValveGrid_OnMouseRightButtonDown"/>
+        <Rectangle Name="rect_object" VerticalAlignment="Center" HorizontalAlignment="Center" Width="30" Height="20" Margin="1" StrokeThickness="0.5" Fill="Transparent" Stroke="Black" Opacity="0" MouseLeftButtonUp="ValveGrid_OnMouseRightButtonDown" PreviewMouseRightButtonDown="ValveGrid_OnPreviewMouseRightButtonDown" PreviewMouseRightButtonUp="ValveGrid_OnPreviewMouseRightButtonUp" ToolTip="Удерживайте ПКМ для активации во время работы узла"/>
         <Popup Name="PopupObject" Placement="Bottom" StaysOpen="False">
             <Border BorderBrush="Black" BorderThickness="1">
                 <Grid Background="Beige" Width="180">

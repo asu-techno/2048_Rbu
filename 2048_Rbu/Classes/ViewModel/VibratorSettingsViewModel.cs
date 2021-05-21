@@ -262,7 +262,7 @@ namespace _2048_Rbu.Classes.ViewModel
             {
                 return _setPauseTime ??= new RelayCommand((o) =>
                 {
-                    Methods.SetParameter(_opcName, NameVibro + ". Длительность паузы, с", 0.0, 10.0, _tagVibro + ".Pause_Time", WindowSetParameter.ValueType.Real, null, 1, 0.5, 1.0, 2.0, 5.0, 1.0);
+                    Methods.SetParameter(_opcName, NameVibro + ". Длительность паузы, с", 0.0, 3600.0, _tagVibro + ".Pause_Time", WindowSetParameter.ValueType.Real, null, 1, 1.0, 100.0, 1000.0, 3000.0, 50.0);
                 });
             }
         }

@@ -99,6 +99,18 @@ namespace _2048_Rbu.Elements.Control
             componentWights.DataChangeReceived += HandleComponentsWeightChanged;
             OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(componentWights);
 
+            var cementDone = new OpcMonitoredItem(_opc.cl.GetNode("DozingCement_Done"), OpcAttribute.Value);
+            cementDone.DataChangeReceived += HandleItemDoneChanged;
+            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(cementDone);
+            var waterDone = new OpcMonitoredItem(_opc.cl.GetNode("DozingWater_Done"), OpcAttribute.Value);
+            waterDone.DataChangeReceived += HandleItemDoneChanged;
+            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(waterDone);
+            var inertDone = new OpcMonitoredItem(_opc.cl.GetNode("DozingInert_Done"), OpcAttribute.Value);
+            inertDone.DataChangeReceived += HandleItemDoneChanged;
+            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(inertDone);
+            var additiveDone = new OpcMonitoredItem(_opc.cl.GetNode("DozingAdditive_Done"), OpcAttribute.Value);
+            additiveDone.DataChangeReceived += HandleItemDoneChanged;
+            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(additiveDone);
         }
 
         private void HandleIdChanged(object sender, OpcDataChangeReceivedEventArgs e)
@@ -159,6 +171,11 @@ namespace _2048_Rbu.Elements.Control
             catch (Exception exception)
             {
             }
+        }
+
+        private void HandleItemDoneChanged(object sender, OpcDataChangeReceivedEventArgs e)
+        {
+            GetTable();
         }
 
 
@@ -249,7 +266,9 @@ namespace _2048_Rbu.Elements.Control
                                 _currentId = _id;
                             }
                             if ((_tempCurrentBatchNum != CurrentBatchNum) || (_tempCurrentBatchNum != 0 && CurrentBatchNum == null))
+                            {
                                 GetTags();
+                            }
                             CurrentBatchNum = _tempCurrentBatchNum;
                             BatchesQuantity = _tempBatchesQuantity;
                             DosingProcess = _tempDosingProcess;
@@ -313,74 +332,64 @@ namespace _2048_Rbu.Elements.Control
 
                         if (selContainer.Id == Static.IdСontainerDictionary[Static.ContainerItem.Bunker1])
                         {
-                            _materialTags[i, 0] = "PAR_Inert_Bunker_1_set";
-                            _materialTags[i, 1] = "Reports[1].Batches[" + _tempCurrentBatchNum +
-                                                  "].Batcher_inert.Bunker1.Dozing_DozedValue";
+                            _materialTags[i, 0] = "SetPoints_Components[6]";
+                            _materialTags[i, 1] = "DosedValue_Components[6]";
                             _materialTags[i, 2] = "Progress_Components[6]";
                             _materialTags[i, 3] = "InertDozing.Tank_1_ON";
                         }
                         if (selContainer.Id == Static.IdСontainerDictionary[Static.ContainerItem.Bunker2])
                         {
-                            _materialTags[i, 0] = "PAR_Inert_Bunker_2_set";
-                            _materialTags[i, 1] = "Reports[1].Batches[" + _tempCurrentBatchNum +
-                                                  "].Batcher_inert.Bunker2.Dozing_DozedValue";
+                            _materialTags[i, 0] = "SetPoints_Components[7]";
+                            _materialTags[i, 1] = "DosedValue_Components[7]";
                             _materialTags[i, 2] = "Progress_Components[7]";
                             _materialTags[i, 3] = "InertDozing.Tank_2_ON";
                         }
                         if (selContainer.Id == Static.IdСontainerDictionary[Static.ContainerItem.Bunker3])
                         {
-                            _materialTags[i, 0] = "PAR_Inert_Bunker_3_set";
-                            _materialTags[i, 1] = "Reports[1].Batches[" + _tempCurrentBatchNum +
-                                                  "].Batcher_inert.Bunker3.Dozing_DozedValue";
+                            _materialTags[i, 0] = "SetPoints_Components[8]";
+                            _materialTags[i, 1] = "DosedValue_Components[8]";
                             _materialTags[i, 2] = "Progress_Components[8]";
                             _materialTags[i, 3] = "InertDozing.Tank_3_ON";
                         }
                         if (selContainer.Id == Static.IdСontainerDictionary[Static.ContainerItem.Bunker4])
                         {
-                            _materialTags[i, 0] = "PAR_Inert_Bunker_4_set";
-                            _materialTags[i, 1] = "Reports[1].Batches[" + _tempCurrentBatchNum +
-                                                  "].Batcher_inert.Bunker4.Dozing_DozedValue";
+                            _materialTags[i, 0] = "SetPoints_Components[9]";
+                            _materialTags[i, 1] = "DosedValue_Components[9]";
                             _materialTags[i, 2] = "Progress_Components[9]";
                             _materialTags[i, 3] = "InertDozing.Tank_4_ON";
                         }
                         if (selContainer.Id == Static.IdСontainerDictionary[Static.ContainerItem.Silo1])
                         {
-                            _materialTags[i, 0] = "PAR_Cement_Silos_1_set";
-                            _materialTags[i, 1] = "Reports[1].Batches[" + _tempCurrentBatchNum +
-                                                  "].Batcher_cement.Silos1.Dozing_DozedValue";
+                            _materialTags[i, 0] = "SetPoints_Components[3]";
+                            _materialTags[i, 1] = "DosedValue_Components[3]";
                             _materialTags[i, 2] = "Progress_Components[3]";
                             _materialTags[i, 3] = "CementDozing.Silo_1_ON";
                         }
                         if (selContainer.Id == Static.IdСontainerDictionary[Static.ContainerItem.Silo2])
                         {
-                            _materialTags[i, 0] = "PAR_Cement_Silos_2_set";
-                            _materialTags[i, 1] = "Reports[1].Batches[" + _tempCurrentBatchNum +
-                                                  "].Batcher_cement.Silos2.Dozing_DozedValue";
+                            _materialTags[i, 0] = "SetPoints_Components[4]";
+                            _materialTags[i, 1] = "DosedValue_Components[4]";
                             _materialTags[i, 2] = "Progress_Components[4]";
                             _materialTags[i, 3] = "CementDozing.Silo_2_ON";
                         }
                         if (selContainer.Id == Static.IdСontainerDictionary[Static.ContainerItem.Water])
                         {
-                            _materialTags[i, 0] = "Reports[1].Batches[" + _tempCurrentBatchNum +
-                                                  "].Batcher_water.Water.Dozing_SetValue";
-                            _materialTags[i, 1] = "Reports[1].Batches[" + _tempCurrentBatchNum +
-                                                  "].Batcher_water.Water.Dozing_DozedValue";
+                            _materialTags[i, 0] = "SetPoints_Components[5]";
+                            _materialTags[i, 1] = "DosedValue_Components[5]";
                             _materialTags[i, 2] = "Progress_Components[5]";
                             _materialTags[i, 3] = "DozingWater_ON";
                         }
                         if (selContainer.Id == Static.IdСontainerDictionary[Static.ContainerItem.Additive1])
                         {
-                            _materialTags[i, 0] = "PAR_Additive_Tank_1_set";
-                            _materialTags[i, 1] = "Reports[1].Batches[" + _tempCurrentBatchNum +
-                                                  "].Batcher_add.Tank1.Dozing_DozedValue";
+                            _materialTags[i, 0] = "SetPoints_Components[1]";
+                            _materialTags[i, 1] = "DosedValue_Components[1]";
                             _materialTags[i, 2] = "Progress_Components[1]";
                             _materialTags[i, 3] = "AdditiveDozing.Tank_1_ON";
                         }
                         if (selContainer.Id == Static.IdСontainerDictionary[Static.ContainerItem.Additive2])
                         {
-                            _materialTags[i, 0] = "PAR_Additive_Tank_2_set";
-                            _materialTags[i, 1] = "Reports[1].Batches[" + _tempCurrentBatchNum +
-                                                  "].Batcher_add.Tank2.Dozing_DozedValue";
+                            _materialTags[i, 0] = "SetPoints_Components[2]";
+                            _materialTags[i, 1] = "DosedValue_Components[2]";
                             _materialTags[i, 2] = "Progress_Components[2]";
                             _materialTags[i, 3] = "AdditiveDozing.Tank_2_ON";
                         }

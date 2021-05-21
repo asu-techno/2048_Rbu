@@ -179,6 +179,27 @@ namespace _2048_Rbu.Elements.Mechs
             }
         }
 
+        private bool _isUnload;
+        public bool IsUnload
+        {
+            get { return _isUnload; }
+            set
+            {
+                if (value)
+                {
+                    ImgClose.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs/img_BigGate_Close.png", UriKind.Relative));
+                    ImgOpen.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs/img_BigGate_Open.png", UriKind.Relative));
+                    ImgAlarm.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs/img_BigGate_Alarm.png", UriKind.Relative));
+                    ImgOpen.Width = 130;
+                    ImgClose.Width = ImgAlarm.Width = 81;
+                    RectObject.Width = ImgOpen.Width;
+                }
+
+                _isUnload = value;
+                OnPropertyChanged(nameof(IsUnload));
+            }
+        }
+
         #region MyRegion
 
         private bool _alarmStatus;
@@ -201,26 +222,6 @@ namespace _2048_Rbu.Elements.Mechs
         public int ValueNumMech { get; set; }
         public string AerationName { get; set; }
 
-        private bool _isUnload;
-        public bool IsUnload
-        {
-            get { return _isUnload; }
-            set
-            {
-                if (value)
-                {
-                    ImgClose.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs/img_BigGate_Close.png", UriKind.Relative));
-                    ImgOpen.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs/img_BigGate_Open.png", UriKind.Relative));
-                    ImgAlarm.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs/img_BigGate_Alarm.png", UriKind.Relative));
-                    ImgOpen.Width = 130;
-                    ImgClose.Width = ImgAlarm.Width = 81;
-                    RectObject.Width = ImgOpen.Width;
-                }
-
-                _isUnload = value;
-            }
-        }
-
         private bool _isAeration;
         public bool IsAeration
         {
@@ -235,6 +236,8 @@ namespace _2048_Rbu.Elements.Mechs
                     ImgOpen.Width = ImgClose.Width = ImgAlarm.Width = 72;
                     ImgOpen.Height = ImgClose.Height = ImgAlarm.Height = 9;
                     RectObject.Width = ImgOpen.Width;
+                    RectObject.Margin = new Thickness(45, 0, 0, 0);
+                    RectObject.ToolTip = "Удерживайте ПКМ для активации во время работы узла";
                 }
 
                 _isAeration = value;
@@ -751,10 +754,38 @@ namespace _2048_Rbu.Elements.Mechs
             Methods.ButtonClick(btn, BtnOpen, OpenPcx, true, TxtPopupName.Text + ". Открыть");
         }
 
+        private void BtnOpen_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            object btn = e.Source;
+            Methods.ButtonClick(btn, BtnOpenUnloadGate, "btn_V1_Open", true, TxtPopupName.Text + ". Открыть");
+        }
+
+        private void BtnOpen_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            object btn = e.Source;
+            Methods.ButtonClick(btn, BtnOpenUnloadGate, "btn_V1_Open", false);
+        }
+
         private void BtnClose_Click(object sender, RoutedEventArgs e)
         {
             object btn = e.Source;
             Methods.ButtonClick(btn, BtnClose, ClosePcx, true, TxtPopupName.Text + ". Закрыть");
+        }
+
+        private void ValveGrid_OnPreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (IsAeration)
+            {
+                Methods.ButtonClick($"{Prefix}.Start_ByOperator", true, TxtPopupName.Text + ". Старт");
+            }
+        }
+
+        private void ValveGrid_OnPreviewMouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (IsAeration)
+            {
+                Methods.ButtonClick($"{Prefix}.Start_ByOperator", false, TxtPopupName.Text + ". Стоп");
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

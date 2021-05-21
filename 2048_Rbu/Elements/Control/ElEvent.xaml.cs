@@ -193,12 +193,12 @@ namespace _2048_Rbu.Elements.Control
                         case 51: Value = "Вибратор M-7 - авария ОС"; break;
                         case 52: Value = "Вибратор M-7 - внешняя авария"; break;
                         case 53: Value = "Вибратор M-7 - авария ДКС"; break;
-                        case 54: Value = "Вибратор M-12-1 - авария ОС"; break;
-                        case 55: Value = "Вибратор M-12-1 - внешняя авария"; break;
-                        case 56: Value = "Вибратор M-12-1 - авария ДКС"; break;
-                        case 57: Value = "Вибратор M-12-2 - авария ОС"; break;
-                        case 58: Value = "Вибратор M-12-2 - внешняя авария"; break;
-                        case 59: Value = "Вибратор M-12-2 - авария ДКС"; break;
+                        case 54: Value = "Вибратор 1 бункера инертных 4 - авария ОС"; break;
+                        case 55: Value = "Вибратор 1 бункера инертных 4 - внешняя авария"; break;
+                        case 56: Value = "Вибратор 1 бункера инертных 4 - авария ДКС"; break;
+                        case 57: Value = "Вибратор 2 бункера инертных 4 - авария ОС"; break;
+                        case 58: Value = "Вибратор 2 бункера инертных 4 - внешняя авария"; break;
+                        case 59: Value = "Вибратор 2 бункера инертных 4 - авария ДКС"; break;
                         case 60: Value = "Задвижка V-1 - авария ОС-Open"; break;
                         case 61: Value = "Задвижка V-1 - авария ОС-Close"; break;
                         case 62: Value = "Задвижка V-1 - авария датчиков"; break;
@@ -268,6 +268,8 @@ namespace _2048_Rbu.Elements.Control
                         case 6: Value = "Бетоносмеситель M-18 - ручной режим"; break;
                         case 7: Value = "Низкое давление в гидравлической магистрали"; break;
                         case 8: Value = "Нет связи с программой архивации"; break;
+                        case 9: Value = "Сработал датчик верхнего уровня цемента в силосе №1"; break;
+                        case 10: Value = "Сработал датчик верхнего уровня цемента в силосе №2"; break;
                         default:
                             Value = "- - - - - - - -";
                             break;

@@ -93,7 +93,7 @@ namespace _2048_Rbu.Elements.Control
         private void BtnRought_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             object btn = e.Source;
-            Methods.ButtonClick(btn, BtnRought, RoughtPcy, true, EventText != null? EventText:"" + ". Грубое дозирование");
+            Methods.ButtonClick(btn, BtnRought, RoughtPcy, true, EventText == null? EventText:"" + ". Грубое дозирование");
         }
 
         private void BtnRought_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -105,7 +105,7 @@ namespace _2048_Rbu.Elements.Control
         private void BtnPrecise_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             object btn = e.Source;
-            Methods.ButtonClick(btn, BtnPrecise, PrecisePcy, true, EventText != null ? EventText : "" + ". Точное дозирование");
+            Methods.ButtonClick(btn, BtnPrecise, PrecisePcy, true, EventText == null ? EventText : "" + ". Точное дозирование");
         }
 
         private void BtnPrecise_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)

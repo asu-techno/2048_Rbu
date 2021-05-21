@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "2048_Rbu": {
+      "commandName": "Project",
+      "remoteDebugEnabled": false
+    }
+  }
+}

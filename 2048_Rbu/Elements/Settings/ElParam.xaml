@@ -7,7 +7,7 @@
              MinHeight="50" MinWidth="50" Background="Silver">
     <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,10,10,10" Orientation="Vertical">
         <StackPanel Name="Settings" VerticalAlignment="Top" HorizontalAlignment="Left" Orientation="Vertical"/>
-        <Grid VerticalAlignment="Top" HorizontalAlignment="Center">
+        <!--<Grid VerticalAlignment="Top" HorizontalAlignment="Center">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -45,6 +45,6 @@
                     </Style>
                 </Button.Style>
             </Button>
-        </Grid>
+        </Grid>-->
     </StackPanel>
 </UserControl>

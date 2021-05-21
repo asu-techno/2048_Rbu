@@ -23,6 +23,7 @@
                     <RowDefinition Height="35"/>
                     <RowDefinition Height="35"/>
                     <RowDefinition Height="35"/>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="35"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
@@ -134,7 +135,28 @@
                         </Style>
                     </Label.Style>
                 </Label>
-                <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource PressButton}" VerticalAlignment="Center" HorizontalAlignment="Center" Height="30" Width="200" Margin="0,5,0,0" BorderThickness="1" BorderBrush="Black" Background="LightBlue" FontSize="14" Content="Загрузка материала">
+                <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Height="30" Width="200" Margin="0,5,0,0" BorderThickness="1" BorderBrush="Black" FontSize="14" Content="Режим загрузки цемента">
+                    <Button.InputBindings>
+                        <MouseBinding Command="{Binding InvertLoadCement}" MouseAction="LeftClick"/>
+                    </Button.InputBindings>
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Setter Property="Background" Value="LightBlue"/>
+                            <Setter Property="FontWeight" Value="Normal"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsCementBunker}" Value="True">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding LoadCement}" Value="True">
+                                    <Setter Property="Background" Value="#85FC84"/>
+                                    <Setter Property="FontWeight" Value="Bold"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+                <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource PressButton}" VerticalAlignment="Center" HorizontalAlignment="Center" Height="30" Width="200" Margin="0,5,0,0" BorderThickness="1" BorderBrush="Black" Background="LightBlue" FontSize="14" Content="Материал загружен">
                     <Button.InputBindings>
                         <MouseBinding Command="{Binding SetAdd}" MouseAction="LeftClick"/>
                     </Button.InputBindings>

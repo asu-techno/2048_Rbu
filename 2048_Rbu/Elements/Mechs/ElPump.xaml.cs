@@ -4,10 +4,10 @@ using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using _2048_Rbu.Classes;
 using _2048_Rbu.Classes;
 using _2048_Rbu.Interfaces;
 using _2048_Rbu.Windows;
@@ -101,6 +101,20 @@ namespace _2048_Rbu.Elements.Mechs
             }
         }
 
+        private bool _modeManualDosing;
+        public bool ModeManualDosing
+        {
+            get
+            {
+                return _modeManualDosing;
+            }
+            set
+            {
+                _modeManualDosing = value;
+                OnPropertyChanged(nameof(ModeManualDosing));
+            }
+        }
+
         private string _freq;
         public string Freq
         {
@@ -143,17 +157,33 @@ namespace _2048_Rbu.Elements.Mechs
             }
         }
 
+        private bool _isDosing;
+        public bool IsDosing
+        {
+            get
+            {
+                return _isDosing;
+            }
+            set
+            {
+                _isDosing = value;
+                OnPropertyChanged(nameof(IsDosing));
+            }
+        }
+
         #region MyRegion
 
         private bool _alarmStatus;
         private bool _onStatus;
         private bool _automatMode;
         private bool _manualMode;
+        private bool _manualDosingMode;
 
         public string Prefix { get; set; }
         public string FreqPcay { get; set; }
         public string ModePcy { get; set; }
         public string ManualPcy { get; set; }
+        public string ManualDosingPcy { get; set; }
         public string OnPcy { get; set; }
         public string AlarmPcy { get; set; }
         public string StartPcx { get; set; }
@@ -220,6 +250,34 @@ namespace _2048_Rbu.Elements.Mechs
                 _modepos = value;
             }
         }
+
+        private Position _modeDosingPos;
+        public Position ModeDosingPos
+        {
+            get { return _modeDosingPos; }
+            set
+            {
+                if (value == Position.LeftUp)
+                    LblModeDosing.Margin = new Thickness(-40, -30, 0, 0);
+                if (value == Position.Up)
+                    LblModeDosing.Margin = new Thickness(0, -40, 0, 0);
+                if (value == Position.RightUp)
+                    LblModeDosing.Margin = new Thickness(40, -40, 0, 0);
+                if (value == Position.Left)
+                    LblModeDosing.Margin = new Thickness(-40, 10, 0, 0);
+                if (value == Position.Right)
+                    LblModeDosing.Margin = new Thickness(40, 10, 0, 0);
+                if (value == Position.LeftDown)
+                    LblModeDosing.Margin = new Thickness(-40, 25, 0, 0);
+                if (value == Position.Down)
+                    LblModeDosing.Margin = new Thickness(0, 40, 0, 0);
+                if (value == Position.RightDown)
+                    LblModeDosing.Margin = new Thickness(40, 25, 0, 0);
+
+                _modeDosingPos = value;
+            }
+        }
+
         private Position _namepos;
         public Position NamePos
         {
@@ -278,6 +336,25 @@ namespace _2048_Rbu.Elements.Mechs
             }
         }
 
+        private ElGate.Position _popupposition;
+        public ElGate.Position PopupPosition
+        {
+            get { return _popupposition; }
+            set
+            {
+                if (value == ElGate.Position.Left)
+                    PopupObject.Placement = PlacementMode.Left;
+                if (value == ElGate.Position.Right)
+                    PopupObject.Placement = PlacementMode.Right;
+                if (value == ElGate.Position.Up)
+                    PopupObject.Placement = PlacementMode.Top;
+                if (value == ElGate.Position.Down)
+                    PopupObject.Placement = PlacementMode.Bottom;
+
+                _popupposition = value;
+            }
+        }
+
         private string _nameObject;
         public string NameObject
         {
@@ -331,7 +408,12 @@ namespace _2048_Rbu.Elements.Mechs
             var modeManual = new OpcMonitoredItem(_opc.cl.GetNode(ManualPcy), OpcAttribute.Value);
             modeManual.DataChangeReceived += HandleManualChanged;
             OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(modeManual);
-
+            if (IsDosing)
+            {
+                var modeManualDosingItem = new OpcMonitoredItem(_opc.cl.GetNode(ManualDosingPcy), OpcAttribute.Value);
+                modeManualDosingItem.DataChangeReceived += HandleManualDosingChanged;
+                OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(modeManualDosingItem);
+            }
             if (FreqPcay == null)
                 VisFreq = Visibility.Collapsed;
             else
@@ -364,6 +446,19 @@ namespace _2048_Rbu.Elements.Mechs
                 VisMode();
             }
             catch (Exception)
+            {
+
+            }
+        }
+
+        private void HandleManualDosingChanged(object sender, OpcDataChangeReceivedEventArgs e)
+        {
+            try
+            {
+                _manualDosingMode = bool.Parse(e.Item.Value.ToString());
+                VisMode();
+            }
+            catch
             {
 
             }
@@ -449,11 +544,13 @@ namespace _2048_Rbu.Elements.Mechs
             {
                 ModeAutomat = true;
                 ModeManual = false;
+                ModeManualDosing = false;
             }
             else
             {
                 ModeAutomat = false;
                 ModeManual = _manualMode;
+                ModeManualDosing = _manualDosingMode;
             }
         }
 
@@ -466,9 +563,18 @@ namespace _2048_Rbu.Elements.Mechs
                 if (ModePcy == null)
                     ModePcy = Prefix + ".gMode_Automat";
                 if (ManualPcy == null)
-                    ManualPcy = Prefix + ".gMode_Manual";
+                {
+                    if (IsDosing)
+                        ManualPcy = Prefix + ".gMode_Naladka";
+                    else
+                        ManualPcy = Prefix + ".gMode_Manual";
+                }
                 if (AlarmPcy == null)
-                    AlarmPcy = Prefix + ".gb_ALARM";
+                    AlarmPcy = Prefix + ".gb_ALARM"; 
+                if (ManualDosingPcy == null)
+                {
+                    ManualDosingPcy = Prefix + ".gMode_Manual";
+                }
             }
 
             StartPcx = "btn_Mech_Start";
@@ -505,14 +611,23 @@ namespace _2048_Rbu.Elements.Mechs
 
         private void BtnManual_Click(object sender, RoutedEventArgs e)
         {
-            object btn = e.Source;
-            Methods.ButtonClick(btn, BtnManual, "btn_Mech_Manual", true, TxtPopupName.Text + ". Режим работы - ручной");
+            object btn = e.Source; 
+            if (IsDosing)
+                Methods.ButtonClick(btn, BtnManual, "btn_Mech_Naladka", true, TxtPopupName.Text + ". Режим работы - наладка");
+            else
+                Methods.ButtonClick(btn, BtnManual, "btn_Mech_Manual", true, TxtPopupName.Text + ". Режим работы - ручной");
         }
 
         private void BtnAutomat_Click(object sender, RoutedEventArgs e)
         {
             object btn = e.Source;
             Methods.ButtonClick(btn, BtnAutomat, "btn_Mech_Automat", true, TxtPopupName.Text + ". Режим работы - автомат");
+        }
+
+        private void BtnManualDosing_Click(object sender, RoutedEventArgs e)
+        {
+            object btn = e.Source;
+            Methods.ButtonClick(btn, BtnManualDosing, "btn_Mech_Manual", true, TxtPopupName.Text + ". Режим работы - ручное дозирование");
         }
 
         private void BtnStart_Click(object sender, RoutedEventArgs e)
