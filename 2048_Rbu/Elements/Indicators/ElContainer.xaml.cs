@@ -27,6 +27,8 @@ namespace _2048_Rbu.Elements.Indicators
         private OPC_client _opc;
         private OpcServer.OpcList _opcName;
 
+        private bool _permitDos;
+
         private string _nameContainerMaterial;
         public string NameContainerMaterial
         {
@@ -35,17 +37,6 @@ namespace _2048_Rbu.Elements.Indicators
             {
                 _nameContainerMaterial = value;
                 OnPropertyChanged(nameof(NameContainerMaterial));
-            }
-        }
-
-        private bool _permitDos;
-        public bool PermitDos
-        {
-            get { return _permitDos; }
-            set
-            {
-                _permitDos = value;
-                OnPropertyChanged(nameof(PermitDos));
             }
         }
 
@@ -91,7 +82,7 @@ namespace _2048_Rbu.Elements.Indicators
         {
             try
             {
-                PermitDos = bool.Parse(e.Item.Value.ToString());
+                _permitDos = bool.Parse(e.Item.Value.ToString());
             }
             catch (Exception exception)
             {
@@ -150,7 +141,7 @@ namespace _2048_Rbu.Elements.Indicators
 
         private void RectObject_OnMouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (PermitDos)
+            if (_permitDos)
                 Methods.ButtonClick(PermitTag, false, NameContainerMaterial+". Запрет дозирования");
             else
                 Methods.ButtonClick(PermitTag, true, NameContainerMaterial + ". Разрешение дозирования");

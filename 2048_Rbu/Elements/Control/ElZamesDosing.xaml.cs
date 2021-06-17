@@ -260,7 +260,7 @@ namespace _2048_Rbu.Elements.Control
                     {
                         if (_id != 0)
                         {
-                            if (_id != _currentId || ViewModelTabl.CurrentSelTask == null)
+                            if (_id != _currentId && ViewModelTabl.CurrentSelTask != null)
                             {
                                 GetMaterials();
                                 _currentId = _id;
@@ -294,8 +294,7 @@ namespace _2048_Rbu.Elements.Control
 
         private void GetMaterials()
         {
-            if (ViewModelTabl.CurrentSelTask != null)
-            {
+            
                 var recipes = new ObservableCollection<ApiRecipe>(RecipesReader.ListRecipes());
                 var selRecipe = recipes.FirstOrDefault(x => x.Id == ViewModelTabl.CurrentSelTask.Recipe.Id);
                 _materials = new ObservableCollection<ApiRecipeMaterial>(selRecipe.RecipeMaterials);
@@ -313,8 +312,7 @@ namespace _2048_Rbu.Elements.Control
                     else
                         DosingTask[i].MaterialName = "";
                 }
-            }
-        }
+        } 
 
         private void GetTags()
         {

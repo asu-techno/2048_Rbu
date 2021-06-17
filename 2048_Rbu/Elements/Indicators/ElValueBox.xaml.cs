@@ -26,6 +26,8 @@ namespace _2048_Rbu.Elements.Indicators
         private OpcServer.OpcList _opcName;
         private string _readVal;
 
+        private bool _permitDos;
+
         private Visibility _vis;
         public Visibility Vis
         {
@@ -67,17 +69,7 @@ namespace _2048_Rbu.Elements.Indicators
                 OnPropertyChanged(nameof(Value));
             }
         }
-
-        private bool _permitDos;
-        public bool PermitDos
-        {
-            get { return _permitDos; }
-            set
-            {
-                _permitDos = value;
-                OnPropertyChanged(nameof(PermitDos));
-            }
-        }
+        
         #region MyRegion
 
         public string VisValue { get; set; }
@@ -242,10 +234,7 @@ namespace _2048_Rbu.Elements.Indicators
         {
             try
             {
-                PermitDos = bool.Parse(e.Item.Value.ToString());
-                LblText.Background = LblValue.Background =
-                    PermitDos ? (SolidColorBrush) (new BrushConverter().ConvertFrom("#FF84B584")) : Color;
-
+                _permitDos = bool.Parse(e.Item.Value.ToString());
             }
             catch (Exception exception)
             {
@@ -284,10 +273,15 @@ namespace _2048_Rbu.Elements.Indicators
 
         private void RectObject_OnMouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (PermitDos)
-                Methods.ButtonClick(PermitTag, false, !string.IsNullOrEmpty(EventPermit)? EventPermit + ". Запрет дозирования":null);
-            else
-                Methods.ButtonClick(PermitTag, true, !string.IsNullOrEmpty(EventPermit) ? EventPermit + ". Разрешение дозирования" : null);
+            if (!string.IsNullOrEmpty(PermitTag))
+            {
+                if (_permitDos)
+                    Methods.ButtonClick(PermitTag, false,
+                        !string.IsNullOrEmpty(EventPermit) ? EventPermit + ". Запрет дозирования" : null);
+                else
+                    Methods.ButtonClick(PermitTag, true,
+                        !string.IsNullOrEmpty(EventPermit) ? EventPermit + ". Разрешение дозирования" : null);
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

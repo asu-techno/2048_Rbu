@@ -16,7 +16,7 @@
     </UserControl.Resources>
     <UserControl.Style>
         <Style TargetType="{x:Type UserControl}">
-            <Setter Property="Visibility" Value="Collapsed" />
+            <Setter Property="Visibility" Value="Collapsed"/>
             <Style.Triggers>
                 <DataTrigger Binding="{Binding Vis}" Value="True">
                     <Setter Property="Visibility" Value="Visible" />

@@ -813,7 +813,7 @@ namespace _2048_Rbu.Elements
                 _cycle++;
             }
 
-            if (_cycle > 5)
+            if (_cycle > 12)
             {
                 if (Static.Link || !_firstCheckLink)
                 {
@@ -821,9 +821,10 @@ namespace _2048_Rbu.Elements
                     _firstCheckLink = true;
                 }
                 LinkOk = Static.Link = false;
-                _cycle = 11;
+                _cycle = 15;
             }
 
+            LinkOk = Static.Link = true;
             IsUpdating = false;
         }
 
