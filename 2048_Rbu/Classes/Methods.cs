@@ -127,11 +127,11 @@ namespace _2048_Rbu.Classes
             }
         }
 
-        public static void SetParameter(OpcServer.OpcList opcName, string parameterName, double minValue, double maxValue, string opcTag, WindowSetParameter.ValueType valueType, Popup popup = null, int digit = 0, double? firstPrompt = null, double? secondPrompt = null, double? thirdPrompt = null, double? fourthPrompt = null, double? stepFeed = null)
+        public static void SetParameter(OpcServer.OpcList opcName, string parameterName, double minValue, double maxValue, string opcTag, WindowSetParameter.ValueType valueType, Popup popup = null, int digit = 0, double? firstPrompt = null, double? secondPrompt = null, double? thirdPrompt = null, double? fourthPrompt = null, double? stepFeed = null, string additionalTag="")
         {
             if (Static.Link)
             {
-                WindowSetParameter window = new WindowSetParameter(opcName, parameterName, minValue, maxValue, opcTag, valueType, popup, digit, firstPrompt, secondPrompt, thirdPrompt, fourthPrompt, stepFeed);
+                WindowSetParameter window = new WindowSetParameter(opcName, parameterName, minValue, maxValue, opcTag, valueType, popup, digit, firstPrompt, secondPrompt, thirdPrompt, fourthPrompt, stepFeed, additionalTag);
                 window.Show();
                 window.SelText();
             }

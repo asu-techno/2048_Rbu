@@ -11,7 +11,9 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 using _2048_Rbu.Classes;
 using _2048_Rbu.Interfaces;
+using _2048_Rbu.Windows;
 using AS_Library.Annotations;
+using AS_Library.Classes;
 using AsuBetonLibrary.Abstract;
 using AsuBetonLibrary.Readers;
 using DevExpress.Data.Browsing;
@@ -57,7 +59,7 @@ namespace _2048_Rbu.Elements.Control
         static object lockerValue = new object();
         private OPC_client _opc;
         private OpcServer.OpcList _opcName;
-        private long _id, _currentId;
+        private long _id, _currentId, _currentMixerId;
         private string[,] _materialTags;
 
         private int _tempCurrentBatchNum, _tempBatchesQuantity;
@@ -72,6 +74,7 @@ namespace _2048_Rbu.Elements.Control
         {
             CreateSubscription();
         }
+
         public void Unsubscribe()
         {
         }
@@ -111,6 +114,10 @@ namespace _2048_Rbu.Elements.Control
             var additiveDone = new OpcMonitoredItem(_opc.cl.GetNode("DozingAdditive_Done"), OpcAttribute.Value);
             additiveDone.DataChangeReceived += HandleItemDoneChanged;
             OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(additiveDone);
+
+            var mixerIdItem = new OpcMonitoredItem(_opc.cl.GetNode("Mixer.TaskID_mixer"), OpcAttribute.Value);
+            mixerIdItem.DataChangeReceived += HandleMixerIdChanged;
+            OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(mixerIdItem);
         }
 
         private void HandleIdChanged(object sender, OpcDataChangeReceivedEventArgs e)
@@ -167,6 +174,17 @@ namespace _2048_Rbu.Elements.Control
             {
                 ComponentsWeight = double.Parse(e.Item.Value.ToString());
                 ProgressBrush = ComponentsWeight == 0 ? System.Windows.Media.Brushes.White : (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF85FC84"));
+            }
+            catch (Exception exception)
+            {
+            }
+        }
+
+        private void HandleMixerIdChanged(object sender, OpcDataChangeReceivedEventArgs e)
+        {
+            try
+            {
+                _currentMixerId = long.Parse(e.Item.Value.ToString());
             }
             catch (Exception exception)
             {
@@ -250,6 +268,17 @@ namespace _2048_Rbu.Elements.Control
             }
         }
 
+        private bool _visSetBatchesQuantity;
+        public bool VisSetBatchesQuantity
+        {
+            get { return _visSetBatchesQuantity; }
+            set
+            {
+                _visSetBatchesQuantity = value;
+                OnPropertyChanged(nameof(VisSetBatchesQuantity));
+            }
+        }
+
         public async void GetTable()
         {
             await Task.Run(() =>
@@ -283,6 +312,9 @@ namespace _2048_Rbu.Elements.Control
                             DosingProcess = null;
                             _currentId = _id;
                         }
+
+                        VisSetBatchesQuantity = BatchesQuantity.GetValueOrDefault() > 1 &&
+                                                CurrentBatchNum.GetValueOrDefault() < BatchesQuantity.GetValueOrDefault();
                     }
                     catch (Exception ex)
                     {
@@ -294,25 +326,25 @@ namespace _2048_Rbu.Elements.Control
 
         private void GetMaterials()
         {
-            
-                var recipes = new ObservableCollection<ApiRecipe>(RecipesReader.ListRecipes());
-                var selRecipe = recipes.FirstOrDefault(x => x.Id == ViewModelTabl.CurrentSelTask.Recipe.Id);
-                _materials = new ObservableCollection<ApiRecipeMaterial>(selRecipe.RecipeMaterials);
-                _containers = new ObservableCollection<ApiContainer>(ContainersReader.ListContainers());
 
-                DosingTask = new ObservableCollection<ViewDosingTask>();
-                _materialTags = new string[_materials.Count, 4];
+            var recipes = new ObservableCollection<ApiRecipe>(RecipesReader.ListRecipes());
+            var selRecipe = recipes.FirstOrDefault(x => x.Id == ViewModelTabl.CurrentSelTask.Recipe.Id);
+            _materials = new ObservableCollection<ApiRecipeMaterial>(selRecipe.RecipeMaterials);
+            _containers = new ObservableCollection<ApiContainer>(ContainersReader.ListContainers());
 
-                for (int i = 0; i < _materials.Count; i++)
-                {
-                    DosingTask.Add(new ViewDosingTask());
+            DosingTask = new ObservableCollection<ViewDosingTask>();
+            _materialTags = new string[_materials.Count, 4];
 
-                    if (_materials[i].Material.Name != null)
-                        DosingTask[i].MaterialName = _materials[i].Material.Name;
-                    else
-                        DosingTask[i].MaterialName = "";
-                }
-        } 
+            for (int i = 0; i < _materials.Count; i++)
+            {
+                DosingTask.Add(new ViewDosingTask());
+
+                if (_materials[i].Material.Name != null)
+                    DosingTask[i].MaterialName = _materials[i].Material.Name;
+                else
+                    DosingTask[i].MaterialName = "";
+            }
+        }
 
         private void GetTags()
         {
@@ -415,6 +447,19 @@ namespace _2048_Rbu.Elements.Control
 
                     DosingTask[i].ProgressDone = (DosingTask[i].CurrentProgress == ComponentsWeight) || DosingProcess == 100;
                 }
+            }
+        }
+
+        private RelayCommand _setBatchesQuantity;
+        public RelayCommand SetBatchesQuantity
+        {
+            get
+            {
+                return _setBatchesQuantity ??
+                       (_setBatchesQuantity = new RelayCommand(obj =>
+                       {
+                           Methods.SetParameter(_opcName, "Количество замесов", (int)CurrentBatchNum, (int)BatchesQuantity, "PAR_BatchesQuantity", WindowSetParameter.ValueType.Int16, null, 0, null, null, null, null, null, _id == _currentMixerId ? "Mixer.PAR_BatchesQuantity" : "");
+                       }));
             }
         }
     }

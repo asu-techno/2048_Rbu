@@ -34,7 +34,7 @@ namespace _2048_Rbu.Windows
         private OpcServer.OpcList _opcName;
         private OPC_client _opc;
         private Popup _popup;
-        private string _opcTag, _startValue;
+        private string _opcTag, _startValue, _additionalTag;
         private ValueType _valueType;
         private double _finishValue;
         private bool _err;
@@ -208,7 +208,7 @@ namespace _2048_Rbu.Windows
             }
         }
 
-        public WindowSetParameter(OpcServer.OpcList opcName, string parameterName, double minValue, double maxValue, string opcTag, ValueType valueType, Popup popup = null, int digit = 1, double? firstPrompt = null, double? secondPrompt = null, double? thirdPrompt = null, double? fourthPrompt = null, double? stepFeed = null)
+        public WindowSetParameter(OpcServer.OpcList opcName, string parameterName, double minValue, double maxValue, string opcTag, ValueType valueType, Popup popup = null, int digit = 1, double? firstPrompt = null, double? secondPrompt = null, double? thirdPrompt = null, double? fourthPrompt = null, double? stepFeed = null, string additionalTag = "")
         {
             InitializeComponent();
             KeyDown += OnKeyDown;
@@ -228,6 +228,7 @@ namespace _2048_Rbu.Windows
             _valueType = valueType;
             _digit = digit;
             _opc = OpcServer.GetInstance().GetOpc(_opcName);
+            _additionalTag = additionalTag;
 
             switch (_valueType)
             {
@@ -291,10 +292,14 @@ namespace _2048_Rbu.Windows
                                 break;
                             case ValueType.Int16:
                                 _opc.cl.WriteInt16(_opcTag, Convert.ToInt16(_finishValue), out _err);
+                                if (!string.IsNullOrEmpty(_additionalTag))
+                                {
+                                    _opc.cl.WriteInt16(_additionalTag, Convert.ToInt16(_finishValue), out _err);
+                                }
                                 break;
                             case ValueType.Int32:
                                 _opc.cl.WriteInt32(_opcTag, Convert.ToInt32(_finishValue), out _err);
-                                break;
+                                    break;
                             case ValueType.Real:
                                 _opc.cl.WriteReal(_opcTag, (float)_finishValue, out _err);
                                 break;

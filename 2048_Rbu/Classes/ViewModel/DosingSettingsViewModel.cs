@@ -33,6 +33,7 @@ namespace _2048_Rbu.Classes.ViewModel
         private string _tagWeight, _tagPreciseDos;
         private Static.ContainerItem _containerItem;
         private DosingSettingType _typeMaterial;
+        private int _digit;
 
         private WorkMode[] _workMode;
         public WorkMode[] WorkMode
@@ -257,6 +258,8 @@ namespace _2048_Rbu.Classes.ViewModel
                     break;
             }
 
+            _digit = _containerItem == Static.ContainerItem.Additive1 ? 2 : 1;
+
             NameWindow += Static.СontainerNameDictionary[_containerItem] + " (" + Static.СontainerMaterialDictionary[_containerItem] + ")";
 
             Subscribe();
@@ -303,7 +306,7 @@ namespace _2048_Rbu.Classes.ViewModel
 
         private void HandleWeightChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
-            WeightDiff = double.Parse(e.Item.Value.ToString()).ToString("F1");
+            WeightDiff = double.Parse(e.Item.Value.ToString()).ToString($"F{_digit}");
         }
 
         private void HandlePercentRoughtChanged(object sender, OpcDataChangeReceivedEventArgs e)
@@ -313,7 +316,7 @@ namespace _2048_Rbu.Classes.ViewModel
 
         private void HandleWeightPreciseChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
-            WeightPrecise = double.Parse(e.Item.Value.ToString()).ToString("F1");
+            WeightPrecise = double.Parse(e.Item.Value.ToString()).ToString($"F{_digit}");
         }
 
         private void HandleByPercentChanged(object sender, OpcDataChangeReceivedEventArgs e)
@@ -328,7 +331,7 @@ namespace _2048_Rbu.Classes.ViewModel
             {
                 return _setWeightDiff ??= new RelayCommand((o) =>
                 {
-                    Methods.SetParameter(_opcName, NameWindow + ". Недосып, кг", 0.0, 100.0, "WeightDiff_" + _tagWeight, WindowSetParameter.ValueType.Real, null, 1, 10.0, 20.0, 50.0, 100.0, 10.0);
+                    Methods.SetParameter(_opcName, NameWindow + ". Недосып, кг", 0.0, 100.0, "WeightDiff_" + _tagWeight, WindowSetParameter.ValueType.Real, null, _digit, 10.0, 20.0, 50.0, 100.0, 10.0);
                 });
             }
         }
@@ -352,7 +355,7 @@ namespace _2048_Rbu.Classes.ViewModel
             {
                 return _setWeightPrecise ??= new RelayCommand((o) =>
                 {
-                    Methods.SetParameter(_opcName, NameWindow + ". Масса точного дозирования, %", 0.0, 1000.0, _tagPreciseDos + ".PreciseWeight", WindowSetParameter.ValueType.Real, null, 1, 10.0, 50.0, 100.0, 500.0, 50.0);
+                    Methods.SetParameter(_opcName, NameWindow + ". Масса точного дозирования, кг", 0.0, 1000.0, _tagPreciseDos + ".PreciseWeight", WindowSetParameter.ValueType.Real, null, _digit, 10.0, 50.0, 100.0, 500.0, 50.0);
                 });
             }
         }

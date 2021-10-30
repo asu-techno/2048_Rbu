@@ -823,8 +823,6 @@ namespace _2048_Rbu.Elements
                 LinkOk = Static.Link = false;
                 _cycle = 15;
             }
-
-            LinkOk = Static.Link = true;
             IsUpdating = false;
         }
 

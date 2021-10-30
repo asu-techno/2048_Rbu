@@ -24,6 +24,8 @@ namespace _2048_Rbu.Classes.ViewModel
         private OpcServer.OpcList _opcName;
         private readonly int _numSilo;
 
+        private int _digit;
+
         private string _nameContainer;
         public string NameContainer
         {
@@ -35,8 +37,8 @@ namespace _2048_Rbu.Classes.ViewModel
             }
         }
 
-        private double _addVolume;
-        public double AddVolume
+        private string _addVolume;
+        public string AddVolume
         {
             get { return _addVolume; }
             set
@@ -46,8 +48,8 @@ namespace _2048_Rbu.Classes.ViewModel
             }
         }
 
-        private double _parVolume;
-        public double ParVolume
+        private string _parVolume;
+        public string ParVolume
         {
             get { return _parVolume; }
             set
@@ -57,8 +59,8 @@ namespace _2048_Rbu.Classes.ViewModel
             }
         }
 
-        private double _currentVolume;
-        public double CurrentVolume
+        private string _currentVolume;
+        public string CurrentVolume
         {
             get { return _currentVolume; }
             set
@@ -115,6 +117,7 @@ namespace _2048_Rbu.Classes.ViewModel
 
             NameContainer = "Настройки массы емкости. " + Static.СontainerNameDictionary[_containerItem] + " (" + Static.СontainerMaterialDictionary[_containerItem] + ")";
 
+            _digit = containerSettingsItem == Static.ContainerItem.Additive1 ? 2 : 1;
             Subscribe();
         }
 
@@ -157,17 +160,17 @@ namespace _2048_Rbu.Classes.ViewModel
 
         private void HandleAddVolumeChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
-            AddVolume = double.Parse(e.Item.Value.ToString());
+            AddVolume = double.Parse(e.Item.Value.ToString()).ToString($"F{_digit}");
         }
 
         private void HandleParVolumeChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
-            ParVolume = double.Parse(e.Item.Value.ToString());
+            ParVolume = double.Parse(e.Item.Value.ToString()).ToString($"F{_digit}");
         }
 
         private void HandleCurrentVolumeChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
-            CurrentVolume = double.Parse(e.Item.Value.ToString());
+            CurrentVolume = double.Parse(e.Item.Value.ToString()).ToString($"F{_digit}");
         }
 
         private void HandleLoadCementChanged(object sender, OpcDataChangeReceivedEventArgs e)
@@ -183,7 +186,7 @@ namespace _2048_Rbu.Classes.ViewModel
                 return _setAddVolume ??= new RelayCommand((o) =>
                 {
                     Methods.SetParameter(_opcName, NameContainer + ". Масса загружаемого материала", 0, 70000,
-                        "Add_Volume[" + _contNumDictionary[_containerItem] + "]", WindowSetParameter.ValueType.Real, null, 1, 100, 1000, 5000, 50000, 500);
+                        "Add_Volume[" + _contNumDictionary[_containerItem] + "]", WindowSetParameter.ValueType.Real, null, _digit, 100, 1000, 5000, 50000, 500);
                 });
             }
         }
@@ -196,7 +199,7 @@ namespace _2048_Rbu.Classes.ViewModel
                 return _setParVolume ??= new RelayCommand((o) =>
                 {
                     Methods.SetParameter(_opcName, NameContainer + ". Вместимость емкости", 0, 70000,
-                        "PAR_Volume[" + _contNumDictionary[_containerItem] + "]", WindowSetParameter.ValueType.Real, null, 1, 100, 1000, 5000, 50000, 500);
+                        "PAR_Volume[" + _contNumDictionary[_containerItem] + "]", WindowSetParameter.ValueType.Real, null, _digit, 100, 1000, 5000, 50000, 500);
                 });
             }
         }
@@ -209,7 +212,7 @@ namespace _2048_Rbu.Classes.ViewModel
                 return _setVolume ??= new RelayCommand((o) =>
                 {
                     Methods.SetParameter(_opcName, NameContainer + ". Текущая масса, кг", 0, 70000,
-                        "Volume[" + _contNumDictionary[_containerItem] + "]", WindowSetParameter.ValueType.Real, null, 1, 100, 1000, 5000, 50000, 500);
+                        "Volume[" + _contNumDictionary[_containerItem] + "]", WindowSetParameter.ValueType.Real, null, _digit, 100, 1000, 5000, 50000, 500);
                 });
             }
         }

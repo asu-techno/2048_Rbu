@@ -52,7 +52,7 @@
             <Grid Margin="0,5,0,0">
                 <Grid.Style>
                     <Style TargetType="{x:Type Grid}">
-                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Setter Property="Visibility" Value="Visible"/>
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding VisPrompt}" Value="True">
                                 <Setter Property="Visibility" Value="Visible"/>
@@ -60,10 +60,10 @@
                         </Style.Triggers>
                     </Style>
                 </Grid.Style>
-                <Button Name="BtnFirst" VerticalAlignment="Top" HorizontalAlignment="Center" Width="60" Height="30" Margin="0,0,190,0" Background="LightBlue" BorderBrush="Black" BorderThickness="1" FontSize="14" FontWeight="Bold" Content="{Binding FirstPrompt}" ContentStringFormat="{Binding ValueStringFormat}" Click="BtnFirst_OnClick"/>
-                <Button Name="BtnSecond" VerticalAlignment="Top" HorizontalAlignment="Center" Width="60" Height="30" Margin="0,0,63,0" Background="LightBlue" BorderBrush="Black" BorderThickness="1" FontSize="14" FontWeight="Bold" Content="{Binding SecondPrompt}" ContentStringFormat="{Binding ValueStringFormat}" Click="BtnSecond_OnClick"/>
-                <Button Name="BtnThird" VerticalAlignment="Top" HorizontalAlignment="Center" Width="60" Height="30" Margin="63,0,0,0" Background="LightBlue" BorderBrush="Black" BorderThickness="1" FontSize="14" FontWeight="Bold" Content="{Binding ThirdPrompt}" ContentStringFormat="{Binding ValueStringFormat}" Click="BtnThird_OnClick"/>
-                <Button Name="BtnFourth" VerticalAlignment="Top" HorizontalAlignment="Center" Width="60" Height="30" Margin="190,0,0,0" Background="LightBlue" BorderBrush="Black" BorderThickness="1" FontSize="14" FontWeight="Bold" Content="{Binding FourthPrompt}" ContentStringFormat="{Binding ValueStringFormat}" Click="BtnFourth_OnClick"/>
+                <Button Name="BtnFirst" VerticalAlignment="Top" HorizontalAlignment="Center" Width="65" Height="30" Margin="0,0,201,0" Background="LightBlue" BorderBrush="Black" BorderThickness="1" FontSize="14" FontWeight="Bold" Content="{Binding FirstPrompt}" ContentStringFormat="{Binding ValueStringFormat}" Click="BtnFirst_OnClick"/>
+                <Button Name="BtnSecond" VerticalAlignment="Top" HorizontalAlignment="Center" Width="65" Height="30" Margin="0,0,67,0" Background="LightBlue" BorderBrush="Black" BorderThickness="1" FontSize="14" FontWeight="Bold" Content="{Binding SecondPrompt}" ContentStringFormat="{Binding ValueStringFormat}" Click="BtnSecond_OnClick"/>
+                <Button Name="BtnThird" VerticalAlignment="Top" HorizontalAlignment="Center" Width="65" Height="30" Margin="67,0,0,0" Background="LightBlue" BorderBrush="Black" BorderThickness="1" FontSize="14" FontWeight="Bold" Content="{Binding ThirdPrompt}" ContentStringFormat="{Binding ValueStringFormat}" Click="BtnThird_OnClick"/>
+                <Button Name="BtnFourth" VerticalAlignment="Top" HorizontalAlignment="Center" Width="65" Height="30" Margin="201,0,0,0" Background="LightBlue" BorderBrush="Black" BorderThickness="1" FontSize="14" FontWeight="Bold" Content="{Binding FourthPrompt}" ContentStringFormat="{Binding ValueStringFormat}" Click="BtnFourth_OnClick"/>
             </Grid>
             <Grid Margin="0,15,0,10">
                 <Button Name="BtnSave" VerticalAlignment="Top" HorizontalAlignment="Center" Width="120" Height="30" Margin="0,0,130,0" Background="LightBlue" BorderBrush="Black" BorderThickness="1" FontSize="14" FontWeight="Bold" Content="Сохранить" Click="BtnSave_Click" />

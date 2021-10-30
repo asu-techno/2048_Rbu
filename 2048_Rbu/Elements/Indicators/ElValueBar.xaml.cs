@@ -168,6 +168,7 @@ namespace _2048_Rbu.Elements.Indicators
             _opcName = opcName;
 
             ValueBox.Initialize(_opcName);
+            ValueBox.Digit = ContainerItem == Static.ContainerItem.Additive1?2:1;
 
             DataContext = this;
         }

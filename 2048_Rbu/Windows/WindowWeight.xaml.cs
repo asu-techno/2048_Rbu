@@ -17,12 +17,6 @@ namespace _2048_Rbu.Windows
     /// </summary>
     public partial class WindowWeight : INotifyPropertyChanged
     {
-        OpcServer.OpcList _opcName;
-        private OPC_client _opc;
-        private bool _err;
-        private string _materialName;
-        private string _tagName;
-
         public enum TypeMaterial
         {
             Cement = 1,
@@ -30,6 +24,13 @@ namespace _2048_Rbu.Windows
             Additive,
             Inert
         }
+
+        OpcServer.OpcList _opcName;
+        private OPC_client _opc;
+        private bool _err;
+        private string _materialName;
+        private string _tagName;
+        private TypeMaterial _typeMaterial;
 
         private string _signEmpty;
         public string SignEmpty
@@ -62,10 +63,10 @@ namespace _2048_Rbu.Windows
         public WindowWeight(OpcServer.OpcList opcName, TypeMaterial typeMaterial)
         {
             _opcName = opcName;
-
+            _typeMaterial = typeMaterial;
             InitializeComponent();
 
-            switch (typeMaterial)
+            switch (_typeMaterial)
             {
                 case TypeMaterial.Cement:
                     _tagName = "Cement";
@@ -125,14 +126,14 @@ namespace _2048_Rbu.Windows
 
         private void HandleEmptyChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
-            SignEmpty = double.Parse(e.Item.Value.ToString()).ToString("F1");
+            SignEmpty = double.Parse(e.Item.Value.ToString()).ToString(_typeMaterial==TypeMaterial.Additive ? "F2" : "F1");
         }
 
         private void LblEmpty_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             object btn = e.Source;
 
-            Methods.SetParameter(LblEmpty, btn, _opcName, "Весы " + _materialName + ".Признак пустоты, кг", 0.0, 100.0, "Scale_isEmpty_" + _tagName, WindowSetParameter.ValueType.Real, null, 1, 10.0, 20.0, 50.0, 100.0, 10.0);
+            Methods.SetParameter(LblEmpty, btn, _opcName, "Весы " + _materialName + ". Признак пустоты, кг", 0.0, 100.0, "Scale_isEmpty_" + _tagName, WindowSetParameter.ValueType.Real, null, _typeMaterial == TypeMaterial.Additive ? 2:1, 10.0, 20.0, 50.0, 100.0, 10.0);
         }
 
         private void BtnUseWeight_Click(object sender, RoutedEventArgs e)

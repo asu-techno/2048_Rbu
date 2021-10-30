@@ -13,6 +13,45 @@
         <Label Name="lbl_State" Content="{Binding Path=CurrentBatchNum, UpdateSourceTrigger=PropertyChanged}" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="154,25,0,0" BorderBrush="Black" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Width="50" Height="22" Background="Silver"/>
         <Label Content="из" FontSize="16" FontWeight="Normal" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="208,26,0,0" Padding="0" VerticalAlignment="Top" Width="24"/>
         <Label Background="Silver" BorderBrush="Black" BorderThickness="1" Content="{Binding Path=BatchesQuantity, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Height="22" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="235,25,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="50"/>
+        <Label Name="LblSetBatchesQuantity" VerticalAlignment="Top" HorizontalAlignment="Left" Width="50" Height="22" Margin="235,25,0,0"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" FontSize="14" ToolTip="Изменить количество замесов">
+            <Label.InputBindings>
+                <MouseBinding Command="{Binding SetBatchesQuantity}" MouseAction="LeftClick"/>
+            </Label.InputBindings>
+            <Label.Style>
+                <Style TargetType="{x:Type Label}">
+                    <Setter Property="OverridesDefaultStyle" Value="True"/>
+                    <Setter Property="SnapsToDevicePixels" Value="True"/>
+                    <Setter Property="FontSize" Value="14"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type Label}">
+                                <Border Name="Border" BorderThickness="1" Opacity="1">
+                                    <TextBlock Text="{Binding BatchesQuantity}" TextAlignment="Center" VerticalAlignment="Center" Height="20"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="False">
+                                        <Setter TargetName="Border" Property="Background" Value="#FFADD8E6"/>
+                                        <Setter TargetName="Border" Property="BorderBrush" Value="#FF000000"/>
+                                        <Setter Property="Foreground" Value="#FF000000"/>
+                                    </Trigger>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="Border" Property="Background" Value="#FFC9DEF5"/>
+                                        <Setter TargetName="Border" Property="BorderBrush" Value="#FF3399FF"/>
+                                        <Setter Property="Foreground" Value="#FF000000"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding VisSetBatchesQuantity}" Value="True">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Label.Style>
+        </Label>
         <Label Content="Дозирование" FontSize="16" FontWeight="Normal" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,50,0,0" Padding="0" VerticalAlignment="Top" Width="224"/>
         <Border BorderThickness="1" BorderBrush="Black" Width="300" Height="23" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,75,0,0">
             <Grid>
