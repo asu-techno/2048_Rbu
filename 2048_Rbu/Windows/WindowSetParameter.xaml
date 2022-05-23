@@ -52,7 +52,7 @@
             <Grid Margin="0,5,0,0">
                 <Grid.Style>
                     <Style TargetType="{x:Type Grid}">
-                        <Setter Property="Visibility" Value="Visible"/>
+                        <Setter Property="Visibility" Value="Collapsed"/>
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding VisPrompt}" Value="True">
                                 <Setter Property="Visibility" Value="Visible"/>
