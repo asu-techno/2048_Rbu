@@ -967,9 +967,9 @@
                   <Name>Text22</Name>
                   <Page isRef="9" />
                   <Parent isRef="56" />
-                  <Text>{Batches_MaterialsUnloadReports.FinishWeight}</Text>
+                  <Text>{IIF(Batches_MaterialsUnloadReports.Batcher == "Дозатор хим/добавки", Batches_MaterialsUnloadReports.FinishWeight.ToString("F2"), Batches_MaterialsUnloadReports.FinishWeight.ToString("F1"))}</Text>
                   <TextBrush>Black</TextBrush>
-                  <Type>DataColumn</Type>
+                  <Type>Expression</Type>
                   <VertAlignment>Center</VertAlignment>
                 </Text22>
                 <Text21 Ref="58" type="Text" isKey="true">
@@ -988,7 +988,7 @@
                   <Name>Text21</Name>
                   <Page isRef="9" />
                   <Parent isRef="56" />
-                  <Text>{Batches_MaterialsUnloadReports.StartWeight}</Text>
+                  <Text>{IIF(Batches_MaterialsUnloadReports.Batcher == "Дозатор хим/добавки", Batches_MaterialsUnloadReports.StartWeight.ToString("F2"), Batches_MaterialsUnloadReports.StartWeight.ToString("F1"))}</Text>
                   <TextBrush>Black</TextBrush>
                   <Type>Expression</Type>
                   <VertAlignment>Center</VertAlignment>
@@ -1018,9 +1018,9 @@
                           <Name>Text25</Name>
                           <Page isRef="9" />
                           <Parent isRef="60" />
-                          <Text>{Batches_MaterialsUnloadReports_MaterialsDosingReports.StartWeight}</Text>
+                          <Text>{IIF(Batches_MaterialsUnloadReports_MaterialsDosingReports.Batches_MaterialsUnloadReports.Batcher == "Дозатор хим/добавки", Batches_MaterialsUnloadReports_MaterialsDosingReports.StartWeight.ToString("F2"), Batches_MaterialsUnloadReports_MaterialsDosingReports.StartWeight.ToString("F1"))}</Text>
                           <TextBrush>Black</TextBrush>
-                          <Type>DataColumn</Type>
+                          <Type>Expression</Type>
                           <VertAlignment>Center</VertAlignment>
                         </Text25>
                         <Text28 Ref="62" type="Text" isKey="true">
@@ -1037,9 +1037,9 @@
                           <Name>Text28</Name>
                           <Page isRef="9" />
                           <Parent isRef="60" />
-                          <Text>{Batches_MaterialsUnloadReports_MaterialsDosingReports.FinishWeight}</Text>
+                          <Text>{IIF(Batches_MaterialsUnloadReports_MaterialsDosingReports.Batches_MaterialsUnloadReports.Batcher == "Дозатор хим/добавки", Batches_MaterialsUnloadReports_MaterialsDosingReports.FinishWeight.ToString("F2"), Batches_MaterialsUnloadReports_MaterialsDosingReports.FinishWeight.ToString("F1"))}</Text>
                           <TextBrush>Black</TextBrush>
-                          <Type>DataColumn</Type>
+                          <Type>Expression</Type>
                           <VertAlignment>Center</VertAlignment>
                         </Text28>
                         <Text32 Ref="63" type="Text" isKey="true">
@@ -1056,7 +1056,7 @@
                           <Name>Text32</Name>
                           <Page isRef="9" />
                           <Parent isRef="60" />
-                          <Text>{Batches_MaterialsUnloadReports_MaterialsDosingReports.FinishWeight-Batches_MaterialsUnloadReports_MaterialsDosingReports.StartWeight}</Text>
+                          <Text>{IIF(Batches_MaterialsUnloadReports_MaterialsDosingReports.Batches_MaterialsUnloadReports.Batcher == "Дозатор хим/добавки", (Batches_MaterialsUnloadReports_MaterialsDosingReports.FinishWeight-Batches_MaterialsUnloadReports_MaterialsDosingReports.StartWeight).ToString("F2"), (Batches_MaterialsUnloadReports_MaterialsDosingReports.FinishWeight-Batches_MaterialsUnloadReports_MaterialsDosingReports.StartWeight).ToString("F1"))}</Text>
                           <TextBrush>Black</TextBrush>
                           <Type>Expression</Type>
                           <VertAlignment>Center</VertAlignment>
@@ -1094,9 +1094,9 @@
                           <Name>Text36</Name>
                           <Page isRef="9" />
                           <Parent isRef="60" />
-                          <Text>{Batches_MaterialsUnloadReports_MaterialsDosingReports.SetVolume}</Text>
+                          <Text>{IIF(Batches_MaterialsUnloadReports_MaterialsDosingReports.Batches_MaterialsUnloadReports.Batcher == "Дозатор хим/добавки", Batches_MaterialsUnloadReports_MaterialsDosingReports.SetVolume.ToString("F2"), Batches_MaterialsUnloadReports_MaterialsDosingReports.SetVolume.ToString("F1"))}</Text>
                           <TextBrush>Black</TextBrush>
-                          <Type>DataColumn</Type>
+                          <Type>Expression</Type>
                           <VertAlignment>Center</VertAlignment>
                         </Text36>
                         <Text37 Ref="66" type="Text" isKey="true">
@@ -1113,7 +1113,7 @@
                           <Name>Text37</Name>
                           <Page isRef="9" />
                           <Parent isRef="60" />
-                          <Text>{Batches_MaterialsUnloadReports_MaterialsDosingReports.FinishWeight-Batches_MaterialsUnloadReports_MaterialsDosingReports.StartWeight-Batches_MaterialsUnloadReports_MaterialsDosingReports.SetVolume}</Text>
+                          <Text>{IIF(Batches_MaterialsUnloadReports_MaterialsDosingReports.Batches_MaterialsUnloadReports.Batcher == "Дозатор хим/добавки", (Batches_MaterialsUnloadReports_MaterialsDosingReports.FinishWeight-Batches_MaterialsUnloadReports_MaterialsDosingReports.StartWeight-Batches_MaterialsUnloadReports_MaterialsDosingReports.SetVolume).ToString("F2"), (Batches_MaterialsUnloadReports_MaterialsDosingReports.FinishWeight-Batches_MaterialsUnloadReports_MaterialsDosingReports.StartWeight-Batches_MaterialsUnloadReports_MaterialsDosingReports.SetVolume).ToString("F1"))}</Text>
                           <TextBrush>Black</TextBrush>
                           <Type>Expression</Type>
                           <VertAlignment>Center</VertAlignment>
@@ -1196,7 +1196,7 @@
                   <Name>Text23</Name>
                   <Page isRef="9" />
                   <Parent isRef="56" />
-                  <Text>{Batches_MaterialsUnloadReports.StartWeight-Batches_MaterialsUnloadReports.FinishWeight}</Text>
+                  <Text>{IIF(Batches_MaterialsUnloadReports.Batcher == "Дозатор хим/добавки",(Batches_MaterialsUnloadReports.StartWeight-Batches_MaterialsUnloadReports.FinishWeight).ToString("F2"), (Batches_MaterialsUnloadReports.StartWeight-Batches_MaterialsUnloadReports.FinishWeight).ToString("F1"))}</Text>
                   <TextBrush>Black</TextBrush>
                   <Type>Expression</Type>
                   <VertAlignment>Center</VertAlignment>
@@ -1264,7 +1264,7 @@
               <Name>Text7</Name>
               <Page isRef="9" />
               <Parent isRef="71" />
-              <Text>{Sum(Batches_MaterialsUnloadReports.StartWeight-Batches_MaterialsUnloadReports.FinishWeight)}</Text>
+              <Text>{Sum(Batches_MaterialsUnloadReports.StartWeight-Batches_MaterialsUnloadReports.FinishWeight).ToString("F2")}</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
@@ -1284,7 +1284,7 @@
               <Name>Text55</Name>
               <Page isRef="9" />
               <Parent isRef="71" />
-              <Text>{Sum(Batches_MaterialsUnloadReports.DosingWeightTotal)}</Text>
+              <Text>{Sum(Batches_MaterialsUnloadReports.DosingWeightTotal).ToString("F2")}</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
@@ -1304,7 +1304,7 @@
               <Name>Text56</Name>
               <Page isRef="9" />
               <Parent isRef="71" />
-              <Text>{Sum(Batches_MaterialsUnloadReports.SetVolumeTotal)}</Text>
+              <Text>{Sum(Batches_MaterialsUnloadReports.SetVolumeTotal).ToString("F2")}</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
@@ -1366,7 +1366,7 @@
             <Text60 Ref="78" type="Text" isKey="true">
               <Border>All;[255:255:255];2;Solid;False;4;[141:179:226]</Border>
               <Brush>[141:179:226]</Brush>
-              <ClientRectangle>-0,0,5,0.8</ClientRectangle>
+              <ClientRectangle>0,0,5,0.8</ClientRectangle>
               <ComponentStyle>Header</ComponentStyle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
@@ -1422,13 +1422,13 @@
     <value>Stimulsoft.Report.Dll</value>
   </ReferencedAssemblies>
   <ReportAlias>Report</ReportAlias>
-  <ReportChanged>1/19/2021 12:15:08 PM</ReportChanged>
+  <ReportChanged>11/11/2021 1:51:20 PM</ReportChanged>
   <ReportCreated>12/22/2020 7:22:15 AM</ReportCreated>
-  <ReportFile>Data\ReportTemplates\TaskReport.mrt</ReportFile>
-  <ReportGuid>e69ba3931ab94f43ad77dd375cc425c1</ReportGuid>
+  <ReportFile>C:\Users\Nrj\source\repos\ASU-Techno\2048_Rbu\2048_Rbu\Data\ReportTemplates\TaskReport.mrt</ReportFile>
+  <ReportGuid>6c946f085d604ad8862655279dd1cfcc</ReportGuid>
   <ReportName>Report</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
-  <ReportVersion>2020.5.2.0</ReportVersion>
+  <ReportVersion>2021.2.2.0</ReportVersion>
   <Script>using System;
 using System.Drawing;
 using System.Windows.Forms;
