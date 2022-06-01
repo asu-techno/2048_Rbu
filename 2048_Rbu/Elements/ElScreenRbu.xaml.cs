@@ -55,8 +55,8 @@ namespace _2048_Rbu.Elements
             ViewModelScreenRbu = new ViewModelScreenRbu(_opcName);
             DataContext = ViewModelScreenRbu;
 
-            ElArchiversViewModel = new ElArchiversViewModel();
-            Closed += ElArchiversViewModel.OnClosed;
+            //ElArchiversViewModel = new ElArchiversViewModel();
+            //Closed += ElArchiversViewModel.OnClosed;
 
             ViewModelScreenRbu.IsUpdating = true;
 
@@ -823,6 +823,7 @@ namespace _2048_Rbu.Elements
                 LinkOk = Static.Link = false;
                 _cycle = 15;
             }
+            LinkOk = Static.Link = true;
             IsUpdating = false;
         }
 
