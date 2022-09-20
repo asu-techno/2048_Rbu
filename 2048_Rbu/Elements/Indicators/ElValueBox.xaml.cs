@@ -122,7 +122,7 @@ namespace _2048_Rbu.Elements.Indicators
             {
                 var length = value;
                 LblValue.Width = Math.Max(length * 10 + 1, 20);
-                LblText.Margin = new Thickness(LblValue.Width - 1, 0, 0, 0);
+                //LblText.Margin = new Thickness(LblValue.Width - 0, 0, 0, 0);
                 _count = value;
             }
         }

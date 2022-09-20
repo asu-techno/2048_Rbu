@@ -4,30 +4,76 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d"
-             d:DesignWidth="66" d:DesignHeight="46" MouseEnter="Rect_OnMouseEnter" MouseLeave="Rect_OnMouseLeave">
+             d:DesignWidth="42" d:DesignHeight="42" MouseEnter="Rect_OnMouseEnter" MouseLeave="Rect_OnMouseLeave">
     <Grid>
-        <Grid Name="ObjectGrid" VerticalAlignment="Top" HorizontalAlignment="Left" Width="32" Height="22" Margin="17.5,12.5">
-            <Image Name="img_On" VerticalAlignment="Top" HorizontalAlignment="Left" Width="26" Height="16" Margin="2.5" Visibility="{Binding VisOn}" Source="../../Images/Mechs/img_Motor_On.png"/>
-            <Image Name="img_Alarm" VerticalAlignment="Top" HorizontalAlignment="Left" Width="26" Height="16" Margin="2.5" Visibility="{Binding VisAlarm}" Source="../../Images/Mechs/img_Motor_Alarm.png"/>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="12"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        
+        <Grid Grid.Row="1" Name="ObjectGrid"  VerticalAlignment="Top" HorizontalAlignment="Left" Width="42" Height="30" >
+            <Image Name="img_On"    Visibility="{Binding VisOn}"     Source="../../Images/Mechs_Redesign/img_Motor_Left_ON.png"/>
+            <Image Name="img_Alarm" Visibility="{Binding VisAlarm}"  Source="../../Images/Mechs_Redesign/img_Motor_Left_ALARM.png"/>
         </Grid>
-        <TextBlock Name="tbc_name" FontSize="14" Text="МXXX" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,25,0,0" TextAlignment="Left"/>
-        <Label Name="lbl_mode" Width="12" Height="12" BorderThickness="1" BorderBrush="Black" Background="Yellow" Margin="-70,0,0,0">
+
+        <Label Grid.Row="0" 
+               Name="lbl_mode" 
+               Width="10" 
+               Height="12" 
+               HorizontalContentAlignment="Left"
+               VerticalAlignment="Top"
+               VerticalContentAlignment="Center"
+               BorderThickness="0"
+               Background="#343536" 
+               Foreground="#FFE91F"
+               FontSize="10"
+               Visibility="Visible"
+               >
+            
             <Label.Style>
                 <Style TargetType="{x:Type Label}">
                     <Setter Property="Visibility" Value="Visible" />
+                    <Setter Property="HorizontalAlignment" Value="Center"/>
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding ModeAutomat}" Value="True">
                             <Setter Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
+                        <DataTrigger Binding="{Binding Rotate}" Value="False">
+                            <Setter Property="HorizontalAlignment" Value="Right"/>
+                        </DataTrigger>
                     </Style.Triggers>
                 </Style>
             </Label.Style>
+            
             <Label.Content>
-                <TextBlock Text="Р" FontSize="10" Margin="-3,-7"></TextBlock>
+                <TextBlock Text="P"
+                           HorizontalAlignment="Center" 
+                           VerticalAlignment="Center"
+                           Margin="-3,-7">
+                </TextBlock>
+                
             </Label.Content>
+            
         </Label>
-        <Rectangle Name="rect_object" VerticalAlignment="Center" HorizontalAlignment="Center" Width="30" Height="20" Margin="1" StrokeThickness="0.5" Fill="Transparent" Stroke="Black" Opacity="0" MouseLeftButtonUp="ValveGrid_OnMouseRightButtonDown" PreviewMouseRightButtonDown="ValveGrid_OnPreviewMouseRightButtonDown" PreviewMouseRightButtonUp="ValveGrid_OnPreviewMouseRightButtonUp" ToolTip="Удерживайте ПКМ для активации во время работы узла"/>
-        <Popup Name="PopupObject" Placement="Bottom" StaysOpen="False">
+
+        <TextBlock Name="tbc_name" FontSize="14" Text="МXXX" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,21,0,0" TextAlignment="Left" Visibility="Collapsed" Grid.Row="1"/>
+        
+        <Rectangle Name="rect_object" 
+                   VerticalAlignment="Top" 
+                   HorizontalAlignment="Left" 
+                   Width="42" Height="30" Margin="0,0,0,0" 
+                   StrokeThickness="0.5" 
+                   Fill="Transparent" 
+                   Stroke="Black" 
+                   Opacity="0" 
+                   MouseLeftButtonUp="ValveGrid_OnMouseRightButtonDown" 
+                   PreviewMouseRightButtonDown="ValveGrid_OnPreviewMouseRightButtonDown"
+                   PreviewMouseRightButtonUp="ValveGrid_OnPreviewMouseRightButtonUp" 
+                   ToolTip="Удерживайте ПКМ для активации во время работы узла" 
+                   Grid.Row="1"/>
+        
+        <Popup Name="PopupObject" Placement="Bottom" StaysOpen="False" Grid.RowSpan="2">
             <Border BorderBrush="Black" BorderThickness="1">
                 <Grid Background="Beige" Width="180">
                     <Grid.RowDefinitions>
@@ -51,10 +97,44 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Name="TxtPopupName" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Black" FontSize="16" TextWrapping="Wrap" FontWeight="Bold" TextAlignment="Center" Text="Механизм"/>
-                    <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="4,0,0,0" TextAlignment="Left" Text="Состояние:"/>
-                    <Label Grid.Row="1" Grid.Column="1" Width="75" Height="25" BorderBrush="Black" BorderThickness="1" Background="{Binding Brush}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" Content="{Binding Status}"/>
-                    <Button Name="BtnManual" Grid.Row="2" Grid.Column="0" Width="75" Height="25" BorderBrush="Black" BorderThickness="1" Content="Ручной" Click="BtnManual_Click" >
+                    
+                    <TextBlock Name="TxtPopupName" 
+                               Grid.ColumnSpan="2"
+                               VerticalAlignment="Center" 
+                               HorizontalAlignment="Center" 
+                               Foreground="Black" 
+                               FontSize="16" 
+                               TextWrapping="Wrap" 
+                               FontWeight="Bold" 
+                               TextAlignment="Center" 
+                               Text="Механизм"/>
+                    
+                    <TextBlock Grid.Row="1" 
+                               Grid.Column="0" 
+                               VerticalAlignment="Center" 
+                               HorizontalAlignment="Left" 
+                               Margin="4,0,0,0" 
+                               TextAlignment="Left" 
+                               Text="Состояние:"/>
+                    
+                    <Label Grid.Row="1" 
+                           Grid.Column="1" 
+                           Width="75" Height="25" 
+                           BorderBrush="Black" 
+                           BorderThickness="1" 
+                           Background="{Binding Brush}" 
+                           VerticalContentAlignment="Center"
+                           HorizontalContentAlignment="Center" 
+                           Padding="0" 
+                           Content="{Binding Status}"/>
+                    
+                    <Button Name="BtnManual" Grid.Row="2" 
+                            Grid.Column="0" 
+                            Width="75" Height="25" 
+                            BorderBrush="Black" 
+                            BorderThickness="1" 
+                            Content="Ручной" 
+                            Click="BtnManual_Click" >
                         <Button.Style>
                             <Style TargetType="{x:Type Button}">
                                 <Setter Property="Background" Value="LightBlue"/>
@@ -68,7 +148,15 @@
                             </Style>
                         </Button.Style>
                     </Button>
-                    <Button Name="BtnAutomat" Grid.Row="2" Grid.Column="1" Width="75" Height="25" BorderBrush="Black" BorderThickness="1" Content="Автомат" Click="BtnAutomat_Click" >
+                    
+                    <Button Name="BtnAutomat" 
+                            Grid.Row="2" Grid.Column="1" 
+                            Width="75" Height="25" 
+                            BorderBrush="Black" 
+                            BorderThickness="1" 
+                            Content="Автомат" 
+                            Click="BtnAutomat_Click" >
+                        
                         <Button.Style>
                             <Style TargetType="{x:Type Button}">
                                 <Setter Property="Background" Value="LightBlue"/>
@@ -81,10 +169,45 @@
                                 </Style.Triggers>
                             </Style>
                         </Button.Style>
+                        
                     </Button>
-                    <TextBlock Name="TxtFreq" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="3" Grid.Column="0" Visibility="{Binding VisFreq}" Foreground="Black" Text="Частота, Гц" />
-                    <Label Name="LblParam" VerticalAlignment="Center" HorizontalAlignment="Center" Width="50" Height="25" Grid.Row="3" Grid.Column="1" Background="LightBlue" Padding="0" Margin="5" BorderBrush="Black" BorderThickness="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="14" Visibility="{Binding VisFreq}" Content="{Binding Freq}" MouseLeftButtonDown="Lbl_param_OnMouseLeftButtonDown" />
-                    <Button Name="BtnStart" Grid.Row="3" Grid.Column="0" Width="75" Height="25" Margin="0,0,0,5" Background="#85fc84" BorderBrush="Black" BorderThickness="1" Content="Пуск" Click="BtnStart_Click" ToolTip='Управление доступно только в режиме работы "Ручной"' ToolTipService.ShowOnDisabled="True">
+                    
+                    <TextBlock Name="TxtFreq" 
+                               VerticalAlignment="Center" 
+                               HorizontalAlignment="Center"
+                               Grid.Row="3" Grid.Column="0" 
+                               Visibility="{Binding VisFreq}"
+                               Foreground="Black" 
+                               Text="Частота, Гц" />
+                    
+                    <Label Name="LblParam" 
+                           VerticalAlignment="Center" 
+                           HorizontalAlignment="Center"
+                           Width="50" Height="25" 
+                           Grid.Row="3" Grid.Column="1" 
+                           Background="LightBlue" 
+                           Padding="0" Margin="5" 
+                           BorderBrush="Black" 
+                           BorderThickness="1"
+                           VerticalContentAlignment="Center"
+                           HorizontalContentAlignment="Center" 
+                           FontSize="14" 
+                           Visibility="{Binding VisFreq}" 
+                           Content="{Binding Freq}" 
+                           MouseLeftButtonDown="Lbl_param_OnMouseLeftButtonDown" />
+                    
+                    <Button Name="BtnStart" 
+                            Grid.Row="3" Grid.Column="0" 
+                            Width="75" Height="25"
+                            Margin="0,0,0,5" 
+                            Background="#85fc84"
+                            BorderBrush="Black"
+                            BorderThickness="1" 
+                            Content="Пуск" 
+                            Click="BtnStart_Click" 
+                            ToolTip='Управление доступно только в режиме работы "Ручной"'
+                            ToolTipService.ShowOnDisabled="True">
+                        
                         <Button.Style>
                             <Style TargetType="{x:Type Button}">
                                 <Setter Property="IsEnabled" Value="False"/>
@@ -97,8 +220,22 @@
                                 </Style.Triggers>
                             </Style>
                         </Button.Style>
+                        
                     </Button>
-                    <Button Name="BtnStop" Grid.Row="3" Grid.Column="1" Width="75" Height="25" Margin="0,0,0,5" Background="Salmon" BorderBrush="Black" BorderThickness="1" Content="Стоп" Click="BtnStop_Click" ToolTip='Управление доступно только в режиме работы "Ручной"' ToolTipService.ShowOnDisabled="True">
+                    
+                    <Button Name="BtnStop" 
+                            Grid.Row="3" 
+                            Grid.Column="1" 
+                            Width="75" Height="25"
+                            Margin="0,0,0,5"
+                            Background="Salmon"
+                            BorderBrush="Black" 
+                            BorderThickness="1" 
+                            Content="Стоп" 
+                            Click="BtnStop_Click" 
+                            ToolTip='Управление доступно только в режиме работы "Ручной"' 
+                            ToolTipService.ShowOnDisabled="True">
+                        
                         <Button.Style>
                             <Style TargetType="{x:Type Button}">
                                 <Setter Property="IsEnabled" Value="False"/>
@@ -111,7 +248,9 @@
                                 </Style.Triggers>
                             </Style>
                         </Button.Style>
+                        
                     </Button>
+                    
                 </Grid>
             </Border>
         </Popup>

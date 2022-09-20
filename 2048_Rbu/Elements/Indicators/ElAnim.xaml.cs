@@ -53,13 +53,13 @@ namespace _2048_Rbu.Elements.Indicators
             set
             {
                 if (value == Environment.Cement)
-                    ImgSubstance.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Indicators/img_Cement.png", UriKind.Relative));
+                    ImgSubstance.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Indicators/Arrow.png", UriKind.Relative));
                 if (value == Environment.Water)
-                    ImgSubstance.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Indicators/img_Water.png", UriKind.Relative));
+                    ImgSubstance.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Indicators/Arrow.png", UriKind.Relative));
                 if (value == Environment.Inert)
-                    ImgSubstance.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Indicators/img_Inert.png", UriKind.Relative));
+                    ImgSubstance.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Indicators/Arrow.png", UriKind.Relative));
                 if (value == Environment.Solution)
-                    ImgSubstance.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Indicators/img_Solution.png", UriKind.Relative));
+                    ImgSubstance.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Indicators/Arrow.png", UriKind.Relative));
 
                 _substance = value;
             }

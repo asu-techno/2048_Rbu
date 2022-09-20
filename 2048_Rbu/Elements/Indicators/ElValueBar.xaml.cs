@@ -107,7 +107,7 @@ namespace _2048_Rbu.Elements.Indicators
             get { return _valueBoxPcay; }
             set
             {
-                ValueBox.ValuePcay = value;
+                //ValueBox.ValuePcay = value;
                 _valueBoxPcay = value;
             }
         }
@@ -118,7 +118,7 @@ namespace _2048_Rbu.Elements.Indicators
             get { return _containerItem;}
             set
             {
-                ValueBox.ContainerItem = value;
+               //ValueBox.ContainerItem = value;
                 _containerItem = value;
                 }
         }
@@ -129,7 +129,7 @@ namespace _2048_Rbu.Elements.Indicators
             get { return _myWidth; }
             set
             {
-                ProgressBorder.Width = ProgressValue.Width = value;
+                //ProgressBorder.Width = ProgressValue.Width = value;
                 _myWidth = value;
             }
         }
@@ -140,7 +140,7 @@ namespace _2048_Rbu.Elements.Indicators
             get { return _myHeight; }
             set
             {
-                ProgressBorder.Height = value;
+                //ProgressBorder.Height = value;
                 _myHeight = value;
             }
         }
@@ -167,8 +167,8 @@ namespace _2048_Rbu.Elements.Indicators
         {
             _opcName = opcName;
 
-            ValueBox.Initialize(_opcName);
-            ValueBox.Digit = ContainerItem == Static.ContainerItem.Additive1?2:1;
+            //ValueBox.Initialize(_opcName);
+            //ValueBox.Digit = ContainerItem == Static.ContainerItem.Additive1?2:1;
 
             DataContext = this;
         }
@@ -176,7 +176,7 @@ namespace _2048_Rbu.Elements.Indicators
         public void Subscribe()
         {
             CreateSubscription();
-            ValueBox.Subscribe();
+            //ValueBox.Subscribe();
         }
 
         public void Unsubscribe()
@@ -244,8 +244,8 @@ namespace _2048_Rbu.Elements.Indicators
         {
             if (CheckLevelNum != 0)
             {
-                RectObject.Opacity = 1;
-                RectObject.ToolTip = "Контроль уровня";
+                //RectObject.Opacity = 1;
+                //RectObject.ToolTip = "Контроль уровня";
             }
             VisBox = true;
         }
@@ -253,7 +253,7 @@ namespace _2048_Rbu.Elements.Indicators
         private void Rect_OnMouseLeave(object sender, MouseEventArgs e)
         {
             if (CheckLevelNum != 0)
-             RectObject.Opacity = 0;
+            // RectObject.Opacity = 0;
             VisBox = false;
         }
         

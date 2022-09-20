@@ -6,12 +6,34 @@
              mc:Ignorable="d" 
              Height="Auto" Width="Auto" MouseEnter="Rect_OnMouseEnter" MouseLeave="Rect_OnMouseLeave">
     <Grid Name="MainGrid">
-        <Grid Name="ObjectGrid" VerticalAlignment="Center" HorizontalAlignment="Center" Width="Auto" Height="Auto" Margin="0">
-            <Image Name="ImgKm" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Visibility="{Binding VisOn}"/>
-            <Image Name="ImgAlarm" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Visibility="{Binding VisAlarm}"/>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="15"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="12"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
         </Grid>
-        <TextBlock Name="TbcName" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,20,0,0" TextAlignment="Right" FontSize="14" Text="VXXX"/>
-        <Label Name="LblMode" VerticalAlignment="Center" HorizontalAlignment="Center" Width="12" Height="12" Margin="70,0,0,0" BorderThickness="1" BorderBrush="Black" Background="Yellow">
+
+        <Label Name="LblMode" 
+               Grid.Row="0"
+               Grid.Column="0"
+               VerticalAlignment="Top" 
+               VerticalContentAlignment="Center"
+               HorizontalAlignment="Left"
+               HorizontalContentAlignment="Center"
+               Width="10"
+               Height="12"
+               BorderThickness="0"
+               Background="#343536"
+               Foreground="#FFE91F"
+               FontSize="10"
+               >
+
             <Label.Style>
                 <Style TargetType="{x:Type Label}">
                     <Setter Property="Visibility" Value="Visible"/>
@@ -22,10 +44,20 @@
                     </Style.Triggers>
                 </Style>
             </Label.Style>
+
             <Label.Content>
                 <TextBlock Text="Р" FontSize="10" Margin="-3,-7"></TextBlock>
             </Label.Content>
+
         </Label>
+        
+        <Grid Grid.Column="1" Name="ObjectGrid" VerticalAlignment="Top" HorizontalAlignment="Left" Width="Auto" Height="Auto" Margin="0">
+            <Image Name="ImgKm"    VerticalAlignment="Top" HorizontalAlignment="Left" Visibility="{Binding VisOn}"/>
+            <Image Name="ImgAlarm" VerticalAlignment="Top" HorizontalAlignment="Left" Visibility="{Binding VisAlarm}"/>
+        </Grid>
+        
+        <TextBlock Name="TbcName" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,20,0,0" TextAlignment="Right" FontSize="14" Text="VXXX" Visibility="Hidden"/>
+        
         <Rectangle Name="RectObject" Width="10" Height="10" Margin="0" Fill="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center" StrokeThickness="0.5" Stroke="Black" Opacity="0" MouseLeftButtonUp="ValveGrid_OnMouseRightButtonDown"/>
         <Popup Name="PopupObject" Placement="Bottom" StaysOpen="False">
             <Border BorderBrush="Black" BorderThickness="1">

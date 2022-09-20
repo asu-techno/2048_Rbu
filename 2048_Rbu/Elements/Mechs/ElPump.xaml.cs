@@ -206,9 +206,9 @@ namespace _2048_Rbu.Elements.Mechs
                 else
                 {
                     img_Alarm.Source =
-                    new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs/img_Pump_Alarm.png", UriKind.Relative));
+                    new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs_Redesign/img_Pump_2_Alarm.png", UriKind.Relative));
                     img_On.Source =
-                        new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs/img_Pump_ON.png", UriKind.Relative));
+                        new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs_Redesign/img_Pump_2_ON.png", UriKind.Relative));
                 }
                 _rotate = value;
             }

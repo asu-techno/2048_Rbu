@@ -6,9 +6,162 @@
              xmlns:local="clr-namespace:_2048_Rbu.Elements.Control"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance Type={x:Type local:ViewModelTabl}, IsDesignTimeCreatable=False}"
-             Height="120" Width="384" Background="DarkGray" BorderBrush="Black" BorderThickness="1">
-    <Grid Background="DarkGray">
-        <Grid.ColumnDefinitions>
+             Height="152" Width="380" Background="#E7EAF3">
+    <Grid>
+
+        <StackPanel>
+
+            <TextBlock  FontFamily="{StaticResource Jost}"
+                        FontWeight="Regular"
+                        FontSize="14"
+                        Text="ТЕКУЩЕЕ ЗАДАНИЕ"
+                        HorizontalAlignment="Left"
+                        Foreground="#878A91">
+            </TextBlock>
+
+            <StackPanel Orientation="Horizontal"
+                        Height="25"
+                        Margin="0,17,0,0"
+                        VerticalAlignment="Top">
+                
+                <TextBlock Text="Название:"
+                           FontFamily="{StaticResource Jost}"
+                           FontWeight="Regular"
+                           FontSize="16"
+                           Foreground="#333438"
+                           Width="140"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Center">
+
+                </TextBlock>
+                
+                <Border Width="240"
+                        Background="#F3F4F8"
+                        CornerRadius="5"
+                        BorderThickness="1"
+                        BorderBrush="#B8BBC0">
+                    
+                    <TextBlock Background="Transparent"
+                               FontFamily="{StaticResource Jost}"
+                               FontWeight="Regular"
+                               FontSize="14"
+                               Margin="15,0,0,0"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Center"
+                               Foreground="#333438"
+                               Text="{Binding SelTaskName, UpdateSourceTrigger=PropertyChanged}">
+
+                    </TextBlock>
+                </Border>
+                
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal"
+                        Height="25"
+                        Margin="0,5,0,0">
+                
+                <TextBlock Text="Группа рецептов:"
+                           FontFamily="{StaticResource Jost}"
+                           FontWeight="Regular"
+                           FontSize="16"
+                           Foreground="#333438"
+                           Width="140"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Center">
+
+                </TextBlock>
+                
+                <Border Width="240"
+                        Background="#F3F4F8"
+                        CornerRadius="5"
+                        BorderThickness="1"
+                        BorderBrush="#B8BBC0">
+                    
+                    <TextBlock Background="Transparent"
+                               Text="{Binding SelTaskVolume, UpdateSourceTrigger=PropertyChanged}"
+                               FontFamily="{StaticResource Jost}"
+                               FontWeight="Regular"
+                               FontSize="14"
+                               Margin="15,0,0,0"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Center"
+                               Foreground="#333438">
+
+                    </TextBlock>
+                </Border>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal"
+                        Height="25"
+                        Margin="0,5,0,0">
+                <TextBlock Text="Заказчик:"
+                           FontFamily="{StaticResource Jost}"
+                           FontWeight="Regular"
+                           FontSize="16"
+                           Foreground="#333438"
+                           Width="140"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Center">
+
+                </TextBlock>
+                <Border Width="240"
+                        Background="#F3F4F8"
+                        CornerRadius="5"
+                        BorderThickness="1"
+                        BorderBrush="#B8BBC0">
+                    
+                    <TextBlock Background="Transparent"
+                               Text="{Binding SelTaskGroupName, UpdateSourceTrigger=PropertyChanged}"
+                               FontFamily="{StaticResource Jost}"
+                               FontWeight="Regular"
+                               FontSize="14"
+                               Margin="15,0,0,0"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Center"
+                               Foreground="#333438">
+
+                    </TextBlock>
+                </Border>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal"
+                        Height="25"
+                        Margin="0,5,0,0">
+                <TextBlock Text="Задано:"
+                           FontFamily="{StaticResource Jost}"
+                           FontWeight="Regular"
+                           FontSize="16"
+                           Foreground="#333438"
+                           Width="140"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Center">
+
+                </TextBlock>
+                <Border Width="240"
+                        Background="#F3F4F8"
+                        CornerRadius="5"
+                        BorderThickness="1"
+                        BorderBrush="#B8BBC0">
+                    
+                    <TextBlock Background="Transparent"
+                               Text="{Binding SelTask.Customer.Name, UpdateSourceTrigger=PropertyChanged}"
+                               FontFamily="{StaticResource Jost}"
+                               FontWeight="Regular"
+                               FontSize="14"
+                               Margin="15,0,0,0"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Center"
+                               Foreground="#333438">
+
+                    </TextBlock>
+                </Border>
+            </StackPanel>
+
+
+        </StackPanel>
+
+        
+        <!--<Grid.ColumnDefinitions>
             <ColumnDefinition Width="900" />
         </Grid.ColumnDefinitions>
         <Grid VerticalAlignment="Top" HorizontalAlignment="Left" Width="384">
@@ -17,19 +170,11 @@
             <Label Background="Silver" BorderBrush="Black" BorderThickness="1" Content="Задано: " FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Right" Margin="2,91,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="124" />
             <Label Background="Silver" BorderBrush="Black" BorderThickness="1" Content="Группа рецептов: " FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Right" Margin="2,47,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="124" />
             <Label Background="Silver" BorderBrush="Black" BorderThickness="1" Content="Заказчик: " FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Right" Margin="2,69,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="124" />
-            <!--<Label Background="Silver" BorderBrush="Black" BorderThickness="1" Content="Объем замеса, м³: " FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Right" Margin="2,113,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="124" />-->
-            <!--<Label Background="Silver" BorderBrush="Black" BorderThickness="1" Content="Кол-во замесов: " FontSize="14" Height="23" HorizontalContentAlignment="Right" Margin="191,113,0,0" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="124" />-->
             <Label BorderBrush="Black" Content="{Binding SelTaskName, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="125,25,0,0" Padding="0" VerticalAlignment="Top" Width="255" Background="White" BorderThickness="1" VerticalContentAlignment="Center" />
             <Label BorderBrush="Black" Content="{Binding SelTaskVolume, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="125,91,0,0" VerticalAlignment="Top" Width="255" Background="White" BorderThickness="1" Padding="0" VerticalContentAlignment="Center" />
             <Label BorderBrush="Black" Content="{Binding SelTaskGroupName, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="125,47,0,0" VerticalAlignment="Top" Width="255" Background="White" BorderThickness="1" Padding="0" VerticalContentAlignment="Center" />
             <Label BorderBrush="Black" Content="{Binding SelTask.Customer.Name, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="125,69,0,0" VerticalAlignment="Top" Width="255" Background="White" BorderThickness="1" Padding="0" VerticalContentAlignment="Center" />
-            <!--<Label BorderBrush="Black" Content="{Binding SelTask.BatchVolume, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="125,113,0,0" VerticalAlignment="Top" Width="67" Background="White" BorderThickness="1" Padding="0" VerticalContentAlignment="Center" />-->
-            <!--<Label BorderBrush="Black" Content="{Binding SelTask.BatchesAmount, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="314,113,0,0" VerticalAlignment="Top" Width="66" Background="White" BorderThickness="1" Padding="0" VerticalContentAlignment="Center" />-->
-            <!--<Label BorderBrush="Black" BorderThickness="0" Content="Состав замеса:" FontSize="16" FontWeight="Bold" Height="30" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,155,0,0" Name="label1" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="307" />-->
-            <!--<Label Background="Silver" BorderBrush="Black" BorderThickness="1" Content="Материал" FontSize="14" FontWeight="Bold" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="2,183,0,0" Name="label11" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="200" />-->
-            <!--<Label Background="Silver" BorderBrush="Black" BorderThickness="1" Content="Задано, кг" FontSize="14" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="201,183,0,0" Name="label17" Padding="0" VerticalAlignment="Top" Width="90" FontWeight="Bold" />-->
-            <!--<Label Background="Silver" BorderBrush="Black" BorderThickness="1" Content="Сделано, кг" FontSize="14" FontWeight="Bold" Height="23" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="290,183,0,0" Name="label2" Padding="0" VerticalAlignment="Top" Width="90"/>-->
-        </Grid>
+        </Grid>-->
         <!--<Grid VerticalAlignment="Top" HorizontalAlignment="Left" Width="378" Margin="2,205,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="24"/>

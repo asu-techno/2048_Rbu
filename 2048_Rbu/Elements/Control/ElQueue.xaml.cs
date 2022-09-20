@@ -31,11 +31,6 @@ namespace _2048_Rbu.Elements.Control
         {
             InitializeComponent();
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 
     public sealed class ElQueueViewModel : INotifyPropertyChanged

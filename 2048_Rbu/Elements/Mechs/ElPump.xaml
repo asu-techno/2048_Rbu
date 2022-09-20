@@ -4,15 +4,35 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="90" d:DesignWidth="90" MouseEnter="Rect_OnMouseEnter" MouseLeave="Rect_OnMouseLeave">
+             Height="30" Width="50" MouseEnter="Rect_OnMouseEnter" MouseLeave="Rect_OnMouseLeave">
     <Grid>
 
-        <Grid Name="ValveGrid" Height="40" Width="40" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Image Name="img_On" Visibility="{Binding VisOn}" Source="../../Images/Mechs/img_Pump_ON.png"  Width="37" Height="23"  VerticalAlignment="Top" HorizontalAlignment="Left" Margin="2,8,0,0"></Image>
-            <Image Name="img_Alarm" Visibility="{Binding VisAlarm}" Source="../../Images/Mechs/img_Pump_Alarm.png" Width="37" Height="23" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="2,8,0,0"></Image>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        
+        <Grid      Name="ValveGrid" Height="30" Width="30" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1">
+            <Image Name="img_On"    Visibility="{Binding VisOn}"    Height="30" Width="30" Source="../../Images/Mechs_Redesign/img_Pump_2_ON.png"    ></Image>
+            <Image Name="img_Alarm" Visibility="{Binding VisAlarm}" Height="30" Width="30" Source="../../Images/Mechs_Redesign/img_Pump_2_Alarm.png" ></Image>
         </Grid>
-        <TextBlock Name="tbc_name" FontSize="14"  Text="PXXX"  HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,50,55,0" TextAlignment="Right" TextWrapping="Wrap" ></TextBlock>
-        <Label Name="lbl_mode" Width="12" Height="12" BorderThickness="1" BorderBrush="Black" Background="Yellow" Margin="40,-40,0,0">
+        
+        <TextBlock Name="tbc_name" FontSize="14"  Text="PXXX"  HorizontalAlignment="Right" VerticalAlignment="Top" Visibility="Collapsed" Margin="0,50,55,0" TextAlignment="Right" TextWrapping="Wrap" ></TextBlock>
+
+        <Label Name="lbl_mode" 
+               Grid.Column="0"
+               VerticalAlignment="Top" 
+               VerticalContentAlignment="Center"
+               HorizontalAlignment="Center"
+               HorizontalContentAlignment="Center"
+               Width="10"
+               Height="12"
+               BorderThickness="0"
+               Background="#343536"
+               Foreground="#FFE91F"
+               FontSize="10"
+               >
+
             <Label.Style>
                 <Style TargetType="{x:Type Label}">
                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -23,6 +43,7 @@
                     </Style.Triggers>
                 </Style>
             </Label.Style>
+            
             <Label.Content>
                 <TextBlock FontSize="10">
                     <TextBlock.Style>
@@ -40,7 +61,22 @@
                 </TextBlock>
             </Label.Content>
         </Label>
-        <Label Name="LblModeDosing" Width="16" Height="16" BorderThickness="1" BorderBrush="Black" Background="Yellow" Margin="40,-40,0,0">
+        
+        <Label Name="LblModeDosing" 
+               Width="15" 
+               Height="15"
+               Grid.Column="0"
+               BorderThickness="0"
+               Background="#343536"
+               Foreground="#FFE91F"
+               FontSize="10"
+               VerticalAlignment="Top" 
+               VerticalContentAlignment="Center"
+               HorizontalAlignment="Center"
+               HorizontalContentAlignment="Center"
+               
+               Margin="40,-40,0,0">
+            
             <Label.Style>
                 <Style TargetType="{x:Type Label}">
                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -51,11 +87,15 @@
                     </Style.Triggers>
                 </Style>
             </Label.Style>
+            
             <Label.Content>
-                <TextBlock FontSize="10" TextAlignment="Center" Width="14" Height="14" Text="РД" Margin="-5"/>
+                <TextBlock FontSize="10" TextAlignment="Center" Text="РД" Margin="0,0"/>
             </Label.Content>
+            
         </Label>
+        
         <Rectangle Name="rect_object" Fill="Transparent" Height="25" Width="40" StrokeThickness="0.5" Stroke="Black" Opacity="0" Margin="0,-1,0,0" MouseLeftButtonUp="ValveGrid_OnMouseRightButtonDown"></Rectangle>
+       
         <Popup Name="PopupObject" Placement="Bottom" StaysOpen="False">
             <Border BorderBrush="Black" BorderThickness="1">
                 <Grid Background="Beige" Width="180">

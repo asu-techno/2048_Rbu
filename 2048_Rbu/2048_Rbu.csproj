@@ -28,6 +28,9 @@
 
   <ItemGroup>
     <None Remove="C:\Users\vanya\.nuget\packages\nlog.config\4.7.6\contentFiles\any\any\NLog.config" />
+    <None Remove="Fonts\JostMedium.ttf" />
+    <None Remove="Fonts\JostRegular.ttf" />
+    <None Remove="Fonts\JostVariableFont_wght.ttf" />
     <None Remove="Images\Copy.png" />
     <None Remove="Images\img_AddAct_Color.png" />
     <None Remove="Images\img_BackTTN.png" />
@@ -39,11 +42,17 @@
     <None Remove="Images\img_SaveAct_Color.png" />
     <None Remove="Images\img_Truck_1.png" />
     <None Remove="Images\img_Up.png" />
+    <None Remove="Images\Indicators\bell.png" />
+    <None Remove="Images\Indicators\Down.png" />
     <None Remove="Images\Indicators\img_Cement.png" />
     <None Remove="Images\Indicators\img_Inert.png" />
     <None Remove="Images\Indicators\img_Inert_Edit.png" />
     <None Remove="Images\Indicators\img_Solution.png" />
     <None Remove="Images\Indicators\img_Water.png" />
+    <None Remove="Images\Indicators\Plus.png" />
+    <None Remove="Images\Indicators\Status.svg" />
+    <None Remove="Images\Indicators\Up.png" />
+    <None Remove="Images\Indicators\Warning.png" />
     <None Remove="Images\Logo_ASU.png" />
     <None Remove="Images\Logo_ASU_Gray.png" />
     <None Remove="Images\Mechs\img_Aeration_Alarm.png" />
@@ -74,8 +83,51 @@
     <None Remove="Images\Mechs\img_Shnek_On.png" />
     <None Remove="Images\Mechs\img_Skip_Alarm.png" />
     <None Remove="Images\Mechs\img_Skip_On.png" />
+    <None Remove="Images\Mechs_Redesign\Arrow.png" />
+    <None Remove="Images\Mechs_Redesign\img_Aerator_AL.png" />
+    <None Remove="Images\Mechs_Redesign\img_Aerator_Off.png" />
+    <None Remove="Images\Mechs_Redesign\img_Aerator_ON.png" />
+    <None Remove="Images\Mechs_Redesign\img_Conv_1_Alarm.png" />
+    <None Remove="Images\Mechs_Redesign\img_Conv_1_OFF.png" />
+    <None Remove="Images\Mechs_Redesign\img_Conv_1_ON.png" />
+    <None Remove="Images\Mechs_Redesign\img_Conv_2_Alarm.png" />
+    <None Remove="Images\Mechs_Redesign\img_Conv_2_OFF.png" />
+    <None Remove="Images\Mechs_Redesign\img_Conv_2_ON.png" />
+    <None Remove="Images\Mechs_Redesign\img_Conv_3_Alarm.png" />
+    <None Remove="Images\Mechs_Redesign\img_Conv_3_OFF.png" />
+    <None Remove="Images\Mechs_Redesign\img_Conv_3_ON.png" />
+    <None Remove="Images\Mechs_Redesign\img_Mixer_2_Alarm.png" />
+    <None Remove="Images\Mechs_Redesign\img_Mixer_2_Off.png" />
+    <None Remove="Images\Mechs_Redesign\img_Mixer_2_On.png" />
+    <None Remove="Images\Mechs_Redesign\img_Motor_Left_Alarm.png" />
+    <None Remove="Images\Mechs_Redesign\img_Motor_Left_OFF.png" />
+    <None Remove="Images\Mechs_Redesign\img_Motor_Left_ON.png" />
+    <None Remove="Images\Mechs_Redesign\img_Pump_2_Alarm.png" />
+    <None Remove="Images\Mechs_Redesign\img_Pump_2_On.png" />
+    <None Remove="Images\Mechs_Redesign\Zadv\img_BigZadv_Alarm.png" />
+    <None Remove="Images\Mechs_Redesign\Zadv\img_BigZadv_Closed.png" />
+    <None Remove="Images\Mechs_Redesign\Zadv\img_Zadv_0_Per.png" />
+    <None Remove="Images\Mechs_Redesign\Zadv\img_Zadv_100_Per.png" />
+    <None Remove="Images\Mechs_Redesign\Zadv\img_Zadv_20_Per.png" />
+    <None Remove="Images\Mechs_Redesign\Zadv\img_Zadv_40_Per.png" />
+    <None Remove="Images\Mechs_Redesign\Zadv\img_Zadv_60_Per.png" />
+    <None Remove="Images\Mechs_Redesign\Zadv\img_Zadv_80_Per.png" />
+    <None Remove="Images\Mechs_Redesign\Zadv\img_Zadv_Alarm.png" />
+    <None Remove="Images\Mechs_Redesign\Zadv\img_Zadv_Closed.png" />
+    <None Remove="Images\Mechs_Redesign\Zadv\img_Zadv_Neitral.png" />
+    <None Remove="Images\Mechs_Redesign\Zadv\img_Zadv_Opened_Left.png" />
+    <None Remove="Images\Mechs_Redesign\Zadv\img_Zadv_Opened_Right.png" />
     <None Remove="Images\Mnemo_Rbu.png" />
+    <None Remove="Images\Mnemo_Redesign_v2.png" />
     <None Remove="Images\Splash.png" />
+    <None Remove="Images\Texts\Выполнено.png" />
+    <None Remove="Images\Texts\Очередь заданий.png" />
+    <None Remove="Images\Texts\Статус_.png" />
+    <None Remove="Images\Texts\Статусы узлов.png" />
+    <None Remove="Images\Texts\Текущее задание.png" />
+    <None Remove="Images\Texts\Узел бетоносмесителя.png" />
+    <None Remove="Images\Texts\Узел дозирования.png" />
+    <None Remove="Images\Texts\Управление.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -149,6 +201,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Fonts\JostMedium.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Fonts\JostRegular.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Fonts\JostVariableFont_wght.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\Copy.png" />
     <Resource Include="Images\img_AddAct_Color.png" />
     <Resource Include="Images\img_BackTTN.png" />
@@ -158,10 +219,15 @@
     <Resource Include="Images\img_Refresh_Color.png" />
     <Resource Include="Images\img_ReplyAct_Color.png" />
     <Resource Include="Images\img_SaveAct_Color.png" />
+    <Resource Include="Images\Indicators\bell.png" />
+    <Resource Include="Images\Indicators\Down.png" />
     <Resource Include="Images\Indicators\img_Cement.png" />
     <Resource Include="Images\Indicators\img_Inert.png" />
     <Resource Include="Images\Indicators\img_Solution.png" />
     <Resource Include="Images\Indicators\img_Water.png" />
+    <Resource Include="Images\Indicators\Plus.png" />
+    <Resource Include="Images\Indicators\Up.png" />
+    <Resource Include="Images\Indicators\Warning.png" />
     <Resource Include="Images\Logo_ASU.png" />
     <Resource Include="Images\Logo_ASU_Gray.png" />
     <Resource Include="Images\Mechs\img_Aeration_Alarm.png" />
@@ -192,9 +258,52 @@
     <Resource Include="Images\Mechs\img_Shnek_On.png" />
     <Resource Include="Images\Mechs\img_Skip_Alarm.png" />
     <Resource Include="Images\Mechs\img_Skip_On.png" />
+    <Resource Include="Images\Indicators\Arrow.png" />
+    <Resource Include="Images\Mechs_Redesign\img_Aerator_AL.png" />
+    <Resource Include="Images\Mechs_Redesign\img_Aerator_Off.png" />
+    <Resource Include="Images\Mechs_Redesign\img_Aerator_ON.png" />
+    <Resource Include="Images\Mechs_Redesign\img_Conv_1_Alarm.png" />
+    <Resource Include="Images\Mechs_Redesign\img_Conv_1_OFF.png" />
+    <Resource Include="Images\Mechs_Redesign\img_Conv_1_ON.png" />
+    <Resource Include="Images\Mechs_Redesign\img_Conv_2_Alarm.png" />
+    <Resource Include="Images\Mechs_Redesign\img_Conv_2_OFF.png" />
+    <Resource Include="Images\Mechs_Redesign\img_Conv_2_ON.png" />
+    <Resource Include="Images\Mechs_Redesign\img_Conv_3_Alarm.png" />
+    <Resource Include="Images\Mechs_Redesign\img_Conv_3_OFF.png" />
+    <Resource Include="Images\Mechs_Redesign\img_Conv_3_ON.png" />
+    <Resource Include="Images\Mechs_Redesign\img_Mixer_2_Alarm.png" />
+    <Resource Include="Images\Mechs_Redesign\img_Mixer_2_Off.png" />
+    <Resource Include="Images\Mechs_Redesign\img_Mixer_2_On.png" />
+    <Resource Include="Images\Mechs_Redesign\img_Motor_Left_Alarm.png" />
+    <Resource Include="Images\Mechs_Redesign\img_Motor_Left_OFF.png" />
+    <Resource Include="Images\Mechs_Redesign\img_Motor_Left_ON.png" />
+    <Resource Include="Images\Mechs_Redesign\img_Pump_2_Alarm.png" />
+    <Resource Include="Images\Mechs_Redesign\img_Pump_2_On.png" />
+    <Resource Include="Images\Mechs_Redesign\Zadv\img_BigZadv_Alarm.png" />
+    <Resource Include="Images\Mechs_Redesign\Zadv\img_BigZadv_Closed.png" />
+    <Resource Include="Images\Mechs_Redesign\Zadv\img_Zadv_0_Per.png" />
+    <Resource Include="Images\Mechs_Redesign\Zadv\img_Zadv_100_Per.png" />
+    <Resource Include="Images\Mechs_Redesign\Zadv\img_Zadv_20_Per.png" />
+    <Resource Include="Images\Mechs_Redesign\Zadv\img_Zadv_40_Per.png" />
+    <Resource Include="Images\Mechs_Redesign\Zadv\img_Zadv_60_Per.png" />
+    <Resource Include="Images\Mechs_Redesign\Zadv\img_Zadv_80_Per.png" />
+    <Resource Include="Images\Mechs_Redesign\Zadv\img_Zadv_Alarm.png" />
+    <Resource Include="Images\Mechs_Redesign\Zadv\img_Zadv_Closed.png" />
+    <Resource Include="Images\Mechs_Redesign\Zadv\img_Zadv_Neitral.png" />
+    <Resource Include="Images\Mechs_Redesign\Zadv\img_Zadv_Opened_Left.png" />
+    <Resource Include="Images\Mechs_Redesign\Zadv\img_Zadv_Opened_Right.png" />
     <Resource Include="Images\Mnemo_Rbu.png" />
+    <Resource Include="Images\Mnemo_Redesign_v2.png" />
     <Resource Include="Images\Splash.png" />
     <Resource Include="Images\img_Up.png" />
+    <Resource Include="Images\Texts\Выполнено.png" />
+    <Resource Include="Images\Texts\Очередь заданий.png" />
+    <Resource Include="Images\Texts\Статус_.png" />
+    <Resource Include="Images\Texts\Статусы узлов.png" />
+    <Resource Include="Images\Texts\Текущее задание.png" />
+    <Resource Include="Images\Texts\Узел бетоносмесителя.png" />
+    <Resource Include="Images\Texts\Узел дозирования.png" />
+    <Resource Include="Images\Texts\Управление.png" />
   </ItemGroup>
 
   <ItemGroup>

@@ -21,7 +21,8 @@ namespace _2048_Rbu
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly ElScreenRbu _elScreen = new ElScreenRbu();
+        //private readonly ElScreenRbu _elScreen = new ElScreenRbu();
+        private readonly El_Screen_Redesing_RBU _elScreen = new El_Screen_Redesing_RBU();
         private Logger _logger;
         private bool _isLoad;
         private WindowSplash _windowSplash;
@@ -146,7 +147,7 @@ namespace _2048_Rbu
 
         private void Program_Closed(object sender, EventArgs e)
         {
-            ElScreenRbu.LinkTimer?.Stop();
+            El_Screen_Redesing_RBU.LinkTimer?.Stop();
             foreach (Window w in App.Current.Windows)
                 w.Close();
         }

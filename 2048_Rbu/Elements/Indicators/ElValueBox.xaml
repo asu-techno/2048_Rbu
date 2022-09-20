@@ -6,7 +6,97 @@
              mc:Ignorable="d" 
              Visibility="{Binding Vis}" MouseEnter="Rect_OnMouseEnter" MouseLeave="Rect_OnMouseLeave">
     <Grid Height="Auto" Width="Auto">
-        <Label Name="LblValue" Width="25" Height="25" BorderThickness="1" BorderBrush="Black" Background="LightGray" HorizontalContentAlignment="Center" HorizontalAlignment="Left">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Column="0"
+               Height="40"
+               Name="LblValue" 
+               BorderThickness="0" 
+               Background="Transparent" 
+               
+               HorizontalContentAlignment="Right"
+               VerticalContentAlignment="Center"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top">
+            
+            <Label.Content>
+                <TextBlock Name="TxtValue" 
+                           Text="73" 
+                           FontSize="24" 
+                           Margin="0,0,0,0"
+                           FontFamily="{StaticResource Jost}"
+                           FontWeight="Medium"
+                           Foreground="#018667"/>
+
+            </Label.Content>
+            
+        </Label>
+
+        <Label  Grid.Column="1"
+                Name="LblText" 
+                BorderThickness="0" 
+                Background="Transparent"
+                Height="40"
+                
+                HorizontalContentAlignment="Center"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                VerticalContentAlignment="Top"
+                
+                FontFamily="{StaticResource Jost}"
+                FontWeight="Regular"
+                Foreground="#767980"
+                Margin="0,0,0,0">
+            
+            <Label.Content>
+                <TextBlock Name="TxtText" FontSize="14" Margin="0,0"></TextBlock>
+            </Label.Content>
+            
+        </Label>
+
+        <Label Grid.ColumnSpan="2"
+               Background="#FF5C5D" 
+               BorderThickness="0"
+               VerticalContentAlignment="Center" 
+               HorizontalContentAlignment="Center" 
+               
+               Content="Нет связи"
+               FontFamily="{StaticResource Jost}"
+               Foreground="Black"
+               FontWeight="Medium"
+               FontSize="14"
+               Padding="0">
+
+            <Label.Style>
+                <Style TargetType="{x:Type Label}">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding VisError}" Value="True">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Label.Style>
+        </Label>
+
+        <Rectangle Name="RectObject" 
+                   Fill="Transparent" 
+                   StrokeThickness="0.5" 
+                   Margin="-3" 
+                   Stroke="Black"
+                   Opacity="0" 
+                   MouseLeftButtonUp="ElValueBox_OnMouseLeftButtonDown"
+                   MouseRightButtonDown="RectObject_OnMouseRightButtonDown" />
+
+
+    </Grid>
+    
+    
+    <!--<Grid Height="Auto" Width="Auto">
+        <Label Name="LblValue" Width="25" Height="25" BorderThickness="1" Visibility="Visible" BorderBrush="Black" Background="LightGray" HorizontalContentAlignment="Center" HorizontalAlignment="Left">
             <Label.Content>
                 <TextBlock Name="TxtValue" Text="{Binding Value}" FontSize="16" Margin="-4,-5"></TextBlock>
             </Label.Content>
@@ -29,5 +119,5 @@
             </Label.Style>
         </Label>
         <Rectangle Name="RectObject" Fill="Transparent" StrokeThickness="0.5" Margin="-3" Stroke="Black" Opacity="0" MouseLeftButtonUp="ElValueBox_OnMouseLeftButtonDown" MouseRightButtonDown="RectObject_OnMouseRightButtonDown" />
-    </Grid>
+    </Grid>-->
 </UserControl>

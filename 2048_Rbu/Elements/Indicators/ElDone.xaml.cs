@@ -5,7 +5,6 @@ using System.Windows;
 using System.Windows.Media;
 using AS_Library.Link;
 using _2048_Rbu.Classes;
-using _2048_Rbu.Classes;
 using _2048_Rbu.Interfaces;
 using Opc.UaFx;
 using Opc.UaFx.Client;

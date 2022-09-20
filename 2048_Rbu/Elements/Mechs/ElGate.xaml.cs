@@ -187,11 +187,11 @@ namespace _2048_Rbu.Elements.Mechs
             {
                 if (value)
                 {
-                    ImgClose.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs/img_BigGate_Close.png", UriKind.Relative));
-                    ImgOpen.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs/img_BigGate_Open.png", UriKind.Relative));
-                    ImgAlarm.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs/img_BigGate_Alarm.png", UriKind.Relative));
-                    ImgOpen.Width = 130;
-                    ImgClose.Width = ImgAlarm.Width = 81;
+                    ImgClose.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs_Redesign/Zadv/img_BigZadv_Closed.png", UriKind.Relative));
+                    ImgOpen.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs_Redesign/Zadv/img_Zadv_20_Per.png", UriKind.Relative));
+                    ImgAlarm.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs_Redesign/Zadv/img_BigZadv_Alarm.png", UriKind.Relative));
+                    ImgClose.Width = ImgAlarm.Width = ImgOpen.Width = 125;
+                    ImgClose.Height = ImgAlarm.Height = ImgOpen.Height = 18;
                     RectObject.Width = ImgOpen.Width;
                 }
 
@@ -230,13 +230,13 @@ namespace _2048_Rbu.Elements.Mechs
             {
                 if (value)
                 {
-                    ImgClose.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs/img_Aeration_Close.png", UriKind.Relative));
-                    ImgOpen.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs/img_Aeration_Open.png", UriKind.Relative));
-                    ImgAlarm.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs/img_Aeration_Alarm.png", UriKind.Relative));
-                    ImgOpen.Width = ImgClose.Width = ImgAlarm.Width = 72;
-                    ImgOpen.Height = ImgClose.Height = ImgAlarm.Height = 9;
+                    ImgClose.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs_Redesign/img_Aerator_Off.png", UriKind.Relative));
+                    ImgOpen.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs_Redesign/img_Aerator_ON.png", UriKind.Relative));
+                    ImgAlarm.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs_Redesign/img_Aerator_AL.png", UriKind.Relative));
+                    ImgOpen.Width = ImgClose.Width = ImgAlarm.Width = 116;
+                    ImgOpen.Height = ImgClose.Height = ImgAlarm.Height = 16;
                     RectObject.Width = ImgOpen.Width;
-                    RectObject.Margin = new Thickness(45, 0, 0, 0);
+                    RectObject.Margin = new Thickness(0, 0, 0, 0);
                     RectObject.ToolTip = "Удерживайте ПКМ для активации во время работы узла";
                 }
 

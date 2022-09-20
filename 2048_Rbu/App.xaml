@@ -4,6 +4,28 @@
              xmlns:local="clr-namespace:_2048_Rbu"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/NewButton.xaml"/>
+                <ResourceDictionary Source="Resources/AckButton.xaml"/>
+                <ResourceDictionary Source="Resources/ProgressBar.xaml"/>
+                <ResourceDictionary Source="Resources/StopButton.xaml"/>
+                <ResourceDictionary Source="Resources/QueueButton.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <FontFamily x:Key="Jost">
+                pack://application:,,,/Fonts/#Jost
+            </FontFamily>
+
+            <!--<FontFamily x:Key="JostMedium">
+                pack://application:,,,/Font/#JostMedium
+            </FontFamily>
+
+            <FontFamily x:Key="JostAll">
+                pack://application:,,,/Font/#JostVariableFont_wght
+            </FontFamily>-->
+
+        </ResourceDictionary>
+        
     </Application.Resources>
 </Application>

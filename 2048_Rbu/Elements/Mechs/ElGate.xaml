@@ -4,43 +4,65 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="70" d:DesignWidth="180" MouseEnter="Rect_OnMouseEnter" MouseLeave="Rect_OnMouseLeave">
+             d:DesignHeight="18" d:DesignWidth="140" MouseEnter="Rect_OnMouseEnter" MouseLeave="Rect_OnMouseLeave">
     <Grid>
-        <Grid Name="ObjectGrid" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170" Height="30" Margin="5,20,0,0">
-            <Image Name="ImgHalfOpen" VerticalAlignment="Center" HorizontalAlignment="Left" Height="10" Margin="39,0,0,0">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        
+        <Grid Grid.Column="1" Name="ObjectGrid" VerticalAlignment="Top" HorizontalAlignment="Left" Width="125" Height="18" Margin="0,0,0,0">
+            <Image Name="ImgHalfOpen" VerticalAlignment="Center" HorizontalAlignment="Left" Height="18" Margin="0,0,0,0">
                 <Image.Style>
                     <Style TargetType="{x:Type Image}">
                         <Setter Property="Visibility" Value="Collapsed"/>
-                        <Setter Property="Source" Value="../../Images/Mechs/img_BigGate_HalfOpen.png"/>
+                        <Setter Property="Source" Value="../../Images/Mechs_Redesign/Zadv/img_BigZadv_Closed.png"/>
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding HalfOpenState}" Value="True">
                                 <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
                             <DataTrigger Binding="{Binding OpenState}" Value="1">
-                                <Setter Property="Source" Value="../../Images/Mechs/img_BigGate_HalfOpen.png"/>
+                                <Setter Property="Source" Value="../../Images/Mechs_Redesign/Zadv/img_Zadv_0_Per.png"/>
                             </DataTrigger>
                             <DataTrigger Binding="{Binding OpenState}" Value="2">
-                                <Setter Property="Source" Value="../../Images/Mechs/img_BigGate_20Per_Open.png"/>
+                                <Setter Property="Source" Value="../../Images/Mechs_Redesign/Zadv/img_Zadv_20_Per.png"/>
                             </DataTrigger>
                             <DataTrigger Binding="{Binding OpenState}" Value="3">
-                                <Setter Property="Source" Value="../../Images/Mechs/img_BigGate_40Per_Open.png"/>
+                                <Setter Property="Source" Value="../../Images/Mechs_Redesign/Zadv/img_Zadv_40_Per.png"/>
                             </DataTrigger>
                             <DataTrigger Binding="{Binding OpenState}" Value="4">
-                                <Setter Property="Source" Value="../../Images/Mechs/img_BigGate_60Per_Open.png"/>
+                                <Setter Property="Source" Value="../../Images/Mechs_Redesign/Zadv/img_Zadv_60_Per.png"/>
                             </DataTrigger>
                             <DataTrigger Binding="{Binding OpenState}" Value="5">
-                                <Setter Property="Source" Value="../../Images/Mechs/img_BigGate_80Per_Open.png"/>
+                                <Setter Property="Source" Value="../../Images/Mechs_Redesign/Zadv/img_Zadv_80_Per.png"/>
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </Image.Style>
             </Image>
-            <Image Name="ImgClose" VerticalAlignment="Center" HorizontalAlignment="Left" Width="25" Height="10" Margin="39,0,0,0" Visibility="{Binding VisClose}" Source="../../Images/Mechs/img_Gate_Close.png"/>
-            <Image Name="ImgOpen" VerticalAlignment="Center" HorizontalAlignment="Left" Width="35" Height="10" Margin="39,0,0,0" Visibility="{Binding VisOpen}" Source="../../Images/Mechs/img_Gate_Open.png"/>
-            <Image Name="ImgAlarm" VerticalAlignment="Center" HorizontalAlignment="Left" Width="25" Height="10" Margin="39,0,0,0" Visibility="{Binding VisAlarm}" Source="../../Images/Mechs/img_Gate_Alarm.png"/>
+            <Image Name="ImgClose" VerticalAlignment="Top" HorizontalAlignment="Left" Width="52" Height="14" Margin="0,0,0,0" Visibility="{Binding VisClose}"  Source="../../Images/Mechs_Redesign/Zadv/img_Zadv_Closed.png"/>
+            <Image Name="ImgOpen"  VerticalAlignment="Top" HorizontalAlignment="Left" Width="52" Height="14" Margin="0,0,0,0" Visibility="{Binding VisOpen}"   Source="../../Images/Mechs_Redesign/Zadv/img_Zadv_Opened_Right.png"/>
+            <Image Name="ImgAlarm" VerticalAlignment="Top" HorizontalAlignment="Left" Width="52" Height="14" Margin="0,0,0,0" Visibility="{Binding VisAlarm}"  Source="../../Images/Mechs_Redesign/Zadv/img_Zadv_Alarm.png"/>
         </Grid>
-        <TextBlock Name="TbcName" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" TextAlignment="Right" FontSize="14" Text="VXXX"/>
-        <Label Name="LblMode" VerticalAlignment="Center" HorizontalAlignment="Left" Width="12" Height="12" Margin="70,0,0,0" BorderThickness="1" BorderBrush="Black" Background="Yellow">
+       
+        <TextBlock Name="TbcName" VerticalAlignment="Center" Visibility="Collapsed" HorizontalAlignment="Left" Margin="0,0,0,0" TextAlignment="Right" FontSize="14" Text="VXXX"/>
+        
+        <Label Name="LblMode"
+               Grid.Column="0"
+               VerticalAlignment="Top"
+               HorizontalAlignment="Left"
+               VerticalContentAlignment="Center"
+               HorizontalContentAlignment="Center"
+               Width="10" 
+               Height="12" 
+               Margin="0,0,0,0" 
+               BorderThickness="0"
+               Background="#343536"
+               Foreground="#FFE91F"
+               FontSize="10"
+               >
+            
             <Label.Style>
                 <Style TargetType="{x:Type Label}">
                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -51,8 +73,9 @@
                     </Style.Triggers>
                 </Style>
             </Label.Style>
+            
             <Label.Content>
-                <TextBlock FontSize="10">
+                <TextBlock>
                     <TextBlock.Style>
                         <Style TargetType="{x:Type TextBlock}">
                             <Setter Property="Text" Value="Р"/>
@@ -68,7 +91,23 @@
                 </TextBlock>
             </Label.Content>
         </Label>
-        <Label Name="LblModeDosing" VerticalAlignment="Center" HorizontalAlignment="Left" Width="16" Height="16" Margin="70,0,0,0" BorderThickness="1" BorderBrush="Black" Background="Yellow">
+        
+        
+        <Label Name="LblModeDosing"
+               Grid.Column="0"
+               VerticalAlignment="Top" 
+               HorizontalAlignment="Left"
+               VerticalContentAlignment="Center"
+               HorizontalContentAlignment="Center"
+               Width="16" 
+               Height="14"
+               Margin="0,0,0,0" 
+               BorderThickness="0"
+               Background="#343536"
+               Foreground="#FFE91F"
+               FontSize="10"
+               >
+            
             <Label.Style>
                 <Style TargetType="{x:Type Label}">
                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -79,14 +118,31 @@
                     </Style.Triggers>
                 </Style>
             </Label.Style>
+            
             <Label.Content>
-                <TextBlock FontSize="10" TextAlignment="Center" Width="14" Height="14" Text="РД" Margin="-5"/>
+                <TextBlock FontSize="10" TextAlignment="Center" Text="РД" Margin="-5"/>
             </Label.Content>
+            
         </Label>
-        <Rectangle Name="RectObject" VerticalAlignment="Center" HorizontalAlignment="Left" Width="40" Height="26" Margin="39,0,0,0" Fill="Transparent" StrokeThickness="0.5" Stroke="Black" Opacity="0" MouseLeftButtonUp="ValveGrid_OnMouseRightButtonDown" PreviewMouseRightButtonDown="ValveGrid_OnPreviewMouseRightButtonDown" PreviewMouseRightButtonUp="ValveGrid_OnPreviewMouseRightButtonUp"/>
-        <Popup Name="PopupObject" Placement="Bottom" StaysOpen="False">
+        
+        
+        <Rectangle Name="RectObject" 
+                   Grid.Column="1"
+                   VerticalAlignment="Center" 
+                   HorizontalAlignment="Left" 
+                   Width="125" Height="18" 
+                   Margin="0,0,0,0" 
+                   Fill="Transparent" 
+                   StrokeThickness="0.5" 
+                   Stroke="Black" 
+                   Opacity="0"
+                   MouseLeftButtonUp="ValveGrid_OnMouseRightButtonDown"
+                   PreviewMouseRightButtonDown="ValveGrid_OnPreviewMouseRightButtonDown" 
+                   PreviewMouseRightButtonUp="ValveGrid_OnPreviewMouseRightButtonUp"/>
+        
+        <Popup Name="PopupObject" Placement="Bottom" StaysOpen="False" Grid.Column="1">
             <Border BorderBrush="Black" BorderThickness="1">
-                <Grid Background="Beige" Width="180">
+                <Grid Background="Beige" Width="125">
                     <Grid.RowDefinitions>
                         <RowDefinition MinHeight="25" Height="Auto"/>
                         <RowDefinition Height="35"/>

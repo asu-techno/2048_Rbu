@@ -134,26 +134,26 @@ namespace _2048_Rbu.Elements.Mechs
             {
                 if (value == Mech.Shnek)
                 {
-                    ImgKm.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs/img_Shnek_On.png", UriKind.Relative));
-                    ImgAlarm.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs/img_Shnek_Alarm.png", UriKind.Relative));
-                    ImgKm.Width = ImgAlarm.Width = 85;
-                    ImgKm.Height = ImgAlarm.Height = 17;
+                    ImgKm.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs_Redesign/img_Conv_1_ON.png", UriKind.Relative));
+                    ImgAlarm.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs_Redesign/img_Conv_1_Alarm.png", UriKind.Relative));
+                    ImgKm.Width = ImgAlarm.Width = 75;
+                    ImgKm.Height = ImgAlarm.Height = 24;
                 }
                 if (value == Mech.Conveyor)
                 {
-                    ImgKm.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs/img_Conv_On.png", UriKind.Relative));
-                    ImgAlarm.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs/img_Conv_Alarm.png", UriKind.Relative));
-                    ImgKm.Width = ImgAlarm.Width = 755;
-                    ImgKm.Height = ImgAlarm.Height = 24;
-                    RectObject.Margin = new Thickness(0, -10, 0, 0);
+                    ImgKm.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs_Redesign/img_Conv_2_ON.png", UriKind.Relative));
+                    ImgAlarm.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs_Redesign/img_Conv_2_Alarm.png", UriKind.Relative));
+                    ImgKm.Width = ImgAlarm.Width = 620;
+                    ImgKm.Height = ImgAlarm.Height = 60;
+                    //RectObject.Margin = new Thickness(0, -10, 0, 0);
                 }
                 if (value == Mech.Skip)
                 {
-                    ImgKm.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs/img_Skip_On.png", UriKind.Relative));
-                    ImgAlarm.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs/img_Skip_Alarm.png", UriKind.Relative));
-                    ImgKm.Width = ImgAlarm.Width = 325;
-                    ImgKm.Height = ImgAlarm.Height = 24;
-                    RectObject.Margin = new Thickness(0, -10, 0, 0);
+                    ImgKm.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs_Redesign/img_Conv_3_ON.png", UriKind.Relative));
+                    ImgAlarm.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs_Redesign/img_Conv_3_Alarm.png", UriKind.Relative));
+                    ImgKm.Width = ImgAlarm.Width = 376;
+                    ImgKm.Height = ImgAlarm.Height = 278;
+                    //RectObject.Margin = new Thickness(0, -10, 0, 0);
                 }
                 RectObject.Width = ImgKm.Width + 6;
                 RectObject.Height = ImgKm.Height + 4;
@@ -260,6 +260,30 @@ namespace _2048_Rbu.Elements.Mechs
                 else
                     TxtPopupName.Text = "Шнек " + value;
                 _nameObject = value;
+            }
+        }
+
+        private bool _rotate;
+        public bool Rotate
+        {
+            get { return _rotate; }
+            set
+            {
+                if (value)
+                {
+                    ObjectGrid.RenderTransformOrigin = new Point(0.5, 0.5);
+                    ScaleTransform rotate = new ScaleTransform();
+                    rotate.ScaleX = -1;
+                    ObjectGrid.RenderTransform = rotate;
+                }
+                else
+                {
+                    ObjectGrid.RenderTransformOrigin = new Point(0.5, 0.5);
+                    ScaleTransform rotate = new ScaleTransform();
+                    rotate.ScaleX = 1;
+                    ObjectGrid.RenderTransform = rotate;
+                }
+                _rotate = value;
             }
         }
 

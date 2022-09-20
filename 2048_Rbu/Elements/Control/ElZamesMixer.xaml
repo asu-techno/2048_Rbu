@@ -6,8 +6,372 @@
              xmlns:local="clr-namespace:_2048_Rbu.Elements.Control"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance Type={x:Type local:ViewModelMixer}, IsDesignTimeCreatable=False}"
-             Height="205" Width="384" Background="DarkGray" BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Center">
-    <Grid Background="DarkGray">
+             Height="160" Width="380" Background="#E7EAF3" HorizontalAlignment="Center">
+
+    <StackPanel>
+        
+        <StackPanel>
+            
+            <!--Text = Узел бетоносмесителя-->
+            <TextBlock FontFamily="{StaticResource Jost}"
+                       FontWeight="Regular"
+                       Margin="0,0,0,0"
+                       FontSize="14"
+                       HorizontalAlignment="Left"
+                       Foreground="#878A91">
+                       <Run Typography.CapitalSpacing="True">УЗЕЛ БЕТОНОСМИСИТЕЛЯ</Run>
+            </TextBlock>
+
+            <!--Название-->
+            <StackPanel Orientation="Horizontal"
+                        Height="25"
+                        Margin="0,15,0,0">
+
+                <TextBlock Text="Название:"
+                           FontFamily="{StaticResource Jost}"
+                           FontWeight="Regular"
+                           FontSize="16"
+                           Foreground="#333438"
+                           Width="140"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Center">
+
+                </TextBlock>
+
+                <Border Width="240"
+                        Background="#F3F4F8"
+                        CornerRadius="5"
+                        BorderThickness="1"
+                        BorderBrush="#B8BBC0">
+                    
+                    <TextBlock Background="Transparent"
+                               Text="{Binding Path=SelTaskName, UpdateSourceTrigger=PropertyChanged}"
+                               FontFamily="{StaticResource Jost}"
+                               FontWeight="Regular"
+                               FontSize="14"
+                               Margin="15,0,0,0"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Center"
+                               Foreground="#333438">
+
+                    </TextBlock>
+                    
+                </Border>
+                
+            </StackPanel>
+
+            <!--Замес-->
+            <StackPanel Orientation="Horizontal"
+                        Height="25"
+                        Margin="0,5,0,0">
+                
+                <TextBlock Text="Замес:"
+                           FontFamily="{StaticResource Jost}"
+                           FontWeight="Regular"
+                           FontSize="16"
+                           Foreground="#333438"
+                           Width="140"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Center">
+                </TextBlock>
+
+                <Border Width="80"
+                        Background="#F3F4F8"
+                        CornerRadius="5"
+                        BorderThickness="1"
+                        BorderBrush="#B8BBC0">
+                    
+                    <TextBlock Name="lbl_State"
+                               Background="Transparent"
+                               Text="{Binding Path=CurrentBatchNum, UpdateSourceTrigger=PropertyChanged}"
+                               FontFamily="{StaticResource Jost}"
+                               FontWeight="Regular"
+                               FontSize="14"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Foreground="#333438">
+                    </TextBlock>
+                    
+                </Border>
+
+                <TextBlock Width="80"
+                           Background="Transparent"
+                           Text="из"
+                           VerticalAlignment="Center"
+                           TextAlignment="Center"
+                           FontSize="16"
+                           FontFamily="{StaticResource Jost}"
+                           FontWeight="Regular">
+                </TextBlock>
+
+                <Border Width="80"
+                        Background="#F3F4F8"
+                        CornerRadius="5"
+                        BorderThickness="1"
+                        BorderBrush="#B8BBC0">
+                    
+                    <TextBlock Background="Transparent"
+                               Text="{Binding Path=BatchesQuantity, UpdateSourceTrigger=PropertyChanged}"
+                               FontFamily="{StaticResource Jost}"
+                               FontWeight="Regular"
+                               FontSize="14"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Foreground="#333438">
+                    </TextBlock>
+                    
+                </Border>
+                
+            </StackPanel>
+
+            <!--Смешивание-->
+            <Grid Margin="0,5,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="15"/>
+                    <RowDefinition Height="15"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="140"/>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="160"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Row="0" 
+                           Grid.RowSpan="2"
+                           Text="Смешивание:"
+                           FontFamily="{StaticResource Jost}"
+                           FontWeight="Regular"
+                           FontSize="16"
+                           Foreground="#333438"
+                           Width="140"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Center">
+                </TextBlock>
+
+                <Border Grid.Row="0"
+                        Grid.Column="1"
+                        Width="40"
+                        Grid.RowSpan="2"
+                        Background="#F3F4F8"
+                        CornerRadius="5"
+                        BorderThickness="1"
+                        BorderBrush="#B8BBC0"
+                        Height="25">
+
+                    <TextBlock Name="t_mixer"
+                               Background="Transparent"
+                               Text="{Binding Path=ParMixingProcess, UpdateSourceTrigger=PropertyChanged}"
+                               FontFamily="{StaticResource Jost}"
+                               FontWeight="Regular"
+                               FontSize="14"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Foreground="#333438">
+
+                    </TextBlock>
+                    
+                </Border>
+
+                <TextBlock Grid.Row="1"
+                           Grid.Column="2"
+                           FontFamily="{StaticResource Jost}"
+                           FontWeight="Regular"
+                           FontSize="9"
+                           HorizontalAlignment="Left"
+                           Padding="5,0,0,0"
+                           VerticalAlignment="Center"
+                           Foreground="#018667"
+                           Text="Сек">
+
+                </TextBlock>
+
+                <TextBlock Grid.Row="0"
+                           Grid.Column="3"
+                           FontFamily="{StaticResource Jost}"
+                           FontWeight="Regular"
+                           FontSize="16"
+                           HorizontalAlignment="Right"
+                           VerticalAlignment="Center"
+                           Foreground="#018667"
+                           Text="{Binding ElementName=ProgressMixing, Path=Value, StringFormat={}{0:0}}"
+                           >
+                    
+                    <TextBlock.Style>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="Visibility" Value="Visible"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=ProgressMixing, Path=Value}" Value="0">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+
+                </TextBlock>
+
+                <ProgressBar Name="ProgressMixing"
+                             Value="{Binding Path=MixingProcess, UpdateSourceTrigger=PropertyChanged}"
+                             Maximum="{Binding Path=ParMixingProcess, UpdateSourceTrigger=PropertyChanged}"
+                             Minimum="0"
+                             Grid.Row="1"
+                             Grid.Column="3"
+                             Width="160"
+                             Height="5"
+                             Style="{StaticResource ProgressBarHorizontal}"
+                             >
+                </ProgressBar>
+
+            </Grid>
+
+            <!--Разгрузка-->
+            <Grid Margin="0,5,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="15"/>
+                    <RowDefinition Height="15"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="140"/>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition Width="13"/>
+                    <ColumnDefinition Width="77"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Row="0" 
+                           Grid.RowSpan="2"
+                           Text="Разгрузка:"
+                           FontFamily="{StaticResource Jost}"
+                           FontWeight="Regular"
+                           FontSize="16"
+                           Foreground="#333438"
+                           Width="140"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Center">
+                </TextBlock>
+
+                <Border Grid.Row="0"
+                        Grid.Column="1"
+                        Width="40"
+                        Grid.RowSpan="2"
+                        Background="#F3F4F8"
+                        CornerRadius="5"
+                        BorderThickness="1"
+                        BorderBrush="#B8BBC0"
+                        Height="25"
+                        >
+                    
+                    <TextBlock Background="Transparent"
+                               Name="t_razgr"
+                               FontFamily="{StaticResource Jost}"
+                               FontWeight="Regular"
+                               FontSize="14"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Foreground="#333438"
+                               Text="{Binding Path=ParSumUnload, StringFormat={}{0:0}, UpdateSourceTrigger=PropertyChanged}"
+                               >
+
+                    </TextBlock>
+                </Border>
+
+                <TextBlock Grid.Row="1"
+                           Grid.Column="2"
+                           FontFamily="{StaticResource Jost}"
+                           FontWeight="Regular"
+                           FontSize="9"
+                           HorizontalAlignment="Left"
+                           Padding="5,0,0,0"
+                           VerticalAlignment="Center"
+                           Foreground="#018667"
+                           Text="Сек">
+
+                </TextBlock>
+
+                <ProgressBar Grid.Row="1"
+                             Grid.Column="3"
+                             Width="70"
+                             Height="5"
+                             Style="{StaticResource ProgressBarHorizontal}"
+                             Name="ProgressPartial"
+                             Value="{Binding Path=PartialUnloadProcess, UpdateSourceTrigger=PropertyChanged}"
+                             Maximum="{Binding Path=ParPartialUnload, UpdateSourceTrigger=PropertyChanged}"
+                             Minimum="0"
+                             >
+                </ProgressBar>
+                
+                <TextBlock Grid.Row="0"
+                           Grid.Column="3"
+                           FontFamily="{StaticResource Jost}"
+                           FontWeight="Regular"
+                           FontSize="16"
+                           HorizontalAlignment="Right"
+                           VerticalAlignment="Center"
+                           Foreground="#018667"
+                           Text="{Binding ElementName=ProgressPartial, Path=Value, StringFormat={}{0:0}}"
+                           >
+
+                    <TextBlock.Style>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="Visibility" Value="Visible"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=ProgressPartial, Path=Value}" Value="0">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                    
+                </TextBlock>
+
+                <ProgressBar Grid.Row="1"
+                             Grid.Column="5"
+                             Width="77"
+                             Height="5"
+                             Style="{StaticResource ProgressBarHorizontal}"
+                             Name="ProgressFull"
+                             Value="{Binding Path=FullUnloadProcess, UpdateSourceTrigger=PropertyChanged}"
+                             Maximum="{Binding Path=ParFullUnload, UpdateSourceTrigger=PropertyChanged}"
+                             Minimum="0"
+                             >
+                </ProgressBar>
+                
+                <TextBlock Grid.Row="0"
+                           Grid.Column="5"
+                           FontFamily="{StaticResource Jost}"
+                           FontWeight="Regular"
+                           FontSize="16"
+                           HorizontalAlignment="Right"
+                           VerticalAlignment="Center"
+                           Foreground="#018667"
+                           Text="{Binding ElementName=ProgressFull, Path=Value, StringFormat={}{0:0}}"
+                           >
+
+                    <TextBlock.Style>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="Visibility" Value="Visible"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=ProgressFull, Path=Value}" Value="0">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                    
+                </TextBlock>
+
+            </Grid>
+            
+        </StackPanel>
+        
+    </StackPanel>
+    
+    
+    
+    <!--<Grid Background="DarkGray">
         <Label Content="Узел бетоносмесителя" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" Margin="0" Padding="0" HorizontalContentAlignment="Center"/>
         <Label Content="Название:" FontSize="16" FontWeight="Normal" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="94,22,94,0" Padding="0" VerticalAlignment="Top" Width="79"/>
         <Label Background="Silver" BorderBrush="Black" BorderThickness="1" Content="{Binding Path=SelTaskName, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Height="22" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,44,0,0" Name="label1" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="300"/>
@@ -72,5 +436,5 @@
                 </Grid>
             </Border>
         </StackPanel>
-    </Grid>
+    </Grid>-->
 </UserControl>

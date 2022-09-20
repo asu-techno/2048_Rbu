@@ -7,11 +7,94 @@
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance Type={x:Type local:ElValueBar}, IsDesignTimeCreatable=False}"
              MouseEnter="Rect_OnMouseEnter" MouseLeave="Rect_OnMouseLeave">
-    <Grid Height="Auto" Width="95">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="34"/>
+            <ColumnDefinition Width="4"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="15"/>
+        </Grid.RowDefinitions>
+
+        <ProgressBar Grid.Row="0" Grid.Column="1" Grid.RowSpan="2"
+                     Name="ProgressValue"
+                     Orientation="Vertical"
+                     Value="{Binding Value}">
+            
+            <ProgressBar.Style>
+                <Style TargetType="ProgressBar">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ProgressBar">
+                                <Grid x:Name="TemplateRoot">
+                                    <Border Name="PART_Track" CornerRadius="3"
+                                            Background="#C4C4C4"
+                                            BorderThickness="0">
+                                    </Border>
+                                    <Border Name="PART_Indicator" CornerRadius="3"
+                                            Background="#008767"
+                                            BorderThickness="0"
+                                            HorizontalAlignment="Left">
+                                    </Border>
+                                </Grid>
+
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="Orientation" Value="Vertical">
+                                        <Setter Property="LayoutTransform" TargetName="TemplateRoot">
+                                            <Setter.Value>
+                                                <RotateTransform Angle="270"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+
+                            </ControlTemplate>
+                            
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ProgressBar.Style>
+            
+        </ProgressBar>
+
+        <TextBlock Text="{Binding ElementName=ProgressValue, Path=Value, StringFormat={}{0:0}%}"
+                   Width="{Binding ElementName=ProgressValue, Path=Height}" 
+                   
+                   Grid.Row="1"
+                   TextAlignment="Center"
+                   HorizontalAlignment="Right" 
+                   VerticalAlignment="Bottom" 
+                   Margin="4,-2" 
+                   FontSize="12" 
+                   Foreground="#008767"
+                   >
+            
+            <Span></Span>
+            
+            <TextBlock.Style>
+                <Style TargetType="{x:Type TextBlock}">
+                    <Setter Property="Visibility" Value="Visible"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding VisCheck}" Value="True">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+        
+    </Grid>
+    
+    
+    <!--<Grid Height="Auto" Width="95">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
+        
         <Grid VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="0" >
             <Grid.Style>
                 <Style TargetType="{x:Type Grid}">
@@ -25,11 +108,13 @@
             </Grid.Style>
             <local:ElValueBox x:Name="ValueBox" Width="95" Height="25" Margin="0,0,0,5" Count="7" Digit="1" Color="CornflowerBlue" Measure="кг" ContainerItem="Additive1" ValuePcay="Volume[1]"/>
         </Grid>
+        
         <Grid Grid.Row="1">
             <Border Name="ProgressBorder" Height="Auto" Width="15" BorderThickness="1" BorderBrush="Black">
                 <Grid Height="Auto" Width="Auto">
                     <ProgressBar Name="ProgressValue" Value="{Binding Value}" Width="15" FontSize="8" BorderThickness="0" BorderBrush="Black" Foreground="{Binding Brush}" Background="{Binding BackgroundBrush}" Orientation="Vertical">
                     </ProgressBar>
+                    
                     <TextBlock Text="{Binding ElementName=ProgressValue, Path=Value, StringFormat={}{0:0.0}%}" Width="{Binding ElementName=ProgressValue, Path=Height}" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" FontSize="12" RenderTransformOrigin="0.5,0.5">
                         <TextBlock.LayoutTransform>
                             <RotateTransform Angle="-90"/>
@@ -45,6 +130,7 @@
                             </Style>
                         </TextBlock.Style>
                     </TextBlock>
+
                     <TextBlock Text="Контроль уровня цемента" Width="{Binding ElementName=ProgressValue, Path=Height}" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="-1,0,0,0" Padding="0" FontSize="11" RenderTransformOrigin="0.5,0.5">
                         <TextBlock.LayoutTransform>
                             <RotateTransform Angle="-90"/>
@@ -60,9 +146,11 @@
                             </Style>
                         </TextBlock.Style>
                     </TextBlock>
+                    
                     <Rectangle Name="RectObject" Fill="Transparent" StrokeThickness="0.5" Margin="-3" Stroke="Black" Opacity="0" MouseLeftButtonUp="ElValueBar_OnMouseLeftButtonDown"/>
+                
                 </Grid>
             </Border>
         </Grid>
-    </Grid>
+    </Grid>-->
 </UserControl>

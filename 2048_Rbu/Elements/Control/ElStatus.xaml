@@ -5,9 +5,470 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:_2048_Rbu.Elements.Control"
       mc:Ignorable="d"
-      d:DataContext="{d:DesignInstance Type={x:Type local:ElStatus}, IsDesignTimeCreatable=False}"
-      Width="350" Height="117">
-    <Grid Background="Silver">
+      Width="240" Height="346" >
+
+    <!--d:DataContext="{d:DesignInstance Type={x:Type local:ElStatus}, IsDesignTimeCreatable=False}"-->
+    
+    <Border Background="#E7EAF3"
+            CornerRadius="3,3,0,0"
+            BorderThickness="1"
+            BorderBrush="#B8BBC0">
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="23"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="3"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="3"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="3"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="3"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="3"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="3"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="3"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="3"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="3"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="3"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="3"/>
+                <RowDefinition Height="20"/>
+                
+               
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="1"
+                       FontFamily="{StaticResource Jost}"
+                       FontWeight="Regular"
+                       FontSize="14"
+                       Text="СТАТУСЫ УЗЛОВ"
+                       Height="20"
+                       Foreground="#878A91"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Center"
+                       Padding="20,0,0,0">
+                
+            </TextBlock>
+
+            <StackPanel Orientation="Horizontal"
+                        Grid.Row="3"
+                        Background="Transparent">
+
+                <Rectangle Margin="20,0,0,0" 
+                           Width="10" 
+                           Height="10" 
+                           StrokeThickness="0" 
+                           RadiusX="10" 
+                           RadiusY="10">
+                    
+                    <Rectangle.Style>
+                        <Style TargetType="{x:Type Rectangle}">
+                            <Setter Property="Fill" Value="#B2BBCA"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding StatusArray[0].StatusItem}" Value="True">
+                                    <Setter Property="Fill" Value="#008767"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Rectangle.Style>
+                    
+                </Rectangle>
+
+                <TextBlock Text="Стоповая кнопка ШУ К"
+                           FontFamily="{StaticResource Jost}"
+                           FontWeight="Regular"
+                           FontSize="14"
+                           Padding="10,0,0,0"
+                           VerticalAlignment="Center"
+                           Foreground="#3C3C3E"
+                           >
+                </TextBlock>
+                
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal"
+                        Grid.Row="5"
+                        Background="Transparent"
+                        >
+
+                <Rectangle Margin="20,0,0,0" 
+                           Width="10" 
+                           Height="10" 
+                           StrokeThickness="0" 
+                           RadiusX="10" 
+                           RadiusY="10">
+
+                    <Rectangle.Style>
+                        <Style TargetType="{x:Type Rectangle}">
+                            <Setter Property="Fill" Value="#B2BBCA"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding StatusArray[1].StatusItem}" Value="True">
+                                    <Setter Property="Fill" Value="#008767"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Rectangle.Style>
+
+                </Rectangle>
+
+                <TextBlock Text="Стоповая кнопка ШУ ИФ"
+                           FontFamily="{StaticResource Jost}"
+                           FontWeight="Regular"
+                           FontSize="14"
+                           Padding="10,0,0,0"
+                           VerticalAlignment="Center"
+                           Foreground="#3C3C3E"
+                           >
+                </TextBlock>
+
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal"
+                        Grid.Row="7"
+                        Background="Transparent"
+                        >
+
+                <Rectangle Margin="20,0,0,0" 
+                           Width="10" 
+                           Height="10" 
+                           StrokeThickness="0" 
+                           RadiusX="10" 
+                           RadiusY="10">
+
+                    <Rectangle.Style>
+                        <Style TargetType="{x:Type Rectangle}">
+                            <Setter Property="Fill" Value="#B2BBCA"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding StatusArray[2].StatusItem}" Value="True">
+                                    <Setter Property="Fill" Value="#008767"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Rectangle.Style>
+
+                </Rectangle>
+
+                <TextBlock Text="Стоповая кнопка ШУ Д"
+                           FontFamily="{StaticResource Jost}"
+                           FontWeight="Regular"
+                           FontSize="14"
+                           Padding="10,0,0,0"
+                           VerticalAlignment="Center"
+                           Foreground="#3C3C3E"
+                           >
+                </TextBlock>
+
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal"
+                        Grid.Row="9"
+                        Background="Transparent"
+                        >
+
+                <Rectangle Margin="20,0,0,0" 
+                           Width="10" 
+                           Height="10" 
+                           StrokeThickness="0" 
+                           RadiusX="10" 
+                           RadiusY="10">
+
+                    <Rectangle.Style>
+                        <Style TargetType="{x:Type Rectangle}">
+                            <Setter Property="Fill" Value="#B2BBCA"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding StatusArray[3].StatusItem}" Value="True">
+                                    <Setter Property="Fill" Value="#008767"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Rectangle.Style>
+
+                </Rectangle>
+
+                <TextBlock Text="Стоповая кнопка ШУ Ц"
+                           FontFamily="{StaticResource Jost}"
+                           FontWeight="Regular"
+                           FontSize="14"
+                           Padding="10,0,0,0"
+                           VerticalAlignment="Center"
+                           Foreground="#3C3C3E"
+                           >
+                </TextBlock>
+
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal"
+                        Grid.Row="11"
+                        Background="Transparent"
+                        >
+
+                <Rectangle Margin="20,0,0,0" 
+                           Width="10" 
+                           Height="10" 
+                           StrokeThickness="0" 
+                           RadiusX="10" 
+                           RadiusY="10">
+
+                    <Rectangle.Style>
+                        <Style TargetType="{x:Type Rectangle}">
+                            <Setter Property="Fill" Value="#B2BBCA"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding StatusArray[4].StatusItem}" Value="True">
+                                    <Setter Property="Fill" Value="#008767"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Rectangle.Style>
+
+                </Rectangle>
+
+                <TextBlock Text="Стоповая кнопка ШУ ЖК"
+                           FontFamily="{StaticResource Jost}"
+                           FontWeight="Regular"
+                           FontSize="14"
+                           Padding="10,0,0,0"
+                           VerticalAlignment="Center"
+                           Foreground="#3C3C3E"
+                           >
+                </TextBlock>
+
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal"
+                        Grid.Row="13"
+                        Background="Transparent"
+                        >
+
+                <Rectangle Margin="20,0,0,0" 
+                           Width="10" 
+                           Height="10" 
+                           StrokeThickness="0" 
+                           RadiusX="10" 
+                           RadiusY="10">
+
+                    <Rectangle.Style>
+                        <Style TargetType="{x:Type Rectangle}">
+                            <Setter Property="Fill" Value="#B2BBCA"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding StatusArray[5].StatusItem}" Value="True">
+                                    <Setter Property="Fill" Value="#008767"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Rectangle.Style>
+
+                </Rectangle>
+
+                <TextBlock Text="Стоповая кнопка ШУ Б"
+                           FontFamily="{StaticResource Jost}"
+                           FontWeight="Regular"
+                           FontSize="14"
+                           Padding="10,0,0,0"
+                           VerticalAlignment="Center"
+                           Foreground="#3C3C3E"
+                           >
+                </TextBlock>
+
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal"
+                        Grid.Row="15"
+                        Background="Transparent"
+                        >
+
+                <Rectangle Margin="20,0,0,0" 
+                           Width="10" 
+                           Height="10" 
+                           StrokeThickness="0" 
+                           RadiusX="10" 
+                           RadiusY="10">
+
+                    <Rectangle.Style>
+                        <Style TargetType="{x:Type Rectangle}">
+                            <Setter Property="Fill" Value="#B2BBCA"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding StatusArray[6].StatusItem}" Value="True">
+                                    <Setter Property="Fill" Value="#008767"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Rectangle.Style>
+
+                </Rectangle>
+
+                <TextBlock Text="Насос гидростанции"
+                           FontFamily="{StaticResource Jost}"
+                           FontWeight="Regular"
+                           FontSize="14"
+                           Padding="10,0,0,0"
+                           VerticalAlignment="Center"
+                           Foreground="#3C3C3E"
+                           >
+                </TextBlock>
+
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal"
+                        Grid.Row="17"
+                        Background="Transparent"
+                        >
+
+                <Rectangle Margin="20,0,0,0" 
+                           Width="10" 
+                           Height="10" 
+                           StrokeThickness="0" 
+                           RadiusX="10" 
+                           RadiusY="10">
+
+                    <Rectangle.Style>
+                        <Style TargetType="{x:Type Rectangle}">
+                            <Setter Property="Fill" Value="#B2BBCA"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding StatusArray[7].StatusItem}" Value="True">
+                                    <Setter Property="Fill" Value="#008767"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Rectangle.Style>
+
+                </Rectangle>
+
+                <TextBlock Text="Давление гидр. магистр."
+                           FontFamily="{StaticResource Jost}"
+                           FontWeight="Regular"
+                           FontSize="14"
+                           Padding="10,0,0,0"
+                           VerticalAlignment="Center"
+                           Foreground="#3C3C3E"
+                           >
+                </TextBlock>
+
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal"
+                        Grid.Row="19"
+                        Background="Transparent"
+                        >
+
+                <Rectangle Margin="20,0,0,0" 
+                           Width="10" 
+                           Height="10" 
+                           StrokeThickness="0" 
+                           RadiusX="10" 
+                           RadiusY="10">
+
+                    <Rectangle.Style>
+                        <Style TargetType="{x:Type Rectangle}">
+                            <Setter Property="Fill" Value="#B2BBCA"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding StatusArray[8].StatusItem}" Value="True">
+                                    <Setter Property="Fill" Value="#008767"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Rectangle.Style>
+
+                </Rectangle>
+
+                <TextBlock Text="М-18 — давление смазки"
+                           FontFamily="{StaticResource Jost}"
+                           FontWeight="Regular"
+                           FontSize="14"
+                           Padding="10,0,0,0"
+                           VerticalAlignment="Center"
+                           Foreground="#3C3C3E"
+                           >
+                </TextBlock>
+
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal"
+                        Grid.Row="21"
+                        Background="Transparent"
+                        >
+
+                <Rectangle Margin="20,0,0,0" 
+                           Width="10" 
+                           Height="10" 
+                           StrokeThickness="0" 
+                           RadiusX="10" 
+                           RadiusY="10">
+
+                    <Rectangle.Style>
+                        <Style TargetType="{x:Type Rectangle}">
+                            <Setter Property="Fill" Value="#B2BBCA"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding StatusArray[9].StatusItem}" Value="True">
+                                    <Setter Property="Fill" Value="#008767"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Rectangle.Style>
+
+                </Rectangle>
+
+                <TextBlock Text="М-18 — автоматич. режим"
+                           FontFamily="{StaticResource Jost}"
+                           FontWeight="Regular"
+                           FontSize="14"
+                           Padding="10,0,0,0"
+                           VerticalAlignment="Center"
+                           Foreground="#3C3C3E"
+                           >
+                </TextBlock>
+
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal"
+                        Grid.Row="23"
+                        Background="Transparent"
+                        >
+
+                <Rectangle Margin="20,0,0,0" 
+                           Width="10" 
+                           Height="10" 
+                           StrokeThickness="0" 
+                           RadiusX="10" 
+                           RadiusY="10">
+
+                    <Rectangle.Style>
+                        <Style TargetType="{x:Type Rectangle}">
+                            <Setter Property="Fill" Value="#B2BBCA"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding StatusArray[10].StatusItem}" Value="True">
+                                    <Setter Property="Fill" Value="#008767"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Rectangle.Style>
+
+                </Rectangle>
+
+                <TextBlock Text="М-9 — автоматич. режим"
+                           FontFamily="{StaticResource Jost}"
+                           FontWeight="Regular"
+                           FontSize="14"
+                           Padding="10,0,0,0"
+                           VerticalAlignment="Center"
+                           Foreground="#3C3C3E"
+                           >
+                </TextBlock>
+
+            </StackPanel>
+
+        </Grid>
+    </Border>
+    
+    <!--<Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
@@ -174,5 +635,5 @@
                 </Rectangle.Style>
             </Rectangle>
         </Grid>
-    </Grid>
+    </Grid>-->
 </UserControl>
