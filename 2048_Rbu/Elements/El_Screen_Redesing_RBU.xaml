@@ -23,14 +23,31 @@
                 <Setter Property="HorizontalContentAlignment" Value="Center"/>
                 <Setter Property="Foreground" Value="#F3F4F8"/>
                 <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="BorderBrush" Value="Black"/>
+                
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="#365463"/>
+                        <Setter Property="Foreground" Value="Black"/>
+                    </Trigger>
+
+                    <Trigger Property="IsFocused" Value="True">
+                        <Setter Property="Background" Value="#365463"/>
+                        <Setter Property="Foreground" Value="Black"/>
+                    </Trigger>
+                    
+                </Style.Triggers>
+                
             </Style>
+            
+            
         </ResourceDictionary>
     </UserControl.Resources>
     
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="420"/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="1500"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
@@ -45,50 +62,48 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
+            <!--MENU-->
             <Menu Background="#3B3C3E" 
                   Width="540" 
                   HorizontalAlignment="Left"
                   Grid.Column="0">
 
-                <MenuItem     Header="_Программа" 
+                <!--Program-->
+                <MenuItem Header="_Программа" 
                           Name="Program"
                           Height="40" 
-                          Width="120"
+                          Width="113"
                           Style="{StaticResource MenuItemNew}"
-                          Padding="20,0,0,0" 
-                          >
+                          Padding="23,0,0,0">
 
-                    <MenuItem     Header="_Сменить пользователя"
+                    <MenuItem Header="_Сменить пользователя"
                               Name="ChangeUser"
                               Click="Login_OnClick"
                               Style="{StaticResource MenuItemNew}">
                     </MenuItem>
-
-                    <Separator/>
-
-                    <MenuItem     Header="_Выход"
+                    
+                    <MenuItem Header="_Выход"
                               Name="Exit"  
                               Click="Program_Closed"
                               Style="{StaticResource MenuItemNew}">
-
                     </MenuItem>
 
                 </MenuItem>
 
+                <!--Settings Main-->
                 <MenuItem Header="_Настройка" 
-                      ToolTipService.ShowOnDisabled="True"
-                      Height="40" 
-                      Width="100"
-                      Background="#3B3C3E"
-                      FontFamily="{StaticResource Jost}"
-                      FontWeight="Regular"
-                      FontSize="14"
-                      VerticalAlignment="Center"
-                      HorizontalContentAlignment="Center"
-                      Foreground="#F3F4F8"
-                      BorderThickness="0"
-                      Padding="20,0,0,0" 
-                      >
+                          ToolTipService.ShowOnDisabled="True"
+                          Height="40" 
+                          Width="97"
+                          Background="#3B3C3E"
+                          FontFamily="{StaticResource Jost}"
+                          FontWeight="Regular"
+                          FontSize="14"
+                          VerticalAlignment="Center"
+                          HorizontalContentAlignment="Center"
+                          Foreground="#F3F4F8"
+                          BorderThickness="0"
+                          Padding="17,0,0,0">
 
                     <MenuItem.Style>
                         <Style TargetType="{x:Type MenuItem}">
@@ -100,208 +115,237 @@
                                     <Setter Property="IsEnabled" Value="True"/>
                                     <Setter Property="ToolTipService.IsEnabled" Value="False"/>
                                 </DataTrigger>
+
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#365463"/>
+                                    <Setter Property="Foreground" Value="Black"/>
+                                </Trigger>
+
+                                <Trigger Property="IsFocused" Value="True">
+                                    <Setter Property="Background" Value="#365463"/>
+                                    <Setter Property="Foreground" Value="Black"/>
+                                </Trigger>
+                                
                             </Style.Triggers>
                         </Style>
                     </MenuItem.Style>
 
+                    <!--RecipeBase-->
                     <MenuItem Name="RecipeBase" 
-                          Header="База рецептов"
-                          Style="{StaticResource MenuItemNew}">
+                              Header="База рецептов"
+                              Style="{StaticResource MenuItemNew}">
 
                         <MenuItem Header="Типы рецептов" 
-                              Click="RecipeTypes_OnClick"
-                              Style="{StaticResource MenuItemNew}">
+                                  Click="RecipeTypes_OnClick"
+                                  Style="{StaticResource MenuItemNew}">
                         </MenuItem>
-
-                        <Separator/>
 
                         <MenuItem Header="Группы рецептов" 
-                              Click="RecipeGroups_OnClick"
-                              Style="{StaticResource MenuItemNew}">
-
+                                  Click="RecipeGroups_OnClick"
+                                  Style="{StaticResource MenuItemNew}">
                         </MenuItem>
-
-                        <Separator/>
+                        
                         <MenuItem Header="Рецепты"
-                              Click="Recipes_OnClick"
-                              Style="{StaticResource MenuItemNew}">
-
+                                  Click="Recipes_OnClick"
+                                  Style="{StaticResource MenuItemNew}">
                         </MenuItem>
+                        
                     </MenuItem>
 
-                    <Separator/>
-
+                    <!--Settings-->
                     <MenuItem Name="MainSettings"
-                          Header="Общие настройки" 
-                          Click="MainSettings_OnClick"
-                          Style="{StaticResource MenuItemNew}"
-                          />
+                              Header="Общие настройки" 
+                              Click="MainSettings_OnClick"
+                              Style="{StaticResource MenuItemNew}">
+                    </MenuItem>
 
-                    <Separator/>
-
+                    <!--Material-->
                     <MenuItem Header="Материалы"
-                          Style="{StaticResource MenuItemNew}">
+                              Style="{StaticResource MenuItemNew}">
 
                         <MenuItem Header="Выбор материалов" 
-                              Click="MatchingMaterials_OnClick"
-                              Style="{StaticResource MenuItemNew}"/>
-
-                        <Separator/>
+                                  Click="MatchingMaterials_OnClick"
+                                  Style="{StaticResource MenuItemNew}"/>
 
                         <MenuItem Header="Настройки масс емкостей"
-                              Click="WeightMaterials_OnClick"
-                              Style="{StaticResource MenuItemNew}"/>
+                                  Click="WeightMaterials_OnClick"
+                                  Style="{StaticResource MenuItemNew}"/>
+                        
                     </MenuItem>
 
-                    <Separator/>
-
+                    <!--DosingSettings-->
                     <MenuItem Name="DosingSetting" 
-                          Header="Настройки дозаторов" 
-                          Style="{StaticResource MenuItemNew}">
-
-                        <MenuItem Name="InertDosing" 
-                              Header="Инертные материалы" 
+                              Header="Настройки дозаторов" 
                               Style="{StaticResource MenuItemNew}">
+
+                        <!--InertDosing-->
+                        <MenuItem Name="InertDosing" 
+                                  Header="Инертные материалы" 
+                                  Style="{StaticResource MenuItemNew}">
 
                             <MenuItem Name="Bunker1" 
-                                  Header="Бункер 1" 
-                                  Click="DosingBunker1_Click" 
-                                  Style="{StaticResource MenuItemNew}"/>
-                            <Separator/>
-                            <MenuItem Name="Bunker2" 
-                                  Header="Бункер 2" 
-                                  Click="DosingBunker2_Click" 
-                                  Style="{StaticResource MenuItemNew}"/>
-                            <Separator/>
-                            <MenuItem Name="Bunker3" 
-                                  Header="Бункер 3"
-                                  Click="DosingBunker3_Click"
-                                  Style="{StaticResource MenuItemNew}"/>
+                                      Header="Бункер 1" 
+                                      Click="DosingBunker1_Click" 
+                                      Style="{StaticResource MenuItemNew}">
+                            </MenuItem>
 
-                            <!--<Separator/>
-                        <MenuItem Name="Bunker4" Header="Бункер 4" Click="DosingBunker4_Click"/>-->
+                            <MenuItem Name="Bunker2" 
+                                      Header="Бункер 2" 
+                                      Click="DosingBunker2_Click" 
+                                      Style="{StaticResource MenuItemNew}">
+                            </MenuItem>
+
+                            <MenuItem Name="Bunker3" 
+                                      Header="Бункер 3"
+                                      Click="DosingBunker3_Click"
+                                      Style="{StaticResource MenuItemNew}">
+                            </MenuItem>
 
                         </MenuItem>
 
+                        <!--CementDosing-->
                         <MenuItem Name="CementDosing" 
-                              Header="Цемент" 
-                              Style="{StaticResource MenuItemNew}">
+                                  Header="Цемент" 
+                                  Style="{StaticResource MenuItemNew}">
 
                             <MenuItem Name="Silos1"
-                                  Header="Силос 1"
-                                  Click="DosingSilo1_Click"
-                                  Style="{StaticResource MenuItemNew}"/>
-                            <Separator/>
+                                      Header="Силос 1"
+                                      Click="DosingSilo1_Click"
+                                      Style="{StaticResource MenuItemNew}">
+                            </MenuItem>
+
                             <MenuItem Name="Seilos2"
-                                  Header="Силос 2" 
-                                  Click="DosingSilo2_Click" 
-                                  Style="{StaticResource MenuItemNew}"/>
+                                      Header="Силос 2" 
+                                      Click="DosingSilo2_Click" 
+                                      Style="{StaticResource MenuItemNew}">
+                            </MenuItem>
+                            
                         </MenuItem>
+                        
+                        <!--AddDosing-->
                         <MenuItem Name="AddDosing" 
-                              Header="Химические добавки" 
-                              Style="{StaticResource MenuItemNew}">
+                                  Header="Химические добавки" 
+                                  Style="{StaticResource MenuItemNew}">
 
                             <MenuItem Name="AddTank1" 
                                   Header="Емкость 1"
                                   Click="DosingAdditive1_Click" 
-                                  Style="{StaticResource MenuItemNew}"/>
-                            <Separator/>
+                                  Style="{StaticResource MenuItemNew}">
+                            </MenuItem>
+
                             <MenuItem Name="AddTank2" 
                                   Header="Емкость 2"
                                   Click="DosingAdditive2_Click" 
-                                  Style="{StaticResource MenuItemNew}"/>
+                                  Style="{StaticResource MenuItemNew}">
+                            </MenuItem>
+                            
                         </MenuItem>
+                        
+                        <!--WaterDosing-->
                         <MenuItem Name="WaterDosing" 
-                              Header="Вода" 
-                              Style="{StaticResource MenuItemNew}">
+                                  Header="Вода" 
+                                  Style="{StaticResource MenuItemNew}">
 
                             <MenuItem Name="Water" 
-                                  Header="Вода" 
-                                  Click="DosingWater_Click" 
-                                  Style="{StaticResource MenuItemNew}"/>
+                                      Header="Вода" 
+                                      Click="DosingWater_Click" 
+                                      Style="{StaticResource MenuItemNew}">
+                            </MenuItem>
+                            
                         </MenuItem>
+
+                        <!--LimitValues-->
                         <MenuItem Name="LimitValues"
-                              Header="Предельные значения дозирования" 
-                              Click="MaterialSpeed_OnClick" 
-                              Style="{StaticResource MenuItemNew}"/>
+                                  Header="Предельные значения дозирования" 
+                                  Click="MaterialSpeed_OnClick" 
+                                  Style="{StaticResource MenuItemNew}">
+                        </MenuItem>
 
                     </MenuItem>
 
-                    <Separator/>
+                    <!--VibratorSettings-->
                     <MenuItem Name="VibratorSettings" 
-                          Header="Настройки вибраторов" 
-                          Click="VibratorSettings_OnClick"
-                          Style="{StaticResource MenuItemNew}"/>
-                    <Separator/>
-                    <MenuItem Name="AerationSettings" 
-                          Header="Настройки аэраторов" 
-                          Click="AerationSettings_OnClick"
-                          Style="{StaticResource MenuItemNew}"/>
-                    <Separator/>
-                    <MenuItem Name="Mode" 
-                          Header="Режим работы механизмов" 
-                          Click="Mode_OnClick" 
-                          Style="{StaticResource MenuItemNew}"/>
-                    <Separator/>
+                              Header="Настройки вибраторов" 
+                              Click="VibratorSettings_OnClick"
+                              Style="{StaticResource MenuItemNew}">
+                    </MenuItem>
 
+                    <!--AerationSettings-->
+                    <MenuItem Name="AerationSettings" 
+                              Header="Настройки аэраторов" 
+                              Click="AerationSettings_OnClick"
+                              Style="{StaticResource MenuItemNew}">
+                    </MenuItem>
+
+                    <!--Mode-->
+                    <MenuItem Name="Mode" 
+                              Header="Режим работы механизмов" 
+                              Click="Mode_OnClick" 
+                              Style="{StaticResource MenuItemNew}">
+                    </MenuItem>
+
+                    <!--Directory-->
                     <MenuItem Name="Directory" 
-                          Header="Настройки справочников" 
-                          Style="{StaticResource MenuItemNew}">
+                              Header="Настройки справочников" 
+                              Style="{StaticResource MenuItemNew}">
 
                         <MenuItem Header="Типы материалов"
-                              Click="MaterialTypes_OnClick" 
-                              Style="{StaticResource MenuItemNew}">
+                                  Click="MaterialTypes_OnClick" 
+                                  Style="{StaticResource MenuItemNew}">
                         </MenuItem>
-                        <Separator/>
+                        
                         <MenuItem Header="Материалы" 
-                              Click="Materials_OnClick"
-                              Style="{StaticResource MenuItemNew}">
+                                  Click="Materials_OnClick"
+                                  Style="{StaticResource MenuItemNew}">
                         </MenuItem>
-                        <Separator/>
+                        
                         <MenuItem Header="Типы емкостей"
-                              Click="ContainerTypes_OnClick"
-                              Style="{StaticResource MenuItemNew}">
+                                  Click="ContainerTypes_OnClick"
+                                  Style="{StaticResource MenuItemNew}">
                         </MenuItem>
-                        <Separator/>
+                        
                         <MenuItem Header="Емкости" 
-                              Height="30" 
-                              Click="Containers_OnClick"
-                              Style="{StaticResource MenuItemNew}">
+                                  Click="Containers_OnClick"
+                                  Style="{StaticResource MenuItemNew}">
                         </MenuItem>
-                        <Separator Visibility="Collapsed"/>
+                        
+                        <!--PhisicalModel-->
                         <MenuItem Header="Физическая модель" 
-                              Visibility="Collapsed" 
-                              Style="{StaticResource MenuItemNew}">
+                                  Visibility="Collapsed" 
+                                  Style="{StaticResource MenuItemNew}">
 
                             <MenuItem Header="Общие настройки" 
-                                  Click="CommonSettings_OnClick"
-                                  Style="{StaticResource MenuItemNew}"/>
-                            <Separator/>
+                                      Click="CommonSettings_OnClick"
+                                      Style="{StaticResource MenuItemNew}">
+                            </MenuItem>
+
                             <MenuItem Header="Источники дозирования"
-                                  Click="DosingSources_OnClick" 
-                                  Style="{StaticResource MenuItemNew}"/>
-                            <Separator/>
+                                      Click="DosingSources_OnClick" 
+                                      Style="{StaticResource MenuItemNew}">
+                            </MenuItem>
+
                             <MenuItem Header="Дозаторы" 
-                                  Click="Batchers_OnClick"
-                                  Style="{StaticResource MenuItemNew}"/>
+                                      Click="Batchers_OnClick"
+                                      Style="{StaticResource MenuItemNew}">
+                            </MenuItem>
+                            
                         </MenuItem>
+                        
                     </MenuItem>
 
-                    <Separator/>
+                    <!--Users-->
                     <MenuItem Name="Users" 
-                          Header="Настройки пользователей" 
-                          Click="User_OnClick" 
-                          ToolTipService.ShowOnDisabled="True"
-                          
-                          Background="#3B3C3E"
-                          FontFamily="{StaticResource Jost}"
-                          FontWeight="Regular"
-                          FontSize="14"
-                          VerticalAlignment="Center"
-                          HorizontalContentAlignment="Center"
-                          Foreground="#F3F4F8"
-                          BorderThickness="0"
-                          >
+                              Header="Настройки пользователей" 
+                              Click="User_OnClick" 
+                              ToolTipService.ShowOnDisabled="True"
+                              Background="#3B3C3E"
+                              FontFamily="{StaticResource Jost}"
+                              FontWeight="Regular"
+                              FontSize="14"
+                              VerticalAlignment="Center"
+                              HorizontalContentAlignment="Center"
+                              Foreground="#F3F4F8"
+                              BorderThickness="0">
 
                         <MenuItem.Style>
                             <Style TargetType="{x:Type MenuItem}">
@@ -321,44 +365,58 @@
 
                 </MenuItem>
 
+                <!--Archive-->
                 <MenuItem Header="_Архивы" 
-                      Name="Archive"
-                      Height="40" 
-                      Width="100"
-                      Style="{StaticResource MenuItemNew}"
-                      Padding="23,0,0,0" >
+                          Name="Archive"
+                          Height="40" 
+                          Width="103"
+                          Style="{StaticResource MenuItemNew}"
+                          Padding="29,0,0,0">
 
-                    <MenuItem Name="Archiver" Header="Архиватор" Click="Archiver_OnClick" Style="{StaticResource MenuItemNew}" />
-                    <Separator/>
-                    <MenuItem Name="GraphicsNew" Header="Архив работы" Click="ArchiveNew_OnClick" Style="{StaticResource MenuItemNew}"/>
-                    <Separator/>
-                    <MenuItem Name="EventsArchive" Header="Журнал событий" Click="EventsArchive_OnClick" Style="{StaticResource MenuItemNew}"/>
+                    <MenuItem Name="Archiver" 
+                              Header="Архиватор" 
+                              Click="Archiver_OnClick" 
+                              Style="{StaticResource MenuItemNew}">
+                    </MenuItem>
+
+                    <MenuItem Name="GraphicsNew" 
+                              Header="Архив работы" 
+                              Click="ArchiveNew_OnClick" 
+                              Style="{StaticResource MenuItemNew}">
+                    </MenuItem>
+
+                    <MenuItem Name="EventsArchive" 
+                              Header="Журнал событий" 
+                              Click="EventsArchive_OnClick" 
+                              Style="{StaticResource MenuItemNew}">
+                    </MenuItem>
 
                 </MenuItem>
 
+                <!--Reports-->
                 <MenuItem Header="_Отчеты" 
-                      Name="Reports"
-                      Height="40" 
-                      Width="100"
-                      Style="{StaticResource MenuItemNew}"
-                      Padding="23,0,0,0">
+                          Name="Reports"
+                          Height="40" 
+                          Width="75"
+                          Style="{StaticResource MenuItemNew}"
+                          Padding="17,0,0,0">
 
                     <MenuItem Name="RecipeReport" 
-                          Header="Отчет по заданию" 
-                          Click="RecipeReport_Click"
-                          Style="{StaticResource MenuItemNew}"/>
+                              Header="Отчет по заданию" 
+                              Click="RecipeReport_Click"
+                              Style="{StaticResource MenuItemNew}">
+                    </MenuItem>
 
                 </MenuItem>
-
+                
+                <!--About-->
                 <MenuItem Header="_О программе"
-                      Click="Spalsh_OnClick"
-                      Name="Spalsh"
-                      Height="40" 
-                      Width="120"
-                      Style="{StaticResource MenuItemNew}"
-                      Padding="15,0,0,0" 
-                      >
-
+                          Click="Spalsh_OnClick"
+                          Name="Spalsh"
+                          Height="40" 
+                          Width="140"
+                          Style="{StaticResource MenuItemNew}"
+                          Padding="29,0,0,0">
                 </MenuItem>
 
             </Menu>
@@ -366,65 +424,56 @@
             <StackPanel Grid.Column="1" Orientation="Horizontal">
 
                 <Button Width="180"
-                    Height="30"
-                    Style="{StaticResource AckButton}"
-                    Content="Сброс звонка"
-                    Margin="400,0,0,0"
-                    
-                    Name="BtnAck" 
-                    Click="BtnAck_OnClick"
-                    IsEnabled="{Binding LinkOk}">
-
+                        Height="30"
+                        Style="{StaticResource AckButton}"
+                        Content="Сброс звонка"
+                        Margin="400,0,0,0"
+                        Name="BtnAck" 
+                        Click="BtnAck_OnClick"
+                        IsEnabled="{Binding LinkOk}">
                 </Button>
 
                 <Button Width="180"
-                    Height="30"
-                    Style="{StaticResource AckButton}"
-                    Content="Сброс аварий"
-                    Margin="10,0,0,0"
-                    
-                    IsEnabled="{Binding LinkOk}"
-                    Name="BtnReset" 
-                    PreviewMouseLeftButtonDown="BtnReset_OnPreviewMouseLeftButtonDown" 
-                    PreviewMouseLeftButtonUp="BtnReset_OnPreviewMouseLeftButtonUp"
-                    >
+                        Height="30"
+                        Style="{StaticResource AckButton}"
+                        Content="Сброс аварий"
+                        Margin="10,0,0,0"
+                        IsEnabled="{Binding LinkOk}"
+                        Name="BtnReset" 
+                        PreviewMouseLeftButtonDown="BtnReset_OnPreviewMouseLeftButtonDown" 
+                        PreviewMouseLeftButtonUp="BtnReset_OnPreviewMouseLeftButtonUp">
                 </Button>
 
                 <Button Width="180"
-                    Height="30"
-                    Style="{StaticResource StopButton}"
-                    Content="Общий СТОП"
-                    Margin="10,0,0,0"
-                
-                    IsEnabled="{Binding LinkOk}"
-                    Name="BtnStop"
-                    Click="BtnStop_OnClick">
+                        Height="30"
+                        Style="{StaticResource StopButton}"
+                        Content="Общий СТОП"
+                        Margin="10,0,0,0"
+                        IsEnabled="{Binding LinkOk}"
+                        Name="BtnStop"
+                        Click="BtnStop_OnClick">
                 </Button>
 
                 <Label Width="300" 
-                   Height="30" 
-                   Margin="70,0,0,0" 
-                   BorderThickness="0" 
-                   VerticalContentAlignment="Center"
-                   HorizontalContentAlignment="Center"
-                   FontSize="14"
-                   FontFamily="{StaticResource Jost}"
-                   FontWeight="Regular"
-                   Padding="0" 
-                   Content="{Binding CurrentDateTime}"
-                   MouseLeave="UIElement_OnMouseLeave" 
-                   MouseEnter="UIElement_OnMouseEnter"/>
+                       Height="30" 
+                       Margin="170,0,0,0" 
+                       BorderThickness="0" 
+                       VerticalContentAlignment="Center"
+                       HorizontalContentAlignment="Center"
+                       FontSize="16"
+                       FontFamily="{StaticResource Jost}"
+                       FontWeight="Regular"
+                       Foreground="White"
+                       Padding="0" 
+                       Content="{Binding CurrentDateTime}"
+                       MouseLeave="UIElement_OnMouseLeave" 
+                       MouseEnter="UIElement_OnMouseEnter"/>
 
 
             </StackPanel>
         </Grid>
 
-
-    <!--<controlNew:El_Menu x:Name="ElMenu" 
-                            Grid.Row="0" 
-                            Grid.Column="0"
-                            Grid.ColumnSpan="2"/>-->
-
+        
         <control:ElControl  x:Name="ElControlControl"
                             Grid.Row="1"
                             VerticalAlignment="Top"
@@ -457,21 +506,20 @@
                               Margin="10,0,0,0"
                               />
 
-
-
             <control:ElQueue x:Name="ElControlQueue"
                              Margin="260,0,0,0">
-
             </control:ElQueue>
+            
         </Grid>
 
         <Grid Grid.Row="1" Name="ElGrid"
               Grid.Column="1"
               Background="#F3F4F8">
+            
             <Image Source="\Images\Mnemo_Redesign_v2.png" 
                    Width="1500"
                    Height="694" 
-                   Margin="0,0"/>
+                   Margin="0,0,0,0"/>
 
             <mechs:ElMotor VerticalAlignment="Top"
                            HorizontalAlignment="Left" 

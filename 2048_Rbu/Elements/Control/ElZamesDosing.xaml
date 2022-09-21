@@ -140,8 +140,8 @@
         <Grid Margin="0,15,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="140"/>
-                <ColumnDefinition Width="181"/>
-                <ColumnDefinition Width="44"/>
+                <ColumnDefinition Width="178"/>
+                <ColumnDefinition Width="47"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
@@ -163,7 +163,7 @@
 
             <ProgressBar  Grid.Row="0"
                           Grid.Column="1"
-                          Width="181"
+                          Width="178"
                           Height="5"
                           Style="{StaticResource ProgressBarHorizontal}"
                           Name="ProgressDosing" 
@@ -201,7 +201,7 @@
                        Text="{Binding ElementName=ProgressDosing, Path=Value, StringFormat={}{0:0}}"
                        FontFamily="{StaticResource Jost}"
                        FontWeight="Regular"
-                       FontSize="28"
+                       FontSize="27"
                        Foreground="#018667"
                        HorizontalAlignment="Right"
                        VerticalAlignment="Center">
@@ -215,7 +215,7 @@
                        FontSize="14"
                        Foreground="#018667"
                        HorizontalAlignment="Center"
-                       VerticalAlignment="Center">
+                       VerticalAlignment="Top">
 
             </TextBlock>
 
@@ -413,15 +413,15 @@
                 <ProgressBar Grid.Row="1"
                              Grid.Column="2"
                              BorderThickness="0"
-                             Foreground="#C6E0DD"
-                             Background="#F3F4F8"
                              Name="ProgressBarTest"
+                             Background="#F3F4F8"
                              Value="{Binding Path=DosingTask[0].CurrentProgress, UpdateSourceTrigger=PropertyChanged}"
                              Maximum="{Binding ComponentsWeight, UpdateSourceTrigger=PropertyChanged}"
                              Minimum="0">
                     
                     <ProgressBar.Style>
                         <Style TargetType="{x:Type ProgressBar}">
+                            <Setter Property="Foreground" Value="#C6E0DD"/>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding Path=DosingTask[0].ProgressDone, UpdateSourceTrigger=PropertyChanged}" Value="True">
                                     <Setter Property="Foreground" Value="#008767"/>
@@ -461,7 +461,6 @@
                 <!--The second row. The first column-->
                 <Border Grid.Column="0"
                         Grid.Row="2"
-                        Background="#F3F4F8"
                         BorderThickness="0,1,0,1"
                         BorderBrush="#DFE5F1">
 
@@ -491,11 +490,11 @@
                         <Style TargetType="{x:Type Border}">
                             <Setter Property="Background" Value="Transparent"/>
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding Path=DosingTask[1].ProgressDone, UpdateSourceTrigger=PropertyChanged}" Value="True">
-                                    <Setter Property="Background" Value="#008767"/>
-                                </DataTrigger>
                                 <DataTrigger Binding="{Binding Path=DosingTask[1].InProgress, UpdateSourceTrigger=PropertyChanged}" Value="True">
                                     <Setter Property="Background" Value="#CFD6E9"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Path=DosingTask[1].ProgressDone, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                    <Setter Property="Background" Value="#008767"/>
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
@@ -551,14 +550,14 @@
                              Grid.Column="2"
                              BorderThickness="0,1,0,1"
                              BorderBrush="#DFE5F1"
-                             Foreground="#C6E0DD"
-                             Background="#F3F4F8"
                              Value="{Binding Path=DosingTask[1].CurrentProgress, UpdateSourceTrigger=PropertyChanged}"
                              Maximum="{Binding ComponentsWeight, UpdateSourceTrigger=PropertyChanged}"
+                             Background="#F3F4F8"
                              Minimum="0">
 
                     <ProgressBar.Style>
                         <Style TargetType="{x:Type ProgressBar}">
+                            <Setter Property="Foreground" Value="#C6E0DD"/>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding Path=DosingTask[1].ProgressDone, UpdateSourceTrigger=PropertyChanged}" Value="True">
                                     <Setter Property="Foreground" Value="#008767"/>
@@ -575,6 +574,7 @@
                            FontFamily="{StaticResource Jost}"
                            FontWeight="Regular"
                            FontSize="14"
+                           
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center"
                            >
@@ -592,13 +592,14 @@
                     
                 </TextBlock>
 
-
                 
-
+                
+                
+                
+                
                 <!--The third row. The first column-->
                 <Border Grid.Column="0"
                         Grid.Row="3"
-                        Background="#F3F4F8"
                         BorderThickness="0">
 
                     <TextBlock
@@ -688,14 +689,14 @@
                 <ProgressBar Grid.Row="3"
                              Grid.Column="2"
                              BorderThickness="0"
-                             Foreground="#C6E0DD"
-                             Background="#F3F4F8"
                              Value="{Binding Path=DosingTask[2].CurrentProgress, UpdateSourceTrigger=PropertyChanged}"
                              Maximum="{Binding ComponentsWeight, UpdateSourceTrigger=PropertyChanged}"
                              Minimum="0">
 
                     <ProgressBar.Style>
                         <Style TargetType="{x:Type ProgressBar}">
+                            <Setter Property="Background" Value="#F3F4F8"/>
+                            <Setter Property="Foreground" Value="#C6E0DD"/>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding Path=DosingTask[2].ProgressDone, UpdateSourceTrigger=PropertyChanged}" Value="True">
                                     <Setter Property="Foreground" Value="#008767"/>
@@ -735,7 +736,6 @@
                 <!--The fourth row. The first column-->
                 <Border Grid.Column="0"
                         Grid.Row="4"
-                        Background="#F3F4F8"
                         BorderThickness="0,1,0,1"
                         BorderBrush="#DFE5F1">
 
@@ -827,14 +827,14 @@
                              Grid.Column="2"
                              BorderThickness="0,1,0,1"
                              BorderBrush="#DFE5F1"
-                             Foreground="#C6E0DD"
-                             Background="#F3F4F8"
                              Value="{Binding Path=DosingTask[3].CurrentProgress, UpdateSourceTrigger=PropertyChanged}"
                              Maximum="{Binding ComponentsWeight, UpdateSourceTrigger=PropertyChanged}"
                              Minimum="0">
 
                     <ProgressBar.Style>
                         <Style TargetType="{x:Type ProgressBar}">
+                            <Setter Property="Background" Value="#F3F4F8"/>
+                            <Setter Property="Foreground" Value="#C6E0DD"/>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding Path=DosingTask[3].ProgressDone, UpdateSourceTrigger=PropertyChanged}" Value="True">
                                     <Setter Property="Foreground" Value="#008767"/>
@@ -966,14 +966,14 @@
                 <ProgressBar Grid.Row="5"
                              Grid.Column="2"
                              BorderThickness="0"
-                             Foreground="#C6E0DD"
-                             Background="#F3F4F8"
                              Value="{Binding Path=DosingTask[4].CurrentProgress, UpdateSourceTrigger=PropertyChanged}"
                              Maximum="{Binding ComponentsWeight, UpdateSourceTrigger=PropertyChanged}"
                              Minimum="0">
 
                     <ProgressBar.Style>
                         <Style TargetType="{x:Type ProgressBar}">
+                            <Setter Property="Background" Value="#F3F4F8"/>
+                            <Setter Property="Foreground" Value="#C6E0DD"/>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding Path=DosingTask[4].ProgressDone, UpdateSourceTrigger=PropertyChanged}" Value="True">
                                     <Setter Property="Foreground" Value="#008767"/>
@@ -1105,14 +1105,14 @@
                              Grid.Column="2"
                              BorderThickness="0,1,0,1"
                              BorderBrush="#DFE5F1"
-                             Foreground="#C6E0DD"
-                             Background="#F3F4F8"
                              Value="{Binding Path=DosingTask[5].CurrentProgress, UpdateSourceTrigger=PropertyChanged}"
                              Maximum="{Binding ComponentsWeight, UpdateSourceTrigger=PropertyChanged}"
                              Minimum="0">
 
                     <ProgressBar.Style>
                         <Style TargetType="{x:Type ProgressBar}">
+                            <Setter Property="Background" Value="#F3F4F8"/>
+                            <Setter Property="Foreground" Value="#C6E0DD"/>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding Path=DosingTask[5].ProgressDone, UpdateSourceTrigger=PropertyChanged}" Value="True">
                                     <Setter Property="Foreground" Value="#008767"/>
