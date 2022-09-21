@@ -27,7 +27,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
     
-    <Grid Name="ElGrid" >
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="420"/>
             <ColumnDefinition/>
@@ -465,7 +465,7 @@
             </control:ElQueue>
         </Grid>
 
-        <Grid Grid.Row="1"
+        <Grid Grid.Row="1" Name="ElGrid"
               Grid.Column="1"
               Background="#F3F4F8">
             <Image Source="\Images\Mnemo_Redesign_v2.png" 
