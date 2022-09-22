@@ -9,7 +9,7 @@
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
         
         <Grid      Name="ValveGrid" Height="30" Width="30" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1">
@@ -74,8 +74,7 @@
                VerticalContentAlignment="Center"
                HorizontalAlignment="Center"
                HorizontalContentAlignment="Center"
-               
-               Margin="40,-40,0,0">
+               Margin="0,0,0,0">
             
             <Label.Style>
                 <Style TargetType="{x:Type Label}">
@@ -94,9 +93,22 @@
             
         </Label>
         
-        <Rectangle Name="rect_object" Fill="Transparent" Height="25" Width="40" StrokeThickness="0.5" Stroke="Black" Opacity="0" Margin="0,-1,0,0" MouseLeftButtonUp="ValveGrid_OnMouseRightButtonDown"></Rectangle>
+        <Rectangle Grid.Column="1" 
+                   Name="rect_object"
+                   Fill="Transparent"
+                   StrokeThickness="0.5"
+                   Stroke="Black" 
+                   Opacity="0" 
+                   Margin="0,0,0,0"
+                   MouseLeftButtonUp="ValveGrid_OnMouseRightButtonDown">
+            
+        </Rectangle>
        
-        <Popup Name="PopupObject" Placement="Bottom" StaysOpen="False">
+        <Popup Name="PopupObject" 
+               Placement="Bottom" 
+               StaysOpen="False"
+               Grid.Column="1">
+            
             <Border BorderBrush="Black" BorderThickness="1">
                 <Grid Background="Beige" Width="180">
                     <Grid.RowDefinitions>

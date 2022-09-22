@@ -8,7 +8,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="16"/>
-            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         
         <Grid      Name="ValveGrid" VerticalAlignment="Top" HorizontalAlignment="Left" Width="232" Height="144" Margin="0,0" Grid.Row="1">
@@ -49,8 +49,24 @@
             
         </Label>
         
-        <Rectangle Name="rect_object" VerticalAlignment="Top" HorizontalAlignment="Left" Width="60" Height="60" Margin="62,5,0,0" StrokeThickness="0.5" Fill="Transparent" Stroke="Black" Opacity="0" MouseLeftButtonUp="ValveGrid_OnMouseRightButtonDown"/>
-        <Popup Name="PopupObject" Placement="Bottom" StaysOpen="False">
+        <Rectangle  Grid.Row="1"
+                    Name="rect_object" 
+                    VerticalAlignment="Top" 
+                    HorizontalAlignment="Left"
+                    StrokeThickness="0.5" 
+                    Fill="Transparent" 
+                    Stroke="Black" 
+                    Opacity="0" 
+                    Margin="0,0"
+                    Width="232"
+                    Height="144"
+                    MouseLeftButtonUp="ValveGrid_OnMouseRightButtonDown"/>
+        
+        <Popup Name="PopupObject" 
+               Placement="Bottom" 
+               StaysOpen="False"
+               >
+            
             <Border BorderBrush="Black" BorderThickness="1">
                 <Grid Background="Beige" Width="180">
                     <Grid.RowDefinitions>

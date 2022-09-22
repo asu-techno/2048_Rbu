@@ -24,11 +24,12 @@
                HorizontalContentAlignment="Left"
                VerticalAlignment="Top"
                VerticalContentAlignment="Center"
+               HorizontalAlignment="Left"
                BorderThickness="0"
                Background="#343536" 
                Foreground="#FFE91F"
                FontSize="10"
-               Visibility="Visible"
+               Margin="15,0,0,0"
                >
             
             <Label.Style>
@@ -39,9 +40,9 @@
                         <DataTrigger Binding="{Binding ModeAutomat}" Value="True">
                             <Setter Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Rotate}" Value="False">
-                            <Setter Property="HorizontalAlignment" Value="Right"/>
-                        </DataTrigger>
+                        <!--<DataTrigger Binding="{Binding Rotate}" Value="False">
+                            <Setter Property="HorizontalAlignment" Value="Left"/>
+                        </DataTrigger>-->
                     </Style.Triggers>
                 </Style>
             </Label.Style>

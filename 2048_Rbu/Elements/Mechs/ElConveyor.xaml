@@ -10,21 +10,20 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="15"/>
             <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="15"/>
         </Grid.ColumnDefinitions>
 
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="12"/>
-                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
         </Grid>
 
         <Label Name="LblMode" 
                Grid.Row="0"
-               Grid.Column="0"
                VerticalAlignment="Top" 
                VerticalContentAlignment="Center"
-               HorizontalAlignment="Left"
                HorizontalContentAlignment="Center"
                Width="10"
                Height="12"
@@ -37,9 +36,15 @@
             <Label.Style>
                 <Style TargetType="{x:Type Label}">
                     <Setter Property="Visibility" Value="Visible"/>
+                    <Setter Property="Grid.Column" Value="0"/>
+                    <Setter Property="HorizontalAlignment" Value="Left"/>
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding ModeAutomat}" Value="True">
                             <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Rotate}" Value="True">
+                            <Setter Property="Grid.Column" Value="2"/>
+                            <Setter Property="HorizontalAlignment" Value="Right"/>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
@@ -51,15 +56,31 @@
 
         </Label>
         
-        <Grid Grid.Column="1" Name="ObjectGrid" VerticalAlignment="Top" HorizontalAlignment="Left" Width="Auto" Height="Auto" Margin="0">
+        <Grid Grid.Column="1" Grid.RowSpan="2" Name="ObjectGrid" VerticalAlignment="Top" HorizontalAlignment="Left" Width="Auto" Height="Auto" Margin="0">
             <Image Name="ImgKm"    VerticalAlignment="Top" HorizontalAlignment="Left" Visibility="{Binding VisOn}"/>
             <Image Name="ImgAlarm" VerticalAlignment="Top" HorizontalAlignment="Left" Visibility="{Binding VisAlarm}"/>
         </Grid>
         
         <TextBlock Name="TbcName" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,20,0,0" TextAlignment="Right" FontSize="14" Text="VXXX" Visibility="Hidden"/>
         
-        <Rectangle Name="RectObject" Width="10" Height="10" Margin="0" Fill="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center" StrokeThickness="0.5" Stroke="Black" Opacity="0" MouseLeftButtonUp="ValveGrid_OnMouseRightButtonDown"/>
-        <Popup Name="PopupObject" Placement="Bottom" StaysOpen="False">
+        <Rectangle Name="RectObject" 
+                   Fill="Transparent" 
+                   VerticalAlignment="Top" 
+                   HorizontalAlignment="Left" 
+                   Margin="0,0"
+                   StrokeThickness="0.5" 
+                   Stroke="Black" 
+                   Opacity="0" 
+                   MouseLeftButtonUp="ValveGrid_OnMouseRightButtonDown"
+                   
+                   Grid.RowSpan="2"
+                   Grid.Column="1"/>
+        
+        <Popup Name="PopupObject" 
+               Placement="Bottom" 
+               StaysOpen="False"
+               >
+            
             <Border BorderBrush="Black" BorderThickness="1">
                 <Grid Background="Beige" Width="180">
                     <Grid.RowDefinitions>

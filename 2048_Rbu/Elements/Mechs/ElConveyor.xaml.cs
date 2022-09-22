@@ -145,7 +145,7 @@ namespace _2048_Rbu.Elements.Mechs
                     ImgAlarm.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs_Redesign/img_Conv_2_Alarm.png", UriKind.Relative));
                     ImgKm.Width = ImgAlarm.Width = 620;
                     ImgKm.Height = ImgAlarm.Height = 60;
-                    //RectObject.Margin = new Thickness(0, -10, 0, 0);
+                    RectObject.Margin = new Thickness(0, 0, 0, 0);
                 }
                 if (value == Mech.Skip)
                 {
@@ -153,10 +153,10 @@ namespace _2048_Rbu.Elements.Mechs
                     ImgAlarm.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs_Redesign/img_Conv_3_Alarm.png", UriKind.Relative));
                     ImgKm.Width = ImgAlarm.Width = 376;
                     ImgKm.Height = ImgAlarm.Height = 278;
-                    //RectObject.Margin = new Thickness(0, -10, 0, 0);
+                    RectObject.Margin = new Thickness(0, 0, 0, 0);
                 }
-                RectObject.Width = ImgKm.Width + 6;
-                RectObject.Height = ImgKm.Height + 4;
+                RectObject.Width = ImgKm.Width;
+                RectObject.Height = ImgKm.Height;
 
                 _typeMech = value;
             }

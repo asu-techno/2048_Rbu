@@ -9,11 +9,17 @@
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="125"/>
         </Grid.ColumnDefinitions>
         
-        <Grid Grid.Column="1" Name="ObjectGrid" VerticalAlignment="Top" HorizontalAlignment="Left" Width="125" Height="18" Margin="0,0,0,0">
-            <Image Name="ImgHalfOpen" VerticalAlignment="Center" HorizontalAlignment="Left" Height="18" Margin="0,0,0,0">
+        <Grid Grid.Column="1" 
+              Name="ObjectGrid" 
+              VerticalAlignment="Top"
+              HorizontalAlignment="Left"
+              Width="125" 
+              Height="18"
+              Margin="0,0,0,0">
+            <Image Name="ImgHalfOpen" VerticalAlignment="Center" HorizontalAlignment="Left" Width="Auto" Height="18" Margin="0,0,0,0">
                 <Image.Style>
                     <Style TargetType="{x:Type Image}">
                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -92,7 +98,6 @@
             </Label.Content>
         </Label>
         
-        
         <Label Name="LblModeDosing"
                Grid.Column="0"
                VerticalAlignment="Top" 
@@ -128,10 +133,11 @@
         
         <Rectangle Name="RectObject" 
                    Grid.Column="1"
-                   VerticalAlignment="Center" 
+                   VerticalAlignment="Top" 
                    HorizontalAlignment="Left" 
-                   Width="125" Height="18" 
-                   Margin="0,0,0,0" 
+                   Width="200"
+                   Height="18"
+                   Margin="0,0"
                    Fill="Transparent" 
                    StrokeThickness="0.5" 
                    Stroke="Black" 
@@ -139,12 +145,16 @@
                    MouseLeftButtonUp="ValveGrid_OnMouseRightButtonDown"
                    PreviewMouseRightButtonDown="ValveGrid_OnPreviewMouseRightButtonDown" 
                    PreviewMouseRightButtonUp="ValveGrid_OnPreviewMouseRightButtonUp"/>
-        
-        <Popup Name="PopupObject" Placement="Bottom" StaysOpen="False" Grid.Column="1">
+
+        <Popup Name="PopupObject" 
+               Placement="Bottom" 
+               StaysOpen="False">
+            
             <Border BorderBrush="Black" BorderThickness="1">
-                <Grid Background="Beige" Width="125">
+                <Grid Background="Beige" Width="Auto">
+                    
                     <Grid.RowDefinitions>
-                        <RowDefinition MinHeight="25" Height="Auto"/>
+                        <RowDefinition MinHeight="25"/>
                         <RowDefinition Height="35"/>
                         <RowDefinition Height="35"/>
                         <RowDefinition Height="Auto"/>
@@ -160,16 +170,19 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
+                    
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" FontSize="16">
-                        <TextBlock Name="TxtPopupName" TextAlignment="Center" TextWrapping="Wrap" Text="Клапан"/>
+                    
+                    <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" FontSize="16" MaxWidth="165">
+                        <TextBlock Name="TxtPopupName" TextAlignment="Center" TextWrapping="WrapWithOverflow" Text="Клапан"/>
                     </Label>
+                    
                     <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="4,0,0,0" TextAlignment="Left" Text="Состояние:"/>
                     <Label Grid.Row="1" Grid.Column="1" Width="75" Height="25" BorderBrush="Black" BorderThickness="1" Background="{Binding Brush}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0" Content="{Binding Status}"/>
-                    <Button Name="BtnManual" Grid.Row="2" Grid.Column="0" Width="75" Height="25" BorderBrush="Black" BorderThickness="1" Click="BtnManual_Click">
+                    <Button Name="BtnManual" Grid.Row="2" Grid.Column="0" Width="75" Height="25" Margin="5,0" BorderBrush="Black" BorderThickness="1" Click="BtnManual_Click">
                         <Button.Style>
                             <Style TargetType="{x:Type Button}">
                                 <Setter Property="Background" Value="LightBlue"/>
@@ -187,7 +200,7 @@
                             </Style>
                         </Button.Style>
                     </Button>
-                    <Button Name="BtnAutomat" Grid.Row="2" Grid.Column="1" Width="75" Height="25" BorderBrush="Black" BorderThickness="1" Content="Автомат" Click="BtnAutomat_Click" >
+                    <Button Name="BtnAutomat" Grid.Row="2" Grid.Column="1" Width="75" Height="25" Margin="5,0" BorderBrush="Black" BorderThickness="1" Content="Автомат" Click="BtnAutomat_Click" >
                         <Button.Style>
                             <Style TargetType="{x:Type Button}">
                                 <Setter Property="Background" Value="LightBlue"/>

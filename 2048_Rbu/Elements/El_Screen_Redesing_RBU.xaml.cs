@@ -792,7 +792,7 @@ namespace _2048_Rbu.Elements
 
         public void GetLink()
         {
-            CurrentDateTime = !Cherry ? DateTime.Now.ToString("HH:mm:ss    dd.MM.yyyy") : _linkValue.ToString();
+            CurrentDateTime = !Cherry ? DateTime.Now.ToString(" 🕔 HH:mm:ss      📅 dd.MM.yyyy") : _linkValue.ToString();
 
             _link = _linkValue != _currentLinkValue;
             _currentLinkValue = _linkValue;

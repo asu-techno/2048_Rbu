@@ -595,8 +595,6 @@
                 
                 
                 
-                
-                
                 <!--The third row. The first column-->
                 <Border Grid.Column="0"
                         Grid.Row="3"
@@ -874,19 +872,16 @@
                 <!--The fifth row. The first column-->
                 <Border Grid.Column="0"
                         Grid.Row="5"
-                        Background="#F3F4F8"
                         BorderThickness="0"
                         BorderBrush="#DFE5F1">
 
-                    <TextBlock
-                        Text="{Binding Path=DosingTask[4].MaterialName, UpdateSourceTrigger=PropertyChanged}"
-                        Padding="20,0,0,0"
-                        FontFamily="{StaticResource Jost}"
-                        FontWeight="Medium"
-                        FontSize="14"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        >
+                    <TextBlock  Text="{Binding Path=DosingTask[4].MaterialName, UpdateSourceTrigger=PropertyChanged}"
+                                Padding="20,0,0,0"
+                                FontFamily="{StaticResource Jost}"
+                                FontWeight="Medium"
+                                FontSize="14"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center">
 
                         <TextBlock.Style>
                             <Style TargetType="{x:Type TextBlock}">
@@ -920,18 +915,15 @@
                 <!--The fifth row. The second column-->
                 <Border Grid.Column="1"
                         Grid.Row="5"
-                        Background="#F3F4F8"
                         BorderThickness="1,0,1,0"
                         BorderBrush="#DFE5F1">
 
-                    <TextBlock
-                        Text="{Binding Path=DosingTask[4].SetValue, UpdateSourceTrigger=PropertyChanged}"
-                        FontFamily="{StaticResource Jost}"
-                        FontWeight="Regular"
-                        FontSize="14"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        >
+                    <TextBlock  Text="{Binding Path=DosingTask[4].SetValue, UpdateSourceTrigger=PropertyChanged}"
+                                FontFamily="{StaticResource Jost}"
+                                FontWeight="Regular"
+                                FontSize="14"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center">
 
                         <TextBlock.Style>
                             <Style TargetType="{x:Type TextBlock}">
@@ -1012,19 +1004,16 @@
                 <!--The sixth row. The first column-->
                 <Border Grid.Column="0"
                         Grid.Row="6"
-                        Background="#F3F4F8"
                         BorderThickness="0,1,0,1"
                         BorderBrush="#DFE5F1">
 
-                    <TextBlock
-                        Text="{Binding Path=DosingTask[5].MaterialName, UpdateSourceTrigger=PropertyChanged}"
-                        Padding="20,0,0,0"
-                        FontFamily="{StaticResource Jost}"
-                        FontWeight="Medium"
-                        FontSize="14"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        >
+                    <TextBlock  Text="{Binding Path=DosingTask[5].MaterialName, UpdateSourceTrigger=PropertyChanged}"
+                                Padding="20,0,0,0"
+                                FontFamily="{StaticResource Jost}"
+                                FontWeight="Medium"
+                                FontSize="14"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center">
 
                         <TextBlock.Style>
                             <Style TargetType="{x:Type TextBlock}">
@@ -1058,18 +1047,15 @@
                 <!--The sixth row. The second column-->
                 <Border Grid.Column="1"
                         Grid.Row="6"
-                        Background="#F3F4F8"
                         BorderThickness="1"
                         BorderBrush="#DFE5F1">
 
-                    <TextBlock
-                        Text="{Binding Path=DosingTask[5].SetValue, UpdateSourceTrigger=PropertyChanged}"
-                        FontFamily="{StaticResource Jost}"
-                        FontWeight="Regular"
-                        FontSize="14"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        >
+                    <TextBlock  Text="{Binding Path=DosingTask[5].SetValue, UpdateSourceTrigger=PropertyChanged}"
+                                FontFamily="{StaticResource Jost}"
+                                FontWeight="Regular"
+                                FontSize="14"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center">
 
                         <TextBlock.Style>
                             <Style TargetType="{x:Type TextBlock}">
@@ -1151,17 +1137,15 @@
                 <!--The seventh row. The first column-->
                 <Border Grid.Column="0"
                         Grid.Row="7"
-                        Background="#F3F4F8">
-
-                    <TextBlock
-                        Text="{Binding Path=DosingTask[6].MaterialName, UpdateSourceTrigger=PropertyChanged}"
-                        Padding="20,0,0,0"
-                        FontFamily="{StaticResource Jost}"
-                        FontWeight="Medium"
-                        FontSize="14"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
                         >
+
+                    <TextBlock  Text="{Binding Path=DosingTask[6].MaterialName, UpdateSourceTrigger=PropertyChanged}"
+                                Padding="20,0,0,0"
+                                FontFamily="{StaticResource Jost}"
+                                FontWeight="Medium"
+                                FontSize="14"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center">
 
                         <TextBlock.Style>
                             <Style TargetType="{x:Type TextBlock}">
@@ -1195,18 +1179,15 @@
                 <!--The seventh row. The second column-->
                 <Border Grid.Column="1"
                         Grid.Row="7"
-                        Background="#F3F4F8"
                         BorderThickness="1,0,1,0"
                         BorderBrush="#DFE5F1">
 
-                    <TextBlock
-                        Text="{Binding Path=DosingTask[6].SetValue, UpdateSourceTrigger=PropertyChanged}"
-                        FontFamily="{StaticResource Jost}"
-                        FontWeight="Regular"
-                        FontSize="14"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        >
+                    <TextBlock  Text="{Binding Path=DosingTask[6].SetValue, UpdateSourceTrigger=PropertyChanged}"
+                                FontFamily="{StaticResource Jost}"
+                                FontWeight="Regular"
+                                FontSize="14"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center">
 
                         <TextBlock.Style>
                             <Style TargetType="{x:Type TextBlock}">
@@ -1242,14 +1223,14 @@
                              Grid.Column="2"
                              BorderThickness="0,0,0,0"
                              BorderBrush="#DFE5F1"
-                             Foreground="#C6E0DD"
-                             Background="#F3F4F8"
                              Value="{Binding Path=DosingTask[6].CurrentProgress, UpdateSourceTrigger=PropertyChanged}"
                              Maximum="{Binding ComponentsWeight, UpdateSourceTrigger=PropertyChanged}"
                              Minimum="0">
 
                     <ProgressBar.Style>
                         <Style TargetType="{x:Type ProgressBar}">
+                            <Setter Property="Background" Value="#F3F4F8"/>
+                            <Setter Property="Foreground" Value="#C6E0DD"/>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding Path=DosingTask[6].ProgressDone, UpdateSourceTrigger=PropertyChanged}" Value="True">
                                     <Setter Property="Foreground" Value="#008767"/>
@@ -1288,19 +1269,16 @@
                 <!--The eigth row. The first column-->
                 <Border Grid.Column="0"
                         Grid.Row="8"
-                        Background="#F3F4F8"
                         BorderThickness="0,1,0,1"
                         BorderBrush="#DFE5F1">
 
-                    <TextBlock
-                        Text="{Binding Path=DosingTask[7].MaterialName, UpdateSourceTrigger=PropertyChanged}"
-                        Padding="20,0,0,0"
-                        FontFamily="{StaticResource Jost}"
-                        FontWeight="Medium"
-                        FontSize="14"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        >
+                    <TextBlock  Text="{Binding Path=DosingTask[7].MaterialName, UpdateSourceTrigger=PropertyChanged}"
+                                Padding="20,0,0,0"
+                                FontFamily="{StaticResource Jost}"
+                                FontWeight="Medium"
+                                FontSize="14"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center">
 
                         <TextBlock.Style>
                             <Style TargetType="{x:Type TextBlock}">
@@ -1334,18 +1312,15 @@
                 <!--The eigth row. The second column-->
                 <Border Grid.Column="1"
                         Grid.Row="8"
-                        Background="#F3F4F8"
                         BorderThickness="1"
                         BorderBrush="#DFE5F1">
 
-                    <TextBlock
-                        Text="{Binding Path=DosingTask[7].SetValue, UpdateSourceTrigger=PropertyChanged}"
-                        FontFamily="{StaticResource Jost}"
-                        FontWeight="Regular"
-                        FontSize="14"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        >
+                    <TextBlock  Text="{Binding Path=DosingTask[7].SetValue, UpdateSourceTrigger=PropertyChanged}"
+                                FontFamily="{StaticResource Jost}"
+                                FontWeight="Regular"
+                                FontSize="14"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center">
 
                         <TextBlock.Style>
                             <Style TargetType="{x:Type TextBlock}">
@@ -1381,14 +1356,14 @@
                              Grid.Column="2"
                              BorderThickness="0,1,0,1"
                              BorderBrush="#DFE5F1"
-                             Foreground="#C6E0DD"
-                             Background="#F3F4F8"
                              Value="{Binding Path=DosingTask[7].CurrentProgress, UpdateSourceTrigger=PropertyChanged}"
                              Maximum="{Binding ComponentsWeight, UpdateSourceTrigger=PropertyChanged}"
                              Minimum="0">
 
                     <ProgressBar.Style>
                         <Style TargetType="{x:Type ProgressBar}">
+                            <Setter Property="Background" Value="#F3F4F8"/>
+                            <Setter Property="Foreground" Value="#C6E0DD"/>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding Path=DosingTask[7].ProgressDone, UpdateSourceTrigger=PropertyChanged}" Value="True">
                                     <Setter Property="Foreground" Value="#008767"/>
@@ -1427,25 +1402,22 @@
                 <!--The nineth row. The first column-->
                 <Border Grid.Column="0"
                         Grid.Row="9"
-                        Background="#F3F4F8"
                         BorderBrush="#DFE5F1"
                         CornerRadius="0,0,0,5">
 
-                    <TextBlock
-                        Text="{Binding Path=DosingTask[8].MaterialName, UpdateSourceTrigger=PropertyChanged}"
-                        Padding="20,0,0,0"
-                        FontFamily="{StaticResource Jost}"
-                        FontWeight="Medium"
-                        FontSize="14"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        >
+                    <TextBlock  Text="{Binding Path=DosingTask[4].MaterialName, UpdateSourceTrigger=PropertyChanged}"
+                                Padding="20,0,0,0"
+                                FontFamily="{StaticResource Jost}"
+                                FontWeight="Medium"
+                                FontSize="14"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center">
 
                         <TextBlock.Style>
                             <Style TargetType="{x:Type TextBlock}">
                                 <Setter Property="Foreground" Value="#3B3C3E"/>
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Path=DosingTask[8].ProgressDone, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                    <DataTrigger Binding="{Binding Path=DosingTask[4].ProgressDone, UpdateSourceTrigger=PropertyChanged}" Value="True">
                                         <Setter Property="Foreground" Value="#F3F4F8"/>
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -1458,10 +1430,10 @@
                         <Style TargetType="{x:Type Border}">
                             <Setter Property="Background" Value="Transparent"/>
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding Path=DosingTask[8].ProgressDone, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                <DataTrigger Binding="{Binding Path=DosingTask[4].ProgressDone, UpdateSourceTrigger=PropertyChanged}" Value="True">
                                     <Setter Property="Background" Value="#008767"/>
                                 </DataTrigger>
-                                <DataTrigger Binding="{Binding Path=DosingTask[8].InProgress, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                <DataTrigger Binding="{Binding Path=DosingTask[4].InProgress, UpdateSourceTrigger=PropertyChanged}" Value="True">
                                     <Setter Property="Background" Value="#CFD6E9"/>
                                 </DataTrigger>
                             </Style.Triggers>
@@ -1473,24 +1445,21 @@
                 <!--The nineth row. The second column-->
                 <Border Grid.Column="1"
                         Grid.Row="9"
-                        Background="#F3F4F8"
                         BorderThickness="1,0,1,0"
                         BorderBrush="#DFE5F1">
 
-                    <TextBlock
-                        Text="{Binding Path=DosingTask[8].SetValue, UpdateSourceTrigger=PropertyChanged}"
-                        FontFamily="{StaticResource Jost}"
-                        FontWeight="Regular"
-                        FontSize="14"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        >
+                    <TextBlock  Text="{Binding Path=DosingTask[4].SetValue, UpdateSourceTrigger=PropertyChanged}"
+                                FontFamily="{StaticResource Jost}"
+                                FontWeight="Regular"
+                                FontSize="14"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center">
 
                         <TextBlock.Style>
                             <Style TargetType="{x:Type TextBlock}">
                                 <Setter Property="Foreground" Value="#3B3C3E"/>
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Path=DosingTask[8].ProgressDone, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                    <DataTrigger Binding="{Binding Path=DosingTask[4].ProgressDone, UpdateSourceTrigger=PropertyChanged}" Value="True">
                                         <Setter Property="Foreground" Value="#F3F4F8"/>
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -1503,10 +1472,10 @@
                         <Style TargetType="{x:Type Border}">
                             <Setter Property="Background" Value="Transparent"/>
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding Path=DosingTask[8].ProgressDone, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                <DataTrigger Binding="{Binding Path=DosingTask[4].ProgressDone, UpdateSourceTrigger=PropertyChanged}" Value="True">
                                     <Setter Property="Background" Value="#008767"/>
                                 </DataTrigger>
-                                <DataTrigger Binding="{Binding Path=DosingTask[8].InProgress, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                <DataTrigger Binding="{Binding Path=DosingTask[4].InProgress, UpdateSourceTrigger=PropertyChanged}" Value="True">
                                     <Setter Property="Background" Value="#CFD6E9"/>
                                 </DataTrigger>
                             </Style.Triggers>
@@ -1519,36 +1488,77 @@
                 
                 <!--<Border Grid.Column="2"
                         Grid.Row="9"
-                        Background="#F3F4F8"
                         BorderThickness="0,0,0,0"
                         CornerRadius="0,0,5,0"
                         BorderBrush="#DFE5F1">
 
-                    <ProgressBar Grid.Row="9"
+                    
+
+                </Border>-->
+
+                <ProgressBar Grid.Row="9"
                              Grid.Column="2"
                              BorderThickness="0"
                              BorderBrush="#DFE5F1"
-                             Foreground="#C6E0DD"
-                             Background="#F3F4F8"
-                             Value="{Binding Path=DosingTask[8].CurrentProgress, UpdateSourceTrigger=PropertyChanged}"
+                             Value="{Binding Path=DosingTask[4].CurrentProgress, UpdateSourceTrigger=PropertyChanged}"
                              Maximum="{Binding ComponentsWeight, UpdateSourceTrigger=PropertyChanged}"
                              Minimum="0">
 
-                        <ProgressBar.Style>
-                            <Style TargetType="{x:Type ProgressBar}">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Path=DosingTask[8].ProgressDone, UpdateSourceTrigger=PropertyChanged}" Value="True">
-                                        <Setter Property="Foreground" Value="#008767"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </ProgressBar.Style>
+                    <ProgressBar.Style>
+                        <Style TargetType="{x:Type ProgressBar}">
+                            <Setter Property="Background" Value="#F3F4F8"/>
+                            <Setter Property="Foreground" Value="#C6E0DD"/>
+                            <!--<Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ProgressBar}">
+                                        <Grid>
+                                            <Border Name="PART_Track" 
+                                                    CornerRadius="0,0,5,0"
+                                                    Background="#F3F4F8"
+                                                    BorderThickness="0">
+                                            </Border>
+                                            <Border Name="PART_Indicator" 
+                                                    CornerRadius="0,0,5,0"
+                                                    Background="#008767"
+                                                    BorderThickness="0"
+                                                    HorizontalAlignment="Left">
+                                            </Border>
+                                        </Grid>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>-->
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Path=DosingTask[4].ProgressDone, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                    <Setter Property="Foreground" Value="#008767"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ProgressBar.Style>
 
-                    </ProgressBar>
-                    
-                </Border>-->
+                </ProgressBar>
 
-                
+                <TextBlock Grid.Row="9"
+                           Grid.Column="2"
+                           Text="{Binding Path=DosingTask[4].CurrentValue, UpdateSourceTrigger=PropertyChanged}"
+                           FontFamily="{StaticResource Jost}"
+                           FontWeight="Regular"
+                           FontSize="14"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           >
+
+                    <TextBlock.Style>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="Foreground" Value="#3B3C3E"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Path=DosingTask[4].ProgressDone, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                    <Setter Property="Foreground" Value="#F3F4F8"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+
+                </TextBlock>
 
             </Grid>
 

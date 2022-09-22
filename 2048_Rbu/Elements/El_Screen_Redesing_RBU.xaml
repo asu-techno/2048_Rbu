@@ -24,7 +24,7 @@
                 <Setter Property="Foreground" Value="#F3F4F8"/>
                 <Setter Property="BorderThickness" Value="0"/>
                 <Setter Property="BorderBrush" Value="Black"/>
-                
+
                 <Style.Triggers>
                     <Trigger Property="IsMouseOver" Value="True">
                         <Setter Property="Background" Value="#365463"/>
@@ -35,15 +35,15 @@
                         <Setter Property="Background" Value="#365463"/>
                         <Setter Property="Foreground" Value="Black"/>
                     </Trigger>
-                    
+
                 </Style.Triggers>
-                
+
             </Style>
-            
-            
+
+
         </ResourceDictionary>
     </UserControl.Resources>
-    
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="420"/>
@@ -81,7 +81,7 @@
                               Click="Login_OnClick"
                               Style="{StaticResource MenuItemNew}">
                     </MenuItem>
-                    
+
                     <MenuItem Header="_Выход"
                               Name="Exit"  
                               Click="Program_Closed"
@@ -125,7 +125,7 @@
                                     <Setter Property="Background" Value="#365463"/>
                                     <Setter Property="Foreground" Value="Black"/>
                                 </Trigger>
-                                
+
                             </Style.Triggers>
                         </Style>
                     </MenuItem.Style>
@@ -144,12 +144,12 @@
                                   Click="RecipeGroups_OnClick"
                                   Style="{StaticResource MenuItemNew}">
                         </MenuItem>
-                        
+
                         <MenuItem Header="Рецепты"
                                   Click="Recipes_OnClick"
                                   Style="{StaticResource MenuItemNew}">
                         </MenuItem>
-                        
+
                     </MenuItem>
 
                     <!--Settings-->
@@ -170,7 +170,7 @@
                         <MenuItem Header="Настройки масс емкостей"
                                   Click="WeightMaterials_OnClick"
                                   Style="{StaticResource MenuItemNew}"/>
-                        
+
                     </MenuItem>
 
                     <!--DosingSettings-->
@@ -219,9 +219,9 @@
                                       Click="DosingSilo2_Click" 
                                       Style="{StaticResource MenuItemNew}">
                             </MenuItem>
-                            
+
                         </MenuItem>
-                        
+
                         <!--AddDosing-->
                         <MenuItem Name="AddDosing" 
                                   Header="Химические добавки" 
@@ -238,9 +238,9 @@
                                   Click="DosingAdditive2_Click" 
                                   Style="{StaticResource MenuItemNew}">
                             </MenuItem>
-                            
+
                         </MenuItem>
-                        
+
                         <!--WaterDosing-->
                         <MenuItem Name="WaterDosing" 
                                   Header="Вода" 
@@ -251,7 +251,7 @@
                                       Click="DosingWater_Click" 
                                       Style="{StaticResource MenuItemNew}">
                             </MenuItem>
-                            
+
                         </MenuItem>
 
                         <!--LimitValues-->
@@ -293,22 +293,22 @@
                                   Click="MaterialTypes_OnClick" 
                                   Style="{StaticResource MenuItemNew}">
                         </MenuItem>
-                        
+
                         <MenuItem Header="Материалы" 
                                   Click="Materials_OnClick"
                                   Style="{StaticResource MenuItemNew}">
                         </MenuItem>
-                        
+
                         <MenuItem Header="Типы емкостей"
                                   Click="ContainerTypes_OnClick"
                                   Style="{StaticResource MenuItemNew}">
                         </MenuItem>
-                        
+
                         <MenuItem Header="Емкости" 
                                   Click="Containers_OnClick"
                                   Style="{StaticResource MenuItemNew}">
                         </MenuItem>
-                        
+
                         <!--PhisicalModel-->
                         <MenuItem Header="Физическая модель" 
                                   Visibility="Collapsed" 
@@ -328,9 +328,9 @@
                                       Click="Batchers_OnClick"
                                       Style="{StaticResource MenuItemNew}">
                             </MenuItem>
-                            
+
                         </MenuItem>
-                        
+
                     </MenuItem>
 
                     <!--Users-->
@@ -408,7 +408,7 @@
                     </MenuItem>
 
                 </MenuItem>
-                
+
                 <!--About-->
                 <MenuItem Header="_О программе"
                           Click="Spalsh_OnClick"
@@ -456,7 +456,7 @@
 
                 <Label Width="300" 
                        Height="30" 
-                       Margin="170,0,0,0" 
+                       Margin="130,0,0,0" 
                        BorderThickness="0" 
                        VerticalContentAlignment="Center"
                        HorizontalContentAlignment="Center"
@@ -473,7 +473,7 @@
             </StackPanel>
         </Grid>
 
-        
+
         <control:ElControl  x:Name="ElControlControl"
                             Grid.Row="1"
                             VerticalAlignment="Top"
@@ -509,13 +509,13 @@
             <control:ElQueue x:Name="ElControlQueue"
                              Margin="260,0,0,0">
             </control:ElQueue>
-            
+
         </Grid>
 
         <Grid Grid.Row="1" Name="ElGrid"
               Grid.Column="1"
               Background="#F3F4F8">
-            
+
             <Image Source="\Images\Mnemo_Redesign_v2.png" 
                    Width="1500"
                    Height="694" 
@@ -804,7 +804,7 @@
             <mechs:ElConveyor
                 VerticalAlignment="Top"
                 HorizontalAlignment="Left"
-                Margin="247,262,0,0" 
+                Margin="246,262,0,0" 
                 TypeMech="Shnek"
                 NameObject="M-12"
                 Rotate="True"
@@ -815,9 +815,11 @@
             <mechs:ElConveyor
                 VerticalAlignment="Top"
                 HorizontalAlignment="Left"
-                Margin="545,392,0,0" 
+                Margin="544,392,0,0" 
                 TypeMech="Skip"
                 NameObject="M-9"
+                NamePos="LeftUp"
+                
                 PopupPosition="Up"
                 ValueNumMech="5" 
                 Prefix="M_9"/>
@@ -828,8 +830,8 @@
                 Margin="845,597,0,0" 
                 TypeMech="Conveyor"
                 NameObject="M-1"
+                
                 NamePos="LeftUp"
-                ModePos="Left" 
                 PopupPosition="Up"
                 ValueNumMech="6" 
                 Prefix="M_1"
@@ -855,7 +857,7 @@
                     IsEnabled="{Binding LinkOk}"
                     >
 
-               
+
                 <!--PreviewMouseLeftButtonDown="BtnBell_OnPreviewMouseLeftButtonDown"
                     PreviewMouseLeftButtonUp="BtnBell_OnPreviewMouseLeftButtonUp"-->
 
@@ -865,16 +867,16 @@
                     <Image Source="/Images/Indicators/bell.png"
                            Width="12"
                            Height="16">
-                        
+
                     </Image>
-                    
+
                     <TextBlock Text="Звонок водителю"
                                FontFamily="{StaticResource Jost}"
                                FontWeight="Regular"
                                FontSize="16"
                                VerticalAlignment="Center"
                                Padding="8,0,0,0">
-                        
+
                     </TextBlock>
 
                 </StackPanel>
