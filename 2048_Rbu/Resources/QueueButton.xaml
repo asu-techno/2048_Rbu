@@ -35,7 +35,7 @@
                 <Setter Property="Foreground" Value="#8A8C90"/>
             </Trigger>
 
-            <DataTrigger Binding="{Binding Path=Tag, RelativeSource={RelativeSource Self}}" Value="{x:Static sys:String.Empty}">
+            <DataTrigger Binding="{Binding Path=Tag, RelativeSource={RelativeSource Self}}" Value="{x:Null}">
                 <Setter Property="IsEnabled" Value="False"/>
             </DataTrigger>
 

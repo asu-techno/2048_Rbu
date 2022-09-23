@@ -1144,20 +1144,20 @@
                                OnPcy="LoadInert_3_2" 
                                />
 
-            <indicators:ElAnim VerticalAlignment="Top" 
+            <!--<indicators:ElAnim VerticalAlignment="Top" 
                                HorizontalAlignment="Left"
                                Width="16" 
                                Height="22" 
                                Margin="65,576,0,0" 
                                Substance="Solution" 
                                Logic="False"
-                               OnPcy="V_1.DI_Closed"/>
+                               OnPcy="V_1.DI_Closed"/>-->
 
             <indicators:ElAnim VerticalAlignment="Top" 
                                HorizontalAlignment="Left"
                                Width="16" 
                                Height="22" 
-                               Margin="95,576,0,0" 
+                               Margin="90,576,0,0" 
                                Substance="Solution" 
                                Logic="False"
                                OnPcy="V_1.DI_Closed"/>
@@ -1277,7 +1277,7 @@
                 VerticalAlignment="Top" 
                 HorizontalAlignment="Left" 
                 Margin="0,565,0,0" 
-                Count="4" 
+                Count="5" 
                 Digit="0" 
                 Measure="%" 
                 ValuePcay="gr_Valve_PercentOpen" 

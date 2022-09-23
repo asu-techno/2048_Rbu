@@ -9,6 +9,58 @@
              d:DataContext="{d:DesignInstance Type={x:Type local:ElQueueViewModel}}"
              Height="346" Width="1240" >
 
+    <UserControl.Resources>
+        
+        <!--<Style TargetType="{x:Type DataGridColumnHeader}">
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="FontFamily" Value="{StaticResource Jost}"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Background" Value="#81868C"/>
+            <Setter Property="Foreground" Value="#F3F4F8"/>
+            <Setter Property="BorderThickness" Value="0,0,1,0"/>
+            <Setter Property="BorderBrush" Value="#F3F4F8"/>
+            <Setter Property="Padding" Value="15,0"/>
+            --><!--<Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Grid>
+                            <Border BorderThickness="1"
+                                BorderBrush="#B8BBC0"
+                                CornerRadius="5">
+
+
+                            </Border>
+                        </Grid>
+                        
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>--><!--
+            
+        </Style>-->
+        
+        <!--<Style TargetType="{x:Type DataGrid}">
+            <Setter Property="FontFamily" Value="{StaticResource Jost}"/>
+            <Setter Property="FontWeight" Value="Regular"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type DataGrid}">
+                        <Grid>
+                            <Border BorderThickness="1"
+                                BorderBrush="#B8BBC0"
+                                CornerRadius="5"
+                                Background="Transparent"
+                                >
+
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>-->
+        
+    </UserControl.Resources>
     <Border Background="#E7EAF3"
             CornerRadius="3,0,0,0"
             BorderThickness="1"
@@ -28,10 +80,111 @@
                     <RowDefinition Height="241"/>
                     <RowDefinition Height="25"/>
                 </Grid.RowDefinitions>
-
-                <ListView Grid.Row="3"
+                
+                <DataGrid Grid.Row="3"
                           Margin="20,0,20,0"
-                          AlternationCount="2">
+                          AutoGenerateColumns="False"
+                          AlternationCount="2"
+                          AlternatingRowBackground="Gray"
+                          ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                          ItemsSource="{Binding TaskQueue}"
+                          SelectedItem="{Binding Path=SelTaskQueueItem, UpdateSourceTrigger=PropertyChanged}"
+                          >
+
+                    <DataGrid.Resources>
+
+                        <!--<Style TargetType="{x:Type DataGrid}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate>
+                                        <Grid>
+                                            <Border BorderThickness="1"
+                                                 BorderBrush="#B8BBC0"
+                                                 CornerRadius="5"
+                                                 Background="Transparent"
+                                                 >
+                                            </Border>
+                                        </Grid>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>-->
+
+                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                            <Setter Property="Height" Value="40"/>
+                            <Setter Property="FontFamily" Value="{StaticResource Jost}"/>
+                            <Setter Property="FontWeight" Value="Medium"/>
+                            <Setter Property="FontSize" Value="14"/>
+                            <Setter Property="Background" Value="#81868C"/>
+                            <Setter Property="Foreground" Value="#F3F4F8"/>
+                            <Setter Property="BorderThickness" Value="0,0,1,0"/>
+                            <Setter Property="BorderBrush" Value="#F3F4F8"/>
+                            <Setter Property="Padding" Value="10,0"/>
+                            
+                        </Style>
+
+                        <Style TargetType="{x:Type DataGridRow}">
+                            <Setter Property="Height" Value="30"/>
+                            <Setter Property="FontFamily" Value="{StaticResource Jost}"/>
+                            <Setter Property="FontWeight" Value="Regular"/>
+                            <Setter Property="FontSize" Value="14"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="VerticalContentAlignment" Value="Center"/>
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+
+                        </Style>
+                        
+                    </DataGrid.Resources>
+                    
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Width="50"
+                                            Header="№" 
+                                            Binding="{Binding Id}">
+                        </DataGridTextColumn>
+
+                        <DataGridTextColumn Width="170"
+                                            Header="Заказчик" 
+                                            Binding="{Binding Task.Customer.Name}">
+
+                        </DataGridTextColumn>
+
+                        <DataGridTextColumn Width="210"
+                                            Header="Группа рецептов" 
+                                            Binding="{Binding Task.Recipe.Group.Name}">
+
+                        </DataGridTextColumn>
+
+                        <DataGridTextColumn Width="250"
+                                            Header="Рецепты" 
+                                            Binding="{Binding Task.Recipe.Name}">
+
+                        </DataGridTextColumn>
+
+                        <DataGridTextColumn Width="109"
+                                            Header="Объем &#xa;задания" 
+                                            Binding="{Binding Task.Volume}">
+                        </DataGridTextColumn>
+
+                        <DataGridTextColumn Width="89"
+                                            Header="Объем &#xa;замеса" 
+                                            Binding="{Binding Task.BatchVolume}">
+                        </DataGridTextColumn>
+
+                        <DataGridTextColumn Width="99"
+                                            Header="Количество &#xa;замесов" 
+                                            Binding="{Binding Task.BatchesAmount}">
+
+                        </DataGridTextColumn>
+
+                    </DataGrid.Columns>
+                </DataGrid>
+                
+                <!--<ListView Grid.Row="3"
+                          Margin="20,0,20,0"
+                          AlternationCount="2"
+                          ItemsSource="{Binding TaskQueue}"
+                          SelectedItem="{Binding Path=SelTaskQueueItem, UpdateSourceTrigger=PropertyChanged}">
                     
                     <ListView.ItemContainerStyle>
                         <Style TargetType="{x:Type ListViewItem}">
@@ -42,7 +195,7 @@
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="{x:Type ListViewItem}">
-                                        <Border x:Name="brd"
+                                        <Border x:Name="brd" CornerRadius="5"
                                                 Background="{TemplateBinding Background}">
                                             <ContentPresenter Margin="{TemplateBinding Padding}"/>
                                         </Border>
@@ -59,19 +212,21 @@
 
                     <ListView.View>
                         <GridView>
-                            
                             <GridViewColumn Width="50" DisplayMemberBinding="{Binding Id}">
+                                
                                 <GridViewColumnHeader Background="#80858B" 
                                                       Height="30" 
                                                       HorizontalAlignment="Stretch"
                                                       BorderThickness="0,0,1,0"
                                                       BorderBrush="#E1E5F0">
+                                    
                                     <TextBlock Text="№" 
                                                TextWrapping="WrapWithOverflow"
                                                Foreground="White"
                                                FontFamily="{StaticResource Jost}"
                                                FontWeight="Regular"
                                                FontSize="14"/>
+                                    
                                 </GridViewColumnHeader>
                             </GridViewColumn>
 
@@ -192,8 +347,9 @@
 
                         </GridView>
                     </ListView.View>
-                </ListView>
+                </ListView>-->
 
+                <!--Очередь заданий и кнопка запрет-->
                 <StackPanel Grid.Row="1" Orientation="Horizontal">
                     
                     <TextBlock 
@@ -241,6 +397,7 @@
                 
             </Grid>
 
+            <!--Кнопки управления-->
             <StackPanel Grid.Column="1">
 
                 <!--Кнопка добавить-->
@@ -315,7 +472,8 @@
                         Width="180"
                         Height="30"
                         Margin="0,16,0,0"
-                        Style="{StaticResource QueueButton}">
+                        Style="{StaticResource QueueButton}"
+                        Tag="{Binding SelTaskQueueItem}">
                 </Button>
 
                 <Button ToolTip="Удалить выбранный рецепт из очереди" 
@@ -325,7 +483,8 @@
                         Width="180"
                         Height="30"
                         Margin="0,16,0,0"
-                        Style="{StaticResource QueueButton}">
+                        Style="{StaticResource QueueButton}"
+                        Tag="{Binding SelTaskQueueItem}">
                 </Button>
 
                 <Button ToolTip="Подробнее о выбранном рецепте" 
@@ -335,6 +494,7 @@
                         Width="180"
                         Height="30"
                         Margin="0,16,0,0"
+                        Tag="{Binding SelTaskQueueItem}"
                         Style="{StaticResource QueueButton}">
                 </Button>
 
