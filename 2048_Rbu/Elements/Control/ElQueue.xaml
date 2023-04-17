@@ -4,138 +4,60 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:_2048_Rbu.Elements.Control"
+             xmlns:styles="clr-namespace:Styles.Controls;assembly=Styles"
              xmlns:classes="clr-namespace:AsuBetonLibrary.Classes;assembly=AsuBetonLibrary"
+             d:DataContext="{d:DesignInstance Type=styles:BaseUserControl}"
              mc:Ignorable="d"
-             d:DataContext="{d:DesignInstance Type={x:Type local:ElQueueViewModel}}"
-             Height="346" Width="1240" >
+             Height="269" Width="1240" >
 
     <UserControl.Resources>
-        
-        <!--<Style TargetType="{x:Type DataGridColumnHeader}">
-            <Setter Property="Height" Value="40"/>
-            <Setter Property="FontFamily" Value="{StaticResource Jost}"/>
-            <Setter Property="FontWeight" Value="Medium"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Background" Value="#81868C"/>
-            <Setter Property="Foreground" Value="#F3F4F8"/>
-            <Setter Property="BorderThickness" Value="0,0,1,0"/>
-            <Setter Property="BorderBrush" Value="#F3F4F8"/>
-            <Setter Property="Padding" Value="15,0"/>
-            --><!--<Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate>
-                        <Grid>
-                            <Border BorderThickness="1"
-                                BorderBrush="#B8BBC0"
-                                CornerRadius="5">
 
-
-                            </Border>
-                        </Grid>
-                        
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>--><!--
-            
-        </Style>-->
-        
-        <!--<Style TargetType="{x:Type DataGrid}">
-            <Setter Property="FontFamily" Value="{StaticResource Jost}"/>
-            <Setter Property="FontWeight" Value="Regular"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type DataGrid}">
-                        <Grid>
-                            <Border BorderThickness="1"
-                                BorderBrush="#B8BBC0"
-                                CornerRadius="5"
-                                Background="Transparent"
-                                >
-
-                            </Border>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>-->
-        
     </UserControl.Resources>
-    <Border Background="#E7EAF3"
+
+    <Border Background="#D9D8DD"
             CornerRadius="3,0,0,0"
             BorderThickness="1"
             BorderBrush="#B8BBC0">
 
         <Grid>
+            
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1020"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="0">
+                
                 <Grid.RowDefinitions>
                     <RowDefinition Height="20"/>
                     <RowDefinition Height="30"/>
                     <RowDefinition Height="23"/>
-                    <RowDefinition Height="241"/>
+                    <RowDefinition Height="180"/>
                     <RowDefinition Height="25"/>
                 </Grid.RowDefinitions>
+
+                <styles:BaseUserControl Grid.Row="3">
+                    <DataGrid
+                        x:Name="DataGrid1"
+                        Width="980"
+                        Margin="20,0,20,0"
+                        VerticalScrollBarVisibility="Disabled"
+                        FontFamily="{StaticResource Jost}"
+                        HorizontalAlignment="Left"
+                        ColumnWidth="150"
+                        SelectionUnit="FullRow"
+                        ItemsSource="{Binding Users}"
+                        RowHeight="30" />
+                </styles:BaseUserControl>
                 
-                <DataGrid Grid.Row="3"
-                          Margin="20,0,20,0"
-                          AutoGenerateColumns="False"
-                          AlternationCount="2"
-                          AlternatingRowBackground="Gray"
-                          ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                          ItemsSource="{Binding TaskQueue}"
-                          SelectedItem="{Binding Path=SelTaskQueueItem, UpdateSourceTrigger=PropertyChanged}"
-                          >
-
-                    <DataGrid.Resources>
-
-                        <!--<Style TargetType="{x:Type DataGrid}">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate>
-                                        <Grid>
-                                            <Border BorderThickness="1"
-                                                 BorderBrush="#B8BBC0"
-                                                 CornerRadius="5"
-                                                 Background="Transparent"
-                                                 >
-                                            </Border>
-                                        </Grid>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>-->
-
-                        <Style TargetType="{x:Type DataGridColumnHeader}">
-                            <Setter Property="Height" Value="40"/>
-                            <Setter Property="FontFamily" Value="{StaticResource Jost}"/>
-                            <Setter Property="FontWeight" Value="Medium"/>
-                            <Setter Property="FontSize" Value="14"/>
-                            <Setter Property="Background" Value="#81868C"/>
-                            <Setter Property="Foreground" Value="#F3F4F8"/>
-                            <Setter Property="BorderThickness" Value="0,0,1,0"/>
-                            <Setter Property="BorderBrush" Value="#F3F4F8"/>
-                            <Setter Property="Padding" Value="10,0"/>
-                            
-                        </Style>
-
-                        <Style TargetType="{x:Type DataGridRow}">
-                            <Setter Property="Height" Value="30"/>
-                            <Setter Property="FontFamily" Value="{StaticResource Jost}"/>
-                            <Setter Property="FontWeight" Value="Regular"/>
-                            <Setter Property="FontSize" Value="14"/>
-                            <Setter Property="VerticalAlignment" Value="Center"/>
-                            <Setter Property="VerticalContentAlignment" Value="Center"/>
-                            <Setter Property="HorizontalAlignment" Value="Center"/>
-                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-
-                        </Style>
-                        
-                    </DataGrid.Resources>
+                <!--<DataGrid Grid.Row="3"
+                        FontFamily="{StaticResource Jost}"
+                        Margin="20,0,20,0"
+                        RowHeight="30" 
+                        AutoGenerateColumns="True"
+                        HeadersVisibility="Column" 
+                        ItemsSource="{Binding Users}"
+                        >
                     
                     <DataGrid.Columns>
                         <DataGridTextColumn Width="50"
@@ -143,225 +65,56 @@
                                             Binding="{Binding Id}">
                         </DataGridTextColumn>
 
-                        <DataGridTextColumn Width="170"
+                        <DataGridTextColumn Width="150"
                                             Header="Заказчик" 
                                             Binding="{Binding Task.Customer.Name}">
 
                         </DataGridTextColumn>
 
-                        <DataGridTextColumn Width="210"
+                        <DataGridTextColumn Width="160"
                                             Header="Группа рецептов" 
                                             Binding="{Binding Task.Recipe.Group.Name}">
 
                         </DataGridTextColumn>
 
-                        <DataGridTextColumn Width="250"
+                        <DataGridTextColumn Width="150"
                                             Header="Рецепты" 
                                             Binding="{Binding Task.Recipe.Name}">
 
                         </DataGridTextColumn>
 
                         <DataGridTextColumn Width="109"
-                                            Header="Объем &#xa;задания" 
+                                            Header="Объем задания" 
                                             Binding="{Binding Task.Volume}">
                         </DataGridTextColumn>
 
                         <DataGridTextColumn Width="89"
-                                            Header="Объем &#xa;замеса" 
+                                            Header="Объем замеса" 
                                             Binding="{Binding Task.BatchVolume}">
                         </DataGridTextColumn>
 
-                        <DataGridTextColumn Width="99"
-                                            Header="Количество &#xa;замесов" 
+                        <DataGridTextColumn Width="149"
+                                            Header="Количество замесов" 
                                             Binding="{Binding Task.BatchesAmount}">
 
                         </DataGridTextColumn>
 
                     </DataGrid.Columns>
-                </DataGrid>
-                
-                <!--<ListView Grid.Row="3"
-                          Margin="20,0,20,0"
-                          AlternationCount="2"
-                          ItemsSource="{Binding TaskQueue}"
-                          SelectedItem="{Binding Path=SelTaskQueueItem, UpdateSourceTrigger=PropertyChanged}">
                     
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="{x:Type ListViewItem}">
-                            <Setter Property="Margin" Value="10,0,0,0"/>
-                            <Setter Property="Padding" Value="5"/>
-                            <Setter Property="Background" Value="#F3F4F8"/>
-                            <Setter Property="Foreground" Value="#3C3C3C"/>
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="{x:Type ListViewItem}">
-                                        <Border x:Name="brd" CornerRadius="5"
-                                                Background="{TemplateBinding Background}">
-                                            <ContentPresenter Margin="{TemplateBinding Padding}"/>
-                                        </Border>
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="ItemsControl.AlternationIndex" Value="1">
-                                                <Setter Property="Background" Value="#E1E5F0"/>
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </ListView.ItemContainerStyle>
-
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Width="50" DisplayMemberBinding="{Binding Id}">
-                                
-                                <GridViewColumnHeader Background="#80858B" 
-                                                      Height="30" 
-                                                      HorizontalAlignment="Stretch"
-                                                      BorderThickness="0,0,1,0"
-                                                      BorderBrush="#E1E5F0">
-                                    
-                                    <TextBlock Text="№" 
-                                               TextWrapping="WrapWithOverflow"
-                                               Foreground="White"
-                                               FontFamily="{StaticResource Jost}"
-                                               FontWeight="Regular"
-                                               FontSize="14"/>
-                                    
-                                </GridViewColumnHeader>
-                            </GridViewColumn>
-
-                            <GridViewColumn Width="170" DisplayMemberBinding="{Binding Task.Customer.Name}">
-                                <GridViewColumnHeader Background="#80858B" 
-                                                      Height="30" 
-                                                      BorderThickness="0,0,1,0"
-                                                      BorderBrush="#E1E5F0"
-                                                      HorizontalAlignment="Stretch"
-                                                      HorizontalContentAlignment="Left"
-                                                      Padding="20,0"
-                                                      >
-                                    <TextBlock Text="Заказчик" 
-                                               TextWrapping="WrapWithOverflow"
-                                               Foreground="White"
-                                               FontFamily="{StaticResource Jost}"
-                                               FontWeight="Regular"
-                                               FontSize="14"/>
-                                </GridViewColumnHeader>
-                            </GridViewColumn>
-
-                            <GridViewColumn Width="210" DisplayMemberBinding="{Binding Task.Recipe.Group.Name}">
-                                <GridViewColumnHeader Background="#80858B" 
-                                                      Height="30" 
-                                                      HorizontalAlignment="Stretch"
-                                                      HorizontalContentAlignment="Left"
-                                                      Padding="20,0"
-                                                      BorderThickness="0,0,1,0"
-                                                      BorderBrush="#E1E5F0"
-                                                      >
-                                    <TextBlock Text="Группа рецептов" 
-                                               TextWrapping="WrapWithOverflow"
-                                               Foreground="White"
-                                               FontFamily="{StaticResource Jost}"
-                                               FontWeight="Regular"
-                                               FontSize="14"/>
-                                </GridViewColumnHeader>
-                            </GridViewColumn>
-
-                            <GridViewColumn Width="250" DisplayMemberBinding="{Binding Task.Recipe.Name}">
-                                <GridViewColumnHeader Background="#80858B" 
-                                                      Height="30" 
-                                                      HorizontalAlignment="Stretch"
-                                                      HorizontalContentAlignment="Left"
-                                                      Padding="20,0"
-                                                      BorderThickness="0,0,1,0"
-                                                      BorderBrush="#E1E5F0"
-                                                      >
-                                    <TextBlock Text="Рецепты" 
-                                               TextWrapping="WrapWithOverflow"
-                                               Foreground="White"
-                                               FontFamily="{StaticResource Jost}"
-                                               FontWeight="Regular"
-                                               FontSize="14"/>
-                                </GridViewColumnHeader>
-                            </GridViewColumn>
-
-                            <GridViewColumn Width="109" DisplayMemberBinding="{Binding Task.Volume}">
-                                <GridViewColumnHeader Background="#80858B" 
-                                                      Height="30" 
-                                                      HorizontalAlignment="Stretch"
-                                                      HorizontalContentAlignment="Left"
-                                                      Padding="15,0"
-                                                      BorderThickness="0,0,1,0"
-                                                      BorderBrush="#E1E5F0"
-                                                      >
-                                    <TextBlock Text="Объем &#xa;задания"
-                                               TextWrapping="WrapWithOverflow"
-                                               Foreground="White"
-                                               FontFamily="{StaticResource Jost}"
-                                               FontWeight="Regular"
-                                               FontSize="12"
-                                               VerticalAlignment="Center"
-                                               />
-                                </GridViewColumnHeader>
-                            </GridViewColumn>
-
-                            <GridViewColumn Width="89" DisplayMemberBinding="{Binding Task.BatchVolume}">
-                                <GridViewColumnHeader Background="#80858B" 
-                                                      Height="30" 
-                                                      HorizontalAlignment="Stretch"
-                                                      HorizontalContentAlignment="Left"
-                                                      Padding="15,0"
-                                                      BorderThickness="0,0,1,0"
-                                                      BorderBrush="#E1E5F0"
-                                                      >
-                                    <TextBlock Text="Объем &#xa;замеса"
-                                               TextWrapping="WrapWithOverflow"
-                                               Foreground="White"
-                                               FontFamily="{StaticResource Jost}"
-                                               FontWeight="Regular"
-                                               FontSize="12"
-                                               VerticalAlignment="Center"
-                                               />
-                                </GridViewColumnHeader>
-                            </GridViewColumn>
-                            <GridViewColumn Width="95" DisplayMemberBinding="{Binding Task.BatchesAmount}">
-                                <GridViewColumnHeader Background="#80858B" 
-                                                      Height="30" 
-                                                      HorizontalAlignment="Stretch"
-                                                      HorizontalContentAlignment="Left"
-                                                      Padding="15,0"
-                                                      BorderThickness="0,0,1,0"
-                                                      BorderBrush="#E1E5F0"
-                                                      >
-                                    <TextBlock Text="Количество &#xa;замесов"
-                                               TextWrapping="WrapWithOverflow"
-                                               Foreground="White"
-                                               FontFamily="{StaticResource Jost}"
-                                               FontWeight="Regular"
-                                               FontSize="12"
-                                               VerticalAlignment="Center"
-                                               />
-                                </GridViewColumnHeader>
-                            </GridViewColumn>
-
-
-
-                        </GridView>
-                    </ListView.View>
-                </ListView>-->
-
+                </DataGrid>-->
+               
+                            
                 <!--Очередь заданий и кнопка запрет-->
                 <StackPanel Grid.Row="1" Orientation="Horizontal">
-                    
-                    <TextBlock 
-                           FontFamily="{StaticResource Jost}"
-                           FontWeight="Regular"
-                           FontSize="14"
-                           Height="20"
-                           Foreground="#878A91"
-                           HorizontalAlignment="Left"
-                           VerticalAlignment="Center"
-                           Text="ОЧЕРЕДЬ ЗАДАНИЙ"
-                           Padding="20,0,0,0">
+
+                    <TextBlock Text="ОЧЕРЕДЬ ЗАДАНИЙ"
+                               FontFamily="{StaticResource Jost}"
+                               FontWeight="Regular"
+                               FontSize="14"
+                               Foreground="#676A70"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Center"
+                               Padding="20,0,0,0">
                     </TextBlock>
 
                     <!--Кнопка запрет-->
@@ -498,7 +251,7 @@
                         Style="{StaticResource QueueButton}">
                 </Button>
 
-                <Button ToolTip="Выгрузить текущий рецепт" 
+                <!--<Button ToolTip="Выгрузить текущий рецепт" 
                         Command="{Binding UnloadTask}"
                         Content="Выгрузить"
                         FontSize="16"
@@ -508,14 +261,14 @@
                         Style="{StaticResource NewButton}"
                         Tag="{Binding TaskId}">
 
-                </Button>
+                </Button>-->
 
             </StackPanel>
             
         </Grid>
     </Border>
     
-    
+    <!--#region OLD-->
     <!--<Grid >
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -731,4 +484,6 @@
             </Button>
         </Grid>
     </Grid>-->
+    <!--#endregion-->
+    
 </UserControl>

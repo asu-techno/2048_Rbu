@@ -44,7 +44,7 @@
                 HorizontalContentAlignment="Center"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
-                VerticalContentAlignment="Top"
+                VerticalContentAlignment="Center"
                 
                 FontFamily="{StaticResource Jost}"
                 FontWeight="Regular"

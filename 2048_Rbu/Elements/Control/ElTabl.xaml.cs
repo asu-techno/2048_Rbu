@@ -15,6 +15,9 @@ using AsuBetonLibrary.Readers;
 using AsuBetonLibrary.Services;
 using Opc.UaFx;
 using Opc.UaFx.Client;
+using AS_Library.Classes;
+using System.Windows;
+using AS_Library.Events.Classes;
 
 namespace _2048_Rbu.Elements.Control
 {
@@ -61,6 +64,17 @@ namespace _2048_Rbu.Elements.Control
         //private int _batchNum;
         //private string[,] _materialTags;
 
+        private long _taskId;
+        public long TaskId
+        {
+            get { return _taskId; }
+            set
+            {
+                _taskId = value;
+                OnPropertyChanged(nameof(TaskId));
+            }
+        }
+
         public ViewModelTabl(OpcServer.OpcList opcName)
         {
             _opcName = opcName;
@@ -81,6 +95,7 @@ namespace _2048_Rbu.Elements.Control
             var idItem = new OpcMonitoredItem(_opc.cl.GetNode("TaskID"), OpcAttribute.Value);
             idItem.DataChangeReceived += HandleIdChanged;
             OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(idItem);
+            
             //var batchNumItem = new OpcMonitoredItem(_opc.cl.GetNode("Current_batchNum"), OpcAttribute.Value);
             //batchNumItem.DataChangeReceived += HandleBatchNumChanged;
             //OpcServer.GetInstance().GetSubscription(_opcName).AddMonitoredItem(batchNumItem);
@@ -93,7 +108,7 @@ namespace _2048_Rbu.Elements.Control
         {
             try
             {
-                _id = long.Parse(e.Item.Value.ToString());
+                TaskId = _id = long.Parse(e.Item.Value.ToString());
                 GetTable();
             }
             catch (Exception exception)
@@ -251,6 +266,31 @@ namespace _2048_Rbu.Elements.Control
             SelTaskVolume = SelTask.Volume + " м³" + " (" + SelTask.BatchesAmount + " " + ending + " × " + SelTask.BatchVolume + " м³)";
             CurrentSelTask = SelTask;
         }
+
+        #region Command
+        private RelayCommand _unloadTask;
+        public RelayCommand UnloadTask
+        {
+            get
+            {
+                return _unloadTask ??= new RelayCommand((o) =>
+                {
+                    try
+                    {
+                        _opc.cl.WriteBool("btn_UnloadRecipe", true, out var err);
+                        EventsBase.GetInstance().GetControlEvents(OpcServer.OpcList.Rbu).AddEvent("Выгрузка текущего рецепта из ПЛК", SystemEventType.UserDoing);
+                        if (err)
+                            MessageBox.Show("Ошибка записи", "Ошибка");
+                    }
+                    catch (Exception e)
+                    {
+                        MessageBox.Show("Ошибка записи", "Ошибка");
+                    }
+                });
+            }
+        }
+
+        #endregion
 
         //private void GetMaterials()
         //{

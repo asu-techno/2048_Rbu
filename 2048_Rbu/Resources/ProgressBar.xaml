@@ -10,11 +10,13 @@
                     <Grid>
                         <Border Name="PART_Track" CornerRadius="3"
                                 Background="#C4C4C4"
-                                BorderThickness="0">
+                                BorderThickness="1"
+                                BorderBrush="#3B3C3D">
                         </Border>
                         <Border Name="PART_Indicator" CornerRadius="3"
-                                Background="#008767"
-                                BorderThickness="0"
+                                Background="#19BF2B"
+                                BorderThickness="1"
+                                BorderBrush="#3B3C3D"
                                 HorizontalAlignment="Left">
                         </Border>
                     </Grid>

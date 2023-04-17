@@ -19,17 +19,17 @@ using NLog;
 using Opc.UaFx;
 using Opc.UaFx.Client;
 using AS_Library.Link;
+using System.Windows.Media;
+using Styles.Controls;
 
 namespace _2048_Rbu.Elements.Control
 {
-    /// <summary>
-    /// Interaction logic for ElTaskQueue.xaml
-    /// </summary>
     public partial class ElQueue : UserControl
     {
         public ElQueue()
         {
             InitializeComponent();
+            this.DataContext = new BaseUserControl();
         }
     }
 

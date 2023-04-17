@@ -156,6 +156,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\WpfStyles-master\WpfStyles-master\src\Styles\Styles.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="ArchiverLibCore">
       <HintPath>Libs\ArchiverLibCore.dll</HintPath>
     </Reference>
