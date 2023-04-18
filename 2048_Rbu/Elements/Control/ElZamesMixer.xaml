@@ -17,9 +17,9 @@
                        FontWeight="Regular"
                        Margin="0,0,0,0"
                        FontSize="14"
+                       Text="У З Е Л   Б Е Т О Н О С М Е С И Т Е Л Я"
                        HorizontalAlignment="Left"
                        Foreground="#676A70">
-                       <Run Typography.CapitalSpacing="True">УЗЕЛ БЕТОНОСМЕСИТЕЛЯ</Run>
             </TextBlock>
 
             <!--Название-->

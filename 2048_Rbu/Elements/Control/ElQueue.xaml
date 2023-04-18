@@ -6,46 +6,68 @@
              xmlns:local="clr-namespace:_2048_Rbu.Elements.Control"
              xmlns:styles="clr-namespace:Styles.Controls;assembly=Styles"
              xmlns:classes="clr-namespace:AsuBetonLibrary.Classes;assembly=AsuBetonLibrary"
-             d:DataContext="{d:DesignInstance Type=styles:BaseUserControl}"
+             d:DataContext="{d:DesignInstance Type=local:ElQueueViewModel}"
              mc:Ignorable="d"
-             Height="269" Width="1240" >
+             Height="269" Width="1240" Background="#D9D8DD">
 
     <UserControl.Resources>
 
+        <DrawingImage x:Key="im_symbol_plus">
+            <DrawingImage.Drawing>
+                <DrawingGroup ClipGeometry="M0,0 V14 H14 V0 H0 Z">
+                    <GeometryDrawing Brush="#FF3A85DD" Geometry="F0 M14,14z M0,0z M7,0C6.44772,0,6,0.447716,6,1L6,6 1,6C0.447715,6 0,6.44772 0,7 0,7.55228 0.447716,8 1,8L6,8 6,13C6,13.5523 6.44772,14 7,14 7.55228,14 8,13.5523 8,13L8,8 13,8C13.5523,8 14,7.55228 14,7 14,6.44772 13.5523,6 13,6L8,6 8,1C8,0.447715,7.55228,0,7,0z" />
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+
+        <DrawingImage x:Key="im_symbol_up">
+            <DrawingImage.Drawing>
+                <DrawingGroup ClipGeometry="M0,0 V12 H19 V0 H0 Z">
+                    <GeometryDrawing Brush="#FF3A85DD" Geometry="F0 M19,12z M0,0z M18.6066,10.9495C18.9972,10.559,18.9972,9.92585,18.6066,9.53532L10.3792,1.3079C10.3324,1.21475 10.2702,1.12739 10.1924,1.04965 9.9867,0.843926 9.71364,0.746575 9.44419,0.757596 9.17839,0.749684 8.91003,0.847167 8.70715,1.05004 8.62985,1.12735 8.56785,1.21415 8.52115,1.30671L0.292923,9.53493C-0.0976009,9.92545 -0.0976009,10.5586 0.292923,10.9491 0.683449,11.3397 1.31661,11.3397 1.70714,10.9491L9.44959,3.20669 17.1924,10.9495C17.583,11.3401,18.2161,11.3401,18.6066,10.9495z" />
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+
+        <DrawingImage x:Key="im_symbol_down">
+            <DrawingImage.Drawing>
+                <DrawingGroup ClipGeometry="M0,0 V12 H19 V0 H0 Z">
+                    <DrawingGroup.Transform>
+                        <TranslateTransform X="4.0978203941222091E-08" Y="0" />
+                    </DrawingGroup.Transform>
+                    <GeometryDrawing Brush="#FF3A85DD" Geometry="F0 M19,12z M0,0z M0.292893,1.04973C-0.0976312,1.44025,-0.0976309,2.07342,0.292893,2.46394L8.52032,10.6914C8.56711,10.7845 8.62937,10.8719 8.70712,10.9496 8.91284,11.1553 9.18589,11.2527 9.45534,11.2417 9.72115,11.2496 9.98951,11.1521 10.1924,10.9492 10.2697,10.8719 10.3317,10.7851 10.3784,10.6926L18.6066,2.46434C18.9971,2.07381 18.9971,1.44065 18.6066,1.05012 18.2161,0.6596 17.5829,0.6596 17.1924,1.05012L9.44995,8.79257 1.70711,1.04973C1.31658,0.659205,0.683417,0.659205,0.292893,1.04973z" />
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+        
     </UserControl.Resources>
 
-    <Border Background="#D9D8DD"
-            CornerRadius="3,0,0,0"
+    <Border CornerRadius="3,0,0,0"
             BorderThickness="1"
             BorderBrush="#B8BBC0">
 
         <Grid>
-            
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1020"/>
+                <ColumnDefinition Width="1000"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="0">
-                
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="20"/>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="23"/>
+                    <RowDefinition Height="70"/>
                     <RowDefinition Height="180"/>
-                    <RowDefinition Height="25"/>
                 </Grid.RowDefinitions>
 
-                <styles:BaseUserControl Grid.Row="3">
+                <styles:BaseUserControl Grid.Row="1">
                     <DataGrid
                         x:Name="DataGrid1"
                         Width="980"
-                        Margin="20,0,20,0"
+                        Margin="20,0,0,0"
                         VerticalScrollBarVisibility="Disabled"
                         FontFamily="{StaticResource Jost}"
                         HorizontalAlignment="Left"
                         ColumnWidth="150"
                         SelectionUnit="FullRow"
+                        GridLinesVisibility="Vertical"
                         ItemsSource="{Binding Users}"
                         RowHeight="30" />
                 </styles:BaseUserControl>
@@ -102,131 +124,220 @@
                     </DataGrid.Columns>
                     
                 </DataGrid>-->
-               
-                            
-                <!--Очередь заданий и кнопка запрет-->
-                <StackPanel Grid.Row="1" Orientation="Horizontal">
 
-                    <TextBlock Text="ОЧЕРЕДЬ ЗАДАНИЙ"
+                <Grid>
+                    
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="О Ч Е Р Е Д Ь   З А Д А Н И Й"
                                FontFamily="{StaticResource Jost}"
                                FontWeight="Regular"
                                FontSize="14"
                                Foreground="#676A70"
                                HorizontalAlignment="Left"
-                               VerticalAlignment="Center"
-                               Padding="20,0,0,0">
+                               VerticalAlignment="Top"
+                               Margin="20,19,0,0"
+                               >
                     </TextBlock>
 
+                    <TextBlock Text="З А Г Р У З К А   Р Е Ц Е П Т О В"
+                               Grid.Column="1"
+                               FontFamily="{StaticResource Jost}"
+                               FontWeight="Regular"
+                               FontSize="10"
+                               Foreground="#676A70"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top"
+                               Margin="140,34,0,0"
+                               >
+                    </TextBlock>
+                    
                     <!--Кнопка запрет-->
                     <Button ToolTip="Запретить загрузку рецептов"
-                            Width="300"
+                            Grid.Column="1"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            Width="206"
                             Height="30"
-                            Margin="544,0,0,0"
-                            Style="{StaticResource NewButton}"
+                            Margin="0,24,0,0"
                             Command="{Binding StopLoadTaskCommand}">
-                        
-                        <StackPanel Orientation="Horizontal">
 
-                            <Image Source="/Images/Indicators/Warning.png"
-                                   Width="18"
-                                   Height="16">
-                            </Image>
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                            <Canvas>
+                                                <Border x:Name="border1" Canvas.Left="0" 
+                                                        Canvas.ZIndex="0"
+                                                        BorderThickness="2"
+                                                        CornerRadius="5,0,0,5"
+                                                        BorderBrush="#3A85DD"
+                                                        Background="#FFFFFF"
+                                                        Visibility="Visible"
+                                                        Width="107" 
+                                                        Height="{TemplateBinding Height}"
+                                                        HorizontalAlignment="Left">
 
-                            <TextBlock Text="Запрет загрузки рецептов"
-                                       FontFamily="{StaticResource Jost}"
-                                       FontWeight="Regular"
-                                       FontSize="16"
-                                       VerticalAlignment="Center"
-                                       Padding="7,0,0,0"
-                                       >
+                                                    <TextBlock x:Name="border1_txt"
+                                                               FontFamily="{StaticResource Jost}"
+                                                               FontSize="16"
+                                                               FontWeight="Medium"
+                                                               Text="Запрещена"
+                                                               HorizontalAlignment="Center"
+                                                               VerticalAlignment="Center"
+                                                               Foreground="#3A85DD">
+                                                    </TextBlock>
+                                                    
+                                                </Border>
+                                                <Border x:Name="border2" 
+                                                        Canvas.Right="0"
+                                                        Canvas.ZIndex="0"
+                                                        CornerRadius="0,5,5,0"
+                                                        BorderBrush="#3A85DD"
+                                                        BorderThickness="2"
+                                                        Height="{TemplateBinding Height}"
+                                                        Background="#FFFFFF"
+                                                        Visibility="Visible"
+                                                        Width="107"
+                                                        HorizontalAlignment="Right"
+                                                        >
+                                                    <TextBlock x:Name="border2_txt"
+                                                               FontFamily="{StaticResource Jost}"
+                                                               FontSize="16"
+                                                               FontWeight="Medium"
+                                                               Text="Разрешена"
+                                                               HorizontalAlignment="Center"
+                                                               VerticalAlignment="Center"
+                                                               Foreground="#3A85DD">
+                                                    </TextBlock>
+                                                </Border>
 
-                            </TextBlock>
-                            
-                        </StackPanel>
+                                                <ContentPresenter Content="{TemplateBinding Content}"
+                                                                  HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                                                                  VerticalAlignment="{TemplateBinding VerticalAlignment}"/>
+                                                
+                                            </Canvas>
 
+                                            <ControlTemplate.Triggers>
+                                                <DataTrigger Binding="{Binding StopLoadTasks}" Value="True">
+                                                    <Setter TargetName="border1" Property="Canvas.ZIndex" Value="0"/>
+                                                    <Setter TargetName="border1" Property="Background" Value="#E1B518"/>
+                                                    <Setter TargetName="border1" Property="BorderBrush" Value="#333538"/>
+                                                    <Setter TargetName="border1_txt" Property="Foreground" Value="#333538"/>
+                                                </DataTrigger>
+
+                                                <DataTrigger Binding="{Binding StopLoadTasks}" Value="False">
+                                                    <Setter TargetName="border1" Property="Canvas.ZIndex" Value="1"/>
+                                                    <Setter TargetName="border2" Property="Background" Value="#9EE4A6"/>
+                                                    <Setter TargetName="border2" Property="BorderBrush" Value="#333538"/>
+                                                    <Setter TargetName="border2_txt" Property="Foreground" Value="#333538"/>
+                                                </DataTrigger>
+
+                                                <!--For Test-->
+                                                <Trigger Property="IsPressed" Value="True">
+                                                    <Setter TargetName="border1" Property="Canvas.ZIndex" Value="0"/>
+                                                    <Setter TargetName="border1" Property="Background" Value="#E1B518"/>
+                                                    <Setter TargetName="border1" Property="BorderBrush" Value="#333538"/>
+                                                    <Setter TargetName="border1_txt" Property="Foreground" Value="#333538"/>
+                                                </Trigger>
+
+                                                <Trigger Property="IsFocused" Value="True">
+                                                    <Setter TargetName="border1" Property="Canvas.ZIndex" Value="1"/>
+                                                    <Setter TargetName="border2" Property="Background" Value="#9EE4A6"/>
+                                                    <Setter TargetName="border2" Property="BorderBrush" Value="#333538"/>
+                                                    <Setter TargetName="border2_txt" Property="Foreground" Value="#333538"/>
+                                                </Trigger>
+                                                
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
                     </Button>
-                    
-                </StackPanel>
+            
+                </Grid>
                 
             </Grid>
 
             <!--Кнопки управления-->
-            <StackPanel Grid.Column="1">
+            <StackPanel Grid.Column="1"
+                        Margin="38,24,20,0">
 
                 <!--Кнопка добавить-->
                 <Button Width="180"
                         Height="30"
-                        Margin="0,20,0,0"
                         Style="{StaticResource NewButton}"
                         ToolTip="Добавить рецепт" 
-                        Command="{Binding AddCommand}"
-                        >
+                        Command="{Binding AddCommand}">
+                    
                     <StackPanel Orientation="Horizontal">
 
-                        <Image Source="/Images/Indicators/Plus.png"
-                           Width="14"
-                           Height="14">
-
+                        <Image Source="{StaticResource im_symbol_plus}"
+                           Width="14" Height="14">
                         </Image>
-                        
+
                         <TextBlock Text="Добавить"
                                    FontFamily="{StaticResource Jost}"
-                                   FontWeight="Regular"
+                                   FontWeight="Medium"
                                    FontSize="16"
                                    VerticalAlignment="Center"
-                                   Padding="7,0,0,0"
-                                   >
-
+                                   Margin="6,0,0,0">
                         </TextBlock>
                         
                     </StackPanel>
 
                 </Button>
 
+                <!--Кнопка вверх-->
                 <Button ToolTip="Повысить в очереди выбранный рецепт" 
                         Command="{Binding UpRecipeCommand}"
                         FontSize="21"
                         Width="180"
                         Height="30"
-                        Margin="0,16,0,0"
+                        Margin="0,19,0,0"
                         Style="{StaticResource QueueButton}"
                         Tag="{Binding SelTaskQueueItem}">
 
-                    <Image Source="/Images/Indicators/Up.png"
+                    <Image Source="{StaticResource im_symbol_up}"
                            Width="19"
                            Height="12">
-
                     </Image>
 
                 </Button>
 
+                <!--Кнопка вниз-->
                 <Button ToolTip="Понизить в очереди выбранный рецепт" 
                         Command="{Binding DownRecipeCommand}"
                         x:Name="Down"
                         FontSize="21"
                         Width="180"
                         Height="30"
-                        Margin="0,16,0,0"
+                        Margin="0,19,0,0"
                         Style="{StaticResource QueueButton}"
                         Tag="{Binding SelTaskQueueItem}">
 
-                    <Image Source="/Images/Indicators/Down.png"
-                           Width="19"
-                           Height="12">
-
+                    <Image Source="{StaticResource im_symbol_down}"
+                           Width="19" Height="12">
                     </Image>
 
                 </Button>
 
+                <!--Кнопка copy-->
                 <Button ToolTip="Скопировать выбранный рецепт" 
                         Command="{Binding CopyCommand}"
                         Content="Копировать"
                         FontSize="16"
                         Width="180"
                         Height="30"
-                        Margin="0,16,0,0"
+                        Margin="0,19,0,0"
                         Style="{StaticResource QueueButton}"
-                        Tag="{Binding SelTaskQueueItem}">
+                        Tag="{Binding SelTaskQueueItem}"
+                        >
                 </Button>
 
                 <Button ToolTip="Удалить выбранный рецепт из очереди" 
@@ -235,12 +346,12 @@
                         FontSize="16"
                         Width="180"
                         Height="30"
-                        Margin="0,16,0,0"
+                        Margin="0,19,0,0"
                         Style="{StaticResource QueueButton}"
                         Tag="{Binding SelTaskQueueItem}">
                 </Button>
 
-                <Button ToolTip="Подробнее о выбранном рецепте" 
+                <!--<Button ToolTip="Подробнее о выбранном рецепте" 
                         Command="{Binding DetailsCommand}"
                         Content="О рецепте"
                         FontSize="16"
@@ -249,7 +360,7 @@
                         Margin="0,16,0,0"
                         Tag="{Binding SelTaskQueueItem}"
                         Style="{StaticResource QueueButton}">
-                </Button>
+                </Button>-->
 
                 <!--<Button ToolTip="Выгрузить текущий рецепт" 
                         Command="{Binding UnloadTask}"

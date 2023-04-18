@@ -10,7 +10,7 @@
     <!--d:DataContext="{d:DesignInstance Type={x:Type local:ElStatus}, IsDesignTimeCreatable=False}"-->
 
     <Border Background="#D9D8DD"
-            CornerRadius="3,3,3,3"
+            CornerRadius="3,3,0,0"
             BorderThickness="1"
             BorderBrush="#B8BBC0">
 
@@ -41,7 +41,7 @@
 
             </Grid.RowDefinitions>
 
-            <TextBlock Text="СТАТУСЫ УЗЛОВ"
+            <TextBlock Text="С Т А Т У С Ы   У З Л О В"
                        Grid.Row="1"
                        FontFamily="{StaticResource Jost}"
                        FontWeight="Regular"

@@ -23,7 +23,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="УПРАВЛЕНИЕ"
+        <TextBlock Text="У П Р А В Л Е Н И Е"
                    Grid.Row="0"
                    FontFamily="{StaticResource Jost}"
                    FontWeight="Regular"

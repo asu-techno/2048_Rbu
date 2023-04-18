@@ -14,9 +14,9 @@
         <TextBlock FontFamily="{StaticResource Jost}"
                    FontWeight="Regular"
                    FontSize="14"
+                   Text="У З Е Л   Д О З И Р О В А Н И Я"
                    HorizontalAlignment="Left"
                    Foreground="#676A70">
-                   <Run Typography.CapitalSpacing="True">УЗЕЛ ДОЗИРОВАНИЯ</Run>
         </TextBlock>
 
         <!--StackPanel Замес-->

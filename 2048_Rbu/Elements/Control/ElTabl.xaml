@@ -14,7 +14,7 @@
             <TextBlock  FontFamily="{StaticResource Jost}"
                         FontWeight="Regular"
                         FontSize="14"
-                        Text="ТЕКУЩЕЕ ЗАДАНИЕ"
+                        Text="Т Е К У Щ Е Е   З А Д А Н И Е"
                         HorizontalAlignment="Left"
                         Foreground="#676A70">
             </TextBlock>
