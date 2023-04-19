@@ -4,7 +4,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:indicators="clr-namespace:_2048_Rbu.Elements.Indicators"
-      mc:Ignorable="d" 
+             xmlns:control="clr-namespace:_2048_Rbu.Elements.Control" d:DataContext="{d:DesignInstance Type=control:ElControl}"
+             mc:Ignorable="d" 
       Width="380" 
       Height="104" 
       BorderThickness="0">

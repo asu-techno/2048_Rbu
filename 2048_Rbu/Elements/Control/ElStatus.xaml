@@ -27,7 +27,7 @@
                 <RowDefinition Height="3"/>
                 <RowDefinition Height="20"/>
                 
-                <RowDefinition Height="20"/>
+                <RowDefinition Height="10"/>
                 <RowDefinition Height="3"/>
                 <RowDefinition Height="20"/>
                 <RowDefinition Height="3"/>
@@ -38,6 +38,7 @@
                 <RowDefinition Height="20"/>
                 <RowDefinition Height="3"/>
                 <RowDefinition Height="20"/>
+                <RowDefinition Height="3"/>
 
             </Grid.RowDefinitions>
 

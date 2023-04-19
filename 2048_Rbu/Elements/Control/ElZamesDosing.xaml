@@ -368,8 +368,7 @@
                                     <Setter Property="Background" Value="#9EE4A6"/>
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding Path=DosingTask[0].InProgress, UpdateSourceTrigger=PropertyChanged}" Value="True">
-                                    <Setter Property="Background" Value="#edd34d"/>
-                                    <Setter Property="Opacity" Value="0.2"/>
+                                    <Setter Property="Background" Value="#EEE9CF"/>
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
@@ -401,8 +400,7 @@
                                     <Setter Property="Background" Value="#9EE4A6"/>
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding Path=DosingTask[0].InProgress, UpdateSourceTrigger=PropertyChanged}" Value="True">
-                                    <Setter Property="Background" Value="#edd34d"/>
-                                    <Setter Property="Opacity" Value="0.2"/>
+                                    <Setter Property="Background" Value="#EEE9CF"/>
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
@@ -464,8 +462,7 @@
                                     <Setter Property="Background" Value="#9EE4A6"/>
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding Path=DosingTask[1].InProgress, UpdateSourceTrigger=PropertyChanged}" Value="True">
-                                    <Setter Property="Background" Value="#edd34d"/>
-                                    <Setter Property="Opacity" Value="0.2"/>
+                                    <Setter Property="Background" Value="#EEE9CF"/>
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
@@ -497,8 +494,7 @@
                                     <Setter Property="Background" Value="#9EE4A6"/>
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding Path=DosingTask[1].InProgress, UpdateSourceTrigger=PropertyChanged}" Value="True">
-                                    <Setter Property="Background" Value="#edd34d"/>
-                                    <Setter Property="Opacity" Value="0.2"/>
+                                    <Setter Property="Background" Value="#EEE9CF"/>
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
@@ -559,8 +555,7 @@
                                     <Setter Property="Background" Value="#9EE4A6"/>
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding Path=DosingTask[2].InProgress, UpdateSourceTrigger=PropertyChanged}" Value="True">
-                                    <Setter Property="Background" Value="#edd34d"/>
-                                    <Setter Property="Opacity" Value="0.2"/>
+                                    <Setter Property="Background" Value="#EEE9CF"/>
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
@@ -592,8 +587,7 @@
                                     <Setter Property="Background" Value="#9EE4A6"/>
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding Path=DosingTask[2].InProgress, UpdateSourceTrigger=PropertyChanged}" Value="True">
-                                    <Setter Property="Background" Value="#edd34d"/>
-                                    <Setter Property="Opacity" Value="0.2"/>
+                                    <Setter Property="Background" Value="#EEE9CF"/>
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
@@ -654,8 +648,7 @@
                                     <Setter Property="Background" Value="#9EE4A6"/>
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding Path=DosingTask[3].InProgress, UpdateSourceTrigger=PropertyChanged}" Value="True">
-                                    <Setter Property="Background" Value="#edd34d"/>
-                                    <Setter Property="Opacity" Value="0.2"/>
+                                    <Setter Property="Background" Value="#EEE9CF"/>
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
@@ -687,8 +680,7 @@
                                     <Setter Property="Background" Value="#9EE4A6"/>
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding Path=DosingTask[3].InProgress, UpdateSourceTrigger=PropertyChanged}" Value="True">
-                                    <Setter Property="Background" Value="#edd34d"/>
-                                    <Setter Property="Opacity" Value="0.2"/>
+                                    <Setter Property="Background" Value="#EEE9CF"/>
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
@@ -749,8 +741,7 @@
                                     <Setter Property="Background" Value="#9EE4A6"/>
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding Path=DosingTask[4].InProgress, UpdateSourceTrigger=PropertyChanged}" Value="True">
-                                    <Setter Property="Background" Value="#edd34d"/>
-                                    <Setter Property="Opacity" Value="0.2"/>
+                                    <Setter Property="Background" Value="#EEE9CF"/>
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
@@ -782,8 +773,7 @@
                                     <Setter Property="Background" Value="#9EE4A6"/>
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding Path=DosingTask[4].InProgress, UpdateSourceTrigger=PropertyChanged}" Value="True">
-                                    <Setter Property="Background" Value="#edd34d"/>
-                                    <Setter Property="Opacity" Value="0.2"/>
+                                    <Setter Property="Background" Value="#EEE9CF"/>
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
@@ -844,8 +834,7 @@
                                     <Setter Property="Background" Value="#9EE4A6"/>
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding Path=DosingTask[5].InProgress, UpdateSourceTrigger=PropertyChanged}" Value="True">
-                                    <Setter Property="Background" Value="#edd34d"/>
-                                    <Setter Property="Opacity" Value="0.2"/>
+                                    <Setter Property="Background" Value="#EEE9CF"/>
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
@@ -877,8 +866,7 @@
                                     <Setter Property="Background" Value="#9EE4A6"/>
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding Path=DosingTask[5].InProgress, UpdateSourceTrigger=PropertyChanged}" Value="True">
-                                    <Setter Property="Background" Value="#edd34d"/>
-                                    <Setter Property="Opacity" Value="0.2"/>
+                                    <Setter Property="Background" Value="#EEE9CF"/>
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
@@ -939,8 +927,7 @@
                                     <Setter Property="Background" Value="#9EE4A6"/>
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding Path=DosingTask[6].InProgress, UpdateSourceTrigger=PropertyChanged}" Value="True">
-                                    <Setter Property="Background" Value="#edd34d"/>
-                                    <Setter Property="Opacity" Value="0.2"/>
+                                    <Setter Property="Background" Value="#EEE9CF"/>
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
@@ -972,8 +959,7 @@
                                     <Setter Property="Background" Value="#9EE4A6"/>
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding Path=DosingTask[6].InProgress, UpdateSourceTrigger=PropertyChanged}" Value="True">
-                                    <Setter Property="Background" Value="#edd34d"/>
-                                    <Setter Property="Opacity" Value="0.2"/>
+                                    <Setter Property="Background" Value="#EEE9CF"/>
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
@@ -1034,8 +1020,7 @@
                                     <Setter Property="Background" Value="#9EE4A6"/>
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding Path=DosingTask[7].InProgress, UpdateSourceTrigger=PropertyChanged}" Value="True">
-                                    <Setter Property="Background" Value="#edd34d"/>
-                                    <Setter Property="Opacity" Value="0.2"/>
+                                    <Setter Property="Background" Value="#EEE9CF"/>
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
@@ -1067,8 +1052,7 @@
                                     <Setter Property="Background" Value="#9EE4A6"/>
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding Path=DosingTask[7].InProgress, UpdateSourceTrigger=PropertyChanged}" Value="True">
-                                    <Setter Property="Background" Value="#edd34d"/>
-                                    <Setter Property="Opacity" Value="0.2"/>
+                                    <Setter Property="Background" Value="#EEE9CF"/>
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>

@@ -53,14 +53,14 @@
 
             <Grid Grid.Column="0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="70"/>
-                    <RowDefinition Height="180"/>
+                    <RowDefinition Height="65"/>
+                    <RowDefinition Height="185"/>
                 </Grid.RowDefinitions>
 
-                <styles:BaseUserControl Grid.Row="1">
+                <!--<styles:BaseUserControl Grid.Row="1">
                     <DataGrid
                         x:Name="DataGrid1"
-                        Width="980"
+                        Width="980" IsReadOnly="True"
                         Margin="20,0,0,0"
                         VerticalScrollBarVisibility="Disabled"
                         FontFamily="{StaticResource Jost}"
@@ -68,9 +68,116 @@
                         ColumnWidth="150"
                         SelectionUnit="FullRow"
                         GridLinesVisibility="Vertical"
-                        ItemsSource="{Binding Users}"
-                        RowHeight="30" />
-                </styles:BaseUserControl>
+                        ItemsSource="{Binding TaskQueue}" 
+                        SelectedItem="{Binding Path=SelTaskQueueItem, UpdateSourceTrigger=PropertyChanged}"
+                        RowHeight="30" >
+
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Width="50"
+                                            Header="№" 
+                                            Binding="{Binding Id}">
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Width="150"
+                                            Header="Заказчик" 
+                                            Binding="{Binding Task.Customer.Name}">
+
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Width="160"
+                                            Header="Группа рецептов" 
+                                            Binding="{Binding Task.Recipe.Group.Name}">
+
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Width="150"
+                                            Header="Рецепты" 
+                                            Binding="{Binding Task.Recipe.Name}">
+
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Width="109"
+                                            Header="Объем задания" 
+                                            Binding="{Binding Task.Volume}">
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Width="89"
+                                            Header="Объем замеса" 
+                                            Binding="{Binding Task.BatchVolume}">
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Width="149"
+                                            Header="Количество замесов" 
+                                            Binding="{Binding Task.BatchesAmount}">
+
+                            </DataGridTextColumn>
+
+                        </DataGrid.Columns>
+                        
+                    </DataGrid>
+                </styles:BaseUserControl>-->
+
+                <DataGrid Grid.Row="1"
+                          x:Name="DataGrid2"
+                          Width="980" 
+                          IsReadOnly="True"
+                          Margin="20,0,0,0"
+                          VerticalScrollBarVisibility="Disabled"
+                          HorizontalScrollBarVisibility="Disabled"
+                          FontFamily="{StaticResource Jost}"
+                          FontWeight="Medium"
+                          HorizontalAlignment="Left"
+                          AutoGenerateColumns="False"
+                          ColumnWidth="150"
+                          SelectionUnit="FullRow" 
+                          GridLinesVisibility="Vertical"
+                          ItemsSource="{Binding TaskQueue}" 
+                          SelectedItem="{Binding Path=SelTaskQueueItem, UpdateSourceTrigger=PropertyChanged}"
+                          RowHeight="30" >
+
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Width="50"
+                                            Header="№" 
+                                            Binding="{Binding Id}">
+                        </DataGridTextColumn>
+
+                        <DataGridTextColumn Width="159"
+                                            Header="Заказчик" 
+                                            Binding="{Binding Task.Customer.Name}">
+
+                        </DataGridTextColumn>
+
+                        <DataGridTextColumn Width="179"
+                                            Header="Группа рецептов" 
+                                            Binding="{Binding Task.Recipe.Group.Name}">
+
+                        </DataGridTextColumn>
+
+                        <DataGridTextColumn Width="209"
+                                            Header="Рецепты" 
+                                            Binding="{Binding Task.Recipe.Name}">
+
+                        </DataGridTextColumn>
+
+                        <DataGridTextColumn Width="119"
+                                            Header="Объем задания" 
+                                            Binding="{Binding Task.Volume}">
+                        </DataGridTextColumn>
+
+                        <DataGridTextColumn Width="119"
+                                            Header="Объем замеса" 
+                                            Binding="{Binding Task.BatchVolume}">
+                        </DataGridTextColumn>
+
+                        <DataGridTextColumn Width="139"
+                                            Header="Количество замесов" 
+                                            Binding="{Binding Task.BatchesAmount}">
+
+                        </DataGridTextColumn>
+
+                    </DataGrid.Columns>
+
+                </DataGrid>
                 
                 <!--<DataGrid Grid.Row="3"
                         FontFamily="{StaticResource Jost}"
@@ -186,7 +293,7 @@
                                                                FontFamily="{StaticResource Jost}"
                                                                FontSize="16"
                                                                FontWeight="Medium"
-                                                               Text="Запрещена"
+                                                               Text="Запретить"
                                                                HorizontalAlignment="Center"
                                                                VerticalAlignment="Center"
                                                                Foreground="#3A85DD">
@@ -209,7 +316,7 @@
                                                                FontFamily="{StaticResource Jost}"
                                                                FontSize="16"
                                                                FontWeight="Medium"
-                                                               Text="Разрешена"
+                                                               Text="Разрешить"
                                                                HorizontalAlignment="Center"
                                                                VerticalAlignment="Center"
                                                                Foreground="#3A85DD">
@@ -228,6 +335,7 @@
                                                     <Setter TargetName="border1" Property="Background" Value="#E1B518"/>
                                                     <Setter TargetName="border1" Property="BorderBrush" Value="#333538"/>
                                                     <Setter TargetName="border1_txt" Property="Foreground" Value="#333538"/>
+                                                    <Setter TargetName="border1_txt" Property="Text" Value="Запрещено"/>
                                                 </DataTrigger>
 
                                                 <DataTrigger Binding="{Binding StopLoadTasks}" Value="False">
@@ -235,10 +343,11 @@
                                                     <Setter TargetName="border2" Property="Background" Value="#9EE4A6"/>
                                                     <Setter TargetName="border2" Property="BorderBrush" Value="#333538"/>
                                                     <Setter TargetName="border2_txt" Property="Foreground" Value="#333538"/>
+                                                    <Setter TargetName="border2_txt" Property="Text" Value="Разрешено"/>
                                                 </DataTrigger>
 
                                                 <!--For Test-->
-                                                <Trigger Property="IsPressed" Value="True">
+                                                <!--<Trigger Property="IsPressed" Value="True">
                                                     <Setter TargetName="border1" Property="Canvas.ZIndex" Value="0"/>
                                                     <Setter TargetName="border1" Property="Background" Value="#E1B518"/>
                                                     <Setter TargetName="border1" Property="BorderBrush" Value="#333538"/>
@@ -250,7 +359,7 @@
                                                     <Setter TargetName="border2" Property="Background" Value="#9EE4A6"/>
                                                     <Setter TargetName="border2" Property="BorderBrush" Value="#333538"/>
                                                     <Setter TargetName="border2_txt" Property="Foreground" Value="#333538"/>
-                                                </Trigger>
+                                                </Trigger>-->
                                                 
                                             </ControlTemplate.Triggers>
                                         </ControlTemplate>

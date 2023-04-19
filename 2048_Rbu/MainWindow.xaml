@@ -5,8 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:elements="clr-namespace:_2048_Rbu.Elements"
         Background="Silver"
-        WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight" WindowState="Maximized" Closing="Program_Closing" Closed="Program_Closed"
-        WindowStyle="None">
+        WindowStartupLocation="CenterScreen" 
+        SizeToContent="WidthAndHeight"
+        WindowState="Maximized" 
+        Closing="Program_Closing" Closed="Program_Closed"
+        WindowStyle="None" ResizeMode="NoResize" Topmost="False" Width="1920" Height="1080"
+        ShowInTaskbar="False">
+    
     <Grid Name="MainGrid" Background="Silver" VerticalAlignment="Top" HorizontalAlignment="Left">
         <Grid Name="ScreenGrid" VerticalAlignment="Top" HorizontalAlignment="Left"/>
     </Grid>
