@@ -2,71 +2,627 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mechs="clr-namespace:_2048_Rbu.Elements.Mechs" 
+             d:DataContext="{d:DesignInstance Type=mechs:ElGate}"
              mc:Ignorable="d" 
-             d:DesignHeight="18" d:DesignWidth="140" MouseEnter="Rect_OnMouseEnter" MouseLeave="Rect_OnMouseLeave">
+             d:DesignHeight="17" MouseEnter="Rect_OnMouseEnter" MouseLeave="Rect_OnMouseLeave">
+
+    <UserControl.Resources>
+
+        <DrawingImage x:Key="im_Zadv_Neitral">
+            <DrawingImage.Drawing>
+                <DrawingGroup ClipGeometry="M0,0 V17 H40 V0 H0 Z">
+                    <GeometryDrawing Brush="#FFFFF2C6">
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#FF3B3C3D" Thickness="1" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" />
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0.5,0.5,31,16" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FFE1B518" Geometry="F0 M40,17z M0,0z M1,1L31,1 31,5 31,7 26,7 26,5 6,5 6,12 1,12 1,5 1,1z" />
+                    <GeometryDrawing Brush="#FFE1B518" Geometry="F0 M40,17z M0,0z M31,10L26,10 26,12 1,12 1,16 31,16 31,12 31,10z" />
+                    <GeometryDrawing Brush="#FF676A70">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="14,7,26,3" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FFFFF2C6">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="9,1,14,4" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FFFFF2C6">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="9,12,14,4" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+
+        <DrawingImage x:Key="im_Zadv_Closed">
+            <DrawingImage.Drawing>
+                <DrawingGroup ClipGeometry="M0,0 V17 H32 V0 H0 Z">
+                    <GeometryDrawing Brush="#FFD6D8DD">
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#FF3B3C3D" Thickness="1" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" />
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0.5,0.5,31,16" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FFB8BBC0" Geometry="F0 M32,17z M0,0z M1,1L31,1 31,5 31,7 26,7 26,5 6,5 6,12 1,12 1,5 1,1z" />
+                    <GeometryDrawing Brush="#FFB8BBC0" Geometry="F0 M32,17z M0,0z M31,10L26,10 26,12 1,12 1,16 31,16 31,12 31,10z" />
+                    <GeometryDrawing Brush="#FF676A70">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="6,7,26,3" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FFD6D8DD">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="9,1,14,4" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FFD6D8DD">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="9,12,14,4" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+
+        <DrawingImage x:Key="im_Zadv_Opened">
+            <DrawingImage.Drawing>
+                <DrawingGroup ClipGeometry="M0,0 V17 H51 V0 H0 Z">
+                    <GeometryDrawing Brush="#FF9EE4A6">
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#FF3B3C3D" Thickness="1" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" />
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0.5,0.5,31,16" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FF19BF2B" Geometry="F0 M51,17z M0,0z M1,1L31,1 31,5 31,7 26,7 26,5 6,5 6,12 1,12 1,5 1,1z" />
+                    <GeometryDrawing Brush="#FF19BF2B" Geometry="F0 M51,17z M0,0z M31,10L26,10 26,12 1,12 1,16 31,16 31,12 31,10z" />
+                    <GeometryDrawing Brush="#FF676A70">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="26,7,25,3" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FF9EE4A6">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="9,1,14,4" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FF9EE4A6">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="9,12,14,4" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+
+        <DrawingImage x:Key="im_Zadv_Alarm">
+            <DrawingImage.Drawing>
+                <DrawingGroup ClipGeometry="M0,0 V17 H51 V0 H0 Z">
+                    <GeometryDrawing Brush="#FFFFC9C9">
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#FF3B3C3D" Thickness="1" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" />
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0.5,0.5,31,16" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FFFF5C5C" Geometry="F0 M51,17z M0,0z M1,1L31,1 31,5 31,7 26,7 26,5 6,5 6,12 1,12 1,5 1,1z" />
+                    <GeometryDrawing Brush="#FFFF5C5C" Geometry="F0 M51,17z M0,0z M31,10L26,10 26,12 1,12 1,16 31,16 31,12 31,10z" />
+                    <GeometryDrawing Brush="#FF676A70">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="26,7,25,3" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FFFFC9C9">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="9,1,14,4" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FFFFC9C9">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="9,12,14,4" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+
+        <DrawingImage x:Key="im_Zadv_Aero_Opened">
+            <DrawingImage.Drawing>
+                <DrawingGroup ClipGeometry="M0,0 V17 H126 V0 H0 Z">
+                    <GeometryDrawing Brush="#FF9EE4A6" Geometry="F1 M126,17z M0,0z M3,2.0791L123.5,2.0791 114.222,14.0791 12,14.0791 3,2.0791z" />
+                    <GeometryDrawing>
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#FF19BF2B" Thickness="2" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" />
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <EllipseGeometry RadiusX="3" RadiusY="3" Center="25,8.0791" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing>
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#FF19BF2B" Thickness="2" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" />
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <EllipseGeometry RadiusX="3" RadiusY="3" Center="38,8.0791" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing>
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#FF19BF2B" Thickness="2" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" />
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <EllipseGeometry RadiusX="3" RadiusY="3" Center="51,8.0791" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing>
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#FF19BF2B" Thickness="2" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" />
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <EllipseGeometry RadiusX="3" RadiusY="3" Center="64,8.0791" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing>
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#FF19BF2B" Thickness="2" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" />
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <EllipseGeometry RadiusX="3" RadiusY="3" Center="77,8.0791" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing>
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#FF19BF2B" Thickness="2" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" />
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <EllipseGeometry RadiusX="3" RadiusY="3" Center="90,8.0791" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing>
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#FF19BF2B" Thickness="2" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" />
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <EllipseGeometry RadiusX="3" RadiusY="3" Center="103,8.0791" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FF19BF2B" Geometry="F0 M126,17z M0,0z M1.48466,0.0791651C1.16682,-0.0551739 0.788012,-0.0211851 0.492602,0.201422 0.462027,0.224462 0.433147,0.248918 0.405986,0.27463 0.159695,0.456777 0,0.749321 0,1.07917 0,1.485 0.24175,1.83437 0.589099,1.99112L10.9145,15.6934C11.1514,16.0077 11.5378,16.1428 11.9,16.0742 11.9329,16.0775 11.9663,16.0792 12,16.0792L114,16.0792C114.058,16.0792 114.114,16.0743 114.17,16.0648 114.544,16.1535 114.953,16.0205 115.199,15.6934L125.621,1.86294C125.852,1.67976 126,1.39675 126,1.07917 126,0.52688 125.552,0.0791651 125,0.0791651L1.48466,0.0791651z M113.911,14.0792L122.954,2.07916 3.15972,2.07916 12.2024,14.0792 113.911,14.0792z" />
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+
+        <DrawingImage x:Key="im_Zadv_Aero_Closed">
+            <DrawingImage.Drawing>
+                <DrawingGroup ClipGeometry="M0,0 V17 H126 V0 H0 Z">
+                    <GeometryDrawing Brush="#FFD6D8DD" Geometry="F1 M126,17z M0,0z M3,2.0791L123.5,2.0791 114.222,14.0791 12,14.0791 3,2.0791z" />
+                    <GeometryDrawing>
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#FFB8BBC0" Thickness="2" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" />
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <EllipseGeometry RadiusX="3" RadiusY="3" Center="25,8.0791" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing>
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#FFB8BBC0" Thickness="2" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" />
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <EllipseGeometry RadiusX="3" RadiusY="3" Center="38,8.0791" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing>
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#FFB8BBC0" Thickness="2" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" />
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <EllipseGeometry RadiusX="3" RadiusY="3" Center="51,8.0791" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing>
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#FFB8BBC0" Thickness="2" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" />
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <EllipseGeometry RadiusX="3" RadiusY="3" Center="64,8.0791" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing>
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#FFB8BBC0" Thickness="2" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" />
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <EllipseGeometry RadiusX="3" RadiusY="3" Center="77,8.0791" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing>
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#FFB8BBC0" Thickness="2" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" />
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <EllipseGeometry RadiusX="3" RadiusY="3" Center="90,8.0791" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing>
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#FFB8BBC0" Thickness="2" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" />
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <EllipseGeometry RadiusX="3" RadiusY="3" Center="103,8.0791" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FF79808A" Geometry="F0 M126,17z M0,0z M1.48466,0.0791651C1.16682,-0.0551739 0.788012,-0.0211851 0.492602,0.201422 0.462027,0.224462 0.433147,0.248918 0.405986,0.27463 0.159695,0.456777 0,0.749321 0,1.07917 0,1.485 0.24175,1.83437 0.589099,1.99112L10.9145,15.6934C11.1514,16.0077 11.5378,16.1428 11.9,16.0742 11.9329,16.0775 11.9663,16.0792 12,16.0792L114,16.0792C114.058,16.0792 114.114,16.0743 114.17,16.0648 114.544,16.1535 114.953,16.0205 115.199,15.6934L125.621,1.86294C125.852,1.67976 126,1.39675 126,1.07917 126,0.52688 125.552,0.0791651 125,0.0791651L1.48466,0.0791651z M113.911,14.0792L122.954,2.07916 3.15972,2.07916 12.2024,14.0792 113.911,14.0792z" />
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+
+        <DrawingImage x:Key="im_Zadv_Aero_Alarm">
+            <DrawingImage.Drawing>
+                <DrawingGroup ClipGeometry="M0,0 V17 H126 V0 H0 Z">
+                    <GeometryDrawing Brush="#FFFFC9C9" Geometry="F1 M126,17z M0,0z M3,2.0791L123.5,2.0791 114.222,14.0791 12,14.0791 3,2.0791z" />
+                    <GeometryDrawing>
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#FFFF5C5C" Thickness="2" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" />
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <EllipseGeometry RadiusX="3" RadiusY="3" Center="25,8.0791" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing>
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#FFFF5C5C" Thickness="2" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" />
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <EllipseGeometry RadiusX="3" RadiusY="3" Center="38,8.0791" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing>
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#FFFF5C5C" Thickness="2" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" />
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <EllipseGeometry RadiusX="3" RadiusY="3" Center="51,8.0791" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing>
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#FFFF5C5C" Thickness="2" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" />
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <EllipseGeometry RadiusX="3" RadiusY="3" Center="64,8.0791" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing>
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#FFFF5C5C" Thickness="2" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" />
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <EllipseGeometry RadiusX="3" RadiusY="3" Center="77,8.0791" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing>
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#FFFF5C5C" Thickness="2" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" />
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <EllipseGeometry RadiusX="3" RadiusY="3" Center="90,8.0791" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing>
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#FFFF5C5C" Thickness="2" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" />
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <EllipseGeometry RadiusX="3" RadiusY="3" Center="103,8.0791" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FFFF5C5C" Geometry="F0 M126,17z M0,0z M1.48466,0.0791651C1.16682,-0.0551739 0.788012,-0.0211851 0.492602,0.201422 0.462027,0.224462 0.433147,0.248918 0.405986,0.27463 0.159695,0.456777 0,0.749321 0,1.07917 0,1.485 0.24175,1.83437 0.589099,1.99112L10.9145,15.6934C11.1514,16.0077 11.5378,16.1428 11.9,16.0742 11.9329,16.0775 11.9663,16.0792 12,16.0792L114,16.0792C114.058,16.0792 114.114,16.0743 114.17,16.0648 114.544,16.1535 114.953,16.0205 115.199,15.6934L125.621,1.86294C125.852,1.67976 126,1.39675 126,1.07917 126,0.52688 125.552,0.0791651 125,0.0791651L1.48466,0.0791651z M113.911,14.0792L122.954,2.07916 3.15972,2.07916 12.2024,14.0792 113.911,14.0792z" />
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+
+        <DrawingImage x:Key="im_Big_Zadv_Closed">
+            <DrawingImage.Drawing>
+                <DrawingGroup ClipGeometry="M0,0 V17 H82 V0 H0 Z">
+                    <GeometryDrawing Brush="#FFD6D8DD">
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#FF3B3C3D" Thickness="1" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" />
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0.5,0.5,81,16" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FFB8BBC0" Geometry="F0 M82,17z M0,0z M1,1L81,1 81,5 81,7 76,7 76,5 6,5 6,12 1,12 1,5 1,1z" />
+                    <GeometryDrawing Brush="#FFB8BBC0" Geometry="F0 M82,17z M0,0z M81,10L76,10 76,12 1,12 1,16 81,16 81,12 81,10z" />
+                    <GeometryDrawing Brush="#FF676A70">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="6,7,76,3" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FFD6D8DD">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="9,1,64,4" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FFD6D8DD">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="9,12,64,4" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+        
+        <DrawingImage x:Key="im_Big_Zadv_Opened_20">
+            <DrawingImage.Drawing>
+                <DrawingGroup ClipGeometry="M0,0 V17 H97 V0 H0 Z">
+                    <GeometryDrawing Brush="#FF9EE4A6">
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#FF3B3C3D" Thickness="1" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" />
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0.5,0.5,81,16" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FF19BF2B" Geometry="F0 M97,17z M0,0z M1,1L81,1 81,5 81,7 76,7 76,5 6,5 6,12 1,12 1,5 1,1z" />
+                    <GeometryDrawing Brush="#FF19BF2B" Geometry="F0 M97,17z M0,0z M81,10L76,10 76,12 1,12 1,16 81,16 81,12 81,10z" />
+                    <GeometryDrawing Brush="#FF676A70">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="21,7,76,3" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FF9EE4A6">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="9,1,64,4" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FF9EE4A6">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="9,12,64,4" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+
+        <DrawingImage x:Key="im_Big_Zadv_Opened_40">
+            <DrawingImage.Drawing>
+                <DrawingGroup ClipGeometry="M0,0 V17 H112 V0 H0 Z">
+                    <GeometryDrawing Brush="#FF9EE4A6">
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#FF3B3C3D" Thickness="1" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" />
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0.5,0.5,81,16" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FF19BF2B" Geometry="F0 M112,17z M0,0z M1,1L81,1 81,5 81,7 76,7 76,5 6,5 6,12 1,12 1,5 1,1z" />
+                    <GeometryDrawing Brush="#FF19BF2B" Geometry="F0 M112,17z M0,0z M81,10L76,10 76,12 1,12 1,16 81,16 81,12 81,10z" />
+                    <GeometryDrawing Brush="#FF676A70">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="36,7,76,3" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FF9EE4A6">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="9,1,64,4" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FF9EE4A6">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="9,12,64,4" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+
+        <DrawingImage x:Key="im_Big_Zadv_Opened_60">
+            <DrawingImage.Drawing>
+                <DrawingGroup ClipGeometry="M0,0 V17 H127 V0 H0 Z">
+                    <GeometryDrawing Brush="#FF9EE4A6">
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#FF3B3C3D" Thickness="1" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" />
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0.5,0.5,81,16" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FF19BF2B" Geometry="F0 M127,17z M0,0z M1,1L81,1 81,5 81,7 76,7 76,5 6,5 6,12 1,12 1,5 1,1z" />
+                    <GeometryDrawing Brush="#FF19BF2B" Geometry="F0 M127,17z M0,0z M81,10L76,10 76,12 1,12 1,16 81,16 81,12 81,10z" />
+                    <GeometryDrawing Brush="#FF676A70">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="51,7,76,3" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FF9EE4A6">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="9,1,64,4" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FF9EE4A6">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="9,12,64,4" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+
+        <DrawingImage x:Key="im_Big_Zadv_Opened_80">
+            <DrawingImage.Drawing>
+                <DrawingGroup ClipGeometry="M0,0 V17 H142 V0 H0 Z">
+                    <GeometryDrawing Brush="#FF9EE4A6">
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#FF3B3C3D" Thickness="1" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" />
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0.5,0.5,81,16" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FF19BF2B" Geometry="F0 M142,17z M0,0z M1,1L81,1 81,5 81,7 76,7 76,5 6,5 6,12 1,12 1,5 1,1z" />
+                    <GeometryDrawing Brush="#FF19BF2B" Geometry="F0 M142,17z M0,0z M81,10L76,10 76,12 1,12 1,16 81,16 81,12 81,10z" />
+                    <GeometryDrawing Brush="#FF676A70">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="66,7,76,3" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FF9EE4A6">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="9,1,64,4" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FF9EE4A6">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="9,12,64,4" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+
+        <DrawingImage x:Key="im_Big_Zadv_Opened_100">
+            <DrawingImage.Drawing>
+                <DrawingGroup ClipGeometry="M0,0 V17 H152 V0 H0 Z">
+                    <GeometryDrawing Brush="#FF9EE4A6">
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#FF3B3C3D" Thickness="1" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" />
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0.5,0.5,81,16" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FF19BF2B" Geometry="F0 M152,17z M0,0z M1,1L81,1 81,5 81,7 76,7 76,5 6,5 6,12 1,12 1,5 1,1z" />
+                    <GeometryDrawing Brush="#FF19BF2B" Geometry="F0 M152,17z M0,0z M81,10L76,10 76,12 1,12 1,16 81,16 81,12 81,10z" />
+                    <GeometryDrawing Brush="#FF676A70">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="76,7,76,3" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FF9EE4A6">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="9,1,64,4" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FF9EE4A6">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="9,12,64,4" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+
+        <DrawingImage x:Key="im_Big_Zadv_Alarm">
+            <DrawingImage.Drawing>
+                <DrawingGroup ClipGeometry="M0,0 V17 H82 V0 H0 Z">
+                    <GeometryDrawing Brush="#FFFFC9C9">
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="#FF3B3C3D" Thickness="1" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" />
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="0.5,0.5,81,16" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FFFF5C5C" Geometry="F0 M82,17z M0,0z M1,1L81,1 81,5 81,7 76,7 76,5 6,5 6,12 1,12 1,5 1,1z" />
+                    <GeometryDrawing Brush="#FFFF5C5C" Geometry="F0 M82,17z M0,0z M81,10L76,10 76,12 1,12 1,16 81,16 81,12 81,10z" />
+                    <GeometryDrawing Brush="#FF676A70">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="6,7,76,3" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FFFFC9C9">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="9,1,64,4" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="#FFFFC9C9">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="0" RadiusY="0" Rect="9,12,64,4" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+        
+    </UserControl.Resources>
+        
     <Grid>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="20"/>
-            <ColumnDefinition Width="125"/>
+            <ColumnDefinition Width="25"/>
+            <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
         
         <Grid Grid.Column="1" 
               Name="ObjectGrid" 
+              Width="Auto"
               VerticalAlignment="Top"
               HorizontalAlignment="Left"
-              Width="125" 
-              Height="18"
               Margin="0,0,0,0">
-            <Image Name="ImgHalfOpen" VerticalAlignment="Center" HorizontalAlignment="Left" Width="Auto" Height="18" Margin="0,0,0,0">
+            <Image Name="ImgHalfOpen" VerticalAlignment="Center" HorizontalAlignment="Left" Width="Auto" Height="17" Margin="0,0,0,0">
                 <Image.Style>
                     <Style TargetType="{x:Type Image}">
                         <Setter Property="Visibility" Value="Collapsed"/>
-                        <Setter Property="Source" Value="../../Images/Mechs_Redesign/Zadv/img_BigZadv_Closed.png"/>
+                        <Setter Property="Source" Value="{StaticResource im_Big_Zadv_Closed}"/>
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding HalfOpenState}" Value="True">
                                 <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
                             <DataTrigger Binding="{Binding OpenState}" Value="1">
-                                <Setter Property="Source" Value="../../Images/Mechs_Redesign/Zadv/img_Zadv_0_Per.png"/>
+                                <Setter Property="Source" Value="{StaticResource im_Big_Zadv_Opened_20}"/>
                             </DataTrigger>
                             <DataTrigger Binding="{Binding OpenState}" Value="2">
-                                <Setter Property="Source" Value="../../Images/Mechs_Redesign/Zadv/img_Zadv_20_Per.png"/>
+                                <Setter Property="Source" Value="{StaticResource im_Big_Zadv_Opened_40}"/>
                             </DataTrigger>
                             <DataTrigger Binding="{Binding OpenState}" Value="3">
-                                <Setter Property="Source" Value="../../Images/Mechs_Redesign/Zadv/img_Zadv_40_Per.png"/>
+                                <Setter Property="Source" Value="{StaticResource im_Big_Zadv_Opened_60}"/>
                             </DataTrigger>
                             <DataTrigger Binding="{Binding OpenState}" Value="4">
-                                <Setter Property="Source" Value="../../Images/Mechs_Redesign/Zadv/img_Zadv_60_Per.png"/>
+                                <Setter Property="Source" Value="{StaticResource im_Big_Zadv_Opened_80}"/>
                             </DataTrigger>
                             <DataTrigger Binding="{Binding OpenState}" Value="5">
-                                <Setter Property="Source" Value="../../Images/Mechs_Redesign/Zadv/img_Zadv_80_Per.png"/>
+                                <Setter Property="Source" Value="{StaticResource im_Big_Zadv_Opened_100}"/>
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </Image.Style>
             </Image>
-            <Image Name="ImgClose" VerticalAlignment="Top" HorizontalAlignment="Left" Width="52" Height="14" Margin="0,0,0,0" Visibility="{Binding VisClose}"  Source="../../Images/Mechs_Redesign/Zadv/img_Zadv_Closed.png"/>
-            <Image Name="ImgOpen"  VerticalAlignment="Top" HorizontalAlignment="Left" Width="52" Height="14" Margin="0,0,0,0" Visibility="{Binding VisOpen}"   Source="../../Images/Mechs_Redesign/Zadv/img_Zadv_Opened_Right.png"/>
-            <Image Name="ImgAlarm" VerticalAlignment="Top" HorizontalAlignment="Left" Width="52" Height="14" Margin="0,0,0,0" Visibility="{Binding VisAlarm}"  Source="../../Images/Mechs_Redesign/Zadv/img_Zadv_Alarm.png"/>
+            <Image Name="ImgClose" VerticalAlignment="Top" HorizontalAlignment="Left" Width="Auto" Height="17" Margin="0,0,0,0" Visibility="{Binding VisClose}"  Source="{StaticResource im_Zadv_Closed}"/>
+            <Image Name="ImgOpen"  VerticalAlignment="Top" HorizontalAlignment="Left" Width="Auto" Height="17" Margin="0,0,0,0" Visibility="{Binding VisOpen}"   Source="{StaticResource im_Zadv_Opened}"/>
+            <Image Name="ImgAlarm" VerticalAlignment="Top" HorizontalAlignment="Left" Width="Auto" Height="17" Margin="0,0,0,0" Visibility="{Binding VisAlarm}"  Source="{StaticResource im_Zadv_Alarm}"/>
         </Grid>
        
         <TextBlock Name="TbcName" VerticalAlignment="Center" Visibility="Collapsed" HorizontalAlignment="Left" Margin="0,0,0,0" TextAlignment="Right" FontSize="14" Text="VXXX"/>
         
         <Label Name="LblMode"
+               FontFamily="{StaticResource Jost}"
+               FontWeight="Medium"
+               FontSize="12"
                Grid.Column="0"
                VerticalAlignment="Top"
                HorizontalAlignment="Left"
                VerticalContentAlignment="Center"
                HorizontalContentAlignment="Center"
                Width="10" 
-               Height="12" 
-               Margin="0,0,0,0" 
+               Height="13" 
+               Visibility="Collapsed"
+               Padding="0"
                BorderThickness="0"
-               Background="#343536"
-               Foreground="#FFE91F"
-               FontSize="10"
+               Background="#FAE420"
+               Foreground="#3B3C3D"
                >
             
             <Label.Style>
@@ -85,11 +641,12 @@
                     <TextBlock.Style>
                         <Style TargetType="{x:Type TextBlock}">
                             <Setter Property="Text" Value="Р"/>
-                            <Setter Property="Margin" Value="-3,-7"/>
+                            <Setter Property="Padding" Value="0"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding IsDosing}" Value="True">
                                     <Setter Property="Text" Value="Н"/>
-                                    <Setter Property="Margin" Value="-3.5,-7"/>
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
@@ -104,13 +661,14 @@
                HorizontalAlignment="Left"
                VerticalContentAlignment="Center"
                HorizontalContentAlignment="Center"
-               Width="16" 
-               Height="14"
-               Margin="0,0,0,0" 
+               Width="18" 
+               Height="15"
+               Padding="0"
                BorderThickness="0"
-               Background="#343536"
-               Foreground="#FFE91F"
-               FontSize="10"
+               Background="#FAE420"
+               Foreground="#3B3C3D"
+               FontFamily="{StaticResource Jost}"
+               FontWeight="Medium"
                >
             
             <Label.Style>
@@ -125,18 +683,17 @@
             </Label.Style>
             
             <Label.Content>
-                <TextBlock FontSize="10" TextAlignment="Center" Text="РД" Margin="-5"/>
+                <TextBlock FontSize="12" TextAlignment="Center" Text="РД" VerticalAlignment="Center"/>
             </Label.Content>
             
         </Label>
-        
         
         <Rectangle Name="RectObject" 
                    Grid.Column="1"
                    VerticalAlignment="Top" 
                    HorizontalAlignment="Left" 
-                   Width="200"
-                   Height="18"
+                   Width="{Binding ElementName=ImgOpen, Path=Width}"
+                   Height="17"
                    Margin="0,0"
                    Fill="Transparent" 
                    StrokeThickness="0.5" 
@@ -144,7 +701,9 @@
                    Opacity="0"
                    MouseLeftButtonUp="ValveGrid_OnMouseRightButtonDown"
                    PreviewMouseRightButtonDown="ValveGrid_OnPreviewMouseRightButtonDown" 
-                   PreviewMouseRightButtonUp="ValveGrid_OnPreviewMouseRightButtonUp"/>
+                   PreviewMouseRightButtonUp="ValveGrid_OnPreviewMouseRightButtonUp">
+            
+        </Rectangle>
 
         <Popup Name="PopupObject" 
                Placement="Bottom" 
@@ -289,5 +848,6 @@
                 </Grid>
             </Border>
         </Popup>
+        
     </Grid>
 </UserControl>

@@ -134,29 +134,29 @@ namespace _2048_Rbu.Elements.Mechs
             {
                 if (value == Mech.Shnek)
                 {
-                    ImgKm.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs_Redesign/img_Conv_1_ON.png", UriKind.Relative));
-                    ImgAlarm.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs_Redesign/img_Conv_1_Alarm.png", UriKind.Relative));
-                    ImgKm.Width = ImgAlarm.Width = 75;
-                    ImgKm.Height = ImgAlarm.Height = 24;
+                    ImgKm.Source = (DrawingImage)Resources["conv_shnek_ON"];
+                    ImgAlarm.Source = (DrawingImage)Resources["conv_shnek_AL"];
+                    ImgKm.Width = ImgAlarm.Width = 136;
+                    ImgKm.Height = ImgAlarm.Height = 46;
                 }
                 if (value == Mech.Conveyor)
                 {
-                    ImgKm.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs_Redesign/img_Conv_2_ON.png", UriKind.Relative));
-                    ImgAlarm.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs_Redesign/img_Conv_2_Alarm.png", UriKind.Relative));
+                    ImgKm.Source = (DrawingImage)Resources["Conv_horizontal_ON"];
+                    ImgAlarm.Source = (DrawingImage)Resources["Conv_horizontal_AL"];
                     ImgKm.Width = ImgAlarm.Width = 620;
-                    ImgKm.Height = ImgAlarm.Height = 60;
-                    RectObject.Margin = new Thickness(0, 0, 0, 0);
+                    ImgKm.Height = ImgAlarm.Height = 55;
+                    //RectObject.Margin = new Thickness(0, 0, 0, 0);
                 }
                 if (value == Mech.Skip)
                 {
-                    ImgKm.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs_Redesign/img_Conv_3_ON.png", UriKind.Relative));
-                    ImgAlarm.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs_Redesign/img_Conv_3_Alarm.png", UriKind.Relative));
+                    ImgKm.Source = (DrawingImage)Resources["Conv_vertical_ON"];
+                    ImgAlarm.Source = (DrawingImage)Resources["Conv_vertical_AL"];
                     ImgKm.Width = ImgAlarm.Width = 376;
                     ImgKm.Height = ImgAlarm.Height = 278;
-                    RectObject.Margin = new Thickness(0, 0, 0, 0);
+                    //RectObject.Margin = new Thickness(0, 0, 0, 0);
                 }
-                RectObject.Width = ImgKm.Width;
-                RectObject.Height = ImgKm.Height;
+                //RectObject.Width = ImgKm.Width;
+                //RectObject.Height = ImgKm.Height;
 
                 _typeMech = value;
             }

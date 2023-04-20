@@ -3,9 +3,21 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:indicators="clr-namespace:_2048_Rbu.Elements.Indicators" d:DataContext="{d:DesignInstance Type=indicators:ElAnim}"
              mc:Ignorable="d" 
              Height="22" Width="16" Visibility="{Binding VisSens}">
+
+    <UserControl.Resources>
+        <DrawingImage x:Key="Arrow">
+            <DrawingImage.Drawing>
+                <DrawingGroup ClipGeometry="M0,0 V22 H16 V0 H0 Z">
+                    <GeometryDrawing Brush="#FF028A11" Geometry="F1 M16,22z M0,0z M9,1C9,0.447715 8.55228,0 8,0 7.44772,0 7,0.447715 7,1L9,1z M7.29289,21.7071C7.68342,22.0976,8.31658,22.0976,8.70711,21.7071L15.0711,15.3431C15.4616,14.9526 15.4616,14.3195 15.0711,13.9289 14.6805,13.5384 14.0474,13.5384 13.6569,13.9289L8,19.5858 2.34315,13.9289C1.95262,13.5384 1.31946,13.5384 0.928932,13.9289 0.538408,14.3195 0.538408,14.9526 0.928932,15.3431L7.29289,21.7071z M7,1L7,21 9,21 9,1 7,1z" />
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+    </UserControl.Resources>
+    
     <Grid>
-        <Image Name="ImgSubstance" VerticalAlignment="Top" HorizontalAlignment="Left" Width="16" Height="22"/>
+        <Image Name="ImgSubstance" Source="{StaticResource Arrow}" VerticalAlignment="Top" HorizontalAlignment="Left" Width="16" Height="22"/>
     </Grid>
 </UserControl>

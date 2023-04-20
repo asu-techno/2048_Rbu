@@ -6,20 +6,21 @@
              xmlns:local="clr-namespace:_2048_Rbu.Elements.Indicators"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance Type={x:Type local:ElValueBar}, IsDesignTimeCreatable=False}"
-             MouseEnter="Rect_OnMouseEnter" MouseLeave="Rect_OnMouseLeave">
+             MouseEnter="Rect_OnMouseEnter" 
+             MouseLeave="Rect_OnMouseLeave">
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="34"/>
-            <ColumnDefinition Width="4"/>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="15"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <ProgressBar Grid.Row="0" Grid.Column="1" Grid.RowSpan="2"
+        <ProgressBar Grid.Row="0" Grid.Column="0" Grid.RowSpan="2"
                      Name="ProgressValue"
                      Orientation="Vertical"
                      Value="{Binding Value}">
@@ -30,13 +31,15 @@
                         <Setter.Value>
                             <ControlTemplate TargetType="ProgressBar">
                                 <Grid x:Name="TemplateRoot">
-                                    <Border Name="PART_Track" CornerRadius="3"
-                                            Background="#C4C4C4"
-                                            BorderThickness="0">
+                                    <Border Name="PART_Track" CornerRadius="1"
+                                            Background="#C3C3C3"
+                                            BorderBrush="#3B3C3D"
+                                            BorderThickness="1">
                                     </Border>
-                                    <Border Name="PART_Indicator" CornerRadius="3"
-                                            Background="#008767"
-                                            BorderThickness="0"
+                                    <Border Name="PART_Indicator" CornerRadius="1"
+                                            Background="#19BF2B"
+                                            BorderThickness="1"
+                                            BorderBrush="#3B3C3D"
                                             HorizontalAlignment="Left">
                                     </Border>
                                 </Grid>
@@ -60,19 +63,28 @@
             
         </ProgressBar>
 
-        <TextBlock Text="{Binding ElementName=ProgressValue, Path=Value, StringFormat={}{0:0}%}"
+        <TextBlock Grid.Column="1"
                    Width="{Binding ElementName=ProgressValue, Path=Height}" 
-                   
                    Grid.Row="1"
                    TextAlignment="Center"
-                   HorizontalAlignment="Right" 
-                   VerticalAlignment="Bottom" 
-                   Margin="4,-2" 
-                   FontSize="12" 
-                   Foreground="#008767"
-                   >
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Margin="10,0,0,0"
+                   Padding="0">
             
-            <Span></Span>
+            <Run Text="{Binding ElementName=ProgressValue, Path=Value, StringFormat={}{0:0}}"
+                 FontFamily="{StaticResource Jost}"
+                 FontSize="16" 
+                 Foreground="#028A11"
+                 FontWeight="Medium">
+            </Run>
+            
+            <Run Text="%"
+                 FontFamily="{StaticResource Jost}"
+                 FontSize="14" 
+                 Foreground="#333538"
+                 FontWeight="Medium">
+            </Run>
             
             <TextBlock.Style>
                 <Style TargetType="{x:Type TextBlock}">
@@ -84,6 +96,7 @@
                     </Style.Triggers>
                 </Style>
             </TextBlock.Style>
+            
         </TextBlock>
         
     </Grid>

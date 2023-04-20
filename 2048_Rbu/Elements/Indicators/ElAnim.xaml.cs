@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using _2048_Rbu.Classes;
 using _2048_Rbu.Interfaces;
@@ -53,13 +54,13 @@ namespace _2048_Rbu.Elements.Indicators
             set
             {
                 if (value == Environment.Cement)
-                    ImgSubstance.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Indicators/Arrow.png", UriKind.Relative));
+                    ImgSubstance.Source = (DrawingImage)Resources["Arrow"];
                 if (value == Environment.Water)
-                    ImgSubstance.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Indicators/Arrow.png", UriKind.Relative));
+                    ImgSubstance.Source = (DrawingImage)Resources["Arrow"];
                 if (value == Environment.Inert)
-                    ImgSubstance.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Indicators/Arrow.png", UriKind.Relative));
+                    ImgSubstance.Source = (DrawingImage)Resources["Arrow"];
                 if (value == Environment.Solution)
-                    ImgSubstance.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Indicators/Arrow.png", UriKind.Relative));
+                    ImgSubstance.Source = (DrawingImage)Resources["Arrow"];
 
                 _substance = value;
             }

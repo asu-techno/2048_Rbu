@@ -25,6 +25,7 @@ namespace _2048_Rbu.Elements.Mechs
         private bool _err;
         public enum Position { LeftUp, Up, RightUp, Left, Right, LeftDown, Down, RightDown };
 
+        #region Property
         private Visibility _visAlarm;
         public Visibility VisAlarm
         {
@@ -187,18 +188,20 @@ namespace _2048_Rbu.Elements.Mechs
             {
                 if (value)
                 {
-                    ImgClose.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs_Redesign/Zadv/img_BigZadv_Closed.png", UriKind.Relative));
-                    ImgOpen.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs_Redesign/Zadv/img_Zadv_20_Per.png", UriKind.Relative));
-                    ImgAlarm.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs_Redesign/Zadv/img_BigZadv_Alarm.png", UriKind.Relative));
-                    ImgClose.Width = ImgAlarm.Width = ImgOpen.Width = 125;
-                    ImgClose.Height = ImgAlarm.Height = ImgOpen.Height = 18;
-                    RectObject.Width = ImgOpen.Width;
+                    ImgClose.Source = (DrawingImage)Resources["im_Big_Zadv_Closed"];
+                    ImgOpen.Source = (DrawingImage)Resources["im_Big_Zadv_Opened_20"];
+                    ImgAlarm.Source = (DrawingImage)Resources["im_Big_Zadv_Alarm"];
+                    //ImgClose.Width = ImgAlarm.Width = ImgOpen.Width = 126;
+                    //ImgClose.Height = ImgAlarm.Height = ImgOpen.Height = 17;
+                    //RectObject.Width = ImgOpen.Width;
                 }
 
                 _isUnload = value;
                 OnPropertyChanged(nameof(IsUnload));
             }
         }
+
+        #endregion
 
         #region MyRegion
 
@@ -230,11 +233,14 @@ namespace _2048_Rbu.Elements.Mechs
             {
                 if (value)
                 {
-                    ImgClose.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs_Redesign/img_Aerator_Off.png", UriKind.Relative));
-                    ImgOpen.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs_Redesign/img_Aerator_ON.png", UriKind.Relative));
-                    ImgAlarm.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs_Redesign/img_Aerator_AL.png", UriKind.Relative));
-                    ImgOpen.Width = ImgClose.Width = ImgAlarm.Width = 116;
-                    ImgOpen.Height = ImgClose.Height = ImgAlarm.Height = 16;
+                    //ImgClose.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs_Redesign/img_Aerator_Off.png", UriKind.Relative));
+                    //ImgOpen.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs_Redesign/img_Aerator_ON.png", UriKind.Relative));
+                    //ImgAlarm.Source = new BitmapImage(new Uri("/2048_Rbu;component/Images/Mechs_Redesign/img_Aerator_AL.png", UriKind.Relative));
+                    ImgClose.Source = (DrawingImage)Resources["im_Zadv_Aero_Closed"];
+                    ImgOpen.Source = (DrawingImage)Resources["im_Zadv_Aero_Opened"];
+                    ImgAlarm.Source = (DrawingImage)Resources["im_Zadv_Aero_Alarm"];
+                    ImgOpen.Width = ImgClose.Width = ImgAlarm.Width = 126;
+                    ImgOpen.Height = ImgClose.Height = ImgAlarm.Height = 17;
                     RectObject.Width = ImgOpen.Width;
                     RectObject.Margin = new Thickness(0, 0, 0, 0);
                     RectObject.ToolTip = "Удерживайте ПКМ для активации во время работы узла";
@@ -493,6 +499,7 @@ namespace _2048_Rbu.Elements.Mechs
             Brush = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFC0C0C0"));
         }
 
+        #region HandleMethod
         private void HandleManualChanged(object sender, OpcDataChangeReceivedEventArgs e)
         {
             try
@@ -583,6 +590,8 @@ namespace _2048_Rbu.Elements.Mechs
 
             }
         }
+
+        #endregion
 
         void VisStatus()
         {
