@@ -38,7 +38,7 @@ namespace _2048_Rbu
             if (Process.GetProcessesByName(currentProcess.ProcessName).Length > 1)
             {
                 MessageBox.Show("Запущено более одной копии программного обеспечения");
-                currentProcess.Kill();
+                //currentProcess.Kill();
             }
 
             //if (!InstanceCheck())

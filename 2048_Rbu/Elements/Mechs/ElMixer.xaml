@@ -164,8 +164,8 @@
                     Stroke="Black" 
                     Opacity="0" 
                     Margin="0,0"
-                    Width="{Binding ElementName=ValveGrid, Path=Width}"
-                    Height="{Binding ElementName=ValveGrid, Path=Height}"
+                    Width="{Binding ElementName=ValveGrid, Path=ActualWidth}"
+                    Height="{Binding ElementName=ValveGrid, Path=ActualHeight}"
                     MouseLeftButtonUp="ValveGrid_OnMouseRightButtonDown"/>
         
         <Popup Name="PopupObject" 

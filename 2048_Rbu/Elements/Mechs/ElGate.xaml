@@ -600,9 +600,9 @@
                     </Style>
                 </Image.Style>
             </Image>
-            <Image Name="ImgClose" VerticalAlignment="Top" HorizontalAlignment="Left" Width="Auto" Height="17" Margin="0,0,0,0" Visibility="{Binding VisClose}"  Source="{StaticResource im_Zadv_Closed}"/>
-            <Image Name="ImgOpen"  VerticalAlignment="Top" HorizontalAlignment="Left" Width="Auto" Height="17" Margin="0,0,0,0" Visibility="{Binding VisOpen}"   Source="{StaticResource im_Zadv_Opened}"/>
-            <Image Name="ImgAlarm" VerticalAlignment="Top" HorizontalAlignment="Left" Width="Auto" Height="17" Margin="0,0,0,0" Visibility="{Binding VisAlarm}"  Source="{StaticResource im_Zadv_Alarm}"/>
+            <Image Name="ImgClose" HorizontalAlignment="Left" Width="Auto" Height="17" Visibility="{Binding VisClose}"  Source="{StaticResource im_Zadv_Closed}"/>
+            <Image Name="ImgOpen"  HorizontalAlignment="Left" Width="Auto" Height="17" Visibility="{Binding VisOpen}"   Source="{StaticResource im_Zadv_Opened}"/>
+            <Image Name="ImgAlarm" HorizontalAlignment="Left" Width="Auto" Height="17" Visibility="{Binding VisAlarm}"  Source="{StaticResource im_Zadv_Alarm}"/>
         </Grid>
        
         <TextBlock Name="TbcName" VerticalAlignment="Center" Visibility="Collapsed" HorizontalAlignment="Left" Margin="0,0,0,0" TextAlignment="Right" FontSize="14" Text="VXXX"/>
@@ -687,13 +687,13 @@
             </Label.Content>
             
         </Label>
-        
+
         <Rectangle Name="RectObject" 
                    Grid.Column="1"
                    VerticalAlignment="Top" 
                    HorizontalAlignment="Left" 
-                   Width="{Binding ElementName=ImgOpen, Path=Width}"
-                   Height="17"
+                   Width="{Binding ElementName=ObjectGrid, Path=ActualWidth}"
+                   Height="{Binding ElementName=ObjectGrid, Path=ActualHeight}"
                    Margin="0,0"
                    Fill="Transparent" 
                    StrokeThickness="0.5" 
@@ -702,9 +702,9 @@
                    MouseLeftButtonUp="ValveGrid_OnMouseRightButtonDown"
                    PreviewMouseRightButtonDown="ValveGrid_OnPreviewMouseRightButtonDown" 
                    PreviewMouseRightButtonUp="ValveGrid_OnPreviewMouseRightButtonUp">
-            
-        </Rectangle>
 
+        </Rectangle>
+        
         <Popup Name="PopupObject" 
                Placement="Bottom" 
                StaysOpen="False">

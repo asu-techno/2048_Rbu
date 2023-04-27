@@ -188,7 +188,7 @@
                         Foreground="#676A70"
                         FontSize="12">
                    </Run>
-                    <Run Text="{Binding ElementName=ParMixingProcess, Path=Value, StringFormat={}{0:0}}"
+                    <Run Text="{Binding ElementName=ProgressMixing, Path=Maximum, StringFormat={}{0:0}, UpdateSourceTrigger=PropertyChanged}"
                         Foreground="#676A70"
                         FontSize="12">
                    </Run>
@@ -212,7 +212,7 @@
                              Minimum="0"
                              Grid.Row="1"
                              Grid.Column="3"
-                             Height="5"
+                             Height="6"
                              Style="{StaticResource ProgressBarHorizontal}"
                              >
                 </ProgressBar>
@@ -248,7 +248,7 @@
              
                 <ProgressBar Grid.Row="1"
                              Grid.Column="1"
-                             Height="5"
+                             Height="6"
                              Style="{StaticResource ProgressBarHorizontal}"
                              Name="ProgressPartial"
                              Value="{Binding Path=PartialUnloadProcess, UpdateSourceTrigger=PropertyChanged}"
@@ -273,7 +273,7 @@
                          Foreground="#676A70"
                          FontSize="12">
                     </Run>
-                    <Run Text="{Binding ElementName=ParPartialUnload, Path=Value, StringFormat={}{0:0}}"
+                    <Run Text="{Binding ElementName=ProgressPartial, Path=Maximum, StringFormat={}{0:0}, UpdateSourceTrigger=PropertyChanged}"
                          Foreground="#676A70"
                          FontSize="12">
                     </Run>
@@ -293,7 +293,7 @@
 
                 <ProgressBar Grid.Row="1"
                              Grid.Column="3"
-                             Height="5"
+                             Height="6"
                              Style="{StaticResource ProgressBarHorizontal}"
                              Name="ProgressFull"
                              Value="{Binding Path=FullUnloadProcess, UpdateSourceTrigger=PropertyChanged}"
@@ -319,7 +319,7 @@
                          Foreground="#676A70"
                          FontSize="12">
                     </Run>
-                    <Run Text="{Binding ElementName=ParFullUnload, Path=Value, StringFormat={}{0:0}}"
+                    <Run Text="{Binding ElementName=ProgressFull, Path=Maximum, StringFormat={}{0:0}, UpdateSourceTrigger=PropertyChanged}"
                          Foreground="#676A70"
                          FontSize="12">
                     </Run>

@@ -189,7 +189,7 @@ namespace _2048_Rbu.Elements.Mechs
                 if (value)
                 {
                     ImgClose.Source = (DrawingImage)Resources["im_Big_Zadv_Closed"];
-                    ImgOpen.Source = (DrawingImage)Resources["im_Big_Zadv_Opened_20"];
+                    ImgOpen.Source = (DrawingImage)Resources["im_Big_Zadv_Opened_100"];
                     ImgAlarm.Source = (DrawingImage)Resources["im_Big_Zadv_Alarm"];
                     //ImgClose.Width = ImgAlarm.Width = ImgOpen.Width = 126;
                     //ImgClose.Height = ImgAlarm.Height = ImgOpen.Height = 17;
@@ -425,6 +425,18 @@ namespace _2048_Rbu.Elements.Mechs
                     ObjectGrid.RenderTransform = rotate;
                 }
                 _rotate = value;
+            }
+        }
+
+        private double _rotateAngle = 0.0;
+        public double RotateAngle
+        {
+            get { return _rotateAngle; }
+            set
+            {
+                _rotateAngle = value;
+                RotateTransform rotateTransform = new RotateTransform(_rotateAngle, 25.5, 8.5);
+                ObjectGrid.RenderTransform = rotateTransform;
             }
         }
 

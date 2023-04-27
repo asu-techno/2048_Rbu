@@ -7,9 +7,39 @@
       xmlns:local="clr-namespace:_2048_Rbu.Elements.Indicators"
       mc:Ignorable="d"
       d:DataContext="{d:DesignInstance Type={x:Type local:ElContainer}, IsDesignTimeCreatable=False}"
-      BorderThickness="1" BorderBrush="Black" MinWidth="70" MaxWidth="110" Height="Auto" MaxHeight="80" MinHeight="35" MouseEnter="Rect_OnMouseEnter" MouseLeave="Rect_OnMouseLeave">
-    <Grid Background="DarkGray">
-        <TextBlock Text="{Binding NameContainerMaterial}" Margin="2,2" TextWrapping="Wrap" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" MinWidth="68" MaxWidth="108"/>
-        <Rectangle Name="RectObject" Fill="Transparent" StrokeThickness="0.5" Margin="-3" Stroke="Black" Opacity="0" MouseLeftButtonDown="Double_OnMouseLeftButtonDown" MouseRightButtonDown="RectObject_OnMouseRightButtonDown" ToolTip="Двойной клик для выбора материала&#xA;ПКМ для разрешения(запрета) дозирования"/>
+      BorderThickness="0.1" 
+      BorderBrush="#B8BBC0" 
+      MinWidth="70"
+      MaxWidth="150" 
+      Height="Auto"
+      MaxHeight="80" 
+      MinHeight="35" 
+      MouseEnter="Rect_OnMouseEnter" MouseLeave="Rect_OnMouseLeave">
+    
+    <Grid Background="Transparent">
+        
+        <TextBlock Text="{Binding NameContainerMaterial}" 
+                   Padding="0" 
+                   TextWrapping="Wrap" 
+                   FontFamily="{StaticResource Jost}"
+                   FontWeight="Regular"
+                   FontSize="14"
+                   Foreground="#000000"
+                   VerticalAlignment="Center" 
+                   HorizontalAlignment="Left" 
+                   TextAlignment="Center" 
+                   MinWidth="68" 
+                   MaxWidth="140"/>
+        
+        <Rectangle Name="RectObject" 
+                   Fill="Transparent" 
+                   StrokeThickness="0.5" 
+                   Margin="-3" 
+                   Stroke="Black" 
+                   Opacity="0" 
+                   MouseLeftButtonDown="Double_OnMouseLeftButtonDown" 
+                   MouseRightButtonDown="RectObject_OnMouseRightButtonDown" 
+                   ToolTip="Двойной клик для выбора материала&#xA;ПКМ для разрешения(запрета) дозирования"/>
     </Grid>
+    
 </UserControl>

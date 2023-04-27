@@ -317,7 +317,7 @@
                         <Style TargetType="{x:Type Rectangle}">
                             <Setter Property="Fill" Value="#B2BBC9"/>
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding StatusArray[6].StatusItem}" Value="True">
+                                <DataTrigger Binding="{Binding StatusArray[6].StatusItem}" Value="False">
                                     <Setter Property="Fill" Value="#19BF2B"/>
                                 </DataTrigger>
                             </Style.Triggers>
@@ -354,7 +354,7 @@
                         <Style TargetType="{x:Type Rectangle}">
                             <Setter Property="Fill" Value="#B2BBC9"/>
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding StatusArray[7].StatusItem}" Value="True">
+                                <DataTrigger Binding="{Binding StatusArray[7].StatusItem}" Value="False">
                                     <Setter Property="Fill" Value="#19BF2B"/>
                                 </DataTrigger>
                             </Style.Triggers>
@@ -391,7 +391,7 @@
                         <Style TargetType="{x:Type Rectangle}">
                             <Setter Property="Fill" Value="#B2BBC9"/>
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding StatusArray[8].StatusItem}" Value="True">
+                                <DataTrigger Binding="{Binding StatusArray[8].StatusItem}" Value="False">
                                     <Setter Property="Fill" Value="#19BF2B"/>
                                 </DataTrigger>
                             </Style.Triggers>
