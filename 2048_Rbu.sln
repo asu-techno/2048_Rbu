@@ -5,7 +5,7 @@ VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "2048_Rbu", "2048_Rbu\2048_Rbu.csproj", "{AE60E48B-92A7-4B55-A412-5D87DF9C5E5D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Styles", "..\Styles\Styles.csproj", "{BCEC224F-5D5A-483D-B77C-CD91BD2381C5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Styles", "Styles\Styles.csproj", "{BCEC224F-5D5A-483D-B77C-CD91BD2381C5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
