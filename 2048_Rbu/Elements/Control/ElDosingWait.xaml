@@ -5,18 +5,18 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:_2048_Rbu.Elements.Control"
              mc:Ignorable="d"
-             d:DataContext="{d:DesignInstance Type={x:Type local:ElDosingWait}, IsDesignTimeCreatable=False}"
-             Width="200" MinHeight="90" BorderBrush="Black" BorderThickness="1" Background="DarkGray">
+            
+             Width="249" Height="108">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../Resources/Styles.xaml"/>
+                <ResourceDictionary Source="../../Resources/NewButton.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
     <UserControl.Style>
         <Style TargetType="{x:Type UserControl}">
-            <Setter Property="Visibility" Value="Collapsed"/>
+            <Setter Property="Visibility" Value="Visible"/>
             <Style.Triggers>
                 <DataTrigger Binding="{Binding Vis}" Value="True">
                     <Setter Property="Visibility" Value="Visible" />
@@ -24,11 +24,11 @@
             </Style.Triggers>
         </Style>
     </UserControl.Style>
-    <StackPanel Background="DarkGray">
-        <TextBlock Name="LblName" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,2,0,0" Width="194" FontSize="14" TextAlignment="Center" TextWrapping="WrapWithOverflow" Text="{Binding DosingName}"/>
-        <Label VerticalAlignment="Top" HorizontalAlignment="Center" Width="175" Height="30" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="0,3,0,0" BorderThickness="1" BorderBrush="Black" Background="Yellow" FontSize="16">
-            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="Нет изменения веса"/>
-        </Label>
-        <Button Name="BtnContinue" Style="{StaticResource PressButton}" VerticalAlignment="Top" HorizontalAlignment="Center" Width="150" Height="28" Margin="0,5,0,3" BorderThickness="1" BorderBrush="Black" Background="LightBlue" FontSize="14" Content="Повторить" Click="BtnContinue_OnClick"/>
-    </StackPanel>
+    <Border CornerRadius="2" BorderBrush="#B8BBC0" BorderThickness="1" Background="#D9D8DD">
+        <Grid>
+            <TextBlock Name="LblName" VerticalAlignment="Top"  HorizontalAlignment="Center" Margin="0,2,0,0" Width="194" FontFamily="{DynamicResource Jost}" FontSize="12" TextAlignment="Center" Foreground="#3B3C3D" TextWrapping="WrapWithOverflow" Text="{Binding DosingName}"/>
+            <TextBlock VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,16,0,0" Width="223" Height="20" FontFamily="{DynamicResource Jost}" FontSize="14" TextAlignment="Center" Foreground="#3B3C3D" LineStackingStrategy="BlockLineHeight" LineHeight="20" TextWrapping="WrapWithOverflow" Text="Нет изменения веса"/>
+            <Button Name="BtnContinue" Style="{StaticResource NewButton}" VerticalAlignment="Top" HorizontalAlignment="Center" Width="180" Height="30" Margin="0,50,0,0" Content="Повторить" Click="BtnContinue_OnClick"/>
+        </Grid>
+    </Border>
 </UserControl>
