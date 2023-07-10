@@ -26,9 +26,9 @@
     </UserControl.Style>
     <Border CornerRadius="2" BorderBrush="#B8BBC0" BorderThickness="1" Background="#D9D8DD">
         <Grid>
-            <TextBlock Name="LblName" VerticalAlignment="Top"  HorizontalAlignment="Center" Margin="0,2,0,0" Width="194" FontFamily="{DynamicResource Jost}" FontSize="12" TextAlignment="Center" Foreground="#3B3C3D" TextWrapping="WrapWithOverflow" Text="{Binding DosingName}"/>
-            <TextBlock VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,16,0,0" Width="223" Height="20" FontFamily="{DynamicResource Jost}" FontSize="14" TextAlignment="Center" Foreground="#3B3C3D" LineStackingStrategy="BlockLineHeight" LineHeight="20" TextWrapping="WrapWithOverflow" Text="Нет изменения веса"/>
-            <Button Name="BtnContinue" Style="{StaticResource NewButton}" VerticalAlignment="Top" HorizontalAlignment="Center" Width="180" Height="30" Margin="0,50,0,0" Content="Повторить" Click="BtnContinue_OnClick"/>
+            <TextBlock Name="LblName" VerticalAlignment="Top"  HorizontalAlignment="Center" Margin="0,12,0,0" Width="223" FontFamily="{DynamicResource Jost}" FontSize="12" TextAlignment="Center" Foreground="#676A70" TextWrapping="WrapWithOverflow" LineStackingStrategy="BlockLineHeight" LineHeight="12" Text="{Binding DosingName}"/>
+            <TextBlock VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,37,0,0" Width="223" Height="20" FontFamily="{DynamicResource Jost}" FontSize="14" TextAlignment="Center" Foreground="#3B3C3D" LineStackingStrategy="BlockLineHeight" LineHeight="20" TextWrapping="WrapWithOverflow" Text="Нет изменения веса"/>
+            <Button Name="BtnContinue" Style="{StaticResource NewButton}" VerticalAlignment="Top" HorizontalAlignment="Center" Width="180" Height="30" Margin="0,62,0,0" Content="Повторить" Click="BtnContinue_OnClick"/>
         </Grid>
     </Border>
 </UserControl>

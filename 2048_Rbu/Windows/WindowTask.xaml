@@ -3,120 +3,474 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-        xmlns:window="clr-namespace:_2048_Rbu.Windows" xmlns:elements="clr-namespace:AsuBetonLibrary.Elements;assembly=AsuBetonLibrary"
+        xmlns:window="clr-namespace:_2048_Rbu.Windows" xmlns:elements="clr-namespace:_2048_Rbu.Elements.Control"
+        xmlns:resources="clr-namespace:_2048_Rbu"
         mc:Ignorable="d" 
         d:DataContext="{d:DesignInstance Type={x:Type window:NewTaskViewModel}, IsDesignTimeCreatable = False}"
-        Title="Новая заявка" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight" Background="LightGray">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="300" />
-            <ColumnDefinition Width="300" />
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
-        </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0">
+        Title="Новая заявка" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight" Background="Transparent" FontFamily="{DynamicResource Jost}" WindowStyle="None" Topmost="True">
+    <Window.Resources>
+
+        <DrawingImage x:Key="Plus_Image">
+            <DrawingImage.Drawing>
+                <DrawingGroup ClipGeometry="M0,0 V13 H13 V0 H0 Z">
+                    <GeometryDrawing Brush="#FFFFFFFF">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="0.984" RadiusY="0.984" Rect="5.751,1.2427,1.9355,10" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <DrawingGroup Transform="0,1.01626,0.983474,0,1.87988,5.24268">
+                        <GeometryDrawing Brush="#FFFFFFFF">
+                            <GeometryDrawing.Geometry>
+                                <RectangleGeometry RadiusX="0.984" RadiusY="0.984" Rect="0,0,1.968,9.84" />
+                            </GeometryDrawing.Geometry>
+                        </GeometryDrawing>
+                    </DrawingGroup>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+        <DrawingImage x:Key="Arrow_Image">
+            <DrawingImage.Drawing>
+                <DrawingGroup ClipGeometry="M0,0 V9 H15 V0 H0 Z">
+                    <DrawingGroup Transform="0.707106781186548,0.707106781186547,-0.707106781186547,0.707106781186548,3.82849513107628,-9.24280486892372">
+                        <GeometryDrawing Brush="#FF0474F8">
+                            <GeometryDrawing.Geometry>
+                                <RectangleGeometry RadiusX="1" RadiusY="1" Rect="13.0713,0,2,10" />
+                            </GeometryDrawing.Geometry>
+                        </GeometryDrawing>
+                    </DrawingGroup>
+                    <DrawingGroup Transform="-0.707107,0.707107,0.707107,0.707107,1.41406,0">
+                        <GeometryDrawing Brush="#FF0474F8">
+                            <GeometryDrawing.Geometry>
+                                <RectangleGeometry RadiusX="1" RadiusY="1" Rect="0,0,2,10" />
+                            </GeometryDrawing.Geometry>
+                        </GeometryDrawing>
+                    </DrawingGroup>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+        <DrawingImage x:Key="Slider_Image">
+            <DrawingImage.Drawing>
+                <DrawingGroup ClipGeometry="M0,0 V40 H40 V0 H0 Z">
+                    <DrawingGroup Opacity="1">
+                        <GeometryDrawing Brush="#FFFFFFFF">
+                            <GeometryDrawing.Geometry>
+                                <EllipseGeometry RadiusX="10" RadiusY="10" Center="20,20" />
+                            </GeometryDrawing.Geometry>
+                        </GeometryDrawing>
+                    </DrawingGroup>
+                    <GeometryDrawing Brush="#FF3A85DD">
+                        <GeometryDrawing.Geometry>
+                            <EllipseGeometry RadiusX="5" RadiusY="5" Center="20,20" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+
+        <!--#region ComboboxStyle1-->
+        <!--Toggle Button Template-->
+        <ControlTemplate x:Key="ComboBoxToggleButton" TargetType="{x:Type ToggleButton}">
+            <Grid x:Name="gd">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="286"/>
+                    <ColumnDefinition Width="34" />
+                </Grid.ColumnDefinitions>
+                <Border x:Name="Border" Grid.ColumnSpan="2" Background="#EEEEEF" BorderBrush="#B8BBC0" BorderThickness="1" CornerRadius="5"/>
+                <Image  x:Name="Arrow" Source="{StaticResource Arrow_Image}" Grid.Column="1" Width="14.49" Height="8.49" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,11,0,0"/>
+                <ContentPresenter Grid.Column="0" TextElement.Foreground="#3B3C3D"></ContentPresenter>
+            </Grid>
+            <!--<ControlTemplate.Triggers>
+                <Trigger Property="ToggleButton.IsMouseOver" Value="True">
+                    <Setter TargetName="Border" Property="BorderBrush" Value="#B8BBC0"/>
+                </Trigger>
+                <Trigger Property="ToggleButton.IsChecked" Value="True">
+                    <Setter TargetName="Arrow" Property="DataContext" Value="{StaticResource Arrow_Image}"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter TargetName="gd" Property="Visibility" Value="Visible"/>
+                </Trigger>
+            </ControlTemplate.Triggers>-->
+        </ControlTemplate>
+
+        <!--TextBox Template-->
+        <ControlTemplate x:Key="ComboBoxTextBox" TargetType="{x:Type TextBox}">
+            <ScrollViewer x:Name="PART_ContentHost" Focusable="False" Background="{TemplateBinding Background}" />
+        </ControlTemplate>
+
+        <!--combobox-->
+        <Style x:Key="combobox_style1" TargetType="{x:Type ComboBox}">
+            <Setter Property="SnapsToDevicePixels" Value="true"/>
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+            <Setter Property="MinWidth" Value="320"/>
+            <Setter Property="MinHeight" Value="30"/>
+            <Setter Property="FontFamily" Value="{StaticResource Jost}"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="Foreground" Value="#333538"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate  TargetType="{x:Type ComboBox}">
+                        <Grid>
+                            <ToggleButton Name="ToggleButton" Template="{StaticResource ComboBoxToggleButton}" Focusable="false" IsChecked="{Binding Path=IsDropDownOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}" ClickMode="Press"/>
+                            <ContentPresenter Name="ContentSite" IsHitTestVisible="False" Content="{TemplateBinding SelectionBoxItem}" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" Margin="13,0,0,0"  VerticalAlignment="Center" HorizontalAlignment="Left" />
+                            <TextBox  x:Name="PART_EditableTextBox" Style="{x:Null}" Template="{StaticResource ComboBoxTextBox}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="13,0,0,0" FontFamily="{StaticResource Jost}" Foreground="#333538" FontSize="14" TextWrapping="NoWrap"  Focusable="True"  Visibility="Hidden" IsReadOnly="{TemplateBinding IsReadOnly}"/>
+                            <Popup Name="Popup"  Grid.ColumnSpan="2" Placement="Bottom"  Margin="0" IsOpen="{TemplateBinding IsDropDownOpen}" AllowsTransparency="True" Focusable="False" PopupAnimation="Slide">
+                                <Grid Name="DropDown" SnapsToDevicePixels="True" MinWidth="{TemplateBinding ActualWidth}" MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                    <Border x:Name="DropDownBorder" Background="#EEEEEF" BorderThickness="0" BorderBrush="#EEEEEF" />
+                                    <ScrollViewer Margin="0" SnapsToDevicePixels="True">
+                                        <StackPanel IsItemsHost="True" Background="Transparent" KeyboardNavigation.DirectionalNavigation="Contained"/>
+                                    </ScrollViewer>
+                                </Grid>
+                            </Popup>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="HasItems" Value="false">
+                                <Setter TargetName="DropDownBorder" Property="MinHeight" Value="95"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter TargetName="PART_EditableTextBox" Property="Foreground" Value="#333538"/>
+                            </Trigger>
+                            <Trigger Property="IsGrouping" Value="true">
+                                <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+                            </Trigger>
+                            <Trigger SourceName="Popup" Property="Popup.AllowsTransparency" Value="true">
+                                <Setter TargetName="DropDownBorder" Property="Margin" Value="0,0,0,0"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Opacity" Value="0.9"/>
+                            </Trigger>
+                            <Trigger Property="IsEditable" Value="true">
+                                <Setter Property="IsTabStop" Value="false"/>
+                                <Setter TargetName="PART_EditableTextBox" Property="Visibility" Value="Visible"/>
+                                <Setter TargetName="ContentSite" Property="Visibility" Value="Hidden"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <!-- SimpleStyles: ComboBoxItem -->
+        <Style x:Key="{x:Type ComboBoxItem}" TargetType="{x:Type ComboBoxItem}">
+            <Setter Property="SnapsToDevicePixels" Value="true"/>
+            <Setter Property="FontFamily" Value="{StaticResource Jost}"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Regular"/>
+            <Setter Property="Foreground" Value="#333538"/>
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ComboBoxItem}">
+                        <Border Name="Border" Padding="13,4,0,4" SnapsToDevicePixels="true">
+                            <ContentPresenter />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsHighlighted" Value="true">
+                                <Setter TargetName="Border" Property="Background" Value="#D6D8E0"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="#333538"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--#endregion-->
+
+        <!--#region Listbox Style-->
+        <Style x:Key="LBItem1" TargetType="{x:Type ListBoxItem}" >
+            <Setter Property="SnapsToDevicePixels" Value="true"/>
+            <Setter Property="FontFamily" Value="{StaticResource Jost}"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="Foreground" Value="#3B3C3D"/>
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                        <Grid >
+                            <Border Name="Border"  SnapsToDevicePixels="true" />
+                            <ContentPresenter Margin="20,5,0,5" />
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="true">
+                                <Setter TargetName="Border" Property="Background" Value="#CED6EA"/>
+                                <Setter TargetName="Border" Property="Opacity" Value="0.27"/>
+
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="#3B3C3D"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="LBItem2" TargetType="{x:Type ListBoxItem}" >
+            <Setter Property="SnapsToDevicePixels" Value="true"/>
+            <Setter Property="FontFamily" Value="{StaticResource Jost}"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Regular"/>
+            <Setter Property="Foreground" Value="#3B3C3D"/>
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                        <Grid >
+                            <Border Name="Border"  SnapsToDevicePixels="true" />
+                            <ContentPresenter Margin="20,5,0,5" />
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="true">
+                                <Setter TargetName="Border" Property="Background" Value="#CED6EA"/>
+                                <Setter TargetName="Border" Property="Opacity" Value="0.27"/>
+
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="#3B3C3D"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="{x:Type ListBox}">
+            <Setter Property="SnapsToDevicePixels" Value="true"/>
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+            <Setter Property="FontFamily" Value="{StaticResource Jost}"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="Foreground" Value="#333538"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate  TargetType="{x:Type ListBox}">
+                        <Border x:Name="border" 
+                                    BorderBrush="#B8BBC0" 
+                                    BorderThickness="1"  
+                                    Background="#EEEEEF" 
+                                    CornerRadius="5">
+                            <Grid Margin="0,20,0,0">
+                                <ItemsPresenter  />
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--#endregion-->
+
+    </Window.Resources>
+
+
+    <Border CornerRadius="5" Background="#D9D8DD">
+        <Grid >
             <Grid.RowDefinitions>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="550"/>
+                <RowDefinition Height="69"/>
+                <RowDefinition Height="36"/>
+                <RowDefinition Height="595"/>
             </Grid.RowDefinitions>
-            <TextBlock FontWeight="Bold" FontSize="16" Margin="5" Text="Группы рецептов" HorizontalAlignment="Center" VerticalAlignment="Center" />
-            <ListBox SelectedItem="{Binding SelRecipeGroup}" ItemsSource="{Binding RecipeGroups}" DisplayMemberPath="Name" Grid.Row="1" Margin="10,0,10,10" FontSize="14"/>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300" />
+                <ColumnDefinition Width="300" />
+                <ColumnDefinition Width="460" />
+                <ColumnDefinition Width="440" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontWeight="Medium" FontSize="20" Foreground="#333538" Margin="40,0,0,0" Text="НОВАЯ ЗАЯВКА" />
+            <TextBlock Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontWeight="Normal" FontSize="14" Foreground="#676A70" Margin="40,0,0,0" Text="ГРУППЫ РЕЦЕПТОВ" Width="156"/>
+            <!--<Viewbox Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="40,0,0,0" Stretch="Fill" Width="156" Height="20">
+                <TextBlock  FontWeight="Normal" Foreground="#676A70"  Text="ГРУППЫ РЕЦЕПТОВ" />
+            </Viewbox>-->
+            <ListBox Grid.Column="0" Grid.Row="2" 
+                     Margin="40,15,40,40" 
+                     ItemContainerStyle="{StaticResource LBItem1}"
+                     SelectedItem="{Binding SelRecipeGroup}" 
+                     ItemsSource="{Binding RecipeGroups}" 
+                     DisplayMemberPath="Name" >
+            </ListBox>
+
+            <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontWeight="Normal" FontSize="14" Foreground="#676A70" Margin="0" Text="СПИСОК РЕЦЕПТОВ" Width="163" />
+            <!--<Viewbox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0" Stretch="Fill" Width="163" Height="20">
+                <TextBlock  FontWeight="Normal" Foreground="#676A70"  Text="СПИСОК РЕЦЕПТОВ" />
+            </Viewbox>-->
+            <ListBox Grid.Column="1" Grid.Row="2" 
+                     Margin="0,15,40,40"  
+                     ItemContainerStyle="{StaticResource LBItem2}"
+                     SelectedItem="{Binding SelRecipe}" 
+                     ItemsSource="{Binding SelRecipeGroup.Recipes}" 
+                     DisplayMemberPath="Name" >
+
+            </ListBox>
+
+            <TextBlock Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontWeight="Normal" FontSize="14" Foreground="#676A70" Margin="0" Text="ВЫБРАННЫЙ РЕЦЕПТ" Width="172" />
+            <!--<Viewbox Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0" Stretch="Fill" Width="172" Height="20">
+            <TextBlock  FontWeight="Normal" Foreground="#676A70"  Text="ВЫБРАННЫЙ РЕЦЕПТ" />
+            </Viewbox>-->
+            <elements:ElRecipeDetails Grid.Column="2" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" DataContext="{Binding ElRecipeDetailsViewModel}"  />
+
+            <TextBlock Grid.Column="3" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontWeight="Normal" FontSize="14" Foreground="#676A70" Margin="0" Text="НЕОБХОДИМЫЙ ОБЪЕМ ПРОДУКТА, (М³)" Width="337" />
+            <!--<Viewbox Grid.Column="3" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0" Stretch="Fill" Width="337" Height="20">
+                <TextBlock  FontWeight="Normal" Foreground="#676A70"  Text="НЕОБХОДИМЫЙ ОБЪЕМ ПРОДУКТА, (М³)" />
+            </Viewbox>-->
+
+            <Grid Grid.Column="3" Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Left" Width="361" Margin="0,15,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="35"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="80"/>
+                    <RowDefinition Height="45"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+
+                <Slider Style="{DynamicResource NewSlider}" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="280" Value="{Binding Volume}" />
+                <Label  Grid.Row="0" Height="25" Width="60" 
+                        HorizontalAlignment="Right" VerticalAlignment="Top" 
+                        HorizontalContentAlignment="Center" 
+                        Margin="0,0,0,0" 
+                        Padding="0" 
+                        FontWeight="Medium" 
+                        MouseLeftButtonDown="Control_OnMouseDoubleClick">
+                    <Label.Style>
+                        <Style TargetType="{x:Type Label}">
+                            <Setter Property="OverridesDefaultStyle" Value="True"/>
+                            <Setter Property="SnapsToDevicePixels" Value="True"/>
+                            <Setter Property="IsEnabled" Value="True"/>
+                            <Setter Property="FontSize" Value="14"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Label}">
+                                        <Border Name="Border" BorderThickness="1" BorderBrush="#B8BBC0" Background="#EEEEEF" CornerRadius="5">
+                                            <TextBlock Text="{Binding Volume, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" VerticalAlignment="Center" Height="20"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="False">
+                                                <Setter TargetName="Border" Property="Background" Value="#EEEEEF"/>
+                                                <Setter TargetName="Border" Property="BorderBrush" Value="#B8BBC0"/>
+                                                <Setter Property="Foreground" Value="#0474F8"/>
+                                            </Trigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="Border" Property="Background" Value="#EEEEEF"/>
+                                                <Setter TargetName="Border" Property="BorderBrush" Value="#B8BBC0"/>
+                                                <Setter Property="Foreground" Value="#0474F8"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Label.Style>
+                </Label>
+                <TextBlock Grid.Row="1" Text="Объем замеса, м³:" FontSize="14" FontWeight="Normal" Foreground="#333538" Height="Auto" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Center"  />
+                <Border Grid.Row="1" Background="#EEEEEF" BorderBrush="#B8BBC0" BorderThickness="1" CornerRadius="5" Width="60" Height="25" HorizontalAlignment="Right" Margin="0" VerticalAlignment="Center" >
+                    <TextBlock  Text="{Binding BatchVolume}" FontSize="14" FontWeight="Medium" Width="60" Height="20" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+                <TextBlock Grid.Row="2" Text="Количество замесов:" FontSize="14" FontWeight="Normal" Foreground="#333538" Height="Auto" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Center"  />
+
+                <Border Grid.Row="2" Background="#EEEEEF" BorderBrush="#B8BBC0" BorderThickness="1" CornerRadius="5" Width="60" Height="25" HorizontalAlignment="Right" Margin="0" VerticalAlignment="Center" >
+                    <TextBlock  Text="{Binding BatchesAmount}" FontSize="14" FontWeight="Medium" Width="60" Height="20" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+
+
+                <TextBlock Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontWeight="Normal" FontSize="14" Foreground="#676A70" Margin="0" Text="ЗАКАЗЧИК" Width="87" />
+                <!--<Viewbox Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0" Stretch="Fill" Width="87" Height="20">
+                    <TextBlock  FontWeight="Normal" Foreground="#676A70"  Text="ЗАКАЗЧИК" />
+                </Viewbox>-->
+
+
+                <ComboBox Grid.Row="4" Width="320" Height="30" Style="{StaticResource combobox_style1}" ItemsSource="{Binding Customers}" SelectedValue="{Binding SelCustomer}" DisplayMemberPath="Name"  HorizontalAlignment="Left" HorizontalContentAlignment="Left"  VerticalAlignment="Bottom" Margin="0" SelectionChanged="ComboBox_SelectionChanged_1">
+                    <!--<ComboBox.ItemContainerStyle>
+                        <Style TargetType="{x:Type ComboBoxItem}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Path=Deleted}" Value="true">
+                                    <Setter Property="ContentControl.Visibility" Value="Hidden" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                            <Setter Property="ContentControl.Visibility" Value="Visible"/>
+                        </Style>
+                    </ComboBox.ItemContainerStyle>-->
+                </ComboBox>
+
+                <Button Grid.Row="4" BorderThickness="0" Background="#3A85DD" Width="30" Height="30" FontSize="16" Margin="0,0,1,0" HorizontalAlignment="Right" VerticalAlignment="Bottom" ToolTip="Добавить заказчика" Command="{Binding AddCustomerCommand}">
+                    <Button.Content>
+                        <Image Height="8.35" Width="8.35" Source="{StaticResource Plus_Image}" />
+                    </Button.Content>
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Button}">
+                                        <Border Background="{TemplateBinding Background}"
+                                            CornerRadius="5"
+                                            BorderThickness="0"
+                                            BorderBrush="#61A9FE">
+                                            <ContentPresenter  HorizontalAlignment="Center"  VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+
+                <Button Grid.Row="5" Content="Добавить заявку" FontSize="14" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="360" Height="30" Background="#3A85DD" Foreground="#FFFFFF" Focusable="False" Margin="0" Command="{Binding SaveTaskCommand}">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Button}">
+                                        <Border Background="{TemplateBinding Background}"
+                                            CornerRadius="5"
+                                            BorderThickness="0"
+                                            BorderBrush="#61A9FE">
+                                            <ContentPresenter  HorizontalAlignment="Center"  VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="IsEnabled" Value="True"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding SelRecipe}" Value="{x:Null}">
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Volume}" Value="0">
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+
+
+
+            </Grid>
         </Grid>
-        <Grid Grid.Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="550"/>
-            </Grid.RowDefinitions>
-            <TextBlock FontWeight="Bold" FontSize="16" Margin="0" Text="Список рецептов" HorizontalAlignment="Center" VerticalAlignment="Center" />
-            <ListBox SelectedItem="{Binding SelRecipe}" ItemsSource="{Binding SelRecipeGroup.Recipes}" DisplayMemberPath="Name" Margin="10,0,10,10" FontSize="14" Grid.Row="1" />
-        </Grid>
-        <Grid Grid.Column="2">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <Label BorderBrush="Black" BorderThickness="0" Content="Выбранный рецепт:" FontSize="16" FontWeight="Bold" Height="Auto" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="0" Name="label9" Padding="0" VerticalAlignment="Center" VerticalContentAlignment="Center" Width="279" Grid.Row="0" />
-            <elements:ElRecipeDetails Grid.Row="1" DataContext="{Binding ElRecipeDetailsViewModel}"/>
-        </Grid>
-        <Grid Grid.Column="3" Height="507" VerticalAlignment="Top" HorizontalAlignment="Center" Width="350">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <Label BorderBrush="Black" FontSize="16" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="0" Padding="0" Width="Auto" VerticalContentAlignment="Center" Content="Необходимый объем продукта, м³" Height="Auto" VerticalAlignment="Center" BorderThickness="0" FontWeight="Bold" />
-            <Slider Margin="15,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="265" Minimum="0.2" Maximum="10" Value="{Binding Volume}" TickFrequency="0.1" TickPlacement="TopLeft" IsSnapToTickEnabled="True" Grid.Row="1" />
-            <Label  Height="25" HorizontalAlignment="Right" HorizontalContentAlignment="Center" Margin="0,5,15,5" Padding="0" VerticalAlignment="Top" Width="50" FontWeight="Bold" Grid.Row="1" MouseLeftButtonDown="Control_OnMouseDoubleClick">
-                <Label.Style>
-                    <Style TargetType="{x:Type Label}">
-                        <Setter Property="OverridesDefaultStyle" Value="True"/>
-                        <Setter Property="SnapsToDevicePixels" Value="True"/>
-                        <Setter Property="IsEnabled" Value="True"/>
-                        <Setter Property="FontSize" Value="16"/>
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type Label}">
-                                    <Border Name="Border" BorderThickness="1" Opacity="1">
-                                        <TextBlock Text="{Binding Volume, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" VerticalAlignment="Center" Height="22"/>
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="False">
-                                            <Setter TargetName="Border" Property="Background" Value="#FFADD8E6"/>
-                                            <Setter TargetName="Border" Property="BorderBrush" Value="#FF000000"/>
-                                            <Setter Property="Foreground" Value="#FF000000"/>
-                                        </Trigger>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="Border" Property="Background" Value="#FFC9DEF5"/>
-                                            <Setter TargetName="Border" Property="BorderBrush" Value="#FF3399FF"/>
-                                            <Setter Property="Foreground" Value="#FF000000"/>
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </Label.Style>
-            </Label>
-            <TextBlock Text="Объем замеса, м³:" FontSize="16" FontWeight="Normal" Height="Auto" HorizontalAlignment="Left" Margin="15,5,0,5" VerticalAlignment="Center" Grid.Row="3" />
-            <TextBlock Text="Количество замесов:" FontSize="16" FontWeight="Normal" Height="Auto" HorizontalAlignment="Left" Margin="15,5,0,5" VerticalAlignment="Center" Grid.Row="4" />
-            <Button Grid.Row="7" Content="Добавить заявку" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" BorderBrush="Black" Background="LightBlue" Focusable="False" Margin="10" Command="{Binding SaveTaskCommand}">
-                <Button.Style>
-                    <Style TargetType="{x:Type Button}">
-                        <Setter Property="IsEnabled" Value="True"/>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding SelRecipe}" Value="{x:Null}">
-                                <Setter Property="IsEnabled" Value="False"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding Volume}" Value="0">
-                                <Setter Property="IsEnabled" Value="False"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-            </Button>
-            <TextBlock Background="White" Text="{Binding BatchVolume}" FontSize="16" FontWeight="Bold" Height="25" HorizontalAlignment="Right" Margin="0,5,15,5" TextAlignment="Center" VerticalAlignment="Center" Width="50" Grid.Row="3" />
-            <TextBlock Background="White" Text="{Binding BatchesAmount}" FontSize="16" FontWeight="Bold" Height="25" HorizontalAlignment="Right" Margin="0,5,15,5" TextAlignment="Center" VerticalAlignment="Center" Width="50" Grid.Row="4" />
-            <Label Background="LightGray" BorderBrush="Black" BorderThickness="0" Content="Заказчик" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="5" Padding="0" VerticalAlignment="Center" VerticalContentAlignment="Center" Width="Auto" Grid.Row="5" />
-            <Button Grid.Row="5" Background="LightBlue" Width="20" Height="20" FontSize="16" Margin="0,0,10,0" HorizontalAlignment="Right" VerticalAlignment="Center" ToolTip="Добавить заказчика" Command="{Binding AddCustomerCommand}">
-                <Button.Content>
-                    <Image Source="../Images/img_AddAct_Color.png" />
-                </Button.Content>
-            </Button>
-            <ComboBox Background="White" BorderBrush="Black" BorderThickness="1" ItemsSource="{Binding Customers}" SelectedValue="{Binding SelCustomer}" DisplayMemberPath="Name" FontSize="16" FontWeight="Bold" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="10" VerticalAlignment="Center" Grid.Row="6" />
-        </Grid>
-    </Grid>
+    </Border>
 </Window>

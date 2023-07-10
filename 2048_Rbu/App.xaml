@@ -12,14 +12,15 @@
                 <ResourceDictionary Source="Resources/ProgressBar.xaml"/>
                 <ResourceDictionary Source="Resources/StopButton.xaml"/>
                 <ResourceDictionary Source="Resources/QueueButton.xaml"/>
+                <ResourceDictionary Source="Resources/NewSlider.xaml"/>
                 <ResourceDictionary Source="/Styles;component/Themes/Styles/DataGrid.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <FontFamily x:Key="Jost">
                 pack://application:,,,/Fonts/#Jost
             </FontFamily>
-            
+
         </ResourceDictionary>
-        
+
     </Application.Resources>
 </Application>

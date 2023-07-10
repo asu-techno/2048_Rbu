@@ -39,6 +39,16 @@ namespace _2048_Rbu.Windows
         {
             NewTaskViewModel.SetVolume();
         }
+
+        private void ComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void ComboBox_SelectionChanged_1(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+
+        }
     }
 
     public class NewTaskViewModel : INotifyPropertyChanged
