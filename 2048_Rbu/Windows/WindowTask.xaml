@@ -7,7 +7,13 @@
         xmlns:resources="clr-namespace:_2048_Rbu"
         mc:Ignorable="d" 
         d:DataContext="{d:DesignInstance Type={x:Type window:NewTaskViewModel}, IsDesignTimeCreatable = False}"
-        Title="Новая заявка" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight" Background="Transparent" FontFamily="{DynamicResource Jost}" WindowStyle="None" Topmost="True">
+        Title="Новая заявка" 
+        ResizeMode="NoResize" WindowStartupLocation="CenterScreen" 
+        SizeToContent="WidthAndHeight" 
+        Background="#D9D8DD" 
+        FontFamily="{DynamicResource Jost}" 
+        WindowStyle="None" 
+        Topmost="True">
     <Window.Resources>
 
         <DrawingImage x:Key="Plus_Image">
@@ -45,24 +51,6 @@
                             </GeometryDrawing.Geometry>
                         </GeometryDrawing>
                     </DrawingGroup>
-                </DrawingGroup>
-            </DrawingImage.Drawing>
-        </DrawingImage>
-        <DrawingImage x:Key="Slider_Image">
-            <DrawingImage.Drawing>
-                <DrawingGroup ClipGeometry="M0,0 V40 H40 V0 H0 Z">
-                    <DrawingGroup Opacity="1">
-                        <GeometryDrawing Brush="#FFFFFFFF">
-                            <GeometryDrawing.Geometry>
-                                <EllipseGeometry RadiusX="10" RadiusY="10" Center="20,20" />
-                            </GeometryDrawing.Geometry>
-                        </GeometryDrawing>
-                    </DrawingGroup>
-                    <GeometryDrawing Brush="#FF3A85DD">
-                        <GeometryDrawing.Geometry>
-                            <EllipseGeometry RadiusX="5" RadiusY="5" Center="20,20" />
-                        </GeometryDrawing.Geometry>
-                    </GeometryDrawing>
                 </DrawingGroup>
             </DrawingImage.Drawing>
         </DrawingImage>
@@ -184,11 +172,10 @@
         <!--#endregion-->
 
         <!--#region Listbox Style-->
-        <Style x:Key="LBItem1" TargetType="{x:Type ListBoxItem}" >
+        <Style x:Key="ListBoxItem_Style1" TargetType="{x:Type ListBoxItem}" >
             <Setter Property="SnapsToDevicePixels" Value="true"/>
             <Setter Property="FontFamily" Value="{StaticResource Jost}"/>
             <Setter Property="FontSize" Value="14"/>
-            <Setter Property="FontWeight" Value="Medium"/>
             <Setter Property="Foreground" Value="#3B3C3D"/>
             <Setter Property="OverridesDefaultStyle" Value="true"/>
             <Setter Property="Template">
@@ -196,36 +183,8 @@
                     <ControlTemplate TargetType="{x:Type ListBoxItem}">
                         <Grid >
                             <Border Name="Border"  SnapsToDevicePixels="true" />
-                            <ContentPresenter Margin="20,5,0,5" />
-                        </Grid>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsSelected" Value="true">
-                                <Setter TargetName="Border" Property="Background" Value="#CED6EA"/>
-                                <Setter TargetName="Border" Property="Opacity" Value="0.27"/>
-
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="false">
-                                <Setter Property="Foreground" Value="#3B3C3D"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <Style x:Key="LBItem2" TargetType="{x:Type ListBoxItem}" >
-            <Setter Property="SnapsToDevicePixels" Value="true"/>
-            <Setter Property="FontFamily" Value="{StaticResource Jost}"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="FontWeight" Value="Regular"/>
-            <Setter Property="Foreground" Value="#3B3C3D"/>
-            <Setter Property="OverridesDefaultStyle" Value="true"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                        <Grid >
-                            <Border Name="Border"  SnapsToDevicePixels="true" />
-                            <ContentPresenter Margin="20,5,0,5" />
+                            <ContentPresenter Margin="20,5,0,5"
+                                              />
                         </Grid>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsSelected" Value="true">
@@ -248,11 +207,7 @@
             <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
             <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
             <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
-            <Setter Property="FontFamily" Value="{StaticResource Jost}"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="FontWeight" Value="Normal"/>
-            <Setter Property="Foreground" Value="#333538"/>
-
+            <Setter Property="ItemContainerStyle" Value="{StaticResource ListBoxItem_Style1}"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate  TargetType="{x:Type ListBox}">
@@ -262,7 +217,11 @@
                                     Background="#EEEEEF" 
                                     CornerRadius="5">
                             <Grid Margin="0,20,0,0">
-                                <ItemsPresenter  />
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="143*"/>
+                                    <ColumnDefinition Width="75*"/>
+                                </Grid.ColumnDefinitions>
+                                <ItemsPresenter Grid.ColumnSpan="2"  />
                             </Grid>
                         </Border>
                     </ControlTemplate>
@@ -275,7 +234,7 @@
     </Window.Resources>
 
 
-    <Border CornerRadius="5" Background="#D9D8DD">
+    <Border CornerRadius="5" >
         <Grid >
             <Grid.RowDefinitions>
                 <RowDefinition Height="69"/>
@@ -296,7 +255,7 @@
             </Viewbox>-->
             <ListBox Grid.Column="0" Grid.Row="2" 
                      Margin="40,15,40,40" 
-                     ItemContainerStyle="{StaticResource LBItem1}"
+                     FontWeight="Medium"
                      SelectedItem="{Binding SelRecipeGroup}" 
                      ItemsSource="{Binding RecipeGroups}" 
                      DisplayMemberPath="Name" >
@@ -308,11 +267,10 @@
             </Viewbox>-->
             <ListBox Grid.Column="1" Grid.Row="2" 
                      Margin="0,15,40,40"  
-                     ItemContainerStyle="{StaticResource LBItem2}"
+                     FontWeight="Regular"
                      SelectedItem="{Binding SelRecipe}" 
                      ItemsSource="{Binding SelRecipeGroup.Recipes}" 
                      DisplayMemberPath="Name" >
-
             </ListBox>
 
             <TextBlock Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontWeight="Normal" FontSize="14" Foreground="#676A70" Margin="0" Text="ВЫБРАННЫЙ РЕЦЕПТ" Width="172" />
@@ -335,22 +293,15 @@
                     <RowDefinition Height="45"/>
                     <RowDefinition Height="60"/>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
+
                 </Grid.RowDefinitions>
 
 
                 <Slider Style="{DynamicResource NewSlider}" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="280" Value="{Binding Volume}" />
+
                 <Label  Grid.Row="0" Height="25" Width="60" 
-                        HorizontalAlignment="Right" VerticalAlignment="Top" 
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top" 
                         HorizontalContentAlignment="Center" 
                         Margin="0,0,0,0" 
                         Padding="0" 
@@ -369,7 +320,7 @@
                                             <TextBlock Text="{Binding Volume, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" VerticalAlignment="Center" Height="20"/>
                                         </Border>
                                         <ControlTemplate.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="False">
+                                            <!--<Trigger Property="IsMouseOver" Value="False">
                                                 <Setter TargetName="Border" Property="Background" Value="#EEEEEF"/>
                                                 <Setter TargetName="Border" Property="BorderBrush" Value="#B8BBC0"/>
                                                 <Setter Property="Foreground" Value="#0474F8"/>
@@ -378,7 +329,7 @@
                                                 <Setter TargetName="Border" Property="Background" Value="#EEEEEF"/>
                                                 <Setter TargetName="Border" Property="BorderBrush" Value="#B8BBC0"/>
                                                 <Setter Property="Foreground" Value="#0474F8"/>
-                                            </Trigger>
+                                            </Trigger>-->
                                         </ControlTemplate.Triggers>
                                     </ControlTemplate>
                                 </Setter.Value>
@@ -386,22 +337,27 @@
                         </Style>
                     </Label.Style>
                 </Label>
+
                 <TextBlock Grid.Row="1" Text="Объем замеса, м³:" FontSize="14" FontWeight="Normal" Foreground="#333538" Height="Auto" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Center"  />
-                <Border Grid.Row="1" Background="#EEEEEF" BorderBrush="#B8BBC0" BorderThickness="1" CornerRadius="5" Width="60" Height="25" HorizontalAlignment="Right" Margin="0" VerticalAlignment="Center" >
-                    <TextBlock  Text="{Binding BatchVolume}" FontSize="14" FontWeight="Medium" Width="60" Height="20" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                </Border>
+                <Label Grid.Row="1" 
+                       Style="{StaticResource OvalFrameLabel}" 
+                       Content="{Binding BatchVolume}"
+                       FontSize="14" 
+                       Width="60"
+                       HorizontalAlignment="Right" VerticalAlignment="Center"/>
+
                 <TextBlock Grid.Row="2" Text="Количество замесов:" FontSize="14" FontWeight="Normal" Foreground="#333538" Height="Auto" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Center"  />
-
-                <Border Grid.Row="2" Background="#EEEEEF" BorderBrush="#B8BBC0" BorderThickness="1" CornerRadius="5" Width="60" Height="25" HorizontalAlignment="Right" Margin="0" VerticalAlignment="Center" >
-                    <TextBlock  Text="{Binding BatchesAmount}" FontSize="14" FontWeight="Medium" Width="60" Height="20" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                </Border>
-
+                <Label Grid.Row="2" 
+                       Style="{StaticResource OvalFrameLabel}" 
+                       Content="{Binding BatchesAmount}"
+                       FontSize="14" 
+                       Width="60" 
+                       HorizontalAlignment="Right" VerticalAlignment="Center"/>
 
                 <TextBlock Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontWeight="Normal" FontSize="14" Foreground="#676A70" Margin="0" Text="ЗАКАЗЧИК" Width="87" />
                 <!--<Viewbox Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0" Stretch="Fill" Width="87" Height="20">
                     <TextBlock  FontWeight="Normal" Foreground="#676A70"  Text="ЗАКАЗЧИК" />
                 </Viewbox>-->
-
 
                 <ComboBox Grid.Row="4" Width="320" Height="30" Style="{StaticResource combobox_style1}" ItemsSource="{Binding Customers}" SelectedValue="{Binding SelCustomer}" DisplayMemberPath="Name"  HorizontalAlignment="Left" HorizontalContentAlignment="Left"  VerticalAlignment="Bottom" Margin="0" SelectionChanged="ComboBox_SelectionChanged_1">
                     <!--<ComboBox.ItemContainerStyle>
@@ -416,11 +372,17 @@
                     </ComboBox.ItemContainerStyle>-->
                 </ComboBox>
 
-                <Button Grid.Row="4" BorderThickness="0" Background="#3A85DD" Width="30" Height="30" FontSize="16" Margin="0,0,1,0" HorizontalAlignment="Right" VerticalAlignment="Bottom" ToolTip="Добавить заказчика" Command="{Binding AddCustomerCommand}">
+                <Button Grid.Row="4" 
+                        Template="{StaticResource BlueBtn}" 
+                        Width="30" Height="30" 
+                        Margin="0,0,1,0" 
+                        HorizontalAlignment="Right" VerticalAlignment="Bottom" 
+                        ToolTip="Добавить заказчика" 
+                        Command="{Binding AddCustomerCommand}">
                     <Button.Content>
                         <Image Height="8.35" Width="8.35" Source="{StaticResource Plus_Image}" />
                     </Button.Content>
-                    <Button.Style>
+                    <!--<Button.Style>
                         <Style TargetType="{x:Type Button}">
                             <Setter Property="Template">
                                 <Setter.Value>
@@ -435,26 +397,25 @@
                                 </Setter.Value>
                             </Setter>
                         </Style>
-                    </Button.Style>
+                    </Button.Style>-->
                 </Button>
 
 
-                <Button Grid.Row="5" Content="Добавить заявку" FontSize="14" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="360" Height="30" Background="#3A85DD" Foreground="#FFFFFF" Focusable="False" Margin="0" Command="{Binding SaveTaskCommand}">
+                <Button Grid.Row="5" 
+                        Template="{StaticResource BlueBtn}"  
+                        Content="Добавить заявку" 
+                        Foreground="#FFFFFF"
+                        FontSize="14" 
+                        FontWeight="Medium" 
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Bottom" 
+                        Width="360" 
+                        Height="30" 
+                        Focusable="False" 
+                        Margin="0" 
+                        Command="{Binding SaveTaskCommand}">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="{x:Type Button}">
-                                        <Border Background="{TemplateBinding Background}"
-                                            CornerRadius="5"
-                                            BorderThickness="0"
-                                            BorderBrush="#61A9FE">
-                                            <ContentPresenter  HorizontalAlignment="Center"  VerticalAlignment="Center"/>
-                                        </Border>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                            <Setter Property="IsEnabled" Value="True"/>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding SelRecipe}" Value="{x:Null}">
                                     <Setter Property="IsEnabled" Value="False"/>

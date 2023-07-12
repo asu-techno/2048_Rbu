@@ -843,9 +843,19 @@
                 </DrawingGroup>
             </DrawingImage.Drawing>
         </DrawingImage>
-        
+
+        <DrawingImage x:Key="CloseWindow_Image">
+            <DrawingImage.Drawing>
+                <DrawingGroup ClipGeometry="M0,0 V14 H14 V0 H0 Z">
+                    <DrawingGroup.Transform>
+                        <TranslateTransform X="0" Y="3.2529724621595068E-17" />
+                    </DrawingGroup.Transform>
+                    <GeometryDrawing Brush="#FF333538" Geometry="F1 M14,14z M0,0z M8.64341,6.99801L13.6552,1.99784C13.8747,1.77837 13.998,1.48069 13.998,1.17031 13.998,0.859924 13.8747,0.562251 13.6552,0.342776 13.4358,0.1233 13.1381,0 12.8277,0 12.5173,0 12.2196,0.1233 12.0002,0.342776L7,5.3546 1.99983,0.342776C1.78036,0.1233 1.48268,-2.31255E-09 1.1723,0 0.861913,2.31255E-09 0.56424,0.1233 0.344765,0.342776 0.125289,0.562251 0.00198911,0.859924 0.00198911,1.17031 0.00198911,1.48069 0.125289,1.77837 0.344765,1.99784L5.35659,6.99801 0.344765,11.9982C0.235521,12.1065 0.148811,12.2354 0.0896384,12.3775 0.0304655,12.5195 0,12.6718 0,12.8257 0,12.9796 0.0304655,13.1319 0.0896384,13.274 0.148811,13.416 0.235521,13.5449 0.344765,13.6532 0.453117,13.7625 0.582027,13.8492 0.724059,13.9084 0.866091,13.9675 1.01843,13.998 1.1723,13.998 1.32616,13.998 1.47851,13.9675 1.62054,13.9084 1.76257,13.8492 1.89148,13.7625 1.99983,13.6532L7,8.64142 12.0002,13.6532C12.1085,13.7625 12.2374,13.8492 12.3795,13.9084 12.5215,13.9675 12.6738,13.998 12.8277,13.998 12.9816,13.998 13.1339,13.9675 13.2759,13.9084 13.418,13.8492 13.5469,13.7625 13.6552,13.6532 13.7645,13.5449 13.8512,13.416 13.9104,13.274 13.9695,13.1319 14,12.9796 14,12.8257 14,12.6718 13.9695,12.5195 13.9104,12.3775 13.8512,12.2354 13.7645,12.1065 13.6552,11.9982L8.64341,6.99801z" />
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
     </UserControl.Resources>
-    
+
     <Grid Name="MainGrid">
 
         <Grid.ColumnDefinitions>
@@ -901,14 +911,14 @@
             </Label.Content>-->
 
         </Label>
-        
+
         <Grid Grid.Column="1" Grid.RowSpan="2" Name="ObjectGrid" Width="Auto" Height="Auto">
             <Image Name="ImgKm"    Width="Auto" Height="Auto"  Visibility="{Binding VisOn}"/>
             <Image Name="ImgAlarm" Width="Auto" Height="Auto" Visibility="{Binding VisAlarm}"/>
         </Grid>
-        
+
         <TextBlock Name="TbcName" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,20,0,0" TextAlignment="Right" FontSize="14" Text="VXXX" Visibility="Hidden"/>
-        
+
         <Rectangle Name="RectObject" 
                    Fill="Transparent" 
                    VerticalAlignment="Top" 
@@ -921,13 +931,169 @@
                    Height="{Binding ElementName=ObjectGrid, Path=ActualHeight}"
                    Grid.RowSpan="2"
                    Grid.Column="1"/>
-        
+
         <Popup Name="PopupObject" 
                Placement="Bottom" 
                StaysOpen="False"
                >
-            
-            <Border BorderBrush="Black" BorderThickness="1">
+            <Grid>
+                <Border Background="#D9D8DD" CornerRadius="5">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition MinHeight="35" Height="auto"/>
+                            <RowDefinition Height="6"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="25"/>
+                            <RowDefinition Height="43"/>
+                            <RowDefinition Height="45"/>
+                            <RowDefinition Height="41"/>
+                            <RowDefinition Height="51"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Name="TxtPopupName" 
+                           VerticalAlignment="Bottom" HorizontalAlignment="Left" 
+                           Margin="20,0,0,0" 
+                           Foreground="#333538" 
+                           FontSize="16" FontWeight="Medium"
+                           TextWrapping="Wrap" 
+                           TextAlignment="Left" 
+                           Text="Механизм"/>
+                        <Button Name="BtnCloseWindow" 
+                                Height="14" Width="14" 
+                                BorderThickness="0" 
+                                HorizontalAlignment="Right" VerticalAlignment="Top" 
+                                Margin="0,17,22,0"
+                                Click="BtnCloseWindow_Click">
+                            <Image Source="{StaticResource CloseWindow_Image}"/>
+                        </Button>
+                        <Border Grid.Row="1" VerticalAlignment="Bottom" Height="1" Width="272" Background="#333538" Opacity="0.26" />
+                        <TextBlock Grid.Row="2" 
+                           VerticalAlignment="Bottom" HorizontalAlignment="Left" 
+                           Margin="21,0,0,4" 
+                           TextAlignment="Left" 
+                           Foreground="#333538" FontSize="14" FontWeight="Regular" 
+                           LineStackingStrategy="BlockLineHeight" LineHeight="14" 
+                           Text="Состояние:"/>
+                        <Border Grid.Row="3" 
+                                Width="271" Height="25"
+                                HorizontalAlignment="Center"
+                                CornerRadius="5"
+                                BorderBrush="#B8BBC0" 
+                                BorderThickness="1"
+                                Background="{Binding Brush}">
+                            <Label  VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Foreground="#333538" Content="{Binding Status}"/>
+                        </Border>
+                        <TextBlock Grid.Row="4" 
+                           VerticalAlignment="Bottom" HorizontalAlignment="Left" 
+                           Margin="21,0,0,0" 
+                           TextAlignment="Left" 
+                           Foreground="#676A70" FontSize="14" FontWeight="Regular"  
+                           Text="РЕЖИМ РАБОТЫ"/>
+
+                        <Button Name="BtnSetup" 
+                                Style="{StaticResource NewButton}"
+                                Grid.Row="5"  
+                                Width="130" Height="30"  
+                                HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                                Margin="21,0,0,0"
+                                Content="Наладка"
+                        >
+                        </Button>
+                        <Button Name="BtnAutomat" 
+                                Style="{StaticResource NewButton}"
+                                Grid.Row="5"  
+                                Width="130" Height="30" 
+                                HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                                Margin="162,0,0,0"
+                                Content="Автомат" 
+                                Click="BtnAutomat_Click" >
+                            <!--<Button.Style>
+                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource NewButton}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ModeAutomat}" Value="True">
+                                            <Setter Property="Background" Value="#3A85DD"/>
+                                            <Setter Property="Foreground" Value="#FFFFFF"/>
+                                            <Setter Property="BorderBrush" Value="#3A85DD"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>-->
+                        </Button>
+
+                        <Button Name="BtnManual" 
+                                Style="{StaticResource NewButton}"
+                                Grid.Row="6" 
+                                Width="271" Height="30"
+                                HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                                Content="Ручное дозирование" 
+                                Click="BtnManual_Click" >
+                            <!--<Button.Style>
+                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource NewButton}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ModeAutomat}" Value="True">
+                                            <Setter Property="Background" Value="#3A85DD"/>
+                                            <Setter Property="Foreground" Value="#FFFFFF"/>
+                                            <Setter Property="BorderBrush" Value="#3A85DD"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>-->
+                        </Button>
+
+                        <TextBlock Grid.Row="7" 
+                           VerticalAlignment="Bottom" HorizontalAlignment="Left" 
+                           Margin="21,0,0,0" 
+                           TextAlignment="Left" 
+                           Foreground="#676A70" FontSize="14" FontWeight="Regular"  
+                           Text="УПРАВЛЕНИЕ"/>
+
+
+                        <Button Name="BtnStart" 
+                        Style="{StaticResource NewButton}"
+                        Background="#3A85DD"
+                        Foreground="#FFFFFF"
+                        Grid.Row="8" 
+                        Width="130" Height="30"
+                        HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                        Margin="21,0,0,0" 
+                        Content="Пуск" 
+                        Click="BtnStart_Click" 
+                        ToolTip='Управление доступно только в режиме работы "Ручной"' 
+                        ToolTipService.ShowOnDisabled="True">
+
+                        </Button>
+                        <Button Name="BtnStop" 
+                        Style="{StaticResource NewButton}"
+                        Grid.Row="8" 
+                        Width="130" Height="30"
+                        HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                        Margin="162,0,0,0" 
+                        Content="Стоп" 
+                        Click="BtnStop_Click" 
+                        ToolTip='Управление доступно только в режиме работы "Ручной"' 
+                        ToolTipService.ShowOnDisabled="True">
+                            <!--<Button.Style>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="IsEnabled" Value="False"/>
+                            <Setter Property="ToolTipService.IsEnabled" Value="True"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ModeManual}" Value="True">
+                                    <Setter Property="IsEnabled" Value="True"/>
+                                    <Setter Property="ToolTipService.IsEnabled" Value="False"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>-->
+                        </Button>
+                    </Grid>
+                </Border>
+            </Grid>
+
+
+
+            <!--#region OldDesignPopup-->
+            <!--<Border BorderBrush="Black" BorderThickness="1">
                 <Grid Background="Beige" Width="180">
                     <Grid.RowDefinitions>
                         <RowDefinition MinHeight="25" Height="Auto"/>
@@ -1010,7 +1176,8 @@
                         </Button.Style>
                     </Button>
                 </Grid>
-            </Border>
+            </Border>-->
+            <!--#endregion-->
         </Popup>
     </Grid>
 </UserControl>

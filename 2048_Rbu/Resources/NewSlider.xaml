@@ -20,56 +20,55 @@
         </DrawingImage.Drawing>
     </DrawingImage>
 
-    <Style x:Key="SliderRepeatButton" TargetType="RepeatButton">
+    <Style x:Key="SliderRepeatButton" TargetType="{x:Type RepeatButton}">
         <Setter Property="SnapsToDevicePixels" Value="true" />
         <Setter Property="OverridesDefaultStyle" Value="true" />
         <Setter Property="IsTabStop" Value="false" />
         <Setter Property="Focusable" Value="false" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="RepeatButton">
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
                     <Border  BorderThickness="0" 
-                                 BorderBrush="#C4C4C4" 
-                                 Background="#C4C4C4" 
-                                 CornerRadius="0,2,2,0" 
-                                 Height="5"/>
+                             BorderBrush="#C4C4C4" 
+                             Background="#C4C4C4" 
+                             CornerRadius="0,2,2,0" 
+                             Height="5"/>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
 
-    <Style x:Key="SliderRepeatButton1" TargetType="RepeatButton">
+    <Style x:Key="SliderRepeatButton1" TargetType="{x:Type RepeatButton}">
         <Setter Property="SnapsToDevicePixels" Value="true" />
         <Setter Property="OverridesDefaultStyle" Value="true" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="RepeatButton">
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
                     <Border  BorderThickness="0"
-                                 Background="#008767"  
-                                 BorderBrush="#008767" 
-                                 CornerRadius="2,0,0,2"
-                                 Height="5"/>
+                             Background="#008767"  
+                             BorderBrush="#008767" 
+                             CornerRadius="2,0,0,2"
+                             Height="5"/>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
 
-    <Style x:Key="SliderThumb" TargetType="Thumb">
+    <Style x:Key="SliderThumb" TargetType="{x:Type Thumb}">
         <Setter Property="SnapsToDevicePixels" Value="true" />
         <Setter Property="OverridesDefaultStyle" Value="true" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="Thumb">
+                <ControlTemplate TargetType="{x:Type Thumb}">
                     <Image Source="{StaticResource Slider_Image}" Height="20" Width="20"/>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
 
-    <ControlTemplate x:Key="Slider"  TargetType="Slider">
+    <ControlTemplate x:Key="Slider" TargetType="{x:Type Slider}">
         <Grid>
-
-            <Track x:Name="PART_Track"   >
+            <Track x:Name="PART_Track">
                 <Track.DecreaseRepeatButton>
                     <RepeatButton Style="{StaticResource SliderRepeatButton1}"  Command="Slider.DecreaseLarge" />
                 </Track.DecreaseRepeatButton>
@@ -83,7 +82,7 @@
         </Grid>
     </ControlTemplate>
 
-    <Style x:Key="NewSlider" TargetType="Slider">
+    <Style x:Key="NewSlider" TargetType="{x:Type Slider}">
         <Setter Property="Focusable" Value="False"/>
         <Setter Property="SnapsToDevicePixels" Value="true" />
         <Setter Property="OverridesDefaultStyle" Value="true" />

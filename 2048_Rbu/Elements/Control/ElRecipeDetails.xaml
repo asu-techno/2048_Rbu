@@ -4,11 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:_2048_Rbu.Elements.Control"
-             mc:Ignorable="d" 
+             mc:Ignorable="d" FontFamily="{StaticResource Jost}"
             Background="#D9D8DD" d:DesignHeight="487" d:DesignWidth="420" Width="420">
 
     <UserControl.Resources>
-        <Style x:Key="{x:Type Label}" TargetType="{x:Type Label}">
+        <!--<Style x:Key="{x:Type Label}" TargetType="{x:Type Label}">
             <Setter Property="OverridesDefaultStyle" Value="True"/>
             <Setter Property="SnapsToDevicePixels" Value="True"/>
             <Setter Property="FontSize" Value="12"/>
@@ -28,10 +28,8 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-
-        </Style>
+        </Style>-->
     </UserControl.Resources>
-
 
     <Grid>
 
@@ -67,6 +65,7 @@
         <DataGrid   Grid.Row="5"
                     FontSize="14" 
                     MinHeight="150"
+                    Height="151"
                     IsReadOnly="True"
                     VerticalScrollBarVisibility="Disabled"
                     HorizontalScrollBarVisibility="Disabled"
@@ -93,6 +92,7 @@
                    Foreground="#333538" 
                     />
         <Label Content="{Binding Path=Recipe.MixingTime, UpdateSourceTrigger=PropertyChanged}" 
+               Style="{StaticResource OvalFrameLabel}"
                Grid.Row="7"
                HorizontalAlignment="Right" VerticalAlignment="Center"
                Margin="0,2.5,0,2.5"   
@@ -104,6 +104,7 @@
                    FontWeight="Normal" 
                    Foreground="#333538" />
         <Label Content="{Binding Path=Recipe.PercentOpenGate, UpdateSourceTrigger=PropertyChanged}" 
+               Style="{StaticResource OvalFrameLabel}"
                Grid.Row="8"
                HorizontalAlignment="Right" VerticalAlignment="Center"
                Margin="0,2.5,0,2.5"   
@@ -114,7 +115,8 @@
                    FontSize="14"  
                    FontWeight="Normal" 
                    Foreground="#333538" />
-        <Label Content="{Binding Path=Recipe.TimePartialUnload, UpdateSourceTrigger=PropertyChanged}" 
+        <Label Content="{Binding Path=Recipe.TimePartialUnload, UpdateSourceTrigger=PropertyChanged}"
+               Style="{StaticResource OvalFrameLabel}"
                Grid.Row="9"
                HorizontalAlignment="Right" VerticalAlignment="Center"
                Margin="0,2.5,0,2.5"   
@@ -126,6 +128,7 @@
                    FontWeight="Normal" 
                    Foreground="#333538" />
         <Label Content="{Binding Path=Recipe.TimeFullUnload, UpdateSourceTrigger=PropertyChanged}" 
+               Style="{StaticResource OvalFrameLabel}"
                Grid.Row="10"
                HorizontalAlignment="Right" VerticalAlignment="Center"
                Margin="0,2.5,0,2.5"   

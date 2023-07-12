@@ -10,4 +10,39 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+
+    <ControlTemplate x:Key="BlueBtn" TargetType="{x:Type Button}">
+        <Border Background="#3A85DD"
+                CornerRadius="5"
+                BorderThickness="0"
+                BorderBrush="#3A85DD">
+            <ContentPresenter  HorizontalAlignment="Center"  VerticalAlignment="Center" />
+        </Border>
+    </ControlTemplate>
+
+    <Style x:Key="OvalFrameLabel" TargetType="{x:Type Label}">
+        <Setter Property="OverridesDefaultStyle" Value="True"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Height" Value="25"/>
+        <Setter Property="Width" Value="80"/>
+        <Setter Property="Foreground" Value="#3B3C3D"/>
+        <Setter Property="Background" Value="#EEEEEF"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Label}" >
+                    <Border Name="Border" 
+                            CornerRadius="5" 
+                            Height="{TemplateBinding Height}" 
+                            Width="{TemplateBinding Width}"
+                            Background="{TemplateBinding Background}" 
+                            BorderBrush="#B8BBC0" 
+                            BorderThickness="1"
+                                >
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>
